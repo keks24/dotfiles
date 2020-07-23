@@ -1,0 +1,12 @@
+[user]
+    email = Ramon_Fischer@hotmail.de
+    name = Ramon Fischer
+    #signingkey = 598398DA5F4DA46438FDCF87155BE26413E699BF
+[include]
+    path = ~/.gitconfig.d/gitalias.txt
+[alias]
+    call = commit --all
+#[pull]
+#    rebase = true
+[commit]
+    gpgsign = true
