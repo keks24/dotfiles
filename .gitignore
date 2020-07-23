@@ -1,0 +1,7 @@
+# nvim: ignore undo files
+./home/username/.config/nvim/tmp/backup/*
+./home/username/.config/nvim/tmp/swp/*
+./home/username/.config/nvim/tmp/undo/*
+
+# mpv: ignore "watch_later" files
+./home/username/.config/mpv/watch_later/*
