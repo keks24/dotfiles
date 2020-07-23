@@ -1,0 +1,43 @@
+# custom - 20200618 - rfischer: set custom keyboard shortcuts for vim-like navigation
+# <action> [<modifier_key>-]<key> [ [<modifer_key>-]<key>, [<modifier_key>-]<key>, [<modifier_key>-]<key> ]
+## unbind actions
+next_img
+prev_img
+reload_image
+render
+
+save_image
+delete
+
+scroll_up_page
+scroll_down_page
+scroll_up
+scroll_down
+scroll_left
+scroll_right
+
+zoom_in
+zoom_out
+zoom_fill
+toggle_auto_zoom
+
+## bind actions
+next_img C-l Right
+prev_img C-h Left
+reload_image R
+render r
+
+save_image S
+delete D Delete
+
+scroll_up_page g Page_Up
+scroll_down_page G Page_Down
+scroll_up k
+scroll_down j
+scroll_left h
+scroll_right l
+
+zoom_in z
+zoom_out Z
+zoom_fill F
+toggle_auto_zoom w

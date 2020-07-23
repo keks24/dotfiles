@@ -1,0 +1,28 @@
+# custom - 20200618 - rfischer: set custom mouse shortcuts for convenient navigation. use "xev" in "X" or "showkey" in a tty
+## 1 left mouse button
+## 2 middle mouse button
+## 3 right mouse button
+## 4 mousewheel down
+## 5 mousewheel up
+## 8 mouse backward button
+## 9 mouse forward button
+
+# <action> [<modifier_key>-]<key> [ [<modifer_key>-]<key>, [<modifier_key>-]<key>, [<modifier_key>-]<key> ]
+## unbind actions
+pan
+zoom
+prev_img
+next_img
+blur
+rotate
+zoom_in
+zoom_out
+
+## bind actions
+pan 2
+
+prev_img 8
+next_img 9
+
+zoom_in 4
+zoom_out 5
