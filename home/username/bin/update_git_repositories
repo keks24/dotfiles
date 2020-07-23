@@ -16,6 +16,22 @@
 #############################################################################
 
 # custom - 20200618 - rfischer: update all underlying git repositories of the current working directory
+command_list=(find git)
+checkCommands()
+{
+    for current_command in "${command_list[@]}"
+    do
+        unalias ${current_command} 2>/dev/null
+        if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
+        then
+            /bin/echo -e "\e[01;31mcould not find command '${current_command}'.\e[0m"
+            exit 1
+        fi
+    done
+}
+
+checkCommands
+
 for repository_directory in $(/usr/bin/find -L . -type d -name ".git" -printf "%h\n")
 do
     echo -e "\n### ${repository_directory} ###\n"
