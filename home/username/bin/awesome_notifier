@@ -1,0 +1,85 @@
+#!/bin/bash
+#############################################################################
+# Copyright 2020 Ramon Fischer                                              #
+#                                                                           #
+# Licensed under the Apache License, Version 2.0 (the "License");           #
+# you may not use this file except in compliance with the License.          #
+# You may obtain a copy of the License at                                   #
+#                                                                           #
+#     http://www.apache.org/licenses/LICENSE-2.0                            #
+#                                                                           #
+# Unless required by applicable law or agreed to in writing, software       #
+# distributed under the License is distributed on an "AS IS" BASIS,         #
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  #
+# See the License for the specific language governing permissions and       #
+# limitations under the License.                                            #
+#############################################################################
+
+# custom - 20200701 - rfischer: create dynamic notifications
+command_list=(notify-send)
+checkCommands()
+{
+    for current_command in "${command_list[@]}"
+    do
+        unalias ${current_command} 2>/dev/null
+        if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
+        then
+            /bin/echo -e "\e[01;31mcould not find command '${current_command}'.\e[0m"
+            exit 1
+        fi
+    done
+}
+
+checkCommands
+
+# define global variables
+icon_directory="/usr/share/awesome/icons"
+icon_filename="awesome32.png"
+icon_file="${icon_directory}/${icon_filename}"
+## arguments
+notification_expire_time_s="${1}"
+notification_expire_time_ms=""
+### low, normal, critical
+notification_urgency_level="${2}"
+notification_title="${3}"
+notification_description="${4}"
+
+checkSanity()
+{
+    if [[ ! -f "${icon_file}" ]]
+    then
+        /bin/echo -e "\e[01;31mcould not find file '${icon_file}'.\e[0m"
+        exit 1
+    elif [[ ! "${notification_expire_time_s}" =~ [0-9]+ ]]
+    then
+        /bin/echo -e "\e[01;31mthe expire time must be an integer.\e[0m"
+        exit 1
+    elif [[ ! "${notification_urgency_level}" =~ ^(low|normal|critical)$ ]]
+    then
+        /bin/echo -e "\e[01;31mthe urgency level must be set to one of the following: 'low', 'normal', 'critical'.\e[0m"
+        exit 1
+    fi
+}
+
+convertExpireTimeToMilliseconds()
+{
+    local -i expire_time_s=${1}
+    notification_expire_time_ms=$(( ${expire_time_s} * 1000 ))
+}
+
+sendNotification()
+{
+    /usr/bin/notify-send --expire-time="${notification_expire_time_ms}" --icon="${icon_file}" --urgency="${notification_urgency_level}" "${notification_title}" "${notification_description}"
+}
+
+main()
+{
+    checkSanity
+
+    convertExpireTimeToMilliseconds "${notification_expire_time_s}"
+
+    # usage: awesome_notifier <expire_time_seconds> <urgency_level> <title> <description>
+    sendNotification
+}
+
+main

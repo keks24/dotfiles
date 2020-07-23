@@ -1,0 +1,56 @@
+#!/bin/bash
+#############################################################################
+# Copyright 2020 Ramon Fischer                                              #
+#                                                                           #
+# Licensed under the Apache License, Version 2.0 (the "License");           #
+# you may not use this file except in compliance with the License.          #
+# You may obtain a copy of the License at                                   #
+#                                                                           #
+#     http://www.apache.org/licenses/LICENSE-2.0                            #
+#                                                                           #
+# Unless required by applicable law or agreed to in writing, software       #
+# distributed under the License is distributed on an "AS IS" BASIS,         #
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  #
+# See the License for the specific language governing permissions and       #
+# limitations under the License.                                            #
+#############################################################################
+
+# custom - 20200618 - rfischer: connect to the samsung tv, when it is off
+command_list=(kill xrandr)
+checkCommands()
+{
+    for current_command in "${command_list[@]}"
+    do
+        unalias ${current_command} 2>/dev/null
+        if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
+        then
+            /bin/echo -e "\e[01;31mcould not find command '${current_command}'.\e[0m"
+            exit 1
+        fi
+    done
+}
+
+checkCommands
+
+# define global variables
+display_id="${DISPLAY}"
+samsung_tv_id="HDMI-0"
+samsung_tv_connect_status="$(< /sys/class/drm/card0-HDMI-A-1/status)"
+dell_monitor_id="VGA-0"
+
+if [[ "${display_id}" != "" ]]
+then
+    if [[ "${samsung_tv_connect_status}" == "connected" ]]
+    then
+        # enable the samsung tv
+        /usr/bin/xrandr --query >/dev/null
+        /usr/bin/xrandr --display "${display_id}" --output "${samsung_tv_id}" --left-of "${dell_monitor_id}" --auto
+
+        # reload awesome by hanging up the progress
+        # "--signal" does not work
+        /bin/kill -s HUP $(/usr/bin/pgrep --euid "$(/usr/bin/id --user --name)" "awesome")
+    else
+        /bin/echo -e "\e[01;31msamsung tv is not connected, exiting ...\e[0m"
+        exit 1
+    fi
+fi
