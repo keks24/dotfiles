@@ -52,7 +52,7 @@ checkSanity()
         exit 1
     elif [[ ! "${notification_expire_time_s}" =~ [0-9]+ ]]
     then
-        /bin/echo -e "\e[01;31mthe expire time must be an integer.\e[0m"
+        /bin/echo -e "\e[01;31mthe expire time must be an unsigned integer.\e[0m"
         exit 1
     elif [[ ! "${notification_urgency_level}" =~ ^(low|normal|critical)$ ]]
     then
