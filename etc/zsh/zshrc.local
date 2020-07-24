@@ -19,7 +19,7 @@
 dic()
 {
     input_string=${*// /+}
-    $(command -v w3m) -dump "http://pocket.dict.cc/?s=${input_string}" | $(command -v head) -n -6 | $(command -v tail) -n +6 | $(command -v tac)
+    w3m -dump "http://pocket.dict.cc/?s=${input_string}" | head --lines="-6" | tail --lines="+6" | tac
 }
 
 ## bash: execute bell when command is finished
@@ -27,7 +27,7 @@ precmd()
 {
     eval "${PROMPT_COMMAND}"
 }
-PROMPT_COMMAND+='$(command -v tput) bel;'
+PROMPT_COMMAND+='tput bel;'
 
 ## do not include faulty commands in history
 zshaddhistory()
