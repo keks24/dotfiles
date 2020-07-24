@@ -22,6 +22,6 @@ script_name="${0##*/}"
 
 for brightness in {422..100..10}
 do
-    /bin/echo "${brightness}" > /sys/class/backlight/intel_backlight/brightness
+    /bin/echo "${brightness}" > "/sys/class/backlight/intel_backlight/brightness"
     /bin/sleep 0.1
 done
