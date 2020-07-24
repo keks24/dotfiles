@@ -29,6 +29,25 @@ precmd()
 }
 PROMPT_COMMAND+='tput bel;'
 
+## dynamically change the window title in "st"
+if [[ "${TERM}" != "" && "${TERM}" == "st"* ]]
+then
+    # output on which level (%L) this shell is running on.
+    # append the current directory (%~), substitute home directories with a tilde.
+    # "\a" bell (man 1 echo)
+    precmd()
+    {
+        # "print" must be used here; echo cannot handle prompt expansions (%L)
+        print -Pn "\e]0;zsh[%L] %~\a"
+    }
+    # output current executed command with parameters
+    preexec()
+    {
+        echo -en "\e]0;${1}\a"
+    }
+fi
+
+
 ## do not include faulty commands in history
 zshaddhistory()
 {
