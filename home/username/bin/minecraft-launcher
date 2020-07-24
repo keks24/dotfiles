@@ -1,0 +1,27 @@
+#!/bin/bash
+# custom - 20200701 - rfischer: start "minecraft-launcher" via "java"
+command_list=(java)
+checkCommands()
+{
+    for current_command in "${command_list[@]}"
+    do
+        unalias ${current_command} 2>/dev/null
+        if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
+        then
+            /bin/echo -e "\e[01;31mcould not find command '${current_command}'.\e[0m"
+            exit 1
+        fi
+    done
+}
+
+checkCommands
+
+if [[ "${DISPLAY}" != "" ]]
+then
+    # custom - 20191108 - rfischer: set the environment variable "DRI_PRIME=1" to always use the hybrid graphics card
+    # VDPAU_DRIVER="radeonsi" for "amdgpu"
+    DRI_PRIME=1 VDPAU_DRIVER="r600" /usr/bin/java -jar "/home/ramon/.local/games/minecraft/TLauncher-MCL.jar"
+else
+    echo -e "\e[01;31mno display detected, exiting...\e[0m"
+    exit 1
+fi
