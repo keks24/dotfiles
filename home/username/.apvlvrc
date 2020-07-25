@@ -15,6 +15,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " custom - 20200617 - rfischer: set miscellaneous settings
+set content = no
 set doubleclick = word
 set noinfo = no
-"set zoom = fitwidth
+set zoom = 1.2
