@@ -1,3 +1,5 @@
+" -*- mode: vim -*-
+" vi: set ft=vim :
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copyright 2020 Ramon Fischer                                              "
 "                                                                           "
@@ -15,7 +17,37 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " custom - 20200617 - rfischer: set miscellaneous settings
-set content = no
-set doubleclick = word
+" application settings
+"" save cursor position; the file "~/.apvlvinfo" will be created
 set noinfo = no
+
+"" select a word on double-click
+set doubleclick = word
+
+"" do not start with the table of contents
+set content = no
+
+"" enable continuous scrolling
+set continuous = yes
+"" enable padding for continuous scrolling
+set continuouspad = yes
+
+"" set the default zoom level to "150%"
 set zoom = 1.5
+
+" keyboard settings
+"" zoom in
+map z zi
+"" zoom out
+map Z zo
+
+"" fit content to window width
+map w zw
+"" fit content to window height
+map h zh
+
+" use "spacebar" to search
+map <Space> /
+
+" print file
+map <C-p> :print<CR>
