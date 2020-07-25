@@ -44,7 +44,7 @@ then
     preexec()
     {
         # output current executed command with parameters
-        echo -en "\e]0;${1}\a"
+        echo -en "\e]0;${USER}@${HOSTNAME}: ${1}\a"
     }
 fi
 
