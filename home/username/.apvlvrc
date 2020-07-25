@@ -32,10 +32,18 @@ set continuous = yes
 "" enable padding for continuous scrolling
 set continuouspad = yes
 
-"" set the default zoom level to "150%"
-set zoom = 1.5
+"" set the default zoom level to "160%"
+set zoom = 1.6
 
 " keyboard settings
+"" open link
+map l <C-]>
+
+"" go to next page
+map n <C-f>
+"" go to previous page
+map p <C-b>
+
 "" zoom in
 map z zi
 "" zoom out
