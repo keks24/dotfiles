@@ -10,9 +10,9 @@ home/username/.config/nvim/tmp/swp/*
 home/username/.config/nvim/tmp/undo/*
 
 # ssh: ignore configuration files
-#home/username/.ssh/known_hosts*
-#home/username/.ssh/cm/*
-#home/username/.ssh/keys/*
-#root/.ssh/known_hosts*
-#root/.ssh/cm/*
-#root/.ssh/keys/*
+home/username/.ssh/known_hosts*
+home/username/.ssh/cm/*
+home/username/.ssh/keys/*
+root/.ssh/known_hosts*
+root/.ssh/cm/*
+root/.ssh/keys/*
