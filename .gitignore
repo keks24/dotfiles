@@ -1,10 +1,18 @@
-# nvim: ignore undo files
-home/username/.config/nvim/tmp/backup/*
-home/username/.config/nvim/tmp/swp/*
-home/username/.config/nvim/tmp/undo/*
-
 # mpv: ignore "watch_later" files
 home/username/.config/mpv/watch_later/*
 
 # music: ignore "m3u8" playlist files
 home/username/music/playlists/*.m3u8
+
+# nvim: ignore undo files
+home/username/.config/nvim/tmp/backup/*
+home/username/.config/nvim/tmp/swp/*
+home/username/.config/nvim/tmp/undo/*
+
+# ssh: ignore configuration files
+#home/username/.ssh/known_hosts*
+#home/username/.ssh/cm/*
+#home/username/.ssh/keys/*
+#root/.ssh/known_hosts*
+#root/.ssh/cm/*
+#root/.ssh/keys/*
