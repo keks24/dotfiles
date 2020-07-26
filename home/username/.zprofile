@@ -14,7 +14,7 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# custom - 20200619 - rfischer: start non-daemon processes in the background on boot ("/dev/tty6"). all variables are public to "zsh"!
+# custom - 20200619 - rfischer: start non-daemon processes in the background on boot ("/dev/tty7"). all variables are public to "zsh"!
 # define global variables
 declare -a APPLICATION_NAME_LIST
 ## do not change the order of this list, only append new commands!
@@ -76,8 +76,8 @@ unset APPLICATION_NAME
 
 # startx (awesomewm)
 ## this part must be started at the very end!
-## after autologin on "tty6", start "awesome" on "tty7"
-if [[ "${DISPLAY}" == "" && "$(id --user)" != "0" && -o login && $(tty) == "/dev/tty6" ]]
+## after autologin on "tty7", start "awesome" on "tty7"
+if [[ "${DISPLAY}" == "" && "$(id --user)" != "0" && -o login && $(tty) == "/dev/tty7" ]]
 then
-    startx -- vt7 >> "${LOG_DIRECTORY}/startx/startx.log" 2>&1 &!
+    startx >> "${LOG_DIRECTORY}/startx/startx.log" 2>&1 &!
 fi
