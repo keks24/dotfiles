@@ -1,19 +1,3 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Copyright 2020 Ramon Fischer                                              "
-"                                                                           "
-" Licensed under the Apache License, Version 2.0 (the "License");           "
-" you may not use this file except in compliance with the License.          "
-" You may obtain a copy of the License at                                   "
-"                                                                           "
-"     http://www.apache.org/licenses/LICENSE-2.0                            "
-"                                                                           "
-" Unless required by applicable law or agreed to in writing, software       "
-" distributed under the License is distributed on an "AS IS" BASIS,         "
-" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  "
-" See the License for the specific language governing permissions and       "
-" limitations under the License.                                            "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 "XSANE_DEVICE_RC"
 "Hewlett Packard:ScanJet 2300c"
 "xsane-version"
@@ -27,13 +11,13 @@
 "resolution"
 150
 "tl-x"
-0
+22196
 "tl-y"
 0
 "br-x"
-13762560
+14104587
 "br-y"
-19333120
+19266532
 "custom-gamma"
 0
 "swdeskew"
@@ -63,17 +47,17 @@
 "expiration-time"
 0
 "xsane-main-window-x-position"
-3991
+2055
 "xsane-main-window-y-position"
-152
+253
 "xsane-main-window-width"
 294
 "xsane-main-window-height"
-451
+372
 "xsane-project-window-x-position"
-3644
+1729
 "xsane-project-window-y-position"
-153
+255
 "xsane-standard-options-window-x-position"
 1
 "xsane-standard-options-window-y-position"
@@ -95,13 +79,13 @@
 "xsane-batch-window-y-position"
 40
 "xsane-preview-window-x-position"
-4289
+2344
 "xsane-preview-window-y-position"
-152
+250
 "xsane-preview-window-width"
-519
+520
 "xsane-preview-window-height"
-662
+655
 "xsane-gamma"
 56878
 "xsane-gamma-red"
