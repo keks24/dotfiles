@@ -38,13 +38,13 @@ then
         # append the current directory (%~), substitute home directories with a tilde.
         # "\a" bell (man 1 echo)
         # "print" must be used here; echo cannot handle prompt expansions (%L)
-        print -Pn "\e]0;${USER}@${HOSTNAME}: zsh[%L] %~\a"
+        print -Pn "\e]0;$(id --user --name)@$(hostname): zsh[%L] %~\a"
     }
 
     preexec()
     {
         # output current executed command with parameters
-        echo -en "\e]0;${USER}@${HOSTNAME}: ${1}\a"
+        echo -en "\e]0;$(id --user --name)@$(hostname): ${1}\a"
     }
 fi
 
@@ -217,7 +217,7 @@ export LESSOPEN="| lesspipe.sh %s"
 ## do not include certain commands in history
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
 ## do not include critical commands in history
-export HISTORY_IGNORE="(/sbin/halt*|/sbin/poweroff*|/sbin/reboot*|/sbin/shutdown*|cd*|*chown*|clear*|*delete*|exit*|find*|halt*|ls*|*mv*|*perl-rename*|poweroff*|pwd*|reboot*|*rename*|*rm*|shutdown*|sudo*)"
+export HISTORY_IGNORE="(/sbin/halt*|/sbin/poweroff*|/sbin/reboot*|/sbin/shutdown*|cd*|*chown*|clear*|*delete*|exit*|find*|halt*|ls*|*mv*|*perl*rename*|poweroff*|pwd*|reboot*|*rename*|*rm*|shutdown*|sudo*)"
 ## use "ccache" via "distcc". see also "/etc/conf.d/distccd", "/etc/distcc/hosts", "/etc/env.d/03distcc_ccache" and "/etc/portage/make.conf"
 export PATH="/usr/lib/ccache/bin:${PATH}"
 export CCACHE_DIR="/home/ramon/.var/tmp/ccache"
