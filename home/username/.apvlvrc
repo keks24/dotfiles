@@ -22,7 +22,7 @@
 set noinfo = no
 
 "" select a word on double-click
-set doubleclick = word
+set doubleclick = page
 
 "" do not start with the table of contents
 set content = no
