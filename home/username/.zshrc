@@ -30,10 +30,10 @@ alias pulsemixer="pulsemixer --color 1 --no-mouse"
 
 # tmux
 ## attach or create tmux session
-if [[ $(pgrep --euid "$(id --user --name)" "tmux") && "${TMUX}" == "" && $(tty) != "/dev/tty7" ]]
+if [[ $(pgrep --euid "$(id --user --name)" "tmux") && "${TMUX}" == "" && $(tty) != "/dev/tty1" ]]
 then
     tmux attach 2>/dev/null
-elif [[ ! $(pgrep --euid "$(id --user --name)" "script") && $(tty) != "/dev/tty7" ]]
+elif [[ ! $(pgrep --euid "$(id --user --name)" "script") && $(tty) != "/dev/tty1" ]]
 then
     tmux new-session 2>/dev/null #-n "$(id -un)@$(hostname)"
 fi
