@@ -1,3 +1,7 @@
+# to do
+# - put everthing in functions, so the variables do not get exposed
+# - intercept missing commands
+#
 #############################################################################
 # Copyright 2020 Ramon Fischer                                              #
 #                                                                           #
@@ -14,7 +18,7 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# custom - 20200619 - rfischer: start non-daemon processes in the background on boot ("/dev/tty7"). all variables are public to "zsh"!
+# custom - 20200619 - rfischer: start non-daemon processes in the background on boot ("/dev/tty1"). all variables are global to "zsh"!
 # define global variables
 declare -a APPLICATION_NAME_LIST
 ## do not change the order of this list, only append new commands!
@@ -76,8 +80,8 @@ unset APPLICATION_NAME
 
 # startx (awesomewm)
 ## this part must be started at the very end!
-## after autologin on "tty7", start "awesome" on "tty7"
-if [[ "${DISPLAY}" == "" && "$(id --user)" != "0" && -o login && $(tty) == "/dev/tty7" ]]
+## after autologin on "tty1", start "awesome" on "tty1"
+if [[ "${DISPLAY}" == "" && "$(id --user)" != "0" && -o login && $(tty) == "/dev/tty1" ]]
 then
     startx >> "${LOG_DIRECTORY}/startx/startx.log" 2>&1 &!
 fi
