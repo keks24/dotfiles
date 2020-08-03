@@ -1,3 +1,4 @@
+#!/bin/sh
 #############################################################################
 # Copyright 2020 Ramon Fischer                                              #
 #                                                                           #
@@ -14,12 +15,23 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# custom - 20200502 - rfischer: start an x session with "awesome" using "startx"
+# custom - 20200502 - rfischer: start an "x" session with "awesome" using "startx"
 if [[ "${DBUS_SESSION_BUS_ADDRESS}" == "" ]]
 then
-    # custom - 20200619 - rfischer: use "xdotool" to enable the numpad on boot. "/etc/init.d/numpad" does not work on "/dev/tty7".
+    # custom - 20200619 - rfischer: use "xdotool" to enable the numpad on boot. "/etc/init.d/numpad" does not work within "x" on "/dev/tty1"
     xdotool key Num_Lock
     # custom - 20200721 - rfischer: use custom cursor theme
-    xrdb -merge /home/$(id --user --name)/.Xresources
-    eval $(dbus-launch --sh-syntax --exit-with-session awesome)
+    xrdb -merge "/home/$(id --user --name)/.Xresources"
+    # the following part gets somehow expanded to "0xc00005" and causes the error "command not found", when using "eval" around it
+    dbus-launch --sh-syntax --exit-with-session awesome
 fi
+
+# still to fix:
+## 0xc00005: command not found, what is "0xc00005" anyway?
+
+## The XKEYBOARD keymap compiler (xkbcomp) reports:
+## Internal error:   Could not resolve keysym XF86FullScreen
+## Errors from xkbcomp are not fatal to the X server
+## The XKEYBOARD keymap compiler (xkbcomp) reports:
+## Internal error:   Could not resolve keysym XF86FullScreen
+## Errors from xkbcomp are not fatal to the X server
