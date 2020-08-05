@@ -26,9 +26,3 @@ export MANPATH="/home/$(id --user --name)/.local/share/man:${MANPATH}"
 ## aliases
 ### ruby
 alias ruby-install="ruby-install --jobs='4' --cleanup --src-dir '/home/$(id --user --name)/.local/src' --install-dir '/home/$(id --user --name)/.local'"
-
-## source client-specific file
-if [[ -f "/home/$(id --user --name)/.zshrc.local" ]]
-then
-    source "/home/$(id --user --name)/.zshrc.local"
-fi
