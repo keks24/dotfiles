@@ -14,26 +14,21 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# exports
-## set default scanner device
+# global
+# do not start any programs here. use "~/.zshrc.local" for this!
+
+## exports
+### set default scanner device
 export SANE_DEFAULT_DEVICE="net:raspberrypi-printer.local:genesys"
-## use local man pages
+### use local man pages
 export MANPATH="/home/$(id --user --name)/.local/share/man:${MANPATH}"
 
-# aliases
-## ruby
+## aliases
+### ruby
 alias ruby-install="ruby-install --jobs='4' --cleanup --src-dir '/home/$(id --user --name)/.local/src' --install-dir '/home/$(id --user --name)/.local'"
-## mpv
-alias mpv_anime="mpv --audio-device='pulse/alsa_output.pci-0000_01_00.1.hdmi-stereo'"
-## pulsemixer
-alias pulsemixer="pulsemixer --color 1 --no-mouse"
 
-# tmux
-## attach or create tmux session
-if [[ $(pgrep --euid "$(id --user --name)" "tmux") && "${TMUX}" == "" && $(tty) != "/dev/tty1" ]]
+## source client-specific file
+if [[ -f "/home/$(id --user --name)/.zshrc.local" ]]
 then
-    tmux attach 2>/dev/null
-elif [[ ! $(pgrep --euid "$(id --user --name)" "script") && $(tty) != "/dev/tty1" ]]
-then
-    tmux new-session 2>/dev/null #-n "$(id -un)@$(hostname)"
+    source "/home/$(id --user --name)/.zshrc.local"
 fi
