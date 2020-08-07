@@ -46,7 +46,6 @@ script_name="${0##*/}"
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user
 /usr/bin/eix-sync
 /usr/bin/emerge --ask --update --deep --newuse --tree --verbose @world
-/usr/bin/flatpak update
 /usr/sbin/etc-update
 /usr/bin/emerge --ask --depclean --verbose
 /usr/bin/glsa-check --test all
