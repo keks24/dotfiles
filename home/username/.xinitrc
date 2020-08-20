@@ -25,13 +25,3 @@ then
     # the following part somehow gets expanded to "0xc00005". using "eval" here will cause the error "command not found", but "x" will be started anyways.
     dbus-launch --sh-syntax --exit-with-session awesome
 fi
-
-# still to fix:
-## 0xc00005: command not found, what is "0xc00005" anyway?
-
-## The XKEYBOARD keymap compiler (xkbcomp) reports:
-## Internal error:   Could not resolve keysym XF86FullScreen
-## Errors from xkbcomp are not fatal to the X server
-## The XKEYBOARD keymap compiler (xkbcomp) reports:
-## Internal error:   Could not resolve keysym XF86FullScreen
-## Errors from xkbcomp are not fatal to the X server
