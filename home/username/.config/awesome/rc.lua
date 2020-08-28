@@ -126,7 +126,7 @@ myawesomemenu = {
 
 -- custom - 20200510 - rfischer: add browser variable
 chromium_browser = "chromium"
-torbrowser = "torbrowser --torbrowser-version 9.5.3"
+torbrowser = "torbrowser --torbrowser-version 9.5.4"
 email = "thunderbird-bin"
 downloader = "jdownloader"
 scanner = "xsane"
@@ -374,7 +374,7 @@ globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
 
     -- custom - 20200618 - rfischer: add keyboard shortcut for screenshots via "import". use "zlib" compression level 8 (quality / 10) with adaptive png filtering. see also: file:///usr/share/doc/imagemagick-7.0.10.9/html/www/command-line-options.html#quality
-    --- selection (left click + hold), focussed screen (left click)
+    --- selection (left click + hold), focused screen (left click)
     awful.key({ }, "Print", function () awful.util.spawn_with_shell("current_date_time=$(date +%Y%m%d-%H%M%S) && import -frame -quality 80 /home/ramon/pictures/screenshots/${current_date_time}_screenshot.png && feh /home/ramon/pictures/screenshots/${current_date_time}_screenshot.png") end),
     --- all displays
     awful.key({ "Shift" }, "Print", function () awful.util.spawn_with_shell("current_date_time=$(date +%Y%m%d-%H%M%S) && import -frame -quality 80 -window root /home/ramon/pictures/screenshots/${current_date_time}_screenshot.png && feh /home/ramon/pictures/screenshots/${current_date_time}_screenshot.png") end),
