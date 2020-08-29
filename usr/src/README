@@ -1,0 +1,58 @@
+legend:
+- "clean up" means to keep the last three kernel versions
+
+compile new kernel
+    1. mount "/boot/"
+
+        1.2. clean up "/boot/"
+
+    2. create a new symlink to the newest kernel source
+        cd "/usr/src/"
+        ln --symbolic --force "linux-<new_kernel_version>-gentoo/" "linux"
+
+    3. copy the file ".config" file from the old kernel source to the newer one
+        cp "linux-<old_kernel_version>/.config" "linux/.config"
+
+    4. compile the new kernel
+
+        4.1. adapt new default values
+            make olddefconfig
+
+        4.2. compile the kernel and modules
+            make --jobs 4 --load-average 3.6 && make --jobs 4 --load-average 3.6 modules_install
+
+        4.3. install the kernel:
+            make install
+
+    5. update the initramfs for the new kernel
+        update_initramfs
+
+        5.1. copy the initramfs file to "/boot/"
+            cp "/usr/src/custom-initramfs-<new_kernel_version>.cpio.gz" "/boot/"
+
+    6. update the intel ucode, if necessary
+        iucode_tool --scan-system --write-earlyfw="/boot/early_ucode.cpio" "/lib/firmware/intel-ucode"/* --overwrite
+
+        6.1. check the current revision and date
+            dmesg | grep "microcode"
+
+        6.2. reload the microcode manually
+            echo "1" > /sys/devices/system/cpu/microcode/reload
+
+        6.3. check, if the microcode was updated
+            dmesg | grep "microcode"
+
+    7. update the grub configuration:
+        grub-mkconfig --output="/boot/grub/grub.cfg"
+
+    8. use the new kernel:
+        reboot
+
+    9. re-compile virtualbox modules for the new kernel:
+        emerge @module-rebuild
+
+   10. clean up "/lib/modules/"
+
+   11. clean up "/usr/src/"
+
+   12. clean up "/boot/"
