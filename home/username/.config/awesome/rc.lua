@@ -131,7 +131,7 @@ email = "thunderbird-bin"
 downloader = "jdownloader"
 scanner = "xsane"
 office = "libreoffice"
-steam = "flatpak run com.valvesoftware.Steam"
+steam = "start_steam"
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "open terminal", terminal },
                                     -- custom - 20200510 - rfischer: add browser variable
