@@ -67,6 +67,7 @@ countDown()
         /bin/sleep 1
         (( current_countdown_seconds-- ))
     done
+    /bin/echo ""
 }
 
 createSystemLogEntry()
