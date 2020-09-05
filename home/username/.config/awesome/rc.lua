@@ -131,7 +131,7 @@ email = "thunderbird-bin"
 downloader = "jdownloader"
 scanner = "xsane"
 office = "libreoffice"
---virtualisation = "virtualbox"
+steam = "flatpak run com.valvesoftware.Steam"
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "open terminal", terminal },
                                     -- custom - 20200510 - rfischer: add browser variable
@@ -140,7 +140,8 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "open thunderbird", email },
                                     { "open jdownloader", downloader },
                                     { "open xsane", scanner },
-                                    { "open libreoffice", office }
+                                    { "open libreoffice", office },
+                                    { "open steam", steam }
                                     --{ "open virtualbox", virtualisation }
                                   }
                         })
