@@ -1,0 +1,36 @@
+#!/bin/bash
+# custom - 20200905 - rfischer: start "steam" via "flatpak" and save log files
+command_list=(flatpak id mkdir)
+checkCommands()
+{
+    for current_command in "${command_list[@]}"
+    do
+        unalias ${current_command} 2>/dev/null
+        if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
+        then
+            /bin/echo -e "\e[01;31mcould not find command '${current_command}'.\e[0m"
+            exit 1
+        fi
+    done
+}
+
+checkCommands
+
+# define global variables
+application_name="steam"
+flatpak_application_name="com.valvesoftware.Steam"
+home_directory="/home/$(/usr/bin/id --user --name)"
+log_directory="${home_directory}/.log"
+
+if [[ ! -d "${log_directory}/${application_name}" ]]
+then
+    /bin/mkdir --parents --mode="750" "${log_directory}/${application_name}"
+    /bin/touch "${log_directory}/${application_name}/${application_name}.log"
+    /bin/chmod 640 "${log_directory}/${application_name}/${application_name}.log"
+elif [[ "${DISPLAY}" != "" ]]
+then
+    DRI_PRIME="1" VDPAU_DRIVER="r600" /usr/bin/flatpak run "${flatpak_application_name}" >> "${log_directory}/${application_name}/${application_name}.log" 2>&1 &
+else
+    echo -e "\e[01;31mno display detected, exiting...\e[0m"
+    exit 1
+fi
