@@ -29,7 +29,7 @@ then
     /bin/chmod 640 "${log_directory}/${application_name}/${application_name}.log"
 elif [[ "${DISPLAY}" != "" ]]
 then
-    DRI_PRIME="1" VDPAU_DRIVER="r600" /usr/bin/flatpak run "${flatpak_application_name}" >> "${log_directory}/${application_name}/${application_name}.log" 2>&1 &
+    DRI_PRIME="1" VDPAU_DRIVER="r600" PROTON_USE_WINED3D="1" /usr/bin/flatpak run "${flatpak_application_name}" >> "${log_directory}/${application_name}/${application_name}.log" 2>&1 &
 else
     echo -e "\e[01;31mno display detected, exiting...\e[0m"
     exit 1
