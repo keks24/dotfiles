@@ -31,6 +31,7 @@ elif [[ "${DISPLAY}" != "" ]]
 then
     export DRI_PRIME="1"
     export VDPAU_DRIVER="r600"
+    # amdgpu: export VDPAU_DRIVER="radeonsi"
     export PROTON_USE_WINED3D="1"
 
     /usr/bin/flatpak run "${flatpak_application_name}" >> "${log_directory}/${application_name}/${application_name}.log" 2>&1 &
