@@ -19,8 +19,10 @@ checkCommands
 if [[ "${DISPLAY}" != "" ]]
 then
     # custom - 20191108 - rfischer: set the environment variable "DRI_PRIME=1" to always use the hybrid graphics card
-    # VDPAU_DRIVER="radeonsi" for "amdgpu"
-    DRI_PRIME="1" VDPAU_DRIVER="r600" /usr/bin/java -jar "/home/ramon/.local/games/minecraft/TLauncher-MCL.jar"
+    # 'export VDPAU_DRIVER="radeonsi"' for "amdgpu"
+    export DRI_PRIME="1"
+    export VDPAU_DRIVER="r600"
+    /usr/bin/java -jar "/home/ramon/.local/games/minecraft/TLauncher-MCL.jar"
 else
     echo -e "\e[01;31mno display detected, exiting...\e[0m"
     exit 1
