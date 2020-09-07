@@ -74,7 +74,7 @@ concatenateGeneratedPlaylistFiles()
     unset playlist_filename_list
 }
 
-#convertUnixNewlines()
+#convertToUnixNewlines()
 #{
 #    local new_playlist_filename_list=($(/usr/bin/find . -type f -name "*.${playlist_filename_suffix}"))
 #
