@@ -32,4 +32,4 @@ checkCommands()
 
 checkCommands
 
-/usr/bin/java -jar "/home/ramon/.jdownloader/JDownloader.jar" &!
+/usr/bin/java -jar "/home/ramon/.jdownloader/JDownloader.jar" &
