@@ -1,6 +1,6 @@
 #!/bin/bash
 # custom - 20200905 - rfischer: start "steam" via "flatpak" and save log files
-command_list=(flatpak id mkdir)
+command_list=(chmod flatpak id mkdir touch)
 checkCommands()
 {
     for current_command in "${command_list[@]}"
