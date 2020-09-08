@@ -1,6 +1,6 @@
 #!/bin/bash
 # custom - 20200905 - rfischer: start "steam" via "flatpak" and save log files
-command_list=(chmod flatpak id mkdir touch)
+command_list=(chmod flatpak id mkdir pgrep start-pulseaudio-x11 touch)
 checkCommands()
 {
     for current_command in "${command_list[@]}"
@@ -29,6 +29,12 @@ then
     /bin/chmod 640 "${log_directory}/${application_name}/${application_name}.log"
 elif [[ "${DISPLAY}" != "" ]]
 then
+    # flatpak requires "pulseaudio". sometimes "/etc/xdg/autostart/pulseaudio.desktop" does not get executed
+    if [[ ! $(/usr/bin/pgrep --euid "$(/usr/bin/id --user --name)" "pulseaudio") ]]
+    then
+        /usr/bin/start-pulseaudio-x11
+    fi
+
     export DRI_PRIME="1"
     export VDPAU_DRIVER="r600"
     # amdgpu: export VDPAU_DRIVER="radeonsi"
