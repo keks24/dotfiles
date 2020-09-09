@@ -1,6 +1,6 @@
 #!/bin/bash
 # custom - 20200905 - rfischer: start "steam" via "flatpak" and save log files
-command_list=(chmod flatpak id mkdir pgrep start-pulseaudio-x11 touch)
+command_list=(chmod flatpak id logger mkdir pgrep sleep start-pulseaudio-x11 sudo tee touch)
 checkCommands()
 {
     for current_command in "${command_list[@]}"
@@ -17,31 +17,92 @@ checkCommands()
 checkCommands
 
 # define global variables
+script_directory_path="${0%/*}"
+script_name="${0##*/}"
 application_name="steam"
 flatpak_application_name="com.valvesoftware.Steam"
-home_directory="/home/$(/usr/bin/id --user --name)"
-log_directory="${home_directory}/.log"
+current_username=$(/usr/bin/id --user --name)
+home_directory="/home/${current_username}"
+log_directory="${home_directory}/.log/${applicaton_name}"
+graphics_power_method_file="/sys/class/drm/card0/device/power_method"
+graphics_power_profile_file="/sys/class/drm/card0/device/power_profile"
 
-if [[ ! -d "${log_directory}/${application_name}" ]]
-then
-    /bin/mkdir --parents --mode="750" "${log_directory}/${application_name}"
-    /bin/touch "${log_directory}/${application_name}/${application_name}.log"
-    /bin/chmod 640 "${log_directory}/${application_name}/${application_name}.log"
-elif [[ "${DISPLAY}" != "" ]]
-then
-    # flatpak requires "pulseaudio". sometimes "/etc/xdg/autostart/pulseaudio.desktop" does not get executed
-    if [[ ! $(/usr/bin/pgrep --euid "$(/usr/bin/id --user --name)" "pulseaudio") ]]
+prepareLogDirectory()
+{
+    if [[ ! -d "${log_directory}" ]]
     then
-        /usr/bin/start-pulseaudio-x11
+        /bin/mkdir --parents --mode="750" "${log_directory}"
+        /bin/touch "${log_directory}/${application_name}.log"
+        /bin/chmod 640 "${log_directory}/${application_name}.log"
+    fi
+}
+
+createLogEntry()
+{
+    local log_message="${1}"
+    /usr/bin/logger --tag "start_steam" --id --stderr "${script_directory_path}/${script_name}: ${log_message}"
+}
+
+# this requires the following entries in "/etc/sudoers.d/98-steam":
+# <some_username> <some_hostname>=NOPASSWD: /usr/bin/tee /sys/class/drm/card0/device/power_method
+# <some_username> <some_hostname>=NOPASSWD: /usr/bin/tee /sys/class/drm/card0/device/power_profile
+setGraphicsPowerMethodAndProfile()
+{
+    local graphics_power_method_set="${1}"
+    local graphics_power_profile_set="${2}"
+
+    getGraphicsPowerMethodType
+
+    if [[ "${graphics_power_method_set}" == "${current_graphics_power_method_type}" ]]
+    then
+        /bin/echo "${graphics_power_profile_set}" | /usr/bin/sudo /usr/bin/tee "${graphics_power_profile_file}" >/dev/null
+        createLogEntry "set graphics card power profile to '${graphics_power_profile_set}'"
+    else
+        /bin/echo "${graphics_power_method_set}" | /usr/bin/sudo /usr/bin/tee "${graphics_power_method_file}" >/dev/null
+        /bin/echo "${graphics_power_profile_set}" | /usr/bin/sudo /usr/bin/tee "${graphics_power_profile_file}" >/dev/null
+        createLogEntry "set graphics card power method to '${graphics_power_method_set}' and profile to '${graphics_power_profile_set}'"
     fi
 
-    export DRI_PRIME="1"
-    export VDPAU_DRIVER="r600"
-    # amdgpu: export VDPAU_DRIVER="radeonsi"
-    export PROTON_USE_WINED3D="1"
+}
 
-    /usr/bin/flatpak run "${flatpak_application_name}" >> "${log_directory}/${application_name}/${application_name}.log" 2>&1 &
-else
-    echo -e "\e[01;31mno display detected, exiting...\e[0m"
-    exit 1
-fi
+getGraphicsPowerMethodType()
+{
+    if [[ -f "${graphics_power_method_file}" ]]
+    then
+        current_graphics_power_method_type=$(< "${graphics_power_method_file}")
+    else
+        /bin/echo -e "\e[01;31mCould not find '${graphics_power_method_file}'. Exiting...\e[0m"
+        exit 1
+    fi
+}
+
+main()
+{
+    prepareLogDirectory
+
+    if [[ "${DISPLAY}" != "" ]]
+    then
+        if [[ ! $(/usr/bin/pgrep --euid "${current_username}" "pulseaudio") ]]
+        then
+            # flatpak requires "pulseaudio". sometimes "/etc/xdg/autostart/pulseaudio.desktop" does not get executed
+            /usr/bin/start-pulseaudio-x11
+        fi
+
+        # set graphics card power profile to "auto", since "/etc/local.d/10_set_radeon_power_profile.start" sets it to "low"
+        setGraphicsPowerMethodAndProfile "profile" "auto"
+
+        export DRI_PRIME="1"
+        export VDPAU_DRIVER="r600"
+        # amdgpu: export VDPAU_DRIVER="radeonsi"
+        export PROTON_USE_WINED3D="1"
+        /usr/bin/flatpak run "${flatpak_application_name}" >> "${log_directory}/${application_name}/${application_name}.log" 2>&1
+
+        # revert changes of the graphics card power profile
+        setGraphicsPowerMethodAndProfile "profile" "low"
+    else
+        echo -e "\e[01;31mNo display detected, exiting...\e[0m"
+        exit 1
+    fi
+}
+
+main
