@@ -89,7 +89,7 @@ main()
         fi
 
         # set graphics card power profile to "auto", since "/etc/local.d/10_set_radeon_power_profile.start" sets it to "low"
-        setGraphicsPowerMethodAndProfile "profile" "auto"
+        setGraphicsPowerMethodAndProfile "profile" "high"
 
         export DRI_PRIME="1"
         export VDPAU_DRIVER="r600"
