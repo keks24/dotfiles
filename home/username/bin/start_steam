@@ -37,7 +37,7 @@ prepareLogDirectory()
     fi
 }
 
-createLogEntry()
+createSystemLogEntry()
 {
     local log_message="${1}"
     /usr/bin/logger --tag "start_steam" --id --stderr "${script_directory_path}/${script_name}: ${log_message}"
@@ -56,11 +56,11 @@ setGraphicsPowerMethodAndProfile()
     if [[ "${graphics_power_method_set}" == "${current_graphics_power_method_type}" ]]
     then
         /bin/echo "${graphics_power_profile_set}" | /usr/bin/sudo /usr/bin/tee "${graphics_power_profile_file}" >/dev/null
-        createLogEntry "set graphics card power profile to '${graphics_power_profile_set}'"
+        createSystemLogEntry "set graphics card power profile to '${graphics_power_profile_set}'"
     else
         /bin/echo "${graphics_power_method_set}" | /usr/bin/sudo /usr/bin/tee "${graphics_power_method_file}" >/dev/null
         /bin/echo "${graphics_power_profile_set}" | /usr/bin/sudo /usr/bin/tee "${graphics_power_profile_file}" >/dev/null
-        createLogEntry "set graphics card power method to '${graphics_power_method_set}' and profile to '${graphics_power_profile_set}'"
+        createSystemLogEntry "set graphics card power method to '${graphics_power_method_set}' and profile to '${graphics_power_profile_set}'"
     fi
 
 }
