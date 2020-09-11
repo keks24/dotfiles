@@ -86,7 +86,7 @@ createLogFile()
 
 executeBackup()
 {
-    /usr/bin/rsync --delete --archive --hard-links --acls --xattrs --relative --info="progress2" --verbose "${source_directory_list[@]}" "${backup_directory}" |  /usr/bin/tee "${log_directory}/${log_filename}"
+    /usr/bin/rsync --delete --archive --hard-links --acls --xattrs --relative --info="progress2" --verbose "${source_directory_list[@]}" "${backup_directory}" |  /usr/bin/tee "${log_file}"
 }
 
 main()
