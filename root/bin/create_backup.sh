@@ -18,12 +18,14 @@ checkCommands
 # define global variables
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
+declare -a source_directory_list
 source_directory_list=("/home" "/media/animes")
 countdown_seconds="5"
 current_iso_date=$(/bin/date +%Y%m%d)
 current_time=$(/bin/date +%H%M%S)
 log_directory="./logs"
 log_filename="${current_iso_date}-${current_time}_${script_name}.log"
+log_file="${log_directory}/${log_filename}"
 # do not use "${script_directory_path}" here. when executed manually, the variable will expand to "create_backup.sh"!
 backup_directory="./backup"
 checksum_filename="checksums.b2"
@@ -31,20 +33,20 @@ checksum_filename="checksums.b2"
 calculateChecksums()
 {
     pushd "${backup_directory}" >/dev/null
-    /usr/bin/find "${backup_directory}" -type f -not -name "${checksum_filename}" -exec /usr/bin/b2sum "{}" + > "${checksum_filename}"
+    /usr/bin/find . -type f -not -name "${checksum_filename}" -exec /usr/bin/b2sum "{}" + > "${checksum_filename}"
     popd >/dev/null
 }
 
-checkMountPoint()
+checkAndMountPartitions()
 {
     for source_directory in ${source_directory_list[@]}
     do
         /bin/mountpoint --quiet "${source_directory}"
-        return_code="${?}"
+        local return_code="${?}"
 
         if [[ "${return_code}" != "0" ]]
         then
-            /bin/echo -e "\e[01;31mmounted ${source_directory}.\e[0m"
+            /bin/echo -e "\e[01;33mmounted ${source_directory}.\e[0m"
             /bin/mount "${source_directory}"
             unset return_code
         fi
@@ -53,7 +55,7 @@ checkMountPoint()
 
 correctPermissions()
 {
-    /bin/chmod 640 "${log_directory}/${log_filename}"
+    /bin/chmod 640 "${log_file}"
 }
 
 countDown()
@@ -77,7 +79,7 @@ createSystemLogEntry()
 
 createLogFile()
 {
-    /bin/touch "${log_directory}/${log_filename}"
+    /bin/touch "${log_file}"
 
     correctPermissions
 }
@@ -91,7 +93,7 @@ main()
 {
     /usr/bin/clear
 
-    checkMountPoint
+    checkAndMountPartitions
 
     countDown
 
