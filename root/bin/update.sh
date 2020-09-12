@@ -43,7 +43,7 @@ script_name="${0##*/}"
 
 /bin/echo -e "\e[01;33mChecking for new updates...\e[0m"
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/gem update
-/usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user
+/usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user --no-warn-script-location
 /usr/bin/flatpak update
 /usr/bin/eix-sync
 /usr/bin/emerge --ask --update --deep --newuse --tree --verbose @world
