@@ -20,7 +20,7 @@ compile new kernel
 
     4. compile the new kernel
 
-        4.1. adapt new default values
+        4.1. get new values
             make olddefconfig
 
         4.2. compile the kernel and modules
