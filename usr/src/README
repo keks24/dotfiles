@@ -6,7 +6,7 @@ compile new kernel
 
         1.2. clean up "/boot/"
 
-    2. create a new symlink to the newest kernel source
+    2. check that /usr/src/linux points to the desired kernel version (USE flag 'symlink')
         cd "/usr/src/"
         ln --symbolic --force "linux-<new_kernel_version>-gentoo/" "linux"
 
