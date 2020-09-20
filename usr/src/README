@@ -4,7 +4,7 @@ legend:
 compile new kernel
     1. mount "/boot/"
 
-        1.2. clean up "/boot/"
+        1.1. clean up "/boot/"
 
     2. check that /usr/src/linux points to the desired kernel version (USE flag 'symlink')
 
