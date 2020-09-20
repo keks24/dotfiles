@@ -52,7 +52,7 @@ compile new kernel
         6.3. check, if the microcode was updated
             dmesg | grep "microcode"
 	    
-    7. re-compile virtualbox modules for the new kernel:
+    7. re-compile virtualbox and other modules for the new kernel:
         emerge @module-rebuild
 
     8. update the grub configuration:
