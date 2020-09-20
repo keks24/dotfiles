@@ -12,7 +12,7 @@ compile new kernel
         cd "/usr/src/"
         ln --symbolic --force "linux-<new_kernel_version>-gentoo/" "linux"
 
-    3. copy the file ".config" file from the old kernel source to the newer one
+    3. provide the file ".config" from the old kernel source to the newer one
         cp "linux-<old_kernel_version>/.config" "linux/.config"
 
     4. compile the new kernel
