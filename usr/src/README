@@ -13,7 +13,10 @@ compile new kernel
         ln --symbolic --force "linux-<new_kernel_version>-gentoo/" "linux"
 
     3. provide the file ".config" from the old kernel source to the newer one
-        cp "linux-<old_kernel_version>/.config" "linux/.config"
+
+        3.1 or from the running kernel: zcat "/proc/config.gz" > "linux/.config"
+
+	3.2 or from a folder: cp "linux-<old_kernel_version>/.config" "linux/.config"
 
     4. compile the new kernel
 
