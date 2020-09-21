@@ -15,7 +15,7 @@
 #############################################################################
 
 # this file should only be sourced at the beginning of a shell script!
-# the access permission should be "444"
+# the access permission should be "644"
 
 # function: make variables available to have a colourised output
 ## dependencies:
@@ -42,11 +42,11 @@ enableColours()
 ## dependencies:
 ### enableColours
 ## usage:
-### command_list=(<some_command1> <some_command2> <some_commandn>)
+### COMMAND_LIST=(<some_command1> <some_command2> <some_commandn>)
 ### checkCommands
 
 declare -a command_list
-command_list=()
+COMMAND_LIST=()
 checkCommands()
 {
     enableColours
