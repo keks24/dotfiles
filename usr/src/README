@@ -13,7 +13,7 @@ compile new kernel
     3. copy the file ".config" from the old kernel source directory to the newer one
         cp "linux-<old_kernel_version>/.config" "linux/.config"
 
-        3.1 alternative: copy the config at runtime
+        3.1. alternative: copy the config at runtime
             zcat "/proc/config.gz" > "linux/.config"
 
     4. compile the new kernel
@@ -21,8 +21,8 @@ compile new kernel
         4.1. adapt new kernel settings and use their default values
             make olddefconfig
 
-        4.1.1. alternative: adapt new kernel settings manually
-            make oldconfig
+            4.1.1. alternative: adapt new kernel settings manually
+                make oldconfig
 
         4.2. compile the kernel and kernel modules
             cd "/usr/src/linux/"
