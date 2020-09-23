@@ -10,13 +10,21 @@ compile new kernel
         cd "/usr/src/"
         ln --symbolic --force "linux-<new_kernel_version>-gentoo/" "linux"
 
-    3. copy the file ".config" file from the old kernel source to the newer one
-        cp "linux-<old_kernel_version>/.config" "linux/.config"
+    3. provide the file ".config" from the old kernel source to the newer one
+
+        3.1 or from the running kernel: zcat "/proc/config.gz" > "linux/.config"
+
+    3.2 or from a folder: cp "linux-<old_kernel_version>/.config" "linux/.config"
 
     4. compile the new kernel
 
-        4.1. adapt new default values
+        4.1. get new values
+
+        4.1.1.or all by default:
             make olddefconfig
+
+        4.1.2.or checking them all manually:
+            make oldconfig
 
         4.2. compile the kernel and modules
             make --jobs 4 --load-average 3.6 && make --jobs 4 --load-average 3.6 modules_install
@@ -41,8 +49,8 @@ compile new kernel
 
         6.3. check, if the microcode was updated
             dmesg | grep "microcode"
-	    
-    7. re-compile virtualbox modules for the new kernel:
+
+    7. re-compile virtualbox and other modules for the new kernel:
         emerge @module-rebuild
 
     8. update the grub configuration:
