@@ -27,6 +27,7 @@ compile new kernel
             make oldconfig
 
         4.2. compile the kernel and modules
+            cd "/usr/src/linux/"
             make --jobs 4 --load-average 3.6 && make --jobs 4 --load-average 3.6 modules_install
 
         4.3. install the kernel:
