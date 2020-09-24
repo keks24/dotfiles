@@ -48,7 +48,6 @@ then
     }
 fi
 
-
 ## do not include faulty commands in history
 zshaddhistory()
 {
@@ -217,7 +216,7 @@ export LESSOPEN="| lesspipe.sh %s"
 ## do not include certain commands in history
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
 ## do not include critical commands in history
-export HISTORY_IGNORE="(*--delete*|*-delete*|*--force*|cd*|*chown*|clear*|*delete*|exit*|*find*|*for*|*halt*|*lpr*|ls*|*mv*|*perl-rename*|*poweroff*|pwd*|*reboot*|*rename*|*rm*|*shutdown*|sudo*)"
+export HISTORY_IGNORE="(*--delete*|*-delete*|*--force*|cd*|*chown*|clear*|*delete*|exit*|*find*|*for*|*halt*|*lpr*|ls*|*mv*|*perl-rename*|*poweroff*|pwd*|*reboot*|*rename*|*rm*|*shutdown*|sudo*|*suspend*)"
 ## use "ccache" via "distcc". see also "/etc/conf.d/distccd", "/etc/distcc/hosts", "/etc/env.d/03distcc_ccache" and "/etc/portage/make.conf"
 export PATH="/usr/lib/ccache/bin:${PATH}"
 export CCACHE_DIR="/home/ramon/.var/tmp/ccache"
