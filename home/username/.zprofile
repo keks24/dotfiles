@@ -57,9 +57,9 @@ do
         "${APPLICATION_NAME_LIST[2]}")
             if [[ ! $(pgrep --euid "$(id --user --name)" "${APPLICATION_NAME}") ]]
             then
-                # start "ssh-agent" with environment variables and save passwords for one hours
+                # start "ssh-agent" with environment variables and save passwords for one hour
                 # further configurations are located at "/etc/ssh/ssh_config"
-                eval $(ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1 &!
+                eval $(ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
             fi
             ;;
 
