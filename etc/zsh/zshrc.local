@@ -166,6 +166,7 @@ notifyme()
 #else
 #    zstyle ':prompt:grml:*:items:user' pre '%F{magenta}'
 #fi
+zstyle ':prompt:grml:*:items:user' pre '%F{cyan}'
 
 # source
 ## autojump
