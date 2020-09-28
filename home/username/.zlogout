@@ -14,10 +14,3 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# custom - 20200723 - rfischer: kill "ssh-agent", when exiting zsh
-# ssh-agent
-## stop "ssh-agent" on logout
-if [[ -n "${SSH_AGENT_PID}" ]]
-then
-    eval $(ssh-agent -k)
-fi
