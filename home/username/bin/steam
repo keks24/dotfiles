@@ -88,7 +88,7 @@ main()
             /usr/bin/start-pulseaudio-x11
         fi
 
-        # set graphics card power profile to "auto", since "/etc/local.d/10_set_radeon_power_profile.start" sets it to "low"
+        # set graphics card power profile to "high", since "/etc/local.d/10_set_radeon_power_profile.start" sets it to "low"
         # https://www.x.org/wiki/RadeonFeature/#kmspowermanagementoptions
         setGraphicsPowerMethodAndProfile "profile" "high"
 
