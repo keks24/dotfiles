@@ -180,7 +180,6 @@ alias aria2c="aria2c --force-sequential=true --min-split-size=20M --split=8 --ma
 alias dd="dd bs=64K status=progress"
 alias diff="diff --side-by-side --suppress-common-lines --color"
 alias growisofs="growisofs -speed=1"
-alias gopass="gopass --clip"
 alias halt="echo 'Are you sure? Please run: /sbin/halt'"
 alias history="history -i"
 alias ip="ip --color"
