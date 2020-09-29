@@ -133,6 +133,7 @@ scanner = "xsane"
 office = "libreoffice"
 steam = "steam"
 terra_nil = "terra_nil"
+minecraft = "minecraft-launcher"
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "open terminal", terminal },
                                     -- custom - 20200510 - rfischer: add browser variable
@@ -142,6 +143,7 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "open jdownloader", downloader },
                                     { "open xsane", scanner },
                                     { "open libreoffice", office },
+                                    { "open minecraft", minecraft },
                                     { "open terra nil", terra_nil },
                                     { "open steam", steam }
                                   }
