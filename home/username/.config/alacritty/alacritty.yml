@@ -581,6 +581,9 @@
 env:
   TERM: "st-256color"
 
+window:
+  title: "alacritty"
+
 scrolling:
   # custom - 20201001 - rfischer: disable history
   history: 0
@@ -626,7 +629,7 @@ colors:
     cyan:    "#54ced6"
     white:   "#ffffff"
 
-live_config_reload: true
+live_config_reload: false
 
 mouse:
   url:
