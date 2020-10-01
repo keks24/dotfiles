@@ -14,9 +14,9 @@
 # limitations under the License.                                            #
 #############################################################################
 
+# no shebang should be used here, since it is sourced by "~/.xinitc"
+
 # custom - 20200619 - rfischer: use "xdotool" to enable the numpad on boot. "/etc/init.d/numpad" does not work within "x" on "/dev/tty1"
 xdotool key Num_Lock
 # custom - 20200721 - rfischer: use custom cursor theme
 xrdb -merge "/home/$(id --user --name)/.Xresources"
-
-touch /tmp/nooooomm
