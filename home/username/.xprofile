@@ -18,3 +18,5 @@
 xdotool key Num_Lock
 # custom - 20200721 - rfischer: use custom cursor theme
 xrdb -merge "/home/$(id --user --name)/.Xresources"
+
+touch /tmp/nooooomm
