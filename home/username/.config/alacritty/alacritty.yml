@@ -578,6 +578,9 @@
   # Print all received window events.
   #print_events: false
 
+env:
+  TERM: "st-256color"
+
 scrolling:
   # custom - 20201001 - rfischer: disable history
   history: 0
