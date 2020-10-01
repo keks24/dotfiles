@@ -66,8 +66,10 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 --terminal = "xterm"
--- custom - 20200510 - rfischer: set "terminal" to "tabbed -c -r 2 st -w ''"
-terminal = "tabbed -cr 2 st -w ''"
+-- custom - 20200510 - rfischer: set "terminal" to "tabbed -cr 2 st -w ''"
+--terminal = "tabbed -cr 2 st -w ''"
+-- custom 20201001 - rfischer: set "terminal" to "tabbed -cr 2 alacritty --embed ''"
+terminal = "tabbed -cr 2 alacritty --embed ''"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
