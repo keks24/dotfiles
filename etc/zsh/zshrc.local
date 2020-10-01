@@ -210,9 +210,13 @@ export VISUAL="nvim"
 export XDG_CACHE_HOME="${HOME}/.cache"
 ## set colours for hard and orphaned symlinks
 export LS_COLORS="mh=44;37:or=40;31;01"
-## less: enable syntax highlighting
+## less
+### general settings
 export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --shift 5"
+### enable syntax highlighting
 export LESSOPEN="| lesspipe.sh %s"
+### do not save search entries at "~/.lesshst"
+export LESSHISTFILE="/dev/null"
 ## do not include certain commands in history
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
 ## do not include critical commands in history
