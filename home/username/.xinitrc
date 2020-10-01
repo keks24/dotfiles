@@ -15,11 +15,19 @@
 # limitations under the License.                                            #
 #############################################################################
 
+xprofile_file="/home/$(id --user --name)/.xprofile"
+
 # custom - 20200502 - rfischer: start an "x" session with "awesome" using "startx"
 if [[ "${DBUS_SESSION_BUS_ADDRESS}" == "" ]]
 then
     # custom - 20201001 - rfischer: make this file static by sourcing a dynamic configuration file
-    . "/home/$(id --user --name)/.config/xorg-server/xinit.conf"
+    if [[ -f "${xprofile_file}" ]]
+    then
+        . "${xprofile_file}"
+    else
+        echo "(WW) Could not source file '${xprofile_file}'." >&2
+    fi
+
     # the following part somehow gets expanded to "0xc00005". using "eval" here will cause the error "command not found", but "x" will be started anyways.
     dbus-launch --sh-syntax --exit-with-session awesome
 fi
