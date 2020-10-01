@@ -30,7 +30,7 @@ precmd()
 PROMPT_COMMAND+='tput bel;'
 
 ## dynamically change the window title in "st"
-if [[ "${TERM}" != "" && "${TERM}" == "st"* ]]
+if [[ "${TERM}" != "" && "${TERM}" == "alacritty" ]]
 then
     precmd()
     {
