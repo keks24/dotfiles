@@ -56,5 +56,5 @@ script_name="${0##*/}"
 /usr/bin/eclean --deep --time-limit="1m" distfiles
 /usr/bin/eclean --deep --time-limit="1m" packages
 /usr/bin/eix-test-obsolete
-/usr/bin/eselect news read
 /usr/bin/elogv
+/usr/bin/eselect news read
