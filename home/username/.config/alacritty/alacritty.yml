@@ -622,12 +622,15 @@ colors:
   bright:
     black:   "#666666"
     red:     "#ff3334"
-    green:   "#9ec400"
+    green:   "#66cc66"
     yellow:  "#e7c547"
     blue:    "#7aa6da"
     magenta: "#b77ee0"
     cyan:    "#54ced6"
     white:   "#ffffff"
+
+selection:
+  semantic_escape_chars: ",│`|\"' ()[]{}<>\t"
 
 live_config_reload: false
 
