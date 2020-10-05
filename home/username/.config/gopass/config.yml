@@ -13,7 +13,7 @@ root:
   noconfirm: false
   nopager: true
   notifications: true
-  path: gpgcli-gitcli-fs+file://<some_path>
+  path: gpgcli-gitcli-fs+file://<some_path_to_password_store>
   recipient_hash:
     .gpg-id: <some_id>
   safecontent: false
