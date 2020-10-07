@@ -14,8 +14,9 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# this file should only be sourced at the beginning of a shell script!
-# the access permission should be "644"
+# this file should only be sourced once at the beginning of a shell script!
+# no shebang should be used here!
+# the access permission should be "644"!
 
 # function: make variables available to have a colourised output
 ## dependencies:
@@ -25,17 +26,44 @@
 ### echo -e "????????????????????????????????????
 ### echo -e "????????????????????????????????????
 ### echo -e "????????????????????????????????????
+## reference:
+### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
 enableColours()
 {
-    # make this easier to use
-    # something with "beginning" and "reset" font
-    # echo -e "\e[01;31m<some_text>\e[0m"
-    # echo -e "${bold_font_begin};${colour_red}<some_text>${bold_font_end}"
-    # https://misc.flogisoft.com/bash/tip_colors_and_formatting
-    bold_font_begin="\e[01"
-    bold_font_end="\e[0m"
-    colour_red="31m"
+    local font_type="${1}"
+    local font_colour="${2}"
+
+    case "${font_type}" in
+        "bold")
+            bold_red="\e[01;31m"
+            ;;
+
+        "italics")
+            italics_some_colour=""
+            ;;
+
+        "background")
+            background_some_colour=""
+            ;;
+
+        "end")
+            font_end="\e[0m"
+            ;;
+
+        *)
+            echo "some error"
+    esac
+
+    case "${font_colour}" in
+        "red")
+            nom="31m"
+            ;;
+    esac
+
+    something="concatenate strings '\e[01;31m'"
+
+    return something
 }
 
 # function: check, if a command was not found and return exit code "1"
@@ -44,6 +72,8 @@ enableColours()
 ## usage:
 ### COMMAND_LIST=(<some_command1> <some_command2> <some_commandn>)
 ### checkCommands
+## reference:
+### none
 
 declare -a command_list
 COMMAND_LIST=()
