@@ -18,30 +18,38 @@
 # no shebang should be used here!
 # the access permission should be "644"!
 
+###########################
+# TO-DO TO-DO TO-DO TO-DO #
+###########################
+#
+# figure out, if calling functions every time requires more resources, than do a direct mapping: setFontColour bold red, "${bold_red}"
+## echo -e "${font_bold_red}sdfsdfsdf${font_end}"
+## outputFontColour "bold" "red" "sdfsdfsdfdf"
+## iterate through all combinations and create an array: "${font_colour[2]}", "${font_colour['blue']}"
+#
+# do a research about possible exit codes
+
 # function: make variables available to have a colourised output
 ## dependencies:
 ### none
 ## usage:
-### enableFontColours
+### setFontColour
 ### echo -e "????????????????????????????????????
 ### echo -e "????????????????????????????????????
 ### echo -e "????????????????????????????????????
-## reference:
+## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
-enableFontColours()
+outputFontColour()
 {
     local input_font_type="${1}"
     local input_font_colour="${2}"
-    local output_font_type=""
-    local output_font_colour=""
-    local outuput_font_type_and_colour=""
+    local output_message="${3}"
+    local output_font_type
+    local output_font_colour
+    local output_font_end="\e[0m"
 
     case "${input_font_type}" in
-        "end")
-            return "\e[0m"
-            ;;
-
         "bold")
             output_font_type="\e[01"
             ;;
@@ -55,8 +63,7 @@ enableFontColours()
             ;;
 
         *)
-            echo -e "\e[01;31mSomething went wrong defining the 'font type'.\e[0m" >&2
-            exit 1
+            outputErrorAndExit "Something went wrong defining the font type. Input: '${input_font_type}'. Output: '${output_font_type}'" "1"
     esac
 
     case "${input_font_colour}" in
@@ -65,22 +72,19 @@ enableFontColours()
             ;;
 
         *)
-            echo -e "\e[01;31mSomething went wrong defining the 'font colour'.\e[0m" >&2
-            exit 1
+            outputErrorAndExit "Something went wrong defining the font colour. Input: '${input_font_colour}'. Output: '${output_font_colour}'" "1"
     esac
 
-    output_font_type_and_colour="${output_font_type};${output_font_colour}"
-
-    return "${output_font_type_and_colour}"
+    echo -e "${output_font_type};${output_font_colour}${output_message}${output_font_end}"
 }
 
 # function: check, if a command was not found and return exit code "1"
 ## dependencies:
-### enableColours
+### setFontColour
 ## usage:
 ### command_list=(<some_command1> <some_command2> <some_commandn>)
 ### checkCommands
-## reference:
+## references:
 ### none
 
 declare -a command_list
@@ -96,21 +100,28 @@ checkCommands()
         unalias "${current_command}" 2>/dev/null
         if [[ ! $(command -v "${current_command}" 2>/dev/null) ]]
         then
-            # refactor this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            # refactor this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            # refactor this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            # refactor this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m" >&2
-            return 1
+            outputErrorAndExit "Could not find command '${current_command}'" "1"
         fi
     done
 
     unset current_command
 }
 
-someFunctionToCheckTheReturnCodeAndThenExit()
+# function: helper function, to output given message and exit with error code
+## dependencies:
+### setFontColour
+## usage:
+### outputErrorAndExit "<some_string>" "<some_exit_code>"
+## references:
+### none
+
+outputErrorAndExit()
 {
-    echo "nom"
+    local error_message="${1}"
+    local exit_code="${2}"
+
+    echo -e "\e[01;31m${error_message}.\e[0m" >&2
+    exit "${exit_code}"
 }
 
 return 0
