@@ -22,61 +22,69 @@
 ## dependencies:
 ### none
 ## usage:
-### enableColours
+### enableFontColours
 ### echo -e "????????????????????????????????????
 ### echo -e "????????????????????????????????????
 ### echo -e "????????????????????????????????????
 ## reference:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
-enableColours()
+enableFontColours()
 {
-    local font_type="${1}"
-    local font_colour="${2}"
+    local input_font_type="${1}"
+    local input_font_colour="${2}"
+    local output_font_type=""
+    local output_font_colour=""
+    local outuput_font_type_and_colour=""
 
-    case "${font_type}" in
+    case "${input_font_type}" in
+        "end")
+            return "\e[0m"
+            ;;
+
         "bold")
-            bold_red="\e[01;31m"
+            output_font_type="\e[01"
             ;;
 
         "italics")
-            italics_some_colour=""
+            output_font_type=""
             ;;
 
         "background")
-            background_some_colour=""
-            ;;
-
-        "end")
-            font_end="\e[0m"
+            output_font_type=""
             ;;
 
         *)
-            echo "some error"
+            echo -e "\e[01;31mSomething went wrong defining the 'font type'.\e[0m" >&2
+            exit 1
     esac
 
-    case "${font_colour}" in
+    case "${input_font_colour}" in
         "red")
-            nom="31m"
+            output_font_colour="31m"
             ;;
+
+        *)
+            echo -e "\e[01;31mSomething went wrong defining the 'font colour'.\e[0m" >&2
+            exit 1
     esac
 
-    something="concatenate strings '\e[01;31m'"
+    output_font_type_and_colour="${output_font_type};${output_font_colour}"
 
-    return something
+    return "${output_font_type_and_colour}"
 }
 
 # function: check, if a command was not found and return exit code "1"
 ## dependencies:
 ### enableColours
 ## usage:
-### COMMAND_LIST=(<some_command1> <some_command2> <some_commandn>)
+### command_list=(<some_command1> <some_command2> <some_commandn>)
 ### checkCommands
 ## reference:
 ### none
 
 declare -a command_list
-COMMAND_LIST=()
+command_list=()
 checkCommands()
 {
     enableColours
