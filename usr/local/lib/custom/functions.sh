@@ -18,12 +18,6 @@
 # no shebang should be used here!
 # the access permission should be "644"!
 
-###########################
-# TO-DO TO-DO TO-DO TO-DO #
-###########################
-#
-# do a research about possible exit codes
-
 # function: output colourised text
 ## dependencies:
 ### outputErrorAndExit
@@ -321,7 +315,7 @@ checkCommands()
         unalias "${current_command}" 2>/dev/null
         if [[ ! $(command -v "${current_command}" 2>/dev/null) ]]
         then
-            outputErrorAndExit "Could not find command '${current_command}'." "1"
+            outputErrorAndExit "Could not find command '${current_command}'." "127"
         fi
     done
 
