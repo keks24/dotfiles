@@ -109,7 +109,7 @@ echoC()
                     ;;
 
                 "bold")
-                    # "\e[021m" does not work
+                    # "\e[021m" does not work in "alacritty"
                     output_font_reset="039"
                     ;;
 
