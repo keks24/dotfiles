@@ -34,8 +34,8 @@
 ### echoC "set" "bold" "red" "hello world."
 ### echoC "set" "bold" "red" "hello$(echoC 'reset' 'all') world."
 ### echoC "set" "underline" "red" "hello$(echoC 'reset' 'underline') world."
-### echoC "set" "underline" "" "hello$(echoC 'reset' 'underline') world."
 ### echoC "set" "underline" "red" "hello$(echoC 'reset' 'all') world."
+### echoC "set" "reverse" "" "hello$(echoC 'reset' 'reverse') world."
 ### echoC "set" "" "blue" "hello$(echoC 'reset' 'colour') world."
 ### echoC "set" "" "background_blue" "hello$(echoC 'reset' 'colour') world."
 ## references:
