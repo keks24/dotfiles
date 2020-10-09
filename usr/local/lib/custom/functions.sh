@@ -22,25 +22,19 @@
 # TO-DO TO-DO TO-DO TO-DO #
 ###########################
 #
-# figure out, if calling functions every time requires more resources, than do a direct mapping: setFontColour bold red, "${bold_red}"
-## echo -e "${font_bold_red}sdfsdfsdf${font_end}"
-## outputFontColour "bold" "red" "sdfsdfsdfdf"
-## iterate through all combinations and create an array: "${font_colour[2]}", "${font_colour['blue']}"
-#
 # do a research about possible exit codes
 
 # function: make variables available to have a colourised output
 ## dependencies:
 ### none
 ## usage:
-### setFontColour
-### echo -e "????????????????????????????????????
-### echo -e "????????????????????????????????????
-### echo -e "????????????????????????????????????
+### echoC "<some_font_type>" "<some_font_colour>" "<some_output_message>"
+## examples:
+### echoC "bold" "red" "hello world."
+### echoC "bold" "red" "hello$(echoC "end") world."
 ## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
-
-outputFontColour()
+echoC()
 {
     local input_font_type="${1}"
     local input_font_colour="${2}"
@@ -50,6 +44,11 @@ outputFontColour()
     local output_font_end="\e[0m"
 
     case "${input_font_type}" in
+        "end")
+            echo -e "${output_font_end}"
+            return 0
+            ;;
+
         "bold")
             output_font_type="\e[01"
             ;;
@@ -80,19 +79,20 @@ outputFontColour()
 
 # function: check, if a command was not found and return exit code "1"
 ## dependencies:
-### setFontColour
+### echoC
+### outputErrorAndExit
 ## usage:
 ### command_list=(<some_command1> <some_command2> <some_commandn>)
 ### checkCommands
+## examples:
+### command_list=(tail tmux)
+### checkCommands
 ## references:
 ### none
-
 declare -a command_list
 command_list=()
 checkCommands()
 {
-    enableColours
-
     local current_command
 
     for current_command in "${command_list[@]}"
@@ -100,7 +100,7 @@ checkCommands()
         unalias "${current_command}" 2>/dev/null
         if [[ ! $(command -v "${current_command}" 2>/dev/null) ]]
         then
-            outputErrorAndExit "Could not find command '${current_command}'" "1"
+            outputErrorAndExit "Could not find command '${current_command}'." "1"
         fi
     done
 
@@ -109,18 +109,19 @@ checkCommands()
 
 # function: helper function, to output given message and exit with error code
 ## dependencies:
-### setFontColour
+### echoC
 ## usage:
 ### outputErrorAndExit "<some_string>" "<some_exit_code>"
+## example:
+### outputErrorAndExit "Something went wrong" "1"
 ## references:
 ### none
-
 outputErrorAndExit()
 {
     local error_message="${1}"
     local exit_code="${2}"
 
-    echo -e "\e[01;31m${error_message}.\e[0m" >&2
+    echoC "bold" "red" "${error_message}" >&2
     exit "${exit_code}"
 }
 
