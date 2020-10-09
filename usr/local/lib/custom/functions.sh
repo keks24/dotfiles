@@ -296,46 +296,6 @@ echoC()
     echo -e "${output_font_start_sequence}${output_font_type}${output_font_delimiter}${output_font_colour}${output_font_end_sequence}${output_message}${output_font_reset}"
 }
 
-# function: output all possible colours supported by the terminal
-## dependencies:
-### none
-## usage:
-### outputAllColours
-## examples:
-### outputAllColours
-## references:
-### https://misc.flogisoft.com/bash/tip_colors_and_formatting#terminals_compatibility
-
-outputAllColours()
-{
-    # refactor me: adapt this
-    for clbg in {40..47} {100..107} 49 ; do
-    	#Foreground
-    	for clfg in {30..37} {90..97} 39 ; do
-    		#Formatting
-    		for attr in 0 1 2 4 5 7 ; do
-    			#Print the result
-    			echo -en "\e[${attr};${clbg};${clfg}m ^[${attr};${clbg};${clfg}m \e[0m"
-    		done
-    		echo #Newline
-    	done
-    done
-
-    for fgbg in 38 48 ; do # Foreground / Background
-        for color in {0..255} ; do # Colors
-            # Display the color
-            printf "\e[${fgbg};5;%sm  %3s  \e[0m" $color $color
-            # Display 6 colors per lines
-            if [ $((($color + 1) % 6)) == 4 ] ; then
-                echo # New line
-            fi
-        done
-        echo # New line
-    done
-}
-
-
-
 # function: check, if a command was not found and return exit code "1"
 ## dependencies:
 ### echoC
