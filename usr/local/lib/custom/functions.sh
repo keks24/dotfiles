@@ -84,7 +84,7 @@ echoC()
                     ;;
 
                 *)
-                    outputErrorAndExit "error" "Something went wrong defining the font type:\ninput_font_switch: '${input_font_switch}'\ninput_font_type: '${input_font_type}'\noutput_font_type: '${output_font_type}'\noutput_message: '${output_message}'" "1"
+                    outputErrorAndExit "error" "Could not find font switch: '${input_font_switch}'." "1"
             esac
             ;;
 
@@ -132,7 +132,7 @@ echoC()
                     ;;
 
                 *)
-                    outputErrorAndExit "error" "Something went wrong resetting the font type:\ninput_font_switch: '${input_font_switch}'\ninput_font_type: '${input_font_type}'\noutput_font_type: '${output_font_type}'\noutput_message: '${output_message}'" "1"
+                    outputErrorAndExit "error" "Could not find font type: '${input_font_type}'." "1"
             esac
 
             echo -e "${output_font_start_sequence}${output_font_reset}${output_font_end_sequence}"
@@ -140,7 +140,7 @@ echoC()
             ;;
 
         *)
-            outputErrorAndExit "Something went wrong setting the font:\ninput_font_switch: '${input_font_switch}'" "1"
+            outputErrorAndExit "Could not find font switch: '${input_font_switch}'." "1"
     esac
 
     case "${input_font_colour}" in
@@ -285,7 +285,7 @@ echoC()
             ;;
 
         *)
-            outputErrorAndExit "error" "Something went wrong defining the font colour:\ninput_font_switch: '${input_font_switch}'\ninput_font_type: '${input_font_type}'\noutput_font_type: '${output_font_type}'\noutput_message: '${output_message}'" "1"
+            outputErrorAndExit "error" "Could not find font colour: '${input_font_colour}'." "1"
     esac
 
     echo -e "${output_font_start_sequence}${output_font_type}${output_font_delimiter}${output_font_colour}${output_font_end_sequence}${output_message}${output_font_reset}"
@@ -315,7 +315,7 @@ checkCommands()
         unalias "${current_command}" 2>/dev/null
         if [[ ! $(command -v "${current_command}" 2>/dev/null) ]]
         then
-            outputErrorAndExit "Could not find command '${current_command}'." "127"
+            outputErrorAndExit "Could not find command: '${current_command}'." "127"
         fi
     done
 
@@ -331,13 +331,14 @@ checkCommands()
 ### outputErrorAndExit "error" "Something went wrong." "1"
 ### outputErrorAndExit "warning" "Something went wrong, but is tolerable."
 ## references:
-### none
+### https://tldp.org/LDP/abs/html/exitcodes.html
 
 outputErrorAndExit()
 {
     local error_type="${1}"
     local error_message="${2}"
     local exit_code="${3}"
+    local exit_code_regex="^[0-9]{1,3}$"
 
     case "${error_type}" in
         "warning")
@@ -349,11 +350,18 @@ outputErrorAndExit()
             ;;
 
         *)
-            echo -e "\e[01;31mSomething went wrong outputting the error message. error_type: '${error_type}'. error_message: '${error_message}'. error_code: '${exit_code}'."
+            echoC "set" "bold" "red" "Could not find error type: '${error_type}'." >&2
+            exit 1
     esac
 
     if [[ "${exit_code}" != "" ]]
     then
-        exit "${exit_code}"
+        if [[ ! "${exit_code}" =~ ${exit_code_regex} ]]
+        then
+            echoC "set" "bold" "red" "The exit code '${exit_code}' is invalid. It must be an integer between 0 and 255." >&2
+            exit 128
+        else
+            exit "${exit_code}"
+        fi
     fi
 }
