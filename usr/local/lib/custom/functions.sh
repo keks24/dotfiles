@@ -24,11 +24,12 @@
 #
 # do a research about possible exit codes
 
-# function: make variables available to have a colourised output
+# function: output colourised text
 ## dependencies:
 ### outputErrorAndExit
 ## usage:
-### echoC "<font_switch>" "[<font_type>]" "[<font_colour>]" "<output_message>"
+### echoC "set" "[<font_type>]" "[<font_colour>]" "<output_message>"
+### echoC "reset" "<font_type>"
 ## examples:
 ### echoC "set" "bold" "red" "hello world."
 ### echoC "set" "bold" "red" "hello$(echoC 'reset' 'all') world."
