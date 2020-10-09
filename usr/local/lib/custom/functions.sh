@@ -33,7 +33,10 @@
 ### echoC "set" "bold" "red" "hello world."
 ### echoC "set" "bold" "red" "hello$(echoC 'reset' 'all') world."
 ### echoC "set" "underline" "red" "hello$(echoC 'reset' 'underline') world."
-### echoC "set "" "red" "hello$(echoC 'reset' 'all') world."
+### echoC "set" "underline" "" "hello$(echoC 'reset' 'underline') world."
+### echoC "set" "underline" "red" "hello$(echoC 'reset' 'all') world."
+### echoC "set" "" "blue" "hello$(echoC 'reset' 'colour') world."
+### echoC "set" "" "background_blue" "hello$(echoC 'reset' 'colour') world."
 ## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
@@ -53,6 +56,10 @@ echoC()
     case "${input_font_switch}" in
         "set")
             case "${input_font_type}" in
+                "")
+                    output_font_delimiter=""
+                    ;;
+
                 "bold")
                     output_font_type="001"
                     ;;
@@ -69,8 +76,16 @@ echoC()
                     output_font_type="005"
                     ;;
 
-                "")
-                    output_font_delimiter=""
+                "reverse")
+                    output_font_type="007"
+                    ;;
+
+                "hidden")
+                    output_font_type="008"
+                    ;;
+
+                "strikethrough")
+                    output_font_type="009"
                     ;;
 
                 *)
@@ -81,24 +96,44 @@ echoC()
         "reset")
             case "${input_font_type}" in
                 "all")
-                    output_font_reset="0"
+                    output_font_reset="000"
+                    ;;
+
+                "colour")
+                    output_font_reset="039"
+                    ;;
+
+                "background")
+                    output_font_reset="049"
                     ;;
 
                 "bold")
-                    # "\e[21m" does not work
-                    output_font_reset="39"
+                    # "\e[021m" does not work
+                    output_font_reset="039"
                     ;;
 
                 "dim")
-                    output_font_reset="22"
+                    output_font_reset="022"
                     ;;
 
                 "underline")
-                    output_font_reset="24"
+                    output_font_reset="024"
                     ;;
 
                 "blink")
-                    output_font_reset="25"
+                    output_font_reset="025"
+                    ;;
+
+                "reverse")
+                    output_font_reset="027"
+                    ;;
+
+                "hidden")
+                    output_font_reset="028"
+                    ;;
+
+                "strikethrough")
+                    output_font_reset="029"
                     ;;
 
                 *)
@@ -114,20 +149,148 @@ echoC()
     esac
 
     case "${input_font_colour}" in
+        "")
+            output_font_delimiter=""
+            ;;
+
+        "default")
+            output_font_colour="39"
+            ;;
+
+        "black")
+            output_font_colour="30"
+            ;;
+
         "red")
             output_font_colour="31"
+            ;;
+
+        "green")
+            output_font_colour="32"
+            ;;
+
+        "yellow")
+            output_font_colour="33"
             ;;
 
         "blue")
             output_font_colour="34"
             ;;
 
-        "")
-            output_font_delimiter=""
+        "magenta")
+            output_font_colour="35"
+            ;;
+
+        "cyan")
+            output_font_colour="36"
+            ;;
+
+        "light_grey")
+            output_font_colour="37"
+            ;;
+
+        "dark_grey")
+            output_font_colour="90"
+            ;;
+
+        "light_red")
+            output_font_colour="91"
+            ;;
+
+        "light_green")
+            output_font_colour="92"
+            ;;
+
+        "light_yellow")
+            output_font_colour="93"
+            ;;
+
+        "light_blue")
+            output_font_colour="94"
+            ;;
+
+        "light_magenta")
+            output_font_colour="95"
+            ;;
+
+        "light_cyan")
+            output_font_colour="96"
+            ;;
+
+        "white")
+            output_font_colour="97"
+            ;;
+
+        "background_default")
+            output_font_colour="49"
+            ;;
+
+        "background_black")
+            output_font_colour="40"
+            ;;
+
+        "background_red")
+            output_font_colour="41"
+            ;;
+
+        "background_green")
+            output_font_colour="42"
+            ;;
+
+        "background_yellow")
+            output_font_colour="43"
+            ;;
+
+        "background_blue")
+            output_font_colour="44"
+            ;;
+
+        "background_magenta")
+            output_font_colour="45"
+            ;;
+
+        "background_cyan")
+            output_font_colour="46"
+            ;;
+
+        "background_light_grey")
+            output_font_colour="47"
+            ;;
+
+        "background_dark_grey")
+            output_font_colour="100"
+            ;;
+
+        "background_light_red")
+            output_font_colour="101"
+            ;;
+
+        "background_light_green")
+            output_font_colour="102"
+            ;;
+
+        "background_light_yellow")
+            output_font_colour="103"
+            ;;
+
+        "background_light_blue")
+            output_font_colour="104"
+            ;;
+
+        "background_light_magenta")
+            output_font_colour="105"
+            ;;
+
+        "background_light_cyan")
+            output_font_colour="106"
+            ;;
+
+        "background_white")
+            output_font_colour="107"
             ;;
 
         *)
-            outputErrorAndExit "Something went wrong defining the font colour. Input: '${input_font_switch}'. Output: '${output_font_switch}'" "1"
+            outputErrorAndExit "Something went wrong defining the font colour. Input: '${input_font_colour}'. Output: '${output_font_colour}'" "1"
     esac
 
     echo -e "${output_font_start_sequence}${output_font_type}${output_font_delimiter}${output_font_colour}${output_font_end_sequence}${output_message}${output_font_reset}"
