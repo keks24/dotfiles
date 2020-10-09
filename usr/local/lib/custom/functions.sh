@@ -90,7 +90,7 @@ echoC()
                     ;;
 
                 *)
-                    outputErrorAndExit "Something went wrong defining the font type. Input: '${input_font_type}'. Output: '${output_font_type}'." "1"
+                    outputErrorAndExit "error" "Something went wrong defining the font type:\ninput_font_switch: '${input_font_switch}'\ninput_font_type: '${input_font_type}'\noutput_font_type: '${output_font_type}'\noutput_message: '${output_message}'" "1"
             esac
             ;;
 
@@ -138,7 +138,7 @@ echoC()
                     ;;
 
                 *)
-                    outputErrorAndExit "Something went wrong resetting the font type. Input: '${input_font_type}'. Output: '${output_font_type}'." "1"
+                    outputErrorAndExit "error" "Something went wrong resetting the font type:\ninput_font_switch: '${input_font_switch}'\ninput_font_type: '${input_font_type}'\noutput_font_type: '${output_font_type}'\noutput_message: '${output_message}'" "1"
             esac
 
             echo -e "${output_font_start_sequence}${output_font_reset}${output_font_end_sequence}"
@@ -146,7 +146,7 @@ echoC()
             ;;
 
         *)
-            outputErrorAndExit "Something went wrong setting the font. Input: '${input_font_switch}'." "1"
+            outputErrorAndExit "Something went wrong setting the font:\ninput_font_switch: '${input_font_switch}'" "1"
     esac
 
     case "${input_font_colour}" in
@@ -291,7 +291,7 @@ echoC()
             ;;
 
         *)
-            outputErrorAndExit "Something went wrong defining the font colour. Input: '${input_font_colour}'. Output: '${output_font_colour}'" "1"
+            outputErrorAndExit "error" "Something went wrong defining the font colour:\ninput_font_switch: '${input_font_switch}'\ninput_font_type: '${input_font_type}'\noutput_font_type: '${output_font_type}'\noutput_message: '${output_message}'" "1"
     esac
 
     echo -e "${output_font_start_sequence}${output_font_type}${output_font_delimiter}${output_font_colour}${output_font_end_sequence}${output_message}${output_font_reset}"
@@ -309,6 +309,7 @@ echoC()
 ### checkCommands
 ## references:
 ### none
+
 declare -a command_list
 command_list=()
 checkCommands()
@@ -327,22 +328,38 @@ checkCommands()
     unset current_command
 }
 
-# function: helper function, to output given message and exit with error code
+# function: helper function, to output a given error message and exit with error code
 ## dependencies:
 ### echoC
 ## usage:
-### outputErrorAndExit "<error_message>" "<exit_code>"
-## example:
-### outputErrorAndExit "Something went wrong" "1"
+### outputErrorAndExit "<error_type>" "<error_message>" "[<exit_code>]"
+## examples:
+### outputErrorAndExit "error" "Something went wrong." "1"
+### outputErrorAndExit "warning" "Something went wrong, but is tolerable."
 ## references:
 ### none
+
 outputErrorAndExit()
 {
-    local error_message="${1}"
-    local exit_code="${2}"
+    local error_type="${1}"
+    local error_message="${2}"
+    local exit_code="${3}"
 
-    echoC "set" "bold" "red" "${error_message}" >&2
-    exit "${exit_code}"
+    case "${error_type}" in
+        "warning")
+            echoC "set" "bold" "yellow" "${error_message}" >&2
+            ;;
+
+        "error")
+            echoC "set" "bold" "red" "${error_message}" >&2
+            ;;
+
+        *)
+            echo -e "\e[01;31mSomething went wrong outputting the error message. error_type: '${error_type}'. error_message: '${error_message}'. error_code: '${exit_code}'."
+    esac
+
+    if [[ "${exit_code}" != "" ]]
+    then
+        exit "${exit_code}"
+    fi
 }
-
-return 0
