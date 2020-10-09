@@ -291,7 +291,7 @@ echoC()
     echo -e "${output_font_start_sequence}${output_font_type}${output_font_delimiter}${output_font_colour}${output_font_end_sequence}${output_message}${output_font_reset}"
 }
 
-# function: check, if a command was not found and return exit code "1"
+# function: check, if a command was not found and exit with exit code "127"
 ## dependencies:
 ### echoC
 ### outputErrorAndExit
@@ -315,11 +315,9 @@ checkCommands()
         unalias "${current_command}" 2>/dev/null
         if [[ ! $(command -v "${current_command}" 2>/dev/null) ]]
         then
-            outputErrorAndExit "Could not find command: '${current_command}'." "127"
+            outputErrorAndExit "error" "Could not find command: '${current_command}'." "127"
         fi
     done
-
-    unset current_command
 }
 
 # function: helper function, to output a given error message and exit with error code
@@ -338,7 +336,7 @@ outputErrorAndExit()
     local error_type="${1}"
     local error_message="${2}"
     local exit_code="${3}"
-    local exit_code_regex="^[0-9]{1,3}$"
+    local exit_code_regex="^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$"
 
     case "${error_type}" in
         "warning")
