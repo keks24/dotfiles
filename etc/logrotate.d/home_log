@@ -1,0 +1,11 @@
+/home/<some_username>/.log/*/*.log
+{
+    weekly
+    rotate 12
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+    create 0640 <some_username> <some_username>
+}
