@@ -41,193 +41,88 @@ echoC()
     local input_font_colour="${2}"
     local output_message="${3}"
     local output_font_type
-    local output_font_colour
+    local output_font_colour="039"
     local output_font_start_sequence="\e["
     local output_font_delimiter=";"
     local output_font_end_sequence="m"
     local output_font_reset="${output_font_start_sequence}0${output_font_end_sequence}"
 
-    case "${input_font_type}" in
-        "")
+    local font_type
+    declare -A font_type_list
+    font_type_list["bold"]="001"
+    font_type_list["dim"]="002"
+    font_type_list["underline"]="004"
+    font_type_list["blink"]="005"
+    font_type_list["reverse"]="007"
+    font_type_list["hidden"]="008"
+    font_type_list["strikethrough"]="009"
+
+    local font_colour
+    declare -A font_colour_list
+    font_colour_list["default"]="039"
+    font_colour_list["black"]="030"
+    font_colour_list["red"]="031"
+    font_colour_list["green"]="032"
+    font_colour_list["yellow"]="033"
+    font_colour_list["blue"]="034"
+    font_colour_list["magenta"]="035"
+    font_colour_list["cyan"]="036"
+    font_colour_list["light_grey"]="037"
+    font_colour_list["dark_grey"]="090"
+    font_colour_list["light_red"]="091"
+    font_colour_list["light_green"]="092"
+    font_colour_list["light_yellow"]="093"
+    font_colour_list["light_blue"]="094"
+    font_colour_list["light_magenta"]="095"
+    font_colour_list["light_cyan"]="096"
+    font_colour_list["white"]="097"
+    font_colour_list["background_default"]="049"
+    font_colour_list["background_black"]="040"
+    font_colour_list["background_red"]="041"
+    font_colour_list["background_green"]="042"
+    font_colour_list["background_yellow"]="043"
+    font_colour_list["background_blue"]="044"
+    font_colour_list["background_magenta"]="045"
+    font_colour_list["background_cyan"]="046"
+    font_colour_list["background_light_grey"]="047"
+    font_colour_list["background_dark_grey"]="100"
+    font_colour_list["background_light_red"]="101"
+    font_colour_list["background_light_green"]="102"
+    font_colour_list["background_light_yellow"]="103"
+    font_colour_list["background_light_blue"]="104"
+    font_colour_list["background_light_magenta"]="105"
+    font_colour_list["background_light_cyan"]="106"
+    font_colour_list["background_light_white"]="107"
+
+    for font_type in "${!font_type_list[@]}"
+    do
+        if [[ "${input_font_type}" == "" ]]
+        then
             output_font_delimiter=""
-            ;;
+            break
+        elif [[ "${input_font_type}" == "${font_type}" ]]
+        then
+            output_font_type="${font_type_list[${font_type}]}"
+            break
+        else
+            continue
+        fi
+    done
 
-        "bold")
-            output_font_type="001"
-            ;;
-
-        "dim")
-            output_font_type="002"
-            ;;
-
-        "underline")
-            output_font_type="004"
-            ;;
-
-        "blink")
-            output_font_type="005"
-            ;;
-
-        "reverse")
-            output_font_type="007"
-            ;;
-
-        "hidden")
-            output_font_type="008"
-            ;;
-
-        "strikethrough")
-            output_font_type="009"
-            ;;
-
-        *)
-            outputErrorAndExit "error" "Could not find font switch: '${input_font_switch}'." "1"
-    esac
-
-    case "${input_font_colour}" in
-        "")
+    for font_colour in "${!font_colour_list[@]}"
+    do
+        if [[ "${input_font_colour}" == "" ]]
+        then
             output_font_delimiter=""
-            ;;
-
-        "default")
-            output_font_colour="39"
-            ;;
-
-        "black")
-            output_font_colour="30"
-            ;;
-
-        "red")
-            output_font_colour="31"
-            ;;
-
-        "green")
-            output_font_colour="32"
-            ;;
-
-        "yellow")
-            output_font_colour="33"
-            ;;
-
-        "blue")
-            output_font_colour="34"
-            ;;
-
-        "magenta")
-            output_font_colour="35"
-            ;;
-
-        "cyan")
-            output_font_colour="36"
-            ;;
-
-        "light_grey")
-            output_font_colour="37"
-            ;;
-
-        "dark_grey")
-            output_font_colour="90"
-            ;;
-
-        "light_red")
-            output_font_colour="91"
-            ;;
-
-        "light_green")
-            output_font_colour="92"
-            ;;
-
-        "light_yellow")
-            output_font_colour="93"
-            ;;
-
-        "light_blue")
-            output_font_colour="94"
-            ;;
-
-        "light_magenta")
-            output_font_colour="95"
-            ;;
-
-        "light_cyan")
-            output_font_colour="96"
-            ;;
-
-        "white")
-            output_font_colour="97"
-            ;;
-
-        "background_default")
-            output_font_colour="49"
-            ;;
-
-        "background_black")
-            output_font_colour="40"
-            ;;
-
-        "background_red")
-            output_font_colour="41"
-            ;;
-
-        "background_green")
-            output_font_colour="42"
-            ;;
-
-        "background_yellow")
-            output_font_colour="43"
-            ;;
-
-        "background_blue")
-            output_font_colour="44"
-            ;;
-
-        "background_magenta")
-            output_font_colour="45"
-            ;;
-
-        "background_cyan")
-            output_font_colour="46"
-            ;;
-
-        "background_light_grey")
-            output_font_colour="47"
-            ;;
-
-        "background_dark_grey")
-            output_font_colour="100"
-            ;;
-
-        "background_light_red")
-            output_font_colour="101"
-            ;;
-
-        "background_light_green")
-            output_font_colour="102"
-            ;;
-
-        "background_light_yellow")
-            output_font_colour="103"
-            ;;
-
-        "background_light_blue")
-            output_font_colour="104"
-            ;;
-
-        "background_light_magenta")
-            output_font_colour="105"
-            ;;
-
-        "background_light_cyan")
-            output_font_colour="106"
-            ;;
-
-        "background_white")
-            output_font_colour="107"
-            ;;
-
-        *)
-            outputErrorAndExit "error" "Could not find font colour: '${input_font_colour}'." "1"
-    esac
+            break
+        elif [[ "${input_font_colour}" == "${font_colour}" ]]
+        then
+            output_font_colour="${font_colour_list[${font_colour}]}"
+            break
+        else
+            continue
+        fi
+    done
 
     echo -e "${output_font_start_sequence}${output_font_type}${output_font_delimiter}${output_font_colour}${output_font_end_sequence}${output_message}${output_font_reset}"
 }
@@ -255,6 +150,7 @@ resetC()
     local output_font_start_sequence="\e["
     local output_font_end_sequence="m"
 
+    local reset_type
     declare -A reset_type_list
     reset_type_list["all"]="000"
     reset_type_list["colour"]="039"
@@ -267,7 +163,6 @@ resetC()
     reset_type_list["reverse"]="027"
     reset_type_list["hidden"]="028"
     reset_type_list["strikethrough"]="029"
-    reset_type_list["underline"]="024"
 
     for reset_type in "${!reset_type_list[@]}"
     do
