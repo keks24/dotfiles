@@ -25,16 +25,13 @@
 ## special permissions:
 ### none
 ## usage:
-### echoC "set" "[<font_type>]" "[<font_colour>]" "<output_message>"
-### echoC "reset" "<font_type>"
+### echoC "[<font_type>]" "[<font_colour>]" "<output_message>"
 ## examples:
-### echoC "set" "bold" "red" "hello world."
-### echoC "set" "bold" "red" "hello$(echoC 'reset' 'all') world."
-### echoC "set" "underline" "red" "hello$(echoC 'reset' 'underline') world."
-### echoC "set" "underline" "red" "hello$(echoC 'reset' 'all') world."
-### echoC "set" "reverse" "" "hello$(echoC 'reset' 'reverse') world."
-### echoC "set" "" "blue" "hello$(echoC 'reset' 'colour') world."
-### echoC "set" "" "background_blue" "hello$(echoC 'reset' 'colour') world."
+### echoC "bold" "red" "this text is bold and red."
+### echoC "underline" "blue" "this text is underlined and blue."
+### echoC "reverse" "" "this text is reversed."
+### echoC "" "blue" "this text is blue."
+### echoC "" "background_yellow" "this text's background is yellow."
 ## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
@@ -235,63 +232,56 @@ echoC()
     echo -e "${output_font_start_sequence}${output_font_type}${output_font_delimiter}${output_font_colour}${output_font_end_sequence}${output_message}${output_font_reset}"
 }
 
-# function: reset colourised text to terminal default
+# function: reset colourised text
+## dependencies:
+### outputErrorAndExit
+### echoC
+## special permissions:
+### none
+## usage:
+### resetC "<font_type>"
+## examples:
+### echoC "bold" "red" "this text is bold and red.$(resetC 'all') this text is terminal default."
+### echoC "underline" "blue" "this text is underlined and blue.$(resetC 'underline') this text is not underlined, but blue."
+### echoC "reverse" "" "this text is reversed.$(resetC 'reverse') this text is terminal default."
+### echoC "" "blue" "this text is blue.$(resetC 'colour') this text is terminal default."
+### echoC "" "background_yellow" "this text's background is yellow.$(resetC 'background') this text is terminal default."
+## references:
+### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
 resetC()
 {
     local input_font_type="${1}"
-    local output_font_type
+    local output_font_reset="000"
     local output_font_start_sequence="\e["
     local output_font_end_sequence="m"
 
-    case "${input_font_type}" in
-        "all")
-            output_font_reset="000"
-            ;;
+    declare -A reset_type_list
+    reset_type_list["all"]="000"
+    reset_type_list["colour"]="039"
+    reset_type_list["background"]="049"
+    # "\e[021m" does not work in "alacritty"
+    reset_type_list["bold"]="003"
+    reset_type_list["dim"]="022"
+    reset_type_list["underline"]="024"
+    reset_type_list["blink"]="025"
+    reset_type_list["reverse"]="027"
+    reset_type_list["hidden"]="028"
+    reset_type_list["strikethrough"]="029"
+    reset_type_list["underline"]="024"
 
-        "colour")
-            output_font_reset="039"
-            ;;
-
-        "background")
-            output_font_reset="049"
-            ;;
-
-        "bold")
-            # "\e[021m" does not work in "alacritty"
-            output_font_reset="039"
-            ;;
-
-        "dim")
-            output_font_reset="022"
-            ;;
-
-        "underline")
-            output_font_reset="024"
-            ;;
-
-        "blink")
-            output_font_reset="025"
-            ;;
-
-        "reverse")
-            output_font_reset="027"
-            ;;
-
-        "hidden")
-            output_font_reset="028"
-            ;;
-
-        "strikethrough")
-            output_font_reset="029"
-            ;;
-
-        *)
-            outputErrorAndExit "error" "Could not find font type: '${input_font_type}'." "1"
-    esac
+    for reset_type in "${!reset_type_list[@]}"
+    do
+        if [[ "${input_font_type}" == "${reset_type}" ]]
+        then
+            output_font_reset="${reset_type_list[${reset_type}]}"
+            break
+        else
+            continue
+        fi
+    done
 
     echo -e "${output_font_start_sequence}${output_font_reset}${output_font_end_sequence}"
-    return 0
 }
 
 # function: check, if a command was not found and exit with exit code "127"
@@ -347,15 +337,15 @@ outputErrorAndExit()
 
     case "${error_type}" in
         "warning")
-            echoC "set" "bold" "yellow" "${error_message}" >&2
+            echoC "bold" "yellow" "${error_message}" >&2
             ;;
 
         "error")
-            echoC "set" "bold" "red" "${error_message}" >&2
+            echoC "bold" "red" "${error_message}" >&2
             ;;
 
         *)
-            echoC "set" "bold" "red" "Could not find error type: '${error_type}'." >&2
+            echoC "bold" "red" "Could not find error type: '${error_type}'." >&2
             exit 1
     esac
 
@@ -363,7 +353,7 @@ outputErrorAndExit()
     then
         if [[ ! "${exit_code}" =~ ${exit_code_regex} ]]
         then
-            echoC "set" "bold" "red" "The exit code '${exit_code}' is invalid. It must be an integer between 0 and 255." >&2
+            echoC "bold" "red" "The exit code '${exit_code}' is invalid. It must be an integer between 0 and 255." >&2
             exit 128
         else
             exit "${exit_code}"
