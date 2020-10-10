@@ -20,7 +20,6 @@
 
 # function: output colourised text
 ## dependencies:
-### outputErrorAndExit
 ### resetC
 ## special permissions:
 ### none
