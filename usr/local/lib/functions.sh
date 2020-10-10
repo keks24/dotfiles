@@ -40,7 +40,7 @@ echoC()
     local input_font_colour="${2}"
     local output_message="${3}"
     local output_font_type
-    local output_font_colour="039"
+    local output_font_colour
     local output_font_start_sequence="\e["
     local output_font_delimiter=";"
     local output_font_end_sequence="m"
