@@ -234,7 +234,6 @@ echoC()
 
 # function: reset colourised text
 ## dependencies:
-### outputErrorAndExit
 ### echoC
 ## special permissions:
 ### none
