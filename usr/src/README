@@ -49,11 +49,11 @@ compile new kernel
         6.3. check, if the microcode was updated
             dmesg | grep "microcode"
 
-    7. re-compile all modules for the new kernel
-        emerge @module-rebuild
-
-    8. update the grub configuration
+    7. update the grub configuration
         grub-mkconfig --output="/boot/grub/grub.cfg"
+
+    8. compile all modules for the new kernel
+        emerge @module-rebuild
 
     9. use the new kernel
         reboot
