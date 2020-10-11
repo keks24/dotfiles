@@ -167,8 +167,6 @@ resetC()
         then
             output_font_reset="${reset_type_list[${reset_type}]}"
             break
-        else
-            continue
         fi
     done
 
