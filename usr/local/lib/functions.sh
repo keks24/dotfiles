@@ -234,6 +234,22 @@ createLockFile()
     #
     # write lock file
     ## printf "%*s%s\n" "$(( ${lock_file_max_string_length} - ${script_pid_string_length} ))" "" "${script_pid}" > /var/lock/${script_name}.lock
+    #
+    #
+    # understand the following and refactor the functions accordingly:
+    #
+    # (
+    #  flock -xn 200
+    #  trap 'rm /var/tmp/lockfile' 0
+    #  RETVAL=$?
+    #  if [ $RETVAL -eq 1 ] ; then
+    #    echo $RETVAL
+    #    exit 1
+    #  else
+    #    echo "sleeping"
+    #    sleep 10
+    #  fi
+    # ) 200>/var/tmp/lockfile
 
     if [[ ! -w "${lock_file_directory}" ]]
     then
