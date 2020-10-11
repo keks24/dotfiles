@@ -16,6 +16,7 @@
 
 # this file should only be sourced once at the beginning of a shell script!
 # no shebang should be used here!
+# all functions are written in "bash"
 # the access permission should be "440"!
 
 # function: output colourised text
@@ -249,3 +250,6 @@ outputErrorAndExit()
         fi
     fi
 }
+
+# use posix special-built-in for "true"
+:
