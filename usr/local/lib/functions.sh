@@ -93,35 +93,34 @@ echoC()
     font_colour_list["background_light_cyan"]="106"
     font_colour_list["background_light_white"]="107"
 
-    for font_type in "${!font_type_list[@]}"
-    do
-        if [[ "${input_font_type}" == "" ]]
-        then
-            output_font_delimiter=""
-            break
-        elif [[ "${input_font_type}" == "${font_type}" ]]
-        then
-            output_font_type="${font_type_list[${font_type}]}"
-            break
-        else
-            continue
-        fi
-    done
+    if [[ "${input_font_type}" == "" ]]
+    then
+        output_font_delimiter=""
+    else
+        for font_type in "${!font_type_list[@]}"
+        do
+            if [[ "${input_font_type}" == "${font_type}" ]]
+            then
+                output_font_type="${font_type_list[${font_type}]}"
+                break
+            fi
+        done
+    fi
 
-    for font_colour in "${!font_colour_list[@]}"
-    do
-        if [[ "${input_font_colour}" == "" ]]
-        then
-            output_font_delimiter=""
-            break
-        elif [[ "${input_font_colour}" == "${font_colour}" ]]
-        then
-            output_font_colour="${font_colour_list[${font_colour}]}"
-            break
-        else
-            continue
-        fi
-    done
+    if [[ "${input_font_colour}" == "" ]]
+    then
+        output_font_delimiter=""
+        output_font_colour="${font_colour_list['default']}"
+    else
+        for font_colour in "${!font_colour_list[@]}"
+        do
+            if [[ "${input_font_colour}" == "${font_colour}" ]]
+            then
+                output_font_colour="${font_colour_list[${font_colour}]}"
+                break
+            fi
+        done
+    fi
 
     echo -e "${output_font_start_sequence}${output_font_type}${output_font_delimiter}${output_font_colour}${output_font_end_sequence}${output_message}${output_font_reset}"
 }
