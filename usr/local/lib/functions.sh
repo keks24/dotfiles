@@ -110,7 +110,6 @@ echoC()
     if [[ "${input_font_colour}" == "" ]]
     then
         output_font_delimiter=""
-        output_font_colour="${font_colour_list['default']}"
     else
         for font_colour in "${!font_colour_list[@]}"
         do
