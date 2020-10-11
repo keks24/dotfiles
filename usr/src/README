@@ -1,5 +1,5 @@
 legend:
-- "clean up" means to keep the last three kernel versions
+- "clean up" means to keep the last three versions
 
 compile new kernel
     1. mount "/boot/"
