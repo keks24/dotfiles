@@ -181,16 +181,16 @@ resetC()
 ## special permissions:
 ### none
 ## usage:
-### command_list+=(<command1> <command2> <commandn>)
+### command_list+=("<command1>" "<command2>" "<commandn>")
 ### checkCommands
 ## examples:
-### command_list=(tail tmux)
+### command_list=("tail" "/usr/bin/tmux")
 ### checkCommands
 ## references:
 ### none
 
 declare -a command_list
-command_list=(rm)
+command_list=("/bin/rm" "/bin/touch")
 checkCommands()
 {
     local current_command
@@ -205,17 +205,53 @@ checkCommands()
     done
 }
 
-# function: check, if a given lock file exists
-#lock_file="/var/tmp/${script_name}.lock"
-#if [[ -e "${lock_file}" ]]
-#then
-#    /bin/echo -e "\e[01;31mLock file '${lock_file}' is present, exiting...\e[0m"
-#    exit 1
-#fi
-
 # function: create a lock file to prevent multiple executions of the script
-#lock_file="/var/tmp/${script_name}.lock"
-#    /bin/touch "${lock_file}"
+## references:
+### https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s09.html
+
+script_name="${0##*/}"
+lock_file_directory="/var/lock"
+lock_filename="${script_name}.lock"
+lock_file="${lock_file_directory}/${lock_filename}"
+createLockFile()
+{
+    # note
+    # note
+    # note
+    # note
+    # note
+    # create a lock file in "/var/lock/${script_name}.lock" with the following content (10 byte string, followed by newline)
+    # <space><space>[...]<some_pid><some_newline>
+    #
+
+    # get pid number of the current script
+    ## $ echo "${$}"
+    #
+    # create the appropiate lock file
+    ## lock_file_max_string_length="10"
+    ## script_pid="${$}"
+    ## script_pid_string_length="${#script_pid}"
+    #
+    # write lock file
+    ## printf "%*s%s\n" "$(( ${lock_file_max_string_length} - ${script_pid_string_length} ))" "" "${script_pid}" > /var/lock/${script_name}.lock
+
+    if [[ ! -w "${lock_file_directory}" ]]
+    then
+        outputErrorAndExit "error" "Could not write lock file: '${lock_file}'. Permission denied." "1"
+    else
+        /bin/touch "${lock_file}"
+    fi
+}
+
+
+# function: check, if a given lock file exists and exit
+checkLockFile()
+{
+    if [[ -e "${lock_file}" ]]
+    then
+        outputErrorAndExit "warning" "Lock file is present: '${lock_file}'. Exiting ..." "1"
+    fi
+}
 
 # function: remove a given lock file
 #lock_file="/var/tmp/${script_name}.lock"
