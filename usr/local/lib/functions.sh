@@ -181,7 +181,7 @@ resetC()
 ## special permissions:
 ### none
 ## usage:
-### command_list=(<command1> <command2> <commandn>)
+### command_list+=(<command1> <command2> <commandn>)
 ### checkCommands
 ## examples:
 ### command_list=(tail tmux)
@@ -190,7 +190,7 @@ resetC()
 ### none
 
 declare -a command_list
-command_list=()
+command_list=(rm)
 checkCommands()
 {
     local current_command
@@ -204,6 +204,22 @@ checkCommands()
         fi
     done
 }
+
+# function: check, if a given lock file exists
+#lock_file="/var/tmp/${script_name}.lock"
+#if [[ -e "${lock_file}" ]]
+#then
+#    /bin/echo -e "\e[01;31mLock file '${lock_file}' is present, exiting...\e[0m"
+#    exit 1
+#fi
+
+# function: create a lock file to prevent multiple executions of the script
+#lock_file="/var/tmp/${script_name}.lock"
+#    /bin/touch "${lock_file}"
+
+# function: remove a given lock file
+#lock_file="/var/tmp/${script_name}.lock"
+#/bin/rm --force "${lock_file}"
 
 # function: helper function, to output a given error message and exit with error code
 ## dependencies:
@@ -250,6 +266,9 @@ outputErrorAndExit()
         fi
     fi
 }
+
+# check commands of this file
+checkCommands
 
 # use posix special-built-in for "true"
 :
