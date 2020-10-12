@@ -19,10 +19,20 @@
 # all functions are written in "bash"
 # the access permission should be "440"!
 
+# define environment variables
+script_name="${0##*/}"
+script_directory_path="${0%/*}"
+script_pid="${$}"
+declare -a command_list
+command_list=("/usr/bin/printf" "/bin/rm" "/bin/touch")
+lock_file_directory="/var/lock"
+lock_filename="${script_name}.lock"
+lock_file="${lock_file_directory}/${lock_filename}"
+
 # function: output colourised text
 ## dependencies:
 ### resetC
-## special permissions:
+## required permissions:
 ### none
 ## usage:
 ### echoC "[<font_type>]" "[<font_colour>]" "<output_message>"
@@ -37,9 +47,10 @@
 
 echoC()
 {
-    local input_font_type="${1}"
-    local input_font_colour="${2}"
-    local output_message="${3}"
+    local echo_parameter="${1}"
+    local input_font_type="${2}"
+    local input_font_colour="${3}"
+    local output_message="${4}"
     local output_font_type
     local output_font_colour
     local output_font_start_sequence="\e["
@@ -94,6 +105,16 @@ echoC()
     font_colour_list["background_light_cyan"]="106"
     font_colour_list["background_light_white"]="107"
 
+    # preserve echo parameters, such as: "-n", ...
+    if [[ "${echo_parameter}" =~ ^[a-z]+$ || "${echo_parameter}" == "" ]]
+    then
+        # how to shift parameters unprofessionally. :)
+        unset echo_parameter
+        local input_font_type="${1}"
+        local input_font_colour="${2}"
+        local output_message="${3}"
+    fi
+
     if [[ "${input_font_type}" == "" ]]
     then
         output_font_delimiter=""
@@ -122,13 +143,13 @@ echoC()
         done
     fi
 
-    echo -e "${output_font_start_sequence}${output_font_type}${output_font_delimiter}${output_font_colour}${output_font_end_sequence}${output_message}${output_font_reset}"
+    echo -e ${echo_parameter} "${output_font_start_sequence}${output_font_type}${output_font_delimiter}${output_font_colour}${output_font_end_sequence}${output_message}${output_font_reset}"
 }
 
 # function: reset colourised text
 ## dependencies:
 ### echoC
-## special permissions:
+## required permissions:
 ### none
 ## usage:
 ### resetC "<font_type>"
@@ -178,7 +199,7 @@ resetC()
 ## dependencies:
 ### echoC
 ### outputErrorAndExit
-## special permissions:
+## required permissions:
 ### none
 ## usage:
 ### command_list+=("<command1>" "<command2>" "<commandn>")
@@ -189,8 +210,6 @@ resetC()
 ## references:
 ### none
 
-declare -a command_list
-command_list=("/usr/bin/printf" "/bin/rm" "/bin/touch")
 checkCommands()
 {
     local current_command
@@ -214,16 +233,17 @@ checkCommands()
 #
 #
 
-# function: create a lock file to prevent multiple executions of the script
+# function: create a lock file to prevent multiple executions of a script
 ## dependencies:
 ### outputErrorAndExit
-## special permissions:
-### none
+## required permissions:
+### write access to "/var/lock/"
 ## usage:
-### createAndRemoveLockFile
+### createAndRemoveLockFile [<lock_type>]
 ## examples:
-### outputErrorAndExit "error" "Something went wrong." "1"
-### outputErrorAndExit "warning" "Something went wrong, but is tolerable."
+### createAndRemoveLockFile
+### createAndRemoveLockFile "exclusive"
+### createAndRemoveLockFile "shared"
 ## references:
 ### https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s09.html
 ### https://dmorgan.info/posts/linux-lock-files/
@@ -231,25 +251,22 @@ checkCommands()
 
 createAndRemoveLockFile()
 {
-    local script_name="${0##*/}"
-    local script_pid="${$}"
-    local script_pid_string_length="${#script_pid}"
-    local lock_file_directory="/var/lock"
-    local lock_filename="${script_name}.lock"
-    local lock_file="${lock_file_directory}/${lock_filename}"
+    local lock_file_type="${1:-exclusive}"
     local lock_file_file_descriptor
     local lock_file_max_string_length="10"
+    local script_pid_string_length="${#script_pid}"
 
     if [[ ! -w "${lock_file_directory}" ]]
     then
         outputErrorAndExit "error" "The directory is not writeable: '${lock_file_directory}'. Permission denied." "1"
     else
         /bin/touch "${lock_file}"
-        # assign a read-only file-descriptor. read-write would be "<>"
+        /bin/chmod 644 "${lock_file}"
+        # assign a "read-only" file descriptor to "${lock_file}" and save the file descriptor value in "${lock_file_file_descriptor}". "write" would be ">" and "read-write" would be "<>".
         exec {lock_file_file_descriptor}< "${lock_file}"
 
         # "flock" must not be executed in a test block here!
-        if $(/usr/bin/flock --exclusive --nonblock "${lock_file_file_descriptor}")
+        if $(/usr/bin/flock --"${lock_file_type}" --nonblock "${lock_file_file_descriptor}")
         then
             # unlock the file descriptor and remove the file on signal "EXIT"
             trap "/usr/bin/flock --unlock ${lock_file_file_descriptor} && /bin/rm --force ${lock_file}" EXIT
@@ -258,13 +275,12 @@ createAndRemoveLockFile()
             outputErrorAndExit "warning" "Lock file is present: '${lock_file}', file descriptor '${lock_file_file_descriptor}'. Exiting ..." "1"
         fi
     fi
-
 }
 
 # function: helper function, to output a given error message and exit with error code
 ## dependencies:
 ### echoC
-## special permissions:
+## required permissions:
 ### none
 ## usage:
 ### outputErrorAndExit "<error_type>" "<error_message>" "[<exit_code>]"
