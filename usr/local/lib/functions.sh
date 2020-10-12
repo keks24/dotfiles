@@ -208,6 +208,7 @@ checkCommands()
 # function: create a lock file to prevent multiple executions of the script
 ## references:
 ### https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s09.html
+### https://dmorgan.info/posts/linux-lock-files/
 
 script_name="${0##*/}"
 lock_file_directory="/var/lock"
