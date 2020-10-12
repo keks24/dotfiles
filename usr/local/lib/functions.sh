@@ -201,7 +201,7 @@ checkCommands()
     do
         if [[ ! $(command -v "${current_command}" 2>/dev/null) ]]
         then
-            outputErrorAndExit "error" "Could not find command: '${current_command}'." "127"
+            outputErrorAndExit "error" "Command not found: '${current_command}'." "127"
         fi
     done
 }
