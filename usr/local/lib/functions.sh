@@ -190,14 +190,15 @@ resetC()
 ### none
 
 declare -a command_list
-command_list=("/bin/rm" "/bin/touch")
+command_list=("/usr/bin/printf" "/bin/rm" "/bin/touch")
 checkCommands()
 {
     local current_command
 
+    unalias "${command_list[@]##*/}" 2>/dev/null
+
     for current_command in "${command_list[@]}"
     do
-        unalias "${current_command}" 2>/dev/null
         if [[ ! $(command -v "${current_command}" 2>/dev/null) ]]
         then
             outputErrorAndExit "error" "Could not find command: '${current_command}'." "127"
@@ -205,74 +206,60 @@ checkCommands()
     done
 }
 
+# function: unalias commands
+#
+#
+#
+#
+#
+#
+
 # function: create a lock file to prevent multiple executions of the script
+## dependencies:
+### outputErrorAndExit
+## special permissions:
+### none
+## usage:
+### createAndRemoveLockFile
+## examples:
+### outputErrorAndExit "error" "Something went wrong." "1"
+### outputErrorAndExit "warning" "Something went wrong, but is tolerable."
 ## references:
 ### https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s09.html
 ### https://dmorgan.info/posts/linux-lock-files/
+### https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html
 
-script_name="${0##*/}"
-lock_file_directory="/var/lock"
-lock_filename="${script_name}.lock"
-lock_file="${lock_file_directory}/${lock_filename}"
-createLockFile()
+createAndRemoveLockFile()
 {
-    # note
-    # note
-    # note
-    # note
-    # note
-    # create a lock file in "/var/lock/${script_name}.lock" with the following content (10 byte string, followed by newline)
-    # <space><space>[...]<some_pid><some_newline>
-    #
-
-    # get pid number of the current script
-    ## $ echo "${$}"
-    #
-    # create the appropiate lock file
-    ## lock_file_max_string_length="10"
-    ## script_pid="${$}"
-    ## script_pid_string_length="${#script_pid}"
-    #
-    # write lock file
-    ## printf "%*s%s\n" "$(( ${lock_file_max_string_length} - ${script_pid_string_length} ))" "" "${script_pid}" > /var/lock/${script_name}.lock
-    #
-    #
-    # understand the following and refactor the functions accordingly:
-    #
-    # (
-    #  flock -xn 200
-    #  trap 'rm /var/tmp/lockfile' 0
-    #  RETVAL=$?
-    #  if [ $RETVAL -eq 1 ] ; then
-    #    echo $RETVAL
-    #    exit 1
-    #  else
-    #    echo "sleeping"
-    #    sleep 10
-    #  fi
-    # ) 200>/var/tmp/lockfile
+    local script_name="${0##*/}"
+    local script_pid="${$}"
+    local script_pid_string_length="${#script_pid}"
+    local lock_file_directory="/var/lock"
+    local lock_filename="${script_name}.lock"
+    local lock_file="${lock_file_directory}/${lock_filename}"
+    local lock_file_file_descriptor
+    local lock_file_max_string_length="10"
 
     if [[ ! -w "${lock_file_directory}" ]]
     then
-        outputErrorAndExit "error" "Could not write lock file: '${lock_file}'. Permission denied." "1"
+        outputErrorAndExit "error" "The directory is not writeable: '${lock_file_directory}'. Permission denied." "1"
     else
         /bin/touch "${lock_file}"
+        # assign a read-only file-descriptor. read-write would be "<>"
+        exec {lock_file_file_descriptor}< "${lock_file}"
+
+        # "flock" must not be executed in a test block here!
+        if $(/usr/bin/flock --exclusive --nonblock "${lock_file_file_descriptor}")
+        then
+            # unlock the file descriptor and remove the file on signal "EXIT"
+            trap "/usr/bin/flock --unlock ${lock_file_file_descriptor} && /bin/rm --force ${lock_file}" EXIT
+            /usr/bin/printf "%*s%s\n" "$(( ${lock_file_max_string_length} - ${script_pid_string_length} ))" "" "${script_pid}" > "${lock_file}"
+        else
+            outputErrorAndExit "warning" "Lock file is present: '${lock_file}', file descriptor '${lock_file_file_descriptor}'. Exiting ..." "1"
+        fi
     fi
+
 }
-
-
-# function: check, if a given lock file exists and exit
-checkLockFile()
-{
-    if [[ -e "${lock_file}" ]]
-    then
-        outputErrorAndExit "warning" "Lock file is present: '${lock_file}'. Exiting ..." "1"
-    fi
-}
-
-# function: remove a given lock file
-#lock_file="/var/tmp/${script_name}.lock"
-#/bin/rm --force "${lock_file}"
 
 # function: helper function, to output a given error message and exit with error code
 ## dependencies:
