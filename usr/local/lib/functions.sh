@@ -72,7 +72,6 @@ font_colour_list["background_light_magenta"]="105"
 font_colour_list["background_light_cyan"]="106"
 font_colour_list["background_light_white"]="107"
 
-
 # function: output colourised text
 ## external dependencies:
 ### resetC
@@ -232,7 +231,7 @@ checkCommands()
 ### printf
 ### touch
 ## required permissions:
-### write access to "/var/lock/"
+### write permissions in the directory "/var/lock/"
 ## usage:
 ### createAndRemoveLockFile "[<lock_type>]"
 ## examples:
@@ -271,6 +270,45 @@ createAndRemoveLockFile()
         fi
     fi
 }
+
+# function: prepare a log directory
+## external dependencies:
+### chmod
+### mkdir
+### touch
+## required permissions:
+### write permissions in the desired directory
+## usage:
+### prepareLogDirectory "<directory_path>" "<directory_permissions>" "<application_name>" "<log_permissions>"
+## examples:
+### 
+### 
+### 
+## references:
+### https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s09.html
+### https://dmorgan.info/posts/linux-lock-files/
+### https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html
+
+#prepareLogDirectory()
+#{
+#    local directory_path="${1}"
+#    local directory_permissions"${2}"
+#    local application_name="${3}"
+#    local log_file_permissions="${4}"
+#
+#    for APPLICATION_NAME in ${APPLICATION_NAME_LIST[@]}
+#    do
+#        if [[ ! -d "${LOG_DIRECTORY}/${APPLICATION_NAME}" ]]
+#        then
+#            mkdir --parents --mode="750" "${LOG_DIRECTORY}/${APPLICATION_NAME}"
+#            touch "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
+#            chmod 640 "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
+#        else
+#            continue
+#        fi
+#    done
+#    unset APPLICATON_NAME
+#}
 
 # function: helper function, to output a given error message and exit with error code
 ## external dependencies:
