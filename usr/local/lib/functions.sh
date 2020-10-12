@@ -42,6 +42,7 @@ lock_file="${lock_file_directory}/${lock_filename}"
 ### echoC "reverse" "" "this text is reversed."
 ### echoC "" "blue" "this text is blue."
 ### echoC "" "background_yellow" "this text's background is yellow."
+### echoC -n "bold" "green" "this text is bold and green, but has no newline."
 ## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
