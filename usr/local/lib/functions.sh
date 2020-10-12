@@ -24,10 +24,10 @@ script_name="${0##*/}"
 script_directory_path="${0%/*}"
 script_pid="${$}"
 declare -a command_list
-command_list=("/usr/bin/printf" "/bin/rm" "/bin/touch")
-lock_file_directory="/var/lock"
+command_list=("/bin/chmod" "/usr/bin/printf" "/bin/rm" "/bin/touch")
+lock_file_directory_path="/var/lock"
 lock_filename="${script_name}.lock"
-lock_file="${lock_file_directory}/${lock_filename}"
+lock_file="${lock_file_directory_path}/${lock_filename}"
 declare -A font_type_list
 font_type_list["bold"]="001"
 font_type_list["dim"]="002"
@@ -74,7 +74,7 @@ font_colour_list["background_light_white"]="107"
 
 
 # function: output colourised text
-## dependencies:
+## external dependencies:
 ### resetC
 ## required permissions:
 ### none
@@ -147,7 +147,7 @@ echoC()
 }
 
 # function: reset colourised text
-## dependencies:
+## external dependencies:
 ### echoC
 ## required permissions:
 ### none
@@ -196,8 +196,7 @@ resetC()
 }
 
 # function: check, if a command was not found and exit with exit code "127"
-## dependencies:
-### echoC
+## external dependencies:
 ### outputErrorAndExit
 ## required permissions:
 ### none
@@ -225,21 +224,17 @@ checkCommands()
     done
 }
 
-# function: unalias commands
-#
-#
-#
-#
-#
-#
-
 # function: create a lock file to prevent multiple executions of a script
-## dependencies:
+## external dependencies:
+### chmod
+### flock
 ### outputErrorAndExit
+### printf
+### touch
 ## required permissions:
 ### write access to "/var/lock/"
 ## usage:
-### createAndRemoveLockFile [<lock_type>]
+### createAndRemoveLockFile "[<lock_type>]"
 ## examples:
 ### createAndRemoveLockFile
 ### createAndRemoveLockFile "exclusive"
@@ -256,9 +251,9 @@ createAndRemoveLockFile()
     local lock_file_max_string_length="10"
     local script_pid_string_length="${#script_pid}"
 
-    if [[ ! -w "${lock_file_directory}" ]]
+    if [[ ! -w "${lock_file_directory_path}" ]]
     then
-        outputErrorAndExit "error" "The directory is not writeable: '${lock_file_directory}'. Permission denied." "1"
+        outputErrorAndExit "error" "The directory is not writeable: '${lock_file_directory_path}'. Permission denied." "1"
     else
         /bin/touch "${lock_file}"
         /bin/chmod 644 "${lock_file}"
@@ -278,7 +273,7 @@ createAndRemoveLockFile()
 }
 
 # function: helper function, to output a given error message and exit with error code
-## dependencies:
+## external dependencies:
 ### echoC
 ## required permissions:
 ### none
@@ -286,7 +281,9 @@ createAndRemoveLockFile()
 ### outputErrorAndExit "<error_type>" "<error_message>" "[<exit_code>]"
 ## examples:
 ### outputErrorAndExit "error" "Something went wrong." "1"
-### outputErrorAndExit "warning" "Something went wrong, but is tolerable."
+### outputErrorAndExit "warning" "Something went wrong." "1"
+### outputErrorAndExit "error" "Something went wrong, but do not exit."
+### outputErrorAndExit "warning" "Something went wrong, but do not exit."
 ## references:
 ### https://tldp.org/LDP/abs/html/exitcodes.html
 
@@ -315,7 +312,7 @@ outputErrorAndExit()
     then
         if [[ ! "${exit_code}" =~ ${exit_code_regex} ]]
         then
-            echoC "bold" "red" "The exit code '${exit_code}' is invalid. It must be an integer between 0 and 255." >&2
+            echoC "bold" "red" "The exit code is invalid: '${exit_code}'. It must be an integer between 0 and 255." >&2
             exit 128
         else
             exit "${exit_code}"
