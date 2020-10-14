@@ -72,48 +72,6 @@ font_colour_list["background_light_magenta"]="105"
 font_colour_list["background_light_cyan"]="106"
 font_colour_list["background_light_white"]="107"
 
-# function: make given commands quiet
-## external dependencies:
-### none
-## required permissions:
-### none
-## usage:
-### beQuiet "[<file_descriptor>]" "<command_with_parameters>"
-## examples:
-### beQuiet "stdout" "ls -l"
-### beQuiet "stderr" "unalias ls"
-### beQuiet "stdout_and_stderr" "unalias ${command_list[@]}"
-### beQuiet "unalias command_which_does_not_exist"
-## references:
-### https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
-
-beQuiet()
-{
-    local file_descriptor="${1:-stdout_and_stderr}"
-    local command="${2}"
-
-    # set positional parameters, to make command execution via "${@}" possible.
-    # "ls -l -a -t -r" becomes "ls" "-l" "-a" "-t" "-r".
-    set -- ${command}
-
-    case "${file_descriptor}" in
-        "stdout")
-            "${@}" >/dev/null
-            ;;
-
-        "stderr")
-            "${@}" 2>/dev/null
-            ;;
-
-        "stdout_and_stderr")
-            "${@}" >/dev/null 2>&1
-            ;;
-
-        *)
-            "${@}" >/dev/null 2>&1
-    esac
-}
-
 # function: output colourised text
 ## external dependencies:
 ### resetC
@@ -237,6 +195,158 @@ resetC()
     echo -e "${output_font_start_sequence}${output_font_reset}${output_font_end_sequence}"
 }
 
+# function: make given commands quiet
+## external dependencies:
+### none
+## required permissions:
+### none
+## usage:
+### beQuiet "[<file_descriptor>]" "<command_with_parameters>"
+## examples:
+### beQuiet "stdout" "ls -l"
+### beQuiet "stderr" "unalias ls"
+### beQuiet "stdout_and_stderr" "unalias ${command_list[@]}"
+### beQuiet "unalias command_which_does_not_exist"
+## references:
+### https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
+
+beQuiet()
+{
+    local file_descriptor="${1:-stdout_and_stderr}"
+    local command="${2}"
+
+    # set positional parameters, to make command execution via "${@}" possible.
+    # "ls -l -a -t -r" becomes "ls" "-l" "-a" "-t" "-r".
+    set -- ${command}
+
+    case "${file_descriptor}" in
+        "stdout")
+            "${@}" >/dev/null
+            ;;
+
+        "stderr")
+            "${@}" 2>/dev/null
+            ;;
+
+        "stdout_and_stderr")
+            "${@}" >/dev/null 2>&1
+            ;;
+
+        *)
+            "${@}" >/dev/null 2>&1
+    esac
+}
+
+# function: check, if a given string only contains numeric characters
+## external dependencies:
+### outputErrorAndExit
+## required permissions:
+### none
+## usage:
+### isNumeric "<numeric_character_string>"
+## examples:
+### isNumeric "24"
+### isNumeric "-24"
+### isNumeric "+24"
+### isNumeric "24.24"
+### isNumeric "-24.24
+### isNumeric "+24.24
+## references:
+### none
+
+isNumeric()
+{
+    local input_string="${1}"
+    local is_numeric="^[+-]?[0-9]+(\.[0-9]+)?$"
+
+    if [[ "${input_string}" =~ ${is_numeric} ]]
+    then
+        return 0
+    else
+        outputErrorAndExit "error" "Entered string is not numeric: '${input_string}'. Must match regular expression: '${is_numeric}'" "1"
+    fi
+}
+
+# function: check, if a given string only contains string characters
+## external dependencies:
+### outputErrorAndExit
+## required permissions:
+### none
+## usage:
+### isString "<character_string>"
+## examples:
+### isString "nom"
+### isString "NOM"
+## references:
+### none
+
+isString()
+{
+    local input_string="${1}"
+    local is_string="^[a-zA-Z]+$"
+
+    if [[ "${input_string}" =~ ${is_string} ]]
+    then
+        return 0
+    else
+        outputErrorAndExit "error" "Entered string is not a string: '${input_string}'. Must match regular expression: '${is_string}'" "1"
+    fi
+}
+
+# function: check, if a given string only contains alphanumeric characters
+## external dependencies:
+### outputErrorAndExit
+## required permissions:
+### none
+## usage:
+### isNumeric "<alphanumeric_character_string>"
+## examples:
+### isNumeric "24nom"
+### isNumeric "nom24"
+### isNumeric "24NoM"
+## references:
+### none
+
+isAlphanumeric()
+{
+    local input_string="${1}"
+    local is_alphanumeric="^[a-zA-Z0-9]+$"
+
+    if [[ "${input_string}" =~ ${is_alphanumeric} ]]
+    then
+        return 0
+    else
+        outputErrorAndExit "error" "Entered string is not alphanumeric: '${input_string}'. Must match regular expression: '${is_alphanumeric}'" "1"
+    fi
+}
+
+# function: check, if a given string only contains special characters
+## external dependencies:
+### outputErrorAndExit
+## required permissions:
+### none
+## usage:
+### isSpecial "<special_character_string>"
+## examples:
+### isSpecial "!\"§$%&/()=?\`\\"
+### isSpecial "ł¶ŧ←↓→øþ¨æſðđŋħł˝’»«¢„“”µ·…"
+## references:
+### none
+
+#isSpecial()
+#{
+#    local input_string="${1}"
+#    local is_special="^[^a-zA-Z0-9]+$"
+#    local is_ascii="[^[:print:]]"
+#
+#    if [[ "${input_string}" =~ ${is_special} || "${input_string}" =~ ${is_unprintable} ]]
+#    then
+#        return 0
+#    else
+#        outputErrorAndExit "error" "Entered string is not special: '${input_string}'. Must match regular expression: '${is_special}'" "1"
+#    fi
+#}
+
 # function: check, if a command was not found and exit with exit code "127"
 ## external dependencies:
 ### outputErrorAndExit
@@ -354,7 +464,7 @@ outputErrorAndExit()
     then
         if [[ ! "${exit_code}" =~ ${exit_code_regex} ]]
         then
-            echoC "bold" "red" "The exit code is invalid: '${exit_code}'. It must be an integer between 0 and 255." >&2
+            echoC "bold" "red" "Exit code is invalid: '${exit_code}'. Must be an integer between 0 and 255." >&2
             exit 128
         else
             exit "${exit_code}"
