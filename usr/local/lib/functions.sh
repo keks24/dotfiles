@@ -24,7 +24,7 @@ script_name="${0##*/}"
 script_directory_path="${0%/*}"
 script_pid="${$}"
 declare -a command_list
-command_list=("/bin/chmod" "/usr/bin/printf" "/bin/rm" "/bin/touch")
+command_list=("/bin/chmod" "/usr/bin/flock" "/bin/rm" "/bin/touch")
 lock_file_directory_path="/var/lock"
 lock_filename="${script_name}.lock"
 lock_file="${lock_file_directory_path}/${lock_filename}"
@@ -307,7 +307,7 @@ createAndRemoveLockFile()
         then
             # unlock the file descriptor and remove the file on signal "EXIT"
             trap "/usr/bin/flock --unlock ${lock_file_file_descriptor} && /bin/rm --force ${lock_file}" EXIT
-            /usr/bin/printf "%*s%s\n" "$(( ${lock_file_max_string_length} - ${script_pid_string_length} ))" "" "${script_pid}" > "${lock_file}"
+            printf "%*s%s\n" "$(( ${lock_file_max_string_length} - ${script_pid_string_length} ))" "" "${script_pid}" > "${lock_file}"
         else
             outputErrorAndExit "warning" "Lock file is present: '${lock_file}', file descriptor '${lock_file_file_descriptor}'. Exiting ..." "1"
         fi
