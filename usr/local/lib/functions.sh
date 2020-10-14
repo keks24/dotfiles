@@ -72,6 +72,48 @@ font_colour_list["background_light_magenta"]="105"
 font_colour_list["background_light_cyan"]="106"
 font_colour_list["background_light_white"]="107"
 
+# function: make given commands quiet
+## external dependencies:
+### outputErrorAndExit
+## required permissions:
+### none
+## usage:
+### beQuiet "[<file_descriptor>]" "<command_with_parameters>"
+## examples:
+### beQuiet "stdout" "ls -l"
+### beQuiet "stderr" "unalias ls"
+### beQuiet "stdout_and_stderr" "unalias ${command_list[@]}"
+### beQuiet "unalias command_which_does_not_exist"
+## references:
+### https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
+
+beQuiet()
+{
+    local file_descriptor="${1:-stdout_and_stderr}"
+    local command="${2}"
+
+    # set positional parameters, to make command execution via "${@}" possible.
+    # "ls -l -a -t -r" becomes "ls" "-l" "-a" "-t" "-r".
+    set -- ${command}
+
+    case "${file_descriptor}" in
+        "stdout")
+            "${@}" >/dev/null
+            ;;
+
+        "stderr")
+            "${@}" 2>/dev/null
+            ;;
+
+        "stdout_and_stderr")
+            "${@}" >/dev/null 2>&1
+            ;;
+
+        *)
+            "${@}" >/dev/null 2>&1
+    esac
+}
+
 # function: output colourised text
 ## external dependencies:
 ### resetC
@@ -213,28 +255,16 @@ checkCommands()
 {
     local current_command
 
-    unalias "${command_list[@]##*/}" 2>/dev/null
+    beQuiet "unalias ${command_list[@]##/*}"
 
     for current_command in "${command_list[@]}"
     do
-        if [[ ! $(command -v "${current_command}" 2>/dev/null) ]]
+        if [[ ! $(beQuiet "stderr" "command -v ${current_command}") ]]
         then
             outputErrorAndExit "error" "Command not found: '${current_command}'." "127"
         fi
     done
 }
-
-# function: unalias given commands
-## external dependencies:
-### outputErrorAndExit
-## required permissions:
-### none
-## usage:
-### -------------------------------------
-## examples:
-### -------------------------------------
-## references:
-### none
 
 # function: create a lock file to prevent multiple executions of a script
 ## external dependencies:
@@ -265,11 +295,11 @@ createAndRemoveLockFile()
 
     if [[ ! -w "${lock_file_directory_path}" ]]
     then
-        outputErrorAndExit "error" "The directory is not writeable: '${lock_file_directory_path}'. Permission denied." "1"
+        outputErrorAndExit "error" "Directory is not writeable: '${lock_file_directory_path}'. Permission denied." "1"
     else
         /bin/touch "${lock_file}"
         /bin/chmod 644 "${lock_file}"
-        # assign a "read-only" file descriptor to "${lock_file}" and save the file descriptor value in "${lock_file_file_descriptor}". "write" would be ">" and "read-write" would be "<>".
+        # assign a free "read-only" file descriptor to "${lock_file}" and save the file descriptor value in "${lock_file_file_descriptor}". "write" would be ">" and "read-write" would be "<>".
         exec {lock_file_file_descriptor}< "${lock_file}"
 
         # "flock" must not be executed in a test block here!
