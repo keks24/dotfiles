@@ -158,6 +158,7 @@ echoC()
 ### echoC "reverse" "" "this text is reversed.$(resetC 'reverse') this text is terminal default."
 ### echoC "" "blue" "this text is blue.$(resetC 'colour') this text is terminal default."
 ### echoC "" "background_yellow" "this text's background is yellow.$(resetC 'background') this text is terminal default."
+### echoC "" "background_yellow" "this text's background is yellow.$(resetC 'background') this text is terminal default. $(echoC '' 'background_yellow' 'this text'"'"'s background is yellow again')."
 ## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
@@ -222,6 +223,18 @@ checkCommands()
         fi
     done
 }
+
+# function: unalias given commands
+## external dependencies:
+### outputErrorAndExit
+## required permissions:
+### none
+## usage:
+### -------------------------------------
+## examples:
+### -------------------------------------
+## references:
+### none
 
 # function: create a lock file to prevent multiple executions of a script
 ## external dependencies:
