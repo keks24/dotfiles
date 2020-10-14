@@ -74,7 +74,7 @@ font_colour_list["background_light_white"]="107"
 
 # function: make given commands quiet
 ## external dependencies:
-### outputErrorAndExit
+### none
 ## required permissions:
 ### none
 ## usage:
