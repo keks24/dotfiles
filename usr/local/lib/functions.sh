@@ -257,13 +257,13 @@ beQuiet()
 isNumeric()
 {
     local input_string="${1}"
-    local is_numeric="^[+-]?[0-9]+(\.[0-9]+)?$"
+    local numeric_regex="^[+-]?[0-9]+(\.[0-9]+)?$"
 
-    if [[ "${input_string}" =~ ${is_numeric} ]]
+    if [[ "${input_string}" =~ ${numeric_regex} ]]
     then
         return 0
     else
-        outputErrorAndExit "error" "Entered string is not numeric: '${input_string}'. Must match regular expression: '${is_numeric}'" "1"
+        outputErrorAndExit "error" "Entered string is not numeric: '${input_string}'. Must match regular expression: '${numeric_regex}'." "1"
     fi
 }
 
@@ -283,13 +283,13 @@ isNumeric()
 isString()
 {
     local input_string="${1}"
-    local is_string="^[a-zA-Z]+$"
+    local string_regex="^[a-zA-Z]+$"
 
-    if [[ "${input_string}" =~ ${is_string} ]]
+    if [[ "${input_string}" =~ ${string_regex} ]]
     then
         return 0
     else
-        outputErrorAndExit "error" "Entered string is not a string: '${input_string}'. Must match regular expression: '${is_string}'" "1"
+        outputErrorAndExit "error" "Entered string is not a string: '${input_string}'. Must match regular expression: '${string_regex}'." "1"
     fi
 }
 
@@ -310,13 +310,13 @@ isString()
 isAlphanumeric()
 {
     local input_string="${1}"
-    local is_alphanumeric="^[a-zA-Z0-9]+$"
+    local alphanumeric_regex="^[a-zA-Z0-9]+$"
 
-    if [[ "${input_string}" =~ ${is_alphanumeric} ]]
+    if [[ "${input_string}" =~ ${alphanumeric_regex} ]]
     then
         return 0
     else
-        outputErrorAndExit "error" "Entered string is not alphanumeric: '${input_string}'. Must match regular expression: '${is_alphanumeric}'" "1"
+        outputErrorAndExit "error" "Entered string is not alphanumeric: '${input_string}'. Must match regular expression: '${alphanumeric_regex}'." "1"
     fi
 }
 
@@ -329,21 +329,23 @@ isAlphanumeric()
 ### isSpecial "<special_character_string>"
 ## examples:
 ### isSpecial "!\"§$%&/()=?\`\\"
+### isSpecial '!"§$%&/()=?`\'
 ### isSpecial "ł¶ŧ←↓→øþ¨æſðđŋħł˝’»«¢„“”µ·…"
 ## references:
-### none
+### https://www.ascii-code.com/
+### https://www.regular-expressions.info/posixbrackets.html
 
 #isSpecial()
 #{
 #    local input_string="${1}"
-#    local is_special="^[^a-zA-Z0-9]+$"
-#    local is_ascii="[^[:print:]]"
+#    #local printable_regex="^[^a-zA-Z0-9]+$"
+#    local printable_regex="^([ -~]|[^ -~])+?"
 #
-#    if [[ "${input_string}" =~ ${is_special} || "${input_string}" =~ ${is_unprintable} ]]
+#    if [[ "${input_string}" =~ ${printable_regex} ]]
 #    then
 #        return 0
 #    else
-#        outputErrorAndExit "error" "Entered string is not special: '${input_string}'. Must match regular expression: '${is_special}'" "1"
+#        outputErrorAndExit "error" "Entered string is not special: '${input_string}'. Must match regular expression: '${printable_regex}' or '${extended_regex}'." "1"
 #    fi
 #}
 
