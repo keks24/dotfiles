@@ -19,6 +19,19 @@
 # all functions are written in "bash"
 # the access permission should be "440"!
 
+# table of contents:
+## echoC()......................output colourised text
+## resetC().....................reset colourised text
+## beQuiet()....................make given commands quiet
+## isNumeric()..................check, if a given string only contains numeric characters
+## isString()...................check, if a given string only contains string characters
+## isAlphanumeric().............check, if a given string only contains alphanumeric characters
+## isSpecial()..................check, if a given string only contains special characters
+## checkCommands()..............check, if a command was not found and exit with exit code "127"
+## prepareLogDirectory()........prepare a log directory
+## createAndRemoveLockFile()....create a lock file to prevent multiple executions of a script
+## outputErrorAndExit...........helper function, to output a given error message and exit with given error code
+
 # define environment variables
 script_name="${0##*/}"
 script_directory_path="${0%/*}"
@@ -349,6 +362,48 @@ isAlphanumeric()
 #    fi
 #}
 
+prepareLogDirectory()
+{
+# function: prepare a log directory
+## external dependencies:
+### chmod
+### mkdir
+### touch
+## required permissions:
+### write permissions in the desired directory
+## usage:
+### prepareLogDirectory "<directory_path>" "<directory_permissions>" "<application_name>" "<log_permissions>"
+## examples:
+###
+###
+###
+## references:
+### https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s09.html
+### https://dmorgan.info/posts/linux-lock-files/
+### https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html
+
+#prepareLogDirectory()
+#{
+#    local directory_path="${1}"
+#    local directory_permissions"${2}"
+#    local application_name="${3}"
+#    local log_file_permissions="${4}"
+#
+#    for APPLICATION_NAME in ${APPLICATION_NAME_LIST[@]}
+#    do
+#        if [[ ! -d "${LOG_DIRECTORY}/${APPLICATION_NAME}" ]]
+#        then
+#            mkdir --parents --mode="750" "${LOG_DIRECTORY}/${APPLICATION_NAME}"
+#            touch "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
+#            chmod 640 "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
+#        else
+#            continue
+#        fi
+#    done
+#    unset APPLICATON_NAME
+#}
+}
+
 # function: check, if a command was not found and exit with exit code "127"
 ## external dependencies:
 ### outputErrorAndExit
@@ -426,7 +481,7 @@ createAndRemoveLockFile()
     fi
 }
 
-# function: helper function, to output a given error message and exit with error code
+# function: helper function, to output a given error message and exit with given error code
 ## external dependencies:
 ### echoC
 ## required permissions:
