@@ -17,13 +17,13 @@ compile new kernel
     4. compile the new kernel
 
         4.1. adapt new kernel settings and use their default values
+            cd "/usr/src/linux/"
             make olddefconfig
 
             4.1.1. alternative: adapt new kernel settings manually
                 make oldconfig
 
         4.2. compile the kernel and kernel modules
-            cd "/usr/src/linux/"
             make --jobs 4 --load-average 3.6 && make --jobs 4 --load-average 3.6 modules_install
 
         4.3. install the kernel and copy it to "/boot/":
