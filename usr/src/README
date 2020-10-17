@@ -4,8 +4,6 @@ legend:
 compile new kernel
     1. mount "/boot/"
 
-        1.1. clean up "/boot/"
-
     2. create a new symlink to the newest kernel source (not necessary, if use flag "symlink" is set)
         cd "/usr/src/"
         ln --symbolic --force "linux-<new_kernel_version>-gentoo/" "linux"
