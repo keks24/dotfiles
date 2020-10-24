@@ -20,6 +20,7 @@
 # the access permission should be "440"!
 
 # table of contents:
+## <function_name>..............<description>
 ## echoC()......................output colourised text
 ## resetC().....................reset colourised text
 ## beQuiet()....................make given commands quiet
