@@ -363,46 +363,55 @@ isAlphanumeric()
 #    fi
 #}
 
-prepareLogDirectory()
-{
 # function: prepare a log directory
 ## external dependencies:
 ### chmod
 ### mkdir
+### outputErrorAndExit
 ### touch
 ## required permissions:
+### first parameter must be a (path to a) directory
 ### write permissions in the desired directory
 ## usage:
-### prepareLogDirectory "<directory_path>" "<directory_permissions>" "<application_name>" "<log_permissions>"
+### application_name_list+=("<application_name1>" "<application_name2>" "<application_namen>")
+### prepareLogDirectory "<log_directory_path>" "<log_directory_permissions>" <application_name_list> "<log_permissions>"
 ## examples:
-###
-###
-###
+### application_name_list+=("ssh-agent" "steam")
+### prepareLogDirectory "/tmp/log" "750" application_name_list[@] "640"
+### prepareLogDirectory "/tmp/log" "" application_name_list[@] ""
 ## references:
-### https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s09.html
-### https://dmorgan.info/posts/linux-lock-files/
-### https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html
+### none
 
-#prepareLogDirectory()
-#{
-#    local directory_path="${1}"
-#    local directory_permissions"${2}"
-#    local application_name="${3}"
-#    local log_file_permissions="${4}"
-#
-#    for APPLICATION_NAME in ${APPLICATION_NAME_LIST[@]}
-#    do
-#        if [[ ! -d "${LOG_DIRECTORY}/${APPLICATION_NAME}" ]]
-#        then
-#            mkdir --parents --mode="750" "${LOG_DIRECTORY}/${APPLICATION_NAME}"
-#            touch "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
-#            chmod 640 "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
-#        else
-#            continue
-#        fi
-#    done
-#    unset APPLICATON_NAME
-#}
+prepareLogDirectory()
+{
+    local log_directory_path="${1}"
+    local log_directory_permissions="${2:-750}"
+    local application_name_list=("${!3}")
+    local log_file_permissions="${4:-640}"
+    local log_file_suffix="log"
+
+    if [[ -f "${log_directory_path}" ]]
+    then
+       outputErrorAndExit "error" "'${log_directory_path}': Is a file, but should be a directory. Exiting ..." "1"
+    elif [[ ! -d "${log_directory_path}" ]]
+    then
+        /bin/mkdir --parents --mode="${log_directory_permissions}" "${log_directory_path}"
+    elif [[ ! -w "${log_directory_path}" ]]
+    then
+        outputErrorAndExit "error" "Directory is not writable: '${log_directory_path}'" "1"
+    fi
+
+    for application_name in ${application_name_list[@]}
+    do
+        if [[ ! -d "${log_directory_path}/${application_name}" ]]
+        then
+            /bin/mkdir --parents --mode="${log_directory_permissions}" "${log_directory_path}/${application_name}"
+            /bin/touch "${log_directory_path}/${application_name}/${application_name}.${log_file_suffix}"
+            /bin/chmod "${log_file_permissions}" "${log_directory_path}/${application_name}/${application_name}.${log_file_suffix}"
+        else
+            continue
+        fi
+    done
 }
 
 # function: check, if a command was not found and exit with exit code "127"
