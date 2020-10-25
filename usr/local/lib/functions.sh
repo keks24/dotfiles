@@ -32,6 +32,7 @@
 ## prepareLogDirectory()........prepare a log directory
 ## createAndRemoveLockFile()....create a lock file to prevent multiple executions of a script
 ## outputErrorAndExit().........helper function, to output a given error message and exit with given error code
+## countDown()..................countdown timer in seconds
 
 # define environment variables
 script_name="${0##*/}"
@@ -414,6 +415,33 @@ prepareLogDirectory()
         else
             continue
         fi
+    done
+}
+
+# function: countdown timer in seconds
+## external dependencies:
+### echoC
+### outputErrorAndExit
+## required permissions:
+### none
+## usage:
+### countDown "<output_message>" "<countdown_in_seconds>"
+## examples:
+### countDown "Exiting script in" "30"
+## references:
+### none
+
+countDown()
+{
+    local output_message="${1}"
+    local current_countdown_seconds="${2:-30}"
+
+    echoC -n "bold" "red" "${output_message} ... "
+    while (( "${current_countdown_seconds}" > 0 ))
+    do
+        echoC -n "bold" "red" "${current_countdown_seconds} "
+        /bin/sleep 1
+        (( current_countdown_seconds-- ))
     done
 }
 
