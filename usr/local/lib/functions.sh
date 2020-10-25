@@ -31,7 +31,7 @@
 ## checkCommands()..............check, if a command was not found and exit with exit code "127"
 ## prepareLogDirectory()........prepare a log directory
 ## createAndRemoveLockFile()....create a lock file to prevent multiple executions of a script
-## outputErrorAndExit...........helper function, to output a given error message and exit with given error code
+## outputErrorAndExit().........helper function, to output a given error message and exit with given error code
 
 # define environment variables
 script_name="${0##*/}"
@@ -85,6 +85,18 @@ font_colour_list["background_light_blue"]="104"
 font_colour_list["background_light_magenta"]="105"
 font_colour_list["background_light_cyan"]="106"
 font_colour_list["background_light_white"]="107"
+declare -A reset_type_list
+reset_type_list["all"]="000"
+reset_type_list["colour"]="039"
+reset_type_list["background"]="049"
+# "\e[021m" does not work in "alacritty"
+reset_type_list["bold"]="003"
+reset_type_list["dim"]="022"
+reset_type_list["underline"]="024"
+reset_type_list["blink"]="025"
+reset_type_list["reverse"]="027"
+reset_type_list["hidden"]="028"
+reset_type_list["strikethrough"]="029"
 
 # function: output colourised text
 ## external dependencies:
@@ -182,20 +194,7 @@ resetC()
     local output_font_reset="000"
     local output_font_start_sequence="\e["
     local output_font_end_sequence="m"
-
     local reset_type
-    declare -A reset_type_list
-    reset_type_list["all"]="000"
-    reset_type_list["colour"]="039"
-    reset_type_list["background"]="049"
-    # "\e[021m" does not work in "alacritty"
-    reset_type_list["bold"]="003"
-    reset_type_list["dim"]="022"
-    reset_type_list["underline"]="024"
-    reset_type_list["blink"]="025"
-    reset_type_list["reverse"]="027"
-    reset_type_list["hidden"]="028"
-    reset_type_list["strikethrough"]="029"
 
     for reset_type in "${!reset_type_list[@]}"
     do
