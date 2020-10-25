@@ -33,13 +33,14 @@
 ## createAndRemoveLockFile()....create a lock file to prevent multiple executions of a script
 ## outputErrorAndExit().........helper function, to output a given error message and exit with given error code
 ## countDown()..................countdown timer in seconds
+## createSystemLogEntry().......add dynamic system log entries to "/var/log/syslog" and "/var/log/messages"
 
 # define environment variables
 script_name="${0##*/}"
 script_directory_path="${0%/*}"
 script_pid="${$}"
 declare -a command_list
-command_list=("/bin/chmod" "/usr/bin/flock" "/bin/rm" "/bin/touch")
+command_list=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/bin/touch")
 lock_file_directory_path="/var/lock"
 lock_filename="${script_name}.lock"
 lock_file="${lock_file_directory_path}/${lock_filename}"
@@ -421,7 +422,6 @@ prepareLogDirectory()
 # function: countdown timer in seconds
 ## external dependencies:
 ### echoC
-### outputErrorAndExit
 ## required permissions:
 ### none
 ## usage:
@@ -443,6 +443,26 @@ countDown()
         /bin/sleep 1
         (( current_countdown_seconds-- ))
     done
+}
+
+# function: add dynamic system log entries to "/var/log/syslog" and "/var/log/messages"
+## external dependencies:
+### logger
+## required permissions:
+### none
+## usage:
+### createSystemLogEntry "<log_message>"
+## examples:
+### createSystemLogEntry "executed"
+### createSystemLogEntry "set graphics card power profile to '${graphics_power_profile_set}'"
+## references:
+### none
+
+createSystemLogEntry()
+{
+    local log_message="${1}"
+
+    /usr/bin/logger --tag "${script_name}" --id --stderr "${script_directory_path}/${script_name}: ${log_message}"
 }
 
 # function: check, if a command was not found and exit with exit code "127"
