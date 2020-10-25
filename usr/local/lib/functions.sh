@@ -388,6 +388,7 @@ prepareLogDirectory()
     local log_directory_permissions="${2:-750}"
     local application_name_list=("${!3}")
     local log_file_permissions="${4:-640}"
+    local application_name
     local log_file_suffix="log"
 
     if [[ -f "${log_directory_path}" ]]
