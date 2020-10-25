@@ -403,11 +403,14 @@ prepareLogDirectory()
 
     for application_name in ${application_name_list[@]}
     do
-        if [[ ! -d "${log_directory_path}/${application_name}" ]]
+        local log_directory="${log_directory_path}/${application_name}"
+        local log_file="${log_directory}/${application_name}.${log_file_suffix}"
+
+        if [[ ! -d "${log_directory}" ]]
         then
-            /bin/mkdir --parents --mode="${log_directory_permissions}" "${log_directory_path}/${application_name}"
-            /bin/touch "${log_directory_path}/${application_name}/${application_name}.${log_file_suffix}"
-            /bin/chmod "${log_file_permissions}" "${log_directory_path}/${application_name}/${application_name}.${log_file_suffix}"
+            /bin/mkdir --parents --mode="${log_directory_permissions}" "${log_directory}"
+            /bin/touch "${log_file}"
+            /bin/chmod "${log_file_permissions}" "${log_file}"
         else
             continue
         fi
