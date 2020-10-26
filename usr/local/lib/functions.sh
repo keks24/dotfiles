@@ -501,7 +501,7 @@ setGraphicsPowerMethodAndProfile()
 
     if [[ ! -f "${graphics_power_profile_file}" ]]
     then
-        outputErrorAndExit "File not found: '${graphics_power_profile_file}'." "1"
+        outputErrorAndExit "error" "File not found: '${graphics_power_profile_file}'." "1"
     elif [[ "${graphics_power_method_set}" == "${current_graphics_power_method_type}" ]]
     then
         echo "${graphics_power_profile_set}" | beQuiet "stdout" "/usr/bin/sudo /usr/bin/tee ${graphics_power_profile_file}"
@@ -534,7 +534,7 @@ getGraphicsPowerMethodType()
 
     if [[ ! -f "${graphics_power_method_file}" ]]
     then
-        outputErrorAndExit "File not found: '${graphics_power_profile_file}'." "1"
+        outputErrorAndExit "error" "File not found: '${graphics_power_profile_file}'." "1"
     else
         current_graphics_power_method_type=$(< "${graphics_power_method_file}")
     fi
