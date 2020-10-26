@@ -462,7 +462,7 @@ createSystemLogEntry()
 {
     local log_message="${1}"
 
-    /usr/bin/logger --tag "${script_name}" --id --stderr "${script_directory_path}/${script_name}: ${log_message}"
+    /usr/bin/logger --tag "${script_name}" --id="${script_pid}" --stderr "${script_directory_path}/${script_name}: ${log_message}"
 }
 
 # function: check, if a command was not found and exit with exit code "127"
