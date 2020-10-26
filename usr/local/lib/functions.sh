@@ -20,27 +20,29 @@
 # the access permission should be "440"!
 
 # table of contents:
-## <function_name>..............<description>
-## echoC()......................output colourised text
-## resetC().....................reset colourised text
-## beQuiet()....................make given commands quiet
-## isNumeric()..................check, if a given string only contains numeric characters
-## isString()...................check, if a given string only contains string characters
-## isAlphanumeric().............check, if a given string only contains alphanumeric characters
-## isSpecial()..................check, if a given string only contains special characters
-## checkCommands()..............check, if a command was not found and exit with exit code "127"
-## prepareLogDirectory()........prepare a log directory
-## createAndRemoveLockFile()....create a lock file to prevent multiple executions of a script
-## outputErrorAndExit().........helper function, to output a given error message and exit with given error code
-## countDown()..................countdown timer in seconds
-## createSystemLogEntry().......add dynamic system log entries to "/var/log/syslog" and "/var/log/messages"
+## <function_name>......................<description>
+## echoC()..............................output colourised text
+## resetC().............................reset colourised text
+## beQuiet()............................make given commands quiet
+## isNumeric()..........................check, if a given string only contains numeric characters
+## isString()...........................check, if a given string only contains string characters
+## isAlphanumeric().....................check, if a given string only contains alphanumeric characters
+## isSpecial()..........................check, if a given string only contains special characters
+## checkCommands()......................check, if a command was not found and exit with exit code "127"
+## prepareLogDirectory()................prepare a log directory
+## createAndRemoveLockFile()............create a lock file to prevent multiple executions of a script
+## outputErrorAndExit().................helper function, to output a given error message and exit with given error code
+## countDown()..........................countdown timer in seconds
+## createSystemLogEntry()...............add dynamic system log entries to "/var/log/syslog" and "/var/log/messages"
+## setGraphicsPowerMethodAndProfile()...set graphics card power method or profile
+## getGraphicsPowerMethodType().........get graphics card power method type
 
 # define environment variables
 script_name="${0##*/}"
 script_directory_path="${0%/*}"
 script_pid="${$}"
 declare -a command_list
-command_list=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/bin/touch")
+command_list=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/usr/bin/sudo" "/usr/bin/tee" "/bin/touch")
 lock_file_directory_path="/var/lock"
 lock_filename="${script_name}.lock"
 lock_file="${lock_file_directory_path}/${lock_filename}"
@@ -443,6 +445,7 @@ countDown()
         /bin/sleep 1
         (( current_countdown_seconds-- ))
     done
+    echo ""
 }
 
 # function: add dynamic system log entries to "/var/log/syslog" and "/var/log/messages"
@@ -463,6 +466,80 @@ createSystemLogEntry()
     local log_message="${1}"
 
     /usr/bin/logger --tag "${script_name}" --id="${script_pid}" --stderr "${script_directory_path}/${script_name}: ${log_message}"
+}
+
+# function: set graphics card power method or profile
+## external dependencies:
+### beQuiet
+### createSystemLogEntry
+### getGraphicsPowerMethodType
+### outputErrorAndExit
+### sudo
+### tee
+## required permissions:
+### The following entries in "/etc/sudoers.d/98-gfx-power-method-profile":
+### <username> <hostname>=NOPASSWD: /usr/bin/tee /sys/class/drm/card0/device/power_method
+### <username> <hostname>=NOPASSWD: /usr/bin/tee /sys/class/drm/card0/device/power_profile
+## usage:
+### setGraphicsPowerMethodAndProfile "<power_method>" "<profile_type>"
+## examples:
+### setGraphicsPowerMethodAndProfile "profile" "default"
+### setGraphicsPowerMethodAndProfile "profile" "auto"
+### setGraphicsPowerMethodAndProfile "profile" "low"
+### setGraphicsPowerMethodAndProfile "profile" "mid"
+### setGraphicsPowerMethodAndProfile "profile" "high"
+## references:
+### https://wiki.gentoo.org/wiki/Radeon#Power_management
+### https://www.x.org/wiki/RadeonFeature/#kmspowermanagementoptions
+
+setGraphicsPowerMethodAndProfile()
+{
+    local graphics_power_method_set="${1}"
+    local graphics_power_profile_set="${2}"
+    local graphics_power_profile_file="/sys/class/drm/card0/device/power_profile"
+    local current_graphics_power_method_type=$(getGraphicsPowerMethodType)
+
+    if [[ ! -f "${graphics_power_profile_file}" ]]
+    then
+        outputErrorAndExit "File not found: '${graphics_power_profile_file}'." "1"
+    elif [[ "${graphics_power_method_set}" == "${current_graphics_power_method_type}" ]]
+    then
+        echo "${graphics_power_profile_set}" | beQuiet "stdout" "/usr/bin/sudo /usr/bin/tee ${graphics_power_profile_file}"
+        createSystemLogEntry "set graphics card power profile to '${graphics_power_profile_set}'"
+    else
+        echo "${graphics_power_method_set}" | beQuiet "stdout" "/usr/bin/sudo /usr/bin/tee ${graphics_power_method_file}"
+        echo "${graphics_power_profile_set}" | beQuiet "stdout" "/usr/bin/sudo /usr/bin/tee ${graphics_power_profile_file}"
+        createSystemLogEntry "set graphics card power method to '${graphics_power_method_set}' and profile to '${graphics_power_profile_set}'"
+    fi
+}
+
+# function: get graphics card power method type
+## external dependencies:
+### outputErrorAndExit
+### setGraphicsPowerMethodAndProfile
+## required permissions:
+### none
+## usage:
+### getGraphicsPowerMethodType
+## examples:
+### getGraphicsPowerMethodType
+## references:
+### https://wiki.gentoo.org/wiki/Radeon#Power_management
+### https://www.x.org/wiki/RadeonFeature/#kmspowermanagementoptions
+
+getGraphicsPowerMethodType()
+{
+    local graphics_power_method_file="/sys/class/drm/card0/device/power_method"
+    local current_graphics_power_method_type
+
+    if [[ ! -f "${graphics_power_method_file}" ]]
+    then
+        outputErrorAndExit "File not found: '${graphics_power_profile_file}'." "1"
+    else
+        current_graphics_power_method_type=$(< "${graphics_power_method_file}")
+    fi
+
+    echo "${current_graphics_power_method_type}"
 }
 
 # function: check, if a command was not found and exit with exit code "127"
