@@ -27,7 +27,8 @@
 ## isNumeric()..........................check, if a given string only contains numeric characters
 ## isString()...........................check, if a given string only contains string characters
 ## isAlphanumeric().....................check, if a given string only contains alphanumeric characters
-## isSpecial()..........................check, if a given string only contains special characters
+## isSpecial()..........................check, if a given string only contains special printable characters
+## isVerySpecial()......................check, if a given string only contains special non-printable characters
 ## checkCommands()......................check, if a command was not found and exit with exit code "127"
 ## prepareLogDirectory()................prepare a log directory
 ## createAndRemoveLockFile()............create a lock file to prevent multiple executions of a script
@@ -337,7 +338,7 @@ isAlphanumeric()
     fi
 }
 
-# function: check, if a given string only contains special characters
+# function: check, if a given string only contains special printable characters
 ## external dependencies:
 ### outputErrorAndExit
 ## required permissions:
@@ -347,24 +348,48 @@ isAlphanumeric()
 ## examples:
 ### isSpecial "!\"§$%&/()=?\`\\"
 ### isSpecial '!"§$%&/()=?`\'
-### isSpecial "ł¶ŧ←↓→øþ¨æſðđŋħł˝’»«¢„“”µ·…"
 ## references:
 ### https://www.ascii-code.com/
 ### https://www.regular-expressions.info/posixbrackets.html
 
-#isSpecial()
-#{
-#    local input_string="${1}"
-#    #local printable_regex="^[^a-zA-Z0-9]+$"
-#    local printable_regex="^([ -~]|[^ -~])+?"
-#
-#    if [[ "${input_string}" =~ ${printable_regex} ]]
-#    then
-#        return 0
-#    else
-#        outputErrorAndExit "error" "Entered string is not special: '${input_string}'. Must match regular expression: '${printable_regex}' or '${extended_regex}'." "1"
-#    fi
-#}
+isSpecial()
+{
+    local input_string="${1}"
+    local printable_regex="^[^a-zA-Z0-9]+$"
+
+    if [[ "${input_string}" =~ ${printable_regex} ]]
+    then
+        return 0
+    else
+        outputErrorAndExit "error" "Entered string is not special: '${input_string}'. Must match regular expression: '${printable_regex}'." "1"
+    fi
+}
+
+# function: check, if a given string only contains special non-printable characters
+## external dependencies:
+### outputErrorAndExit
+## required permissions:
+### none
+## usage:
+### isVerySpecial "<very_special_character_string>"
+## examples:
+### isVerySpecial "ł¶ŧ←↓→øþ¨æſðđŋħł˝’»«¢„“”µ·…"
+## references:
+### https://www.ascii-code.com/
+### https://www.regular-expressions.info/posixbrackets.html
+
+isVerySpecial()
+{
+    local input_string="${1}"
+    local non_printable_regex="^[^ -~]+$"
+
+    if [[ "${input_string}" =~ ${non_printable_regex} ]]
+    then
+        return 0
+    else
+        outputErrorAndExit "error" "Entered string is not special: '${input_string}'. Must match regular expression: '${non_printable_regex}'." "1"
+    fi
+}
 
 # function: prepare a log directory
 ## external dependencies:
