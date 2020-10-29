@@ -46,7 +46,7 @@ declare -a COMMAND_LIST
 COMMAND_LIST=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/usr/bin/sudo" "/usr/bin/tee" "/bin/touch")
 LOCK_FILE_DIRECTORY_PATH="/var/lock"
 LOCK_FILENAME="${SCRIPT_NAME}.lock"
-LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
+declare -r LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
 declare -A FONT_TYPE_LIST
 FONT_TYPE_LIST["bold"]="001"
 FONT_TYPE_LIST["dim"]="002"
