@@ -110,6 +110,8 @@ RESET_TYPE_LIST["strikethrough"]="029"
 ### none
 ## usage:
 ### echoC "[<font_type>]" "[<font_colour>]" "<output_message>"
+## defaults:
+### none
 ## examples:
 ### echoC "bold" "red" "this text is bold and red."
 ### echoC "underline" "blue" "this text is underlined and blue."
@@ -183,6 +185,8 @@ echoC()
 ### none
 ## usage:
 ### resetC "<font_type>"
+## defaults:
+### none
 ## examples:
 ### echoC "bold" "red" "this text is bold and red.$(resetC 'all') this text is terminal default."
 ### echoC "underline" "blue" "this text is underlined and blue.$(resetC 'underline') this text is not underlined, but blue."
@@ -220,6 +224,8 @@ resetC()
 ### none
 ## usage:
 ### beQuiet "[<file_descriptor>]" "<command_with_parameters>"
+## defaults:
+### if "file_descriptor" is not set, "stdout_and_stderr" is assumed.
 ## examples:
 ### beQuiet "stdout" "ls -l"
 ### beQuiet "stderr" "unalias ls"
@@ -262,6 +268,8 @@ beQuiet()
 ### none
 ## usage:
 ### isNumeric "<numeric_character_string>"
+## defaults:
+### none
 ## examples:
 ### isNumeric "24"
 ### isNumeric "-24"
@@ -292,6 +300,8 @@ isNumeric()
 ### none
 ## usage:
 ### isString "<character_string>"
+## defaults:
+### none
 ## examples:
 ### isString "nom"
 ### isString "NOM"
@@ -318,6 +328,8 @@ isString()
 ### none
 ## usage:
 ### isNumeric "<alphanumeric_character_string>"
+## defaults:
+### none
 ## examples:
 ### isNumeric "24nom"
 ### isNumeric "nom24"
@@ -345,6 +357,8 @@ isAlphanumeric()
 ### none
 ## usage:
 ### isSpecial "<special_character_string>"
+## defaults:
+### none
 ## examples:
 ### isSpecial "!\"§$%&/()=?\`\\"
 ### isSpecial '!"§$%&/()=?`\'
@@ -372,6 +386,8 @@ isSpecial()
 ### none
 ## usage:
 ### isVerySpecial "<very_special_character_string>"
+## defaults:
+### none
 ## examples:
 ### isVerySpecial "ł¶ŧ←↓→øþ¨æſðđŋħł˝’»«¢„“”µ·…"
 ## references:
@@ -403,6 +419,9 @@ isVerySpecial()
 ## usage:
 ### application_name_list+=("<application_name1>" "<application_name2>" "<application_namen>")
 ### prepareLogDirectory "<log_directory_path>" "<log_directory_permissions>" <application_name_list> "<log_permissions>"
+## defaults:
+### if "log_directory_permissions" is not set, "750" is assumed.
+### if "log_file_permissions" is not set, "640" is assumed.
 ## examples:
 ### application_name_list+=("ssh-agent" "steam")
 ### prepareLogDirectory "/tmp/log" "750" application_name_list[@] "640"
@@ -452,7 +471,9 @@ prepareLogDirectory()
 ## required permissions:
 ### none
 ## usage:
-### countDown "<output_message>" "<countdown_in_seconds>"
+### countDown "<output_message>" "<countdown_seconds>"
+## defaults:
+### if "countdown_seconds" is not set, "30" is assumed.
 ## examples:
 ### countDown "Exiting script in" "30"
 ## references:
@@ -461,14 +482,14 @@ prepareLogDirectory()
 countDown()
 {
     local output_message="${1}"
-    local current_countdown_seconds="${2:-30}"
+    local countdown_seconds="${2:-30}"
 
     echoC -n "bold" "red" "${output_message} ... "
-    while (( "${current_countdown_seconds}" > 0 ))
+    while (( "${countdown_seconds}" > 0 ))
     do
-        echoC -n "bold" "red" "${current_countdown_seconds} "
+        echoC -n "bold" "red" "${countdown_seconds} "
         /bin/sleep 1
-        (( current_countdown_seconds-- ))
+        (( countdown_seconds-- ))
     done
     echo ""
 }
@@ -479,7 +500,9 @@ countDown()
 ## required permissions:
 ### none
 ## usage:
-### createSystemLogEntry "<log_message>"
+### createSystemLogEntry "[<log_message>]"
+## defaults:
+### if "log_message" is not set, "executed" is assumed.
 ## examples:
 ### createSystemLogEntry "executed"
 ### createSystemLogEntry "set graphics card power profile to '${graphics_power_profile_set}'"
@@ -488,7 +511,7 @@ countDown()
 
 createSystemLogEntry()
 {
-    local log_message="${1}"
+    local log_message="${1:-executed}"
 
     /usr/bin/logger --tag "${SCRIPT_NAME}" --id="${SCRIPT_PID}" --stderr "${SCRIPT_DIRECTORY_PATH}/${SCRIPT_NAME}: ${log_message}"
 }
@@ -507,6 +530,8 @@ createSystemLogEntry()
 ### <username> <hostname>=NOPASSWD: /usr/bin/tee /sys/class/drm/card0/device/power_profile
 ## usage:
 ### setGraphicsPowerMethodAndProfile "<power_method>" "<profile_type>"
+## defaults:
+### none
 ## examples:
 ### setGraphicsPowerMethodAndProfile "profile" "default"
 ### setGraphicsPowerMethodAndProfile "profile" "auto"
@@ -546,6 +571,8 @@ setGraphicsPowerMethodAndProfile()
 ### none
 ## usage:
 ### getGraphicsPowerMethodType
+## defaults:
+### none
 ## examples:
 ### getGraphicsPowerMethodType
 ## references:
@@ -575,6 +602,8 @@ getGraphicsPowerMethodType()
 ## usage:
 ### COMMAND_LIST+=("<command1>" "<command2>" "<commandn>")
 ### checkCommands
+## defaults:
+### "COMMAND_LIST" always contains the commands of this script.
 ## examples:
 ### COMMAND_LIST=("tail" "/usr/bin/tmux")
 ### checkCommands
@@ -607,6 +636,8 @@ checkCommands()
 ### write permissions in the directory "/var/lock/"
 ## usage:
 ### createAndRemoveLockFile "[<lock_type>]"
+## defaults:
+### if "lock_type" is not set, "exclusive" is assumed.
 ## examples:
 ### createAndRemoveLockFile
 ### createAndRemoveLockFile "exclusive"
@@ -651,6 +682,8 @@ createAndRemoveLockFile()
 ### none
 ## usage:
 ### outputErrorAndExit "<error_type>" "<error_message>" "[<exit_code>]"
+## defaults:
+### none
 ## examples:
 ### outputErrorAndExit "error" "Something went wrong." "1"
 ### outputErrorAndExit "warning" "Something went wrong." "1"
