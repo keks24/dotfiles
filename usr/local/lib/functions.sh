@@ -327,13 +327,13 @@ isString()
 ## required permissions:
 ### none
 ## usage:
-### isNumeric "<alphanumeric_character_string>"
+### isAlphanumeric "<alphanumeric_character_string>"
 ## defaults:
 ### none
 ## examples:
-### isNumeric "24nom"
-### isNumeric "nom24"
-### isNumeric "24NoM"
+### isAlphanumeric "24nom"
+### isAlphanumeric "nom24"
+### isAlphanumeric "24NoM"
 ## references:
 ### none
 
