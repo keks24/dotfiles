@@ -39,69 +39,69 @@
 ## getGraphicsPowerMethodType().........get graphics card power method type
 
 # define environment variables
-script_name="${0##*/}"
-script_directory_path="${0%/*}"
-script_pid="${$}"
-declare -a command_list
-command_list=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/usr/bin/sudo" "/usr/bin/tee" "/bin/touch")
-lock_file_directory_path="/var/lock"
-lock_filename="${script_name}.lock"
-lock_file="${lock_file_directory_path}/${lock_filename}"
-declare -A font_type_list
-font_type_list["bold"]="001"
-font_type_list["dim"]="002"
-font_type_list["underline"]="004"
-font_type_list["blink"]="005"
-font_type_list["reverse"]="007"
-font_type_list["hidden"]="008"
-font_type_list["strikethrough"]="009"
-declare -A font_colour_list
-font_colour_list["default"]="039"
-font_colour_list["black"]="030"
-font_colour_list["red"]="031"
-font_colour_list["green"]="032"
-font_colour_list["yellow"]="033"
-font_colour_list["blue"]="034"
-font_colour_list["magenta"]="035"
-font_colour_list["cyan"]="036"
-font_colour_list["light_grey"]="037"
-font_colour_list["dark_grey"]="090"
-font_colour_list["light_red"]="091"
-font_colour_list["light_green"]="092"
-font_colour_list["light_yellow"]="093"
-font_colour_list["light_blue"]="094"
-font_colour_list["light_magenta"]="095"
-font_colour_list["light_cyan"]="096"
-font_colour_list["white"]="097"
-font_colour_list["background_default"]="049"
-font_colour_list["background_black"]="040"
-font_colour_list["background_red"]="041"
-font_colour_list["background_green"]="042"
-font_colour_list["background_yellow"]="043"
-font_colour_list["background_blue"]="044"
-font_colour_list["background_magenta"]="045"
-font_colour_list["background_cyan"]="046"
-font_colour_list["background_light_grey"]="047"
-font_colour_list["background_dark_grey"]="100"
-font_colour_list["background_light_red"]="101"
-font_colour_list["background_light_green"]="102"
-font_colour_list["background_light_yellow"]="103"
-font_colour_list["background_light_blue"]="104"
-font_colour_list["background_light_magenta"]="105"
-font_colour_list["background_light_cyan"]="106"
-font_colour_list["background_light_white"]="107"
-declare -A reset_type_list
-reset_type_list["all"]="000"
-reset_type_list["colour"]="039"
-reset_type_list["background"]="049"
+SCRIPT_NAME="${0##*/}"
+SCRIPT_DIRECTORY_PATH="${0%/*}"
+SCRIPT_PID="${$}"
+declare -a COMMAND_LIST
+COMMAND_LIST=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/usr/bin/sudo" "/usr/bin/tee" "/bin/touch")
+LOCK_FILE_DIRECTORY_PATH="/var/lock"
+LOCK_FILENAME="${SCRIPT_NAME}.lock"
+LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
+declare -A FONT_TYPE_LIST
+FONT_TYPE_LIST["bold"]="001"
+FONT_TYPE_LIST["dim"]="002"
+FONT_TYPE_LIST["underline"]="004"
+FONT_TYPE_LIST["blink"]="005"
+FONT_TYPE_LIST["reverse"]="007"
+FONT_TYPE_LIST["hidden"]="008"
+FONT_TYPE_LIST["strikethrough"]="009"
+declare -A FONT_COLOUR_LIST
+FONT_COLOUR_LIST["default"]="039"
+FONT_COLOUR_LIST["black"]="030"
+FONT_COLOUR_LIST["red"]="031"
+FONT_COLOUR_LIST["green"]="032"
+FONT_COLOUR_LIST["yellow"]="033"
+FONT_COLOUR_LIST["blue"]="034"
+FONT_COLOUR_LIST["magenta"]="035"
+FONT_COLOUR_LIST["cyan"]="036"
+FONT_COLOUR_LIST["light_grey"]="037"
+FONT_COLOUR_LIST["dark_grey"]="090"
+FONT_COLOUR_LIST["light_red"]="091"
+FONT_COLOUR_LIST["light_green"]="092"
+FONT_COLOUR_LIST["light_yellow"]="093"
+FONT_COLOUR_LIST["light_blue"]="094"
+FONT_COLOUR_LIST["light_magenta"]="095"
+FONT_COLOUR_LIST["light_cyan"]="096"
+FONT_COLOUR_LIST["white"]="097"
+FONT_COLOUR_LIST["background_default"]="049"
+FONT_COLOUR_LIST["background_black"]="040"
+FONT_COLOUR_LIST["background_red"]="041"
+FONT_COLOUR_LIST["background_green"]="042"
+FONT_COLOUR_LIST["background_yellow"]="043"
+FONT_COLOUR_LIST["background_blue"]="044"
+FONT_COLOUR_LIST["background_magenta"]="045"
+FONT_COLOUR_LIST["background_cyan"]="046"
+FONT_COLOUR_LIST["background_light_grey"]="047"
+FONT_COLOUR_LIST["background_dark_grey"]="100"
+FONT_COLOUR_LIST["background_light_red"]="101"
+FONT_COLOUR_LIST["background_light_green"]="102"
+FONT_COLOUR_LIST["background_light_yellow"]="103"
+FONT_COLOUR_LIST["background_light_blue"]="104"
+FONT_COLOUR_LIST["background_light_magenta"]="105"
+FONT_COLOUR_LIST["background_light_cyan"]="106"
+FONT_COLOUR_LIST["background_light_white"]="107"
+declare -A RESET_TYPE_LIST
+RESET_TYPE_LIST["all"]="000"
+RESET_TYPE_LIST["colour"]="039"
+RESET_TYPE_LIST["background"]="049"
 # "\e[021m" does not work in "alacritty"
-reset_type_list["bold"]="003"
-reset_type_list["dim"]="022"
-reset_type_list["underline"]="024"
-reset_type_list["blink"]="025"
-reset_type_list["reverse"]="027"
-reset_type_list["hidden"]="028"
-reset_type_list["strikethrough"]="029"
+RESET_TYPE_LIST["bold"]="003"
+RESET_TYPE_LIST["dim"]="022"
+RESET_TYPE_LIST["underline"]="024"
+RESET_TYPE_LIST["blink"]="025"
+RESET_TYPE_LIST["reverse"]="027"
+RESET_TYPE_LIST["hidden"]="028"
+RESET_TYPE_LIST["strikethrough"]="029"
 
 # function: output colourised text
 ## external dependencies:
@@ -149,11 +149,11 @@ echoC()
     then
         output_font_delimiter=""
     else
-        for font_type in "${!font_type_list[@]}"
+        for font_type in "${!FONT_TYPE_LIST[@]}"
         do
             if [[ "${input_font_type}" == "${font_type}" ]]
             then
-                output_font_type="${font_type_list[${font_type}]}"
+                output_font_type="${FONT_TYPE_LIST[${font_type}]}"
                 break
             fi
         done
@@ -163,11 +163,11 @@ echoC()
     then
         output_font_delimiter=""
     else
-        for font_colour in "${!font_colour_list[@]}"
+        for font_colour in "${!FONT_COLOUR_LIST[@]}"
         do
             if [[ "${input_font_colour}" == "${font_colour}" ]]
             then
-                output_font_colour="${font_colour_list[${font_colour}]}"
+                output_font_colour="${FONT_COLOUR_LIST[${font_colour}]}"
                 break
             fi
         done
@@ -201,11 +201,11 @@ resetC()
     local output_font_end_sequence="m"
     local reset_type
 
-    for reset_type in "${!reset_type_list[@]}"
+    for reset_type in "${!RESET_TYPE_LIST[@]}"
     do
         if [[ "${input_font_type}" == "${reset_type}" ]]
         then
-            output_font_reset="${reset_type_list[${reset_type}]}"
+            output_font_reset="${RESET_TYPE_LIST[${reset_type}]}"
             break
         fi
     done
@@ -223,7 +223,7 @@ resetC()
 ## examples:
 ### beQuiet "stdout" "ls -l"
 ### beQuiet "stderr" "unalias ls"
-### beQuiet "stdout_and_stderr" "unalias ${command_list[@]}"
+### beQuiet "stdout_and_stderr" "unalias ${COMMAND_LIST[@]}"
 ### beQuiet "unalias command_which_does_not_exist"
 ## references:
 ### https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
@@ -490,7 +490,7 @@ createSystemLogEntry()
 {
     local log_message="${1}"
 
-    /usr/bin/logger --tag "${script_name}" --id="${script_pid}" --stderr "${script_directory_path}/${script_name}: ${log_message}"
+    /usr/bin/logger --tag "${SCRIPT_NAME}" --id="${SCRIPT_PID}" --stderr "${SCRIPT_DIRECTORY_PATH}/${SCRIPT_NAME}: ${log_message}"
 }
 
 # function: set graphics card power method or profile
@@ -573,10 +573,10 @@ getGraphicsPowerMethodType()
 ## required permissions:
 ### none
 ## usage:
-### command_list+=("<command1>" "<command2>" "<commandn>")
+### COMMAND_LIST+=("<command1>" "<command2>" "<commandn>")
 ### checkCommands
 ## examples:
-### command_list=("tail" "/usr/bin/tmux")
+### COMMAND_LIST=("tail" "/usr/bin/tmux")
 ### checkCommands
 ## references:
 ### none
@@ -585,9 +585,9 @@ checkCommands()
 {
     local current_command
 
-    beQuiet "unalias ${command_list[@]##/*}"
+    beQuiet "unalias ${COMMAND_LIST[@]##/*}"
 
-    for current_command in "${command_list[@]}"
+    for current_command in "${COMMAND_LIST[@]}"
     do
         if [[ ! $(beQuiet "stderr" "command -v ${current_command}") ]]
         then
@@ -621,25 +621,25 @@ createAndRemoveLockFile()
     local lock_file_type="${1:-exclusive}"
     local lock_file_file_descriptor
     local lock_file_max_string_length="10"
-    local script_pid_string_length="${#script_pid}"
+    local script_pid_string_length="${#SCRIPT_PID}"
 
-    if [[ ! -w "${lock_file_directory_path}" ]]
+    if [[ ! -w "${LOCK_FILE_DIRECTORY_PATH}" ]]
     then
-        outputErrorAndExit "error" "Directory is not writeable: '${lock_file_directory_path}'. Permission denied." "1"
+        outputErrorAndExit "error" "Directory is not writeable: '${LOCK_FILE_DIRECTORY_PATH}'. Permission denied." "1"
     else
-        /bin/touch "${lock_file}"
-        /bin/chmod 644 "${lock_file}"
-        # assign a free "read-only" file descriptor to "${lock_file}" and save the file descriptor value in "${lock_file_file_descriptor}". "write" would be ">" and "read-write" would be "<>".
-        exec {lock_file_file_descriptor}< "${lock_file}"
+        /bin/touch "${LOCK_FILE}"
+        /bin/chmod 644 "${LOCK_FILE}"
+        # assign a free "read-only" file descriptor to "${LOCK_FILE}" and save the file descriptor value in "${lock_file_file_descriptor}". "write" would be ">" and "read-write" would be "<>".
+        exec {lock_file_file_descriptor}< "${LOCK_FILE}"
 
         # "flock" must not be executed in a test block here!
         if $(/usr/bin/flock --"${lock_file_type}" --nonblock "${lock_file_file_descriptor}")
         then
             # unlock the file descriptor and remove the file on signal "EXIT"
-            trap "/usr/bin/flock --unlock ${lock_file_file_descriptor} && /bin/rm --force ${lock_file}" EXIT
-            printf "%*s%s\n" "$(( ${lock_file_max_string_length} - ${script_pid_string_length} ))" "" "${script_pid}" > "${lock_file}"
+            trap "/usr/bin/flock --unlock ${lock_file_file_descriptor} && /bin/rm --force ${LOCK_FILE}" EXIT
+            printf "%*s%s\n" "$(( ${lock_file_max_string_length} - ${script_pid_string_length} ))" "" "${SCRIPT_PID}" > "${LOCK_FILE}"
         else
-            outputErrorAndExit "warning" "Lock file is present: '${lock_file}', file descriptor '${lock_file_file_descriptor}'. Exiting ..." "1"
+            outputErrorAndExit "warning" "Lock file is present: '${LOCK_FILE}', file descriptor '${lock_file_file_descriptor}'. Exiting ..." "1"
         fi
     fi
 }
