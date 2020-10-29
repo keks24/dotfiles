@@ -430,7 +430,7 @@ prepareLogDirectory()
         outputErrorAndExit "error" "Directory is not writable: '${log_directory_path}'" "1"
     fi
 
-    for application_name in ${application_name_list[@]}
+    for application_name in "${application_name_list[@]}"
     do
         local log_directory="${log_directory_path}/${application_name}"
         local log_file="${log_directory}/${application_name}.${log_file_suffix}"
