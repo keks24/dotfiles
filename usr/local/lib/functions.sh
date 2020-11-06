@@ -334,13 +334,16 @@ isString()
 ### isAlphanumeric "24nom"
 ### isAlphanumeric "nom24"
 ### isAlphanumeric "24NoM"
+### isAlphanumeric "24-nom"
+### isAlphanumeric "nom-24"
+### isAlphanumeric "24-NoM"
 ## references:
 ### none
 
 isAlphanumeric()
 {
     local input_string="${1}"
-    local alphanumeric_regex="^[a-zA-Z0-9]+$"
+    local alphanumeric_regex="^[-a-zA-Z0-9]+$"
 
     if [[ "${input_string}" =~ ${alphanumeric_regex} ]]
     then
