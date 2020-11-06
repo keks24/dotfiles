@@ -680,7 +680,7 @@ createAndRemoveLockFile()
 
 # function: helper function, to output a given error message and exit with given error code
 ## external dependencies:
-### echoC
+### none
 ## required permissions:
 ### none
 ## usage:
@@ -704,15 +704,15 @@ outputErrorAndExit()
 
     case "${error_type}" in
         "warning")
-            echoC "bold" "yellow" "${error_message}" >&2
+            echo -e "\e[01;33m${error_message}" >&2
             ;;
 
         "error")
-            echoC "bold" "red" "${error_message}" >&2
+            echo -e "\e[01;31m${error_message}" >&2
             ;;
 
         *)
-            echoC "bold" "red" "Could not find error type: '${error_type}'." >&2
+            echo -e "\e[01;31mError type not found: '${error_type}'." >&2
             exit 1
     esac
 
@@ -720,7 +720,7 @@ outputErrorAndExit()
     then
         if [[ ! "${exit_code}" =~ ${exit_code_regex} ]]
         then
-            echoC "bold" "red" "Exit code is invalid: '${exit_code}'. Must be an integer between 0 and 255." >&2
+            echo -e "\e[01;31mExit code is invalid: '${exit_code}'. Must be an integer between 0 and 255." >&2
             exit 128
         else
             exit "${exit_code}"
