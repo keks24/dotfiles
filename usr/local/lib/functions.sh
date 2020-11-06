@@ -443,7 +443,7 @@ prepareLogDirectory()
 
     if [[ -f "${log_directory_path}" ]]
     then
-       outputErrorAndExit "error" "'${log_directory_path}': Is a file, but should be a directory. Exiting ..." "1"
+       outputErrorAndExit "error" "'${log_directory_path}': Is a file, but should be a directory." "1"
     elif [[ ! -d "${log_directory_path}" ]]
     then
         /bin/mkdir --parents --mode="${log_directory_permissions}" "${log_directory_path}"
@@ -673,7 +673,7 @@ createAndRemoveLockFile()
             trap "/usr/bin/flock --unlock ${lock_file_file_descriptor} && /bin/rm --force ${LOCK_FILE}" EXIT
             printf "%*s%s\n" "$(( ${lock_file_max_string_length} - ${script_pid_string_length} ))" "" "${SCRIPT_PID}" > "${LOCK_FILE}"
         else
-            outputErrorAndExit "warning" "Lock file is present: '${LOCK_FILE}', file descriptor '${lock_file_file_descriptor}'. Exiting ..." "1"
+            outputErrorAndExit "warning" "Lock file is present: '${LOCK_FILE}', file descriptor '${lock_file_file_descriptor}'." "1"
         fi
     fi
 }
