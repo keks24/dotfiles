@@ -261,6 +261,34 @@ beQuiet()
     esac
 }
 
+# function: check, if a given string is empty
+## external dependencies:
+### none
+## required permissions:
+### none
+## usage:
+### isEmpty "<character_string>"
+## defaults:
+### none
+## examples:
+### isEmpty ""
+## references:
+### none
+
+isEmpty()
+{
+    local input_string="${1}"
+    local empty_regex="^$"
+
+    if [[ "${input_string}" =~ ${empty_regex} ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+
 # function: check, if a given string only contains numeric characters
 ## external dependencies:
 ### none
