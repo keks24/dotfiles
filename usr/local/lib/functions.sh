@@ -645,7 +645,7 @@ checkCommands()
 {
     local current_command
 
-    beQuiet "unalias ${COMMAND_LIST[@]##/*}"
+    beQuiet "" "unalias ${COMMAND_LIST[@]##/*}"
 
     for current_command in "${COMMAND_LIST[@]}"
     do
