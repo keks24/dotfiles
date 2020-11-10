@@ -278,9 +278,9 @@ beQuiet()
 isEmpty()
 {
     local input_string="${1}"
-    local empty_regex="^$"
+    local empty_regex_string="^$"
 
-    if [[ "${input_string}" =~ ${empty_regex} ]]
+    if [[ "${input_string}" =~ ${empty_regex_string} ]]
     then
         return 0
     else
@@ -311,9 +311,9 @@ isEmpty()
 isNumeric()
 {
     local input_string="${1}"
-    local numeric_regex="^[+-]?[0-9]+(\.[0-9]+)?$"
+    local numeric_regex_string="^[+-]?[0-9]+(\.[0-9]+)?$"
 
-    if [[ "${input_string}" =~ ${numeric_regex} ]]
+    if [[ "${input_string}" =~ ${numeric_regex_string} ]]
     then
         return 0
     else
@@ -339,9 +339,9 @@ isNumeric()
 isString()
 {
     local input_string="${1}"
-    local string_regex="^[a-zA-Z]+$"
+    local string_regex_string="^[a-zA-Z]+$"
 
-    if [[ "${input_string}" =~ ${string_regex} ]]
+    if [[ "${input_string}" =~ ${string_regex_string} ]]
     then
         return 0
     else
@@ -371,9 +371,9 @@ isString()
 isAlphanumeric()
 {
     local input_string="${1}"
-    local alphanumeric_regex="^[-a-zA-Z0-9]+$"
+    local alphanumeric_regex_string="^[-a-zA-Z0-9]+$"
 
-    if [[ "${input_string}" =~ ${alphanumeric_regex} ]]
+    if [[ "${input_string}" =~ ${alphanumeric_regex_string} ]]
     then
         return 0
     else
@@ -400,9 +400,9 @@ isAlphanumeric()
 isSpecial()
 {
     local input_string="${1}"
-    local printable_regex="^[^a-zA-Z0-9]+$"
+    local printable_regex_string="^[^a-zA-Z0-9]+$"
 
-    if [[ "${input_string}" =~ ${printable_regex} ]]
+    if [[ "${input_string}" =~ ${printable_regex_string} ]]
     then
         return 0
     else
@@ -428,9 +428,9 @@ isSpecial()
 isVerySpecial()
 {
     local input_string="${1}"
-    local non_printable_regex="^[^ -~]+$"
+    local non_printable_regex_string="^[^ -~]+$"
 
-    if [[ "${input_string}" =~ ${non_printable_regex} ]]
+    if [[ "${input_string}" =~ ${non_printable_regex_string} ]]
     then
         return 0
     else
@@ -728,7 +728,7 @@ outputErrorAndExit()
     local error_type="${1}"
     local error_message="${2}"
     local exit_code="${3}"
-    local exit_code_regex="^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$"
+    local exit_code_regex_string="^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$"
 
     case "${error_type}" in
         "warning")
@@ -746,7 +746,7 @@ outputErrorAndExit()
 
     if [[ "${exit_code}" != "" ]]
     then
-        if [[ ! "${exit_code}" =~ ${exit_code_regex} ]]
+        if [[ ! "${exit_code}" =~ ${exit_code_regex_string} ]]
         then
             echo -e "\e[01;31mExit code is invalid: '${exit_code}'. Must be an integer between 0 and 255." >&2
             exit 128
