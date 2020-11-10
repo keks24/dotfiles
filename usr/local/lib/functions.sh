@@ -263,7 +263,7 @@ beQuiet()
 
 # function: check, if a given string only contains numeric characters
 ## external dependencies:
-### outputErrorAndExit
+### none
 ## required permissions:
 ### none
 ## usage:
@@ -289,13 +289,13 @@ isNumeric()
     then
         return 0
     else
-        outputErrorAndExit "error" "Entered string is not numeric: '${input_string}'. Must match regular expression: '${numeric_regex}'." "1"
+        return 1
     fi
 }
 
 # function: check, if a given string only contains string characters
 ## external dependencies:
-### outputErrorAndExit
+### none
 ## required permissions:
 ### none
 ## usage:
@@ -317,13 +317,13 @@ isString()
     then
         return 0
     else
-        outputErrorAndExit "error" "Entered string is not a string: '${input_string}'. Must match regular expression: '${string_regex}'." "1"
+        return 1
     fi
 }
 
 # function: check, if a given string only contains alphanumeric characters
 ## external dependencies:
-### outputErrorAndExit
+### none
 ## required permissions:
 ### none
 ## usage:
@@ -349,13 +349,13 @@ isAlphanumeric()
     then
         return 0
     else
-        outputErrorAndExit "error" "Entered string is not alphanumeric: '${input_string}'. Must match regular expression: '${alphanumeric_regex}'." "1"
+        return 1
     fi
 }
 
 # function: check, if a given string only contains special printable characters
 ## external dependencies:
-### outputErrorAndExit
+### none
 ## required permissions:
 ### none
 ## usage:
@@ -378,13 +378,13 @@ isSpecial()
     then
         return 0
     else
-        outputErrorAndExit "error" "Entered string is not special: '${input_string}'. Must match regular expression: '${printable_regex}'." "1"
+        return 1
     fi
 }
 
 # function: check, if a given string only contains special non-printable characters
 ## external dependencies:
-### outputErrorAndExit
+### none
 ## required permissions:
 ### none
 ## usage:
@@ -406,7 +406,7 @@ isVerySpecial()
     then
         return 0
     else
-        outputErrorAndExit "error" "Entered string is not special: '${input_string}'. Must match regular expression: '${non_printable_regex}'." "1"
+        return 1
     fi
 }
 
