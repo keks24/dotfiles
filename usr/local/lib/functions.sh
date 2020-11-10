@@ -275,8 +275,8 @@ beQuiet()
 ### isNumeric "-24"
 ### isNumeric "+24"
 ### isNumeric "24.24"
-### isNumeric "-24.24
-### isNumeric "+24.24
+### isNumeric "-24.24"
+### isNumeric "+24.24"
 ## references:
 ### none
 
