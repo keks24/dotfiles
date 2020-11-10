@@ -141,7 +141,7 @@ echoC()
     local font_colour
 
     # preserve echo parameters, such as: "-n", ...
-    if [[ "${echo_parameter}" =~ ^[a-z]+$ || "${echo_parameter}" == "" ]]
+    if isLowercaseString "${echo_parameter}" || isEmpty "${echo_parameter}"
     then
         # how to shift parameters unprofessionally. :)
         unset echo_parameter
