@@ -24,8 +24,11 @@
 ## echoC()..............................output colourised text
 ## resetC().............................reset colourised text
 ## beQuiet()............................make given commands quiet
+## isEmpty()............................check, if a given string is empty
 ## isNumeric()..........................check, if a given string only contains numeric characters
 ## isString()...........................check, if a given string only contains string characters
+## isLowercaseString()..................check, if a given string only contains lowercase characters
+## isUppercaseString()..................check, if a given string only contains uppercase characters
 ## isAlphanumeric().....................check, if a given string only contains alphanumeric characters
 ## isSpecial()..........................check, if a given string only contains special printable characters
 ## isVerySpecial()......................check, if a given string only contains special non-printable characters
@@ -333,6 +336,7 @@ isNumeric()
 ## examples:
 ### isString "nom"
 ### isString "NOM"
+### isString "NoM"
 ## references:
 ### none
 
@@ -342,6 +346,60 @@ isString()
     local string_regex_string="^[a-zA-Z]+$"
 
     if [[ "${input_string}" =~ ${string_regex_string} ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# function: check, if a given string only contains lowercase characters
+## external dependencies:
+### none
+## required permissions:
+### none
+## usage:
+### isLowercaseString "<character_string>"
+## defaults:
+### none
+## examples:
+### isLowercaseString "nom"
+## references:
+### none
+
+isLowercaseString()
+{
+    local input_string="${1}"
+    local lowercase_string_regex_string="^[a-z]+$"
+
+    if [[ "${input_string}" =~ ${lowercase_string_regex_string} ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# function: check, if a given string only contains uppercase characters
+## external dependencies:
+### none
+## required permissions:
+### none
+## usage:
+### isLowercaseString "<character_string>"
+## defaults:
+### none
+## examples:
+### isLowercaseString "NOM"
+## references:
+### none
+
+isUppercaseString()
+{
+    local input_string="${1}"
+    local uppercase_string_regex_string="^[A-Z]+$"
+
+    if [[ "${input_string}" =~ ${uppercase_string_regex_string} ]]
     then
         return 0
     else
