@@ -649,7 +649,7 @@ checkCommands()
 
     for current_command in "${COMMAND_LIST[@]}"
     do
-        if [[ ! $(beQuiet "stderr" "command -v ${current_command}") ]]
+        if [[ ! $(command -v "${current_command}") ]]
         then
             outputErrorAndExit "error" "Command not found: '${current_command}'." "127"
         fi
