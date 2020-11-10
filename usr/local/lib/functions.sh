@@ -229,7 +229,7 @@ resetC()
 ## examples:
 ### beQuiet "stdout" "ls -l"
 ### beQuiet "stderr" "unalias ls"
-### beQuiet "stdout_and_stderr" "unalias ${COMMAND_LIST[@]}"
+### beQuiet "stdout_and_stderr" "unalias ${COMMAND_LIST[*]##*/}"
 ### beQuiet "unalias command_which_does_not_exist"
 ## references:
 ### https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
@@ -645,7 +645,7 @@ checkCommands()
 {
     local current_command
 
-    beQuiet "" "unalias ${COMMAND_LIST[@]##/*}"
+    beQuiet "" "unalias ${COMMAND_LIST[*]##*/}"
 
     for current_command in "${COMMAND_LIST[@]}"
     do
