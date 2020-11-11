@@ -211,20 +211,25 @@ echoC()
 
 resetC()
 {
-    local input_font_type="${1}"
+    local input_font_type="${1:-}"
     local output_font_reset="000"
     local output_font_start_sequence="\e["
     local output_font_end_sequence="m"
     local reset_type
 
-    for reset_type in "${!RESET_TYPE_LIST[@]}"
-    do
-        if [[ "${input_font_type}" == "${reset_type}" ]]
-        then
-            output_font_reset="${RESET_TYPE_LIST[${reset_type}]}"
-            break
-        fi
-    done
+    if $(isEmpty "${input_font_type}") && ! $(isLowercaseString "${input_font_type}")
+    then
+        output_font_reset="000"
+    else
+        for reset_type in "${!RESET_TYPE_LIST[@]}"
+        do
+            if [[ "${input_font_type}" == "${reset_type}" ]]
+            then
+                output_font_reset="${RESET_TYPE_LIST[${reset_type}]}"
+                break
+            fi
+        done
+    fi
 
     echo -e "${output_font_start_sequence}${output_font_reset}${output_font_end_sequence}"
 }
