@@ -108,6 +108,7 @@ RESET_TYPE_LIST["strikethrough"]="029"
 
 # function: output colourised text
 ## external dependencies:
+### outputErrorAndExit
 ### resetC
 ## required permissions:
 ### none
@@ -116,12 +117,12 @@ RESET_TYPE_LIST["strikethrough"]="029"
 ## defaults:
 ### none
 ## examples:
-### echoC "bold" "red" "this text is bold and red."
-### echoC "underline" "blue" "this text is underlined and blue."
-### echoC "reverse" "" "this text is reversed."
-### echoC "" "blue" "this text is blue."
-### echoC "" "background_yellow" "this text's background is yellow."
 ### echoC -n "bold" "green" "this text is bold and green, but has no newline."
+### echoC "" "bold" "red" "this text is bold and red."
+### echoC "" "underline" "blue" "this text is underlined and blue."
+### echoC "" "reverse" "" "this text is reversed."
+### echoC "" "" "blue" "this text is blue."
+### echoC "" "" "background_yellow" "this text's background is yellow."
 ## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
