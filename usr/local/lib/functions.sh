@@ -790,15 +790,15 @@ outputErrorAndExit()
 
     case "${error_type}" in
         "warning")
-            echo -e "\e[01;33m${error_message}" >&2
+            echo -e "\e[01;33m${error_message}\e[0m" >&2
             ;;
 
         "error")
-            echo -e "\e[01;31m${error_message}" >&2
+            echo -e "\e[01;31m${error_message}\e[0m" >&2
             ;;
 
         *)
-            echo -e "\e[01;31mError type not found: '${error_type}'." >&2
+            echo -e "\e[01;31mError type not found: '${error_type}'.\e[0m" >&2
             exit 1
     esac
 
@@ -806,7 +806,7 @@ outputErrorAndExit()
     then
         if [[ ! "${exit_code}" =~ ${exit_code_regex_string} ]]
         then
-            echo -e "\e[01;31mExit code is invalid: '${exit_code}'. Must be an integer between 0 and 255." >&2
+            echo -e "\e[01;31mExit code is invalid: '${exit_code}'. Must be an integer between 0 and 255.\e[0m" >&2
             exit 128
         else
             exit "${exit_code}"
