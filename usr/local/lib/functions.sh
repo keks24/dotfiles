@@ -593,6 +593,7 @@ isVerySpecial()
 ### application_name_list+=("ssh-agent" "steam")
 ### prepareLogDirectory "/tmp/log" "750" application_name_list[@] "640"
 ### prepareLogDirectory "/tmp/log" "" application_name_list[@] ""
+### prepareLogDirectory "./nom" "" application_name_list[@] ""
 ## references:
 ### none
 
@@ -605,12 +606,28 @@ prepareLogDirectory()
     local application_name
     local log_file_suffix="log"
 
-    if [[ -f "${log_directory_path}" ]]
+    if $(isEmpty "${log_directory_path}")
     then
-       outputErrorAndExit "error" "'${log_directory_path}': Is a file, but should be a directory." "1"
+        outputErrorAndExit "error" "Entered string is empty: '${log_directory_path}'." "1"
+    elif [[ -f "${log_directory_path}" ]]
+    then
+        outputErrorAndExit "error" "'${log_directory_path}': Is a file, but should be a directory." "1"
+    elif ! $(isNumeric "${log_directory_permissions}")
+    then
+        outputErrorAndExit "error" "Entered string is not numeric: '${log_directory_permissions}'." "1"
+    elif $(isEmpty "${application_name_list[@]}")
+    then
+        outputErrorAndExit "error" "Entered string is empty: '${application_name_list[*]}'." "1"
+    elif [[ "$(declare -p application_name_list)" != *"declare -a"* ]]
+    then
+        outputErrorAndExit "error" "Entered string is not an array: '${application_name_list[*]}'." "1"
+    elif ! $(isNumeric "${log_file_permissions}")
+    then
+        outputErrorAndExit "error" "Entered string is not numeric: '${log_file_permissions}'." "1"
     elif [[ ! -d "${log_directory_path}" ]]
     then
         /bin/mkdir --parents --mode="${log_directory_permissions}" "${log_directory_path}"
+    # write check must be done here, a not existing directory is not writable as well.
     elif [[ ! -w "${log_directory_path}" ]]
     then
         outputErrorAndExit "error" "Directory is not writable: '${log_directory_path}'" "1"
