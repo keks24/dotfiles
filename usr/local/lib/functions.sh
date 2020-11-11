@@ -46,7 +46,7 @@ SCRIPT_NAME="${0##*/}"
 SCRIPT_DIRECTORY_PATH="${0%/*}"
 SCRIPT_PID="${$}"
 declare -a COMMAND_LIST
-COMMAND_LIST=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/usr/bin/sudo" "/usr/bin/tee" "/bin/touch")
+COMMAND_LIST=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/bin/sleep" "/usr/bin/sudo" "/usr/bin/tee" "/bin/touch")
 LOCK_FILE_DIRECTORY_PATH="/var/lock"
 LOCK_FILENAME="${SCRIPT_NAME}.lock"
 declare -r LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
