@@ -111,6 +111,11 @@ RESET_TYPE_LIST["strikethrough"]="029"
 ## external dependencies:
 ### outputErrorAndExit
 ### resetC
+### helper functions:
+#### isAlphanumeric
+#### isEmpty
+#### isLowercaseString
+#### isLowercaseUnderscoreString
 ## required permissions:
 ### none
 ## usage:
@@ -191,6 +196,9 @@ echoC()
 # function: reset colourised text
 ## external dependencies:
 ### echoC
+### helper functions:
+#### isEmpty
+#### isLowercaseString
 ## required permissions:
 ### none
 ## usage:
@@ -237,6 +245,9 @@ resetC()
 # function: make given commands quiet
 ## external dependencies:
 ### none
+### helper functions:
+#### isEmpty
+#### isLowercaseUnderscoreString
 ## required permissions:
 ### none
 ## usage:
@@ -286,6 +297,8 @@ beQuiet()
 # function: check, if a given string is empty
 ## external dependencies:
 ### none
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -314,6 +327,8 @@ isEmpty()
 # function: check, if a given string only contains numeric characters
 ## external dependencies:
 ### none
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -346,6 +361,8 @@ isNumeric()
 # function: check, if a given string only contains string characters
 ## external dependencies:
 ### none
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -375,6 +392,8 @@ isString()
 # function: check, if a given string only contains lowercase characters
 ## external dependencies:
 ### none
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -402,6 +421,8 @@ isLowercaseString()
 # function: check, if a given string only contains lowercase and underscore characters
 ## external dependencies:
 ### none
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -429,6 +450,8 @@ isLowercaseUnderscoreString()
 # function: check, if a given string only contains uppercase characters
 ## external dependencies:
 ### none
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -456,6 +479,8 @@ isUppercaseString()
 # function: check, if a given string only contains alphanumeric characters
 ## external dependencies:
 ### none
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -488,6 +513,8 @@ isAlphanumeric()
 # function: check, if a given string only contains special printable characters
 ## external dependencies:
 ### none
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -517,6 +544,8 @@ isSpecial()
 # function: check, if a given string only contains special non-printable characters
 ## external dependencies:
 ### none
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -548,6 +577,8 @@ isVerySpecial()
 ### mkdir
 ### outputErrorAndExit
 ### touch
+### helper functions:
+#### none
 ## required permissions:
 ### first parameter must be a (path to a) directory
 ### write permissions in the desired directory
@@ -603,6 +634,8 @@ prepareLogDirectory()
 # function: countdown timer in seconds
 ## external dependencies:
 ### echoC
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -632,6 +665,8 @@ countDown()
 # function: add dynamic system log entries to "/var/log/syslog" and "/var/log/messages"
 ## external dependencies:
 ### logger
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -659,6 +694,8 @@ createSystemLogEntry()
 ### outputErrorAndExit
 ### sudo
 ### tee
+### helper functions:
+#### none
 ## required permissions:
 ### The following entries in "/etc/sudoers.d/98-gfx-power-method-profile":
 ### <username> <hostname>=NOPASSWD: /usr/bin/tee /sys/class/drm/card0/device/power_method
@@ -702,6 +739,8 @@ setGraphicsPowerMethodAndProfile()
 ## external dependencies:
 ### outputErrorAndExit
 ### setGraphicsPowerMethodAndProfile
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -732,6 +771,8 @@ getGraphicsPowerMethodType()
 # function: check, if a command was not found and exit with exit code "127"
 ## external dependencies:
 ### outputErrorAndExit
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
@@ -767,6 +808,8 @@ checkCommands()
 ### outputErrorAndExit
 ### printf
 ### touch
+### helper functions:
+#### none
 ## required permissions:
 ### write permissions in the directory "/var/lock/"
 ## usage:
@@ -813,6 +856,8 @@ createAndRemoveLockFile()
 # function: helper function, to output a given error message and exit with given error code
 ## external dependencies:
 ### none
+### helper functions:
+#### none
 ## required permissions:
 ### none
 ## usage:
