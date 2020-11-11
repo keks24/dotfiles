@@ -132,6 +132,21 @@ echoC()
     local input_font_type="${2}"
     local input_font_colour="${3}"
     local output_message="${4}"
+
+    if ! $(isAlphanumeric "${echo_parameter}") && ! $(isLowercaseString "${echo_parameter}") && ! $(isEmpty "${echo_parameter}")
+    then
+        outputErrorAndExit "error" "Entered string is not alphanumeric, lowercase or empty: '${echo_parameter}'." "1"
+    elif ! $(isLowercaseString "${input_font_type}") && ! $(isEmpty "${input_font_type}")
+    then
+        outputErrorAndExit "error" "Entered string is not lowercase or empty: '${input_font_type}'." "1"
+    elif ! $(isLowercaseString "${input_font_colour}") && ! $(isEmpty "${input_font_colour}")
+    then
+        outputErrorAndExit "error" "Entered string is not lowercase or empty: '${input_font_colour}'." "1"
+    elif $(isEmpty "${output_message}")
+    then
+        outputErrorAndExit "error" "Entered string is empty: '${output_message}'." "1"
+    fi
+
     local output_font_type
     local output_font_colour
     local output_font_start_sequence="\e["
@@ -140,16 +155,6 @@ echoC()
     local output_font_reset="${output_font_start_sequence}0${output_font_end_sequence}"
     local font_type
     local font_colour
-
-    # preserve echo parameters, such as: "-n", ...
-    if isLowercaseString "${echo_parameter}" || isEmpty "${echo_parameter}"
-    then
-        # how to shift parameters unprofessionally. :)
-        unset echo_parameter
-        local input_font_type="${1}"
-        local input_font_colour="${2}"
-        local output_message="${3}"
-    fi
 
     if [[ "${input_font_type}" == "" ]]
     then
