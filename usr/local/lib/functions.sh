@@ -377,9 +377,9 @@ isString()
 isLowercaseString()
 {
     local input_string="${1}"
-    local lowercase_string_regex_string="^[a-z]+$"
+    local lowercase_regex_string="^[a-z]+$"
 
-    if [[ "${input_string}" =~ ${lowercase_string_regex_string} ]]
+    if [[ "${input_string}" =~ ${lowercase_regex_string} ]]
     then
         return 0
     else
@@ -404,9 +404,9 @@ isLowercaseString()
 isLowercaseUnderscoreString()
 {
     local input_string="${1}"
-    local lowercase_underscore_string_regex_string="^[_a-z]+$"
+    local lowercase_underscore_regex_string="^[_a-z]+$"
 
-    if [[ "${input_string}" =~ ${lowercase_underscore_string_regex_string} ]]
+    if [[ "${input_string}" =~ ${lowercase_underscore_regex_string} ]]
     then
         return 0
     else
@@ -431,9 +431,9 @@ isLowercaseUnderscoreString()
 isUppercaseString()
 {
     local input_string="${1}"
-    local uppercase_string_regex_string="^[A-Z]+$"
+    local uppercase_regex_string="^[A-Z]+$"
 
-    if [[ "${input_string}" =~ ${uppercase_string_regex_string} ]]
+    if [[ "${input_string}" =~ ${uppercase_regex_string} ]]
     then
         return 0
     else
