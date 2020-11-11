@@ -205,7 +205,7 @@ echoC()
 ## usage:
 ### resetC "<font_type>"
 ## defaults:
-### remove all text formatting
+### if "${input_font_type}" is not set or contains nonsense, "000" (reset all) is assumed.
 ## examples:
 ### echoC "" "bold" "red" "this text is bold and red.$(resetC 'all') this text is terminal default."
 ### echoC "" "underline" "blue" "this text is underlined and blue.$(resetC 'underline') this text is not underlined, but blue."
@@ -581,7 +581,7 @@ isVerySpecial()
 ### helper functions:
 #### none
 ## required permissions:
-### first parameter must be a (path to a) directory
+### "${log_directory_path}" must be a (path to a) directory
 ### write permissions in the desired directory
 ## usage:
 ### application_name_list+=("<application_name1>" "<application_name2>" "<application_namen>")
@@ -659,7 +659,7 @@ prepareLogDirectory()
 ## usage:
 ### countDown "<output_message>" "<countdown_seconds>"
 ## defaults:
-### if "countdown_seconds" is not set, "30" is assumed.
+### if "${countdown_seconds}" is not set, "30" is assumed.
 ## examples:
 ### countDown "Exiting script in" "30"
 ## references:
@@ -690,7 +690,7 @@ countDown()
 ## usage:
 ### createSystemLogEntry "[<log_message>]"
 ## defaults:
-### if "log_message" is not set, "executed" is assumed.
+### if "${log_message}" is not set, "executed" is assumed.
 ## examples:
 ### createSystemLogEntry "executed"
 ### createSystemLogEntry "set graphics card power profile to '${graphics_power_profile_set}'"
@@ -797,7 +797,7 @@ getGraphicsPowerMethodType()
 ### COMMAND_LIST+=("<command1>" "<command2>" "<commandn>")
 ### checkCommands
 ## defaults:
-### "COMMAND_LIST" always contains the commands of this script.
+### "${COMMAND_LIST[@]}" always contains the commands of this script.
 ## examples:
 ### COMMAND_LIST=("tail" "/usr/bin/tmux")
 ### checkCommands
@@ -833,7 +833,7 @@ checkCommands()
 ## usage:
 ### createAndRemoveLockFile "[<lock_type>]"
 ## defaults:
-### if "lock_type" is not set, "exclusive" is assumed.
+### if "${lock_type}" is not set, "exclusive" is assumed.
 ## examples:
 ### createAndRemoveLockFile
 ### createAndRemoveLockFile "exclusive"
