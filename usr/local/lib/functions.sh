@@ -28,6 +28,7 @@
 ## isNumeric()..........................check, if a given string only contains numeric characters
 ## isString()...........................check, if a given string only contains string characters
 ## isLowercaseString()..................check, if a given string only contains lowercase characters
+## isLowercaseUnderscoreString()........check, if a given string only contains lowercase and underscore characters
 ## isUppercaseString()..................check, if a given string only contains uppercase characters
 ## isAlphanumeric().....................check, if a given string only contains alphanumeric characters
 ## isSpecial()..........................check, if a given string only contains special printable characters
@@ -139,7 +140,7 @@ echoC()
     elif ! $(isLowercaseString "${input_font_type}") && ! $(isEmpty "${input_font_type}")
     then
         outputErrorAndExit "error" "Entered string is not lowercase or empty: '${input_font_type}'." "1"
-    elif ! $(isLowercaseString "${input_font_colour}") && ! $(isEmpty "${input_font_colour}")
+    elif ! $(isLowercaseUnderscoreString "${input_font_colour}") && ! $(isEmpty "${input_font_colour}")
     then
         outputErrorAndExit "error" "Entered string is not lowercase or empty: '${input_font_colour}'." "1"
     elif $(isEmpty "${output_message}")
@@ -379,6 +380,33 @@ isLowercaseString()
     local lowercase_string_regex_string="^[a-z]+$"
 
     if [[ "${input_string}" =~ ${lowercase_string_regex_string} ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# function: check, if a given string only contains lowercase and underscore characters
+## external dependencies:
+### none
+## required permissions:
+### none
+## usage:
+### isLowercaseUnderscoreString "<character_string>"
+## defaults:
+### none
+## examples:
+### isLowercaseUnderscoreString "nom_nom"
+## references:
+### none
+
+isLowercaseUnderscoreString()
+{
+    local input_string="${1}"
+    local lowercase_underscore_string_regex_string="^[_a-z]+$"
+
+    if [[ "${input_string}" =~ ${lowercase_underscore_string_regex_string} ]]
     then
         return 0
     else
