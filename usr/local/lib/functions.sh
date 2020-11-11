@@ -196,7 +196,7 @@ echoC()
 ## usage:
 ### resetC "<font_type>"
 ## defaults:
-### none
+### remove all text formatting
 ## examples:
 ### echoC "" "bold" "red" "this text is bold and red.$(resetC 'all') this text is terminal default."
 ### echoC "" "underline" "blue" "this text is underlined and blue.$(resetC 'underline') this text is not underlined, but blue."
@@ -204,6 +204,8 @@ echoC()
 ### echoC "" "" "blue" "this text is blue.$(resetC 'colour') this text is terminal default."
 ### echoC "" "" "background_yellow" "this text's background is yellow.$(resetC 'background') this text is terminal default."
 ### echoC "" "" "background_yellow" "this text's background is yellow.$(resetC 'background') this text is terminal default. $(echoC '' 'background_yellow' 'this text'"'"'s background is yellow again')."
+### echoC "" "reverse" "blue" "This is reversed and blue.$(resetC 'nonsenseentry') This is terminal default."
+### echoC "" "reverse" "magenta" "This is reversed and magenta.$(resetC) This is terminal default."
 ## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
