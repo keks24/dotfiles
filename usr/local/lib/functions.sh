@@ -148,7 +148,7 @@ echoC()
         outputErrorAndExit "error" "Entered string is not lowercase or empty: '${input_font_type}'." "1"
     elif ! $(isLowercaseUnderscoreString "${input_font_colour}") && ! $(isEmpty "${input_font_colour}")
     then
-        outputErrorAndExit "error" "Entered string is not lowercase or empty: '${input_font_colour}'." "1"
+        outputErrorAndExit "error" "Entered string is not lowercase (with underscores) or empty: '${input_font_colour}'." "1"
     elif $(isEmpty "${output_message}")
     then
         outputErrorAndExit "error" "Entered string is empty: '${output_message}'." "1"
@@ -270,7 +270,7 @@ beQuiet()
 
     if ! $(isLowercaseUnderscoreString "${file_descriptor}")
     then
-        outputErrorAndExit "error" "Entered string is not lowercase: '${file_descriptor}'." "1"
+        outputErrorAndExit "error" "Entered string is not lowercase (with underscores): '${file_descriptor}'." "1"
     fi
 
     # set positional parameters, to make command execution via "${@}" possible.
