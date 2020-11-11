@@ -249,6 +249,11 @@ beQuiet()
     local file_descriptor="${1:-stdout_and_stderr}"
     local command="${2}"
 
+    if ! $(isLowercaseUnderscoreString "${file_descriptor}")
+    then
+        outputErrorAndExit "error" "Entered string is not lowercase: '${file_descriptor}'." "1"
+    fi
+
     # set positional parameters, to make command execution via "${@}" possible.
     # "ls -l -a -t -r" becomes "ls" "-l" "-a" "-t" "-r".
     set -- ${command}
