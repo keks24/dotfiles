@@ -16,8 +16,9 @@
 
 # this file should only be sourced once at the beginning of a shell script!
 # no shebang should be used here!
-# all functions are written in "bash"
-# the access permission should be "440"!
+# all functions are written in "bash".
+# function calls within if statements are executed in subshells, since the return values are not needed.
+# the access permissions of this file should be "440"!
 
 # table of contents:
 ## <function_name>......................<description>
