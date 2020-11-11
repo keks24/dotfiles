@@ -198,12 +198,12 @@ echoC()
 ## defaults:
 ### none
 ## examples:
-### echoC "bold" "red" "this text is bold and red.$(resetC 'all') this text is terminal default."
-### echoC "underline" "blue" "this text is underlined and blue.$(resetC 'underline') this text is not underlined, but blue."
-### echoC "reverse" "" "this text is reversed.$(resetC 'reverse') this text is terminal default."
-### echoC "" "blue" "this text is blue.$(resetC 'colour') this text is terminal default."
-### echoC "" "background_yellow" "this text's background is yellow.$(resetC 'background') this text is terminal default."
-### echoC "" "background_yellow" "this text's background is yellow.$(resetC 'background') this text is terminal default. $(echoC '' 'background_yellow' 'this text'"'"'s background is yellow again')."
+### echoC "" "bold" "red" "this text is bold and red.$(resetC 'all') this text is terminal default."
+### echoC "" "underline" "blue" "this text is underlined and blue.$(resetC 'underline') this text is not underlined, but blue."
+### echoC "" "reverse" "" "this text is reversed.$(resetC 'reverse') this text is terminal default."
+### echoC "" "" "blue" "this text is blue.$(resetC 'colour') this text is terminal default."
+### echoC "" "" "background_yellow" "this text's background is yellow.$(resetC 'background') this text is terminal default."
+### echoC "" "" "background_yellow" "this text's background is yellow.$(resetC 'background') this text is terminal default. $(echoC '' 'background_yellow' 'this text'"'"'s background is yellow again')."
 ## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
