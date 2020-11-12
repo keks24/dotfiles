@@ -28,7 +28,7 @@
 ## isEmpty()............................check, if a given string is empty
 ## isNumeric()..........................check, if a given string only contains numeric characters
 ## isString()...........................check, if a given string only contains string characters
-## isSlashString()......................check, if a given string only contains string and slash characters
+## isDirectoryPath()....................check, if a given string only contains a directory path
 ## isLowercaseString()..................check, if a given string only contains lowercase characters
 ## isLowercaseUnderscoreString()........check, if a given string only contains lowercase and underscore characters
 ## isUppercaseString()..................check, if a given string only contains uppercase characters
@@ -401,7 +401,7 @@ isString()
     fi
 }
 
-# function: check, if a given string only contains string and slash characters
+# function: check, if a given string only contains a directory path
 ## external dependencies:
 ### none
 ### helper functions:
@@ -409,17 +409,17 @@ isString()
 ## required permissions:
 ### none
 ## usage:
-### isSlashString "<character_string>"
+### isDirectoryPath "<character_string>"
 ## defaults:
 ### none
 ## examples:
-### isSlashString "/tmp/nom"
-### isSlashString "nom/nom"
-### isSlashString "/var/run/nom"
+### isDirectoryPath "/tmp/nom"
+### isDirectoryPath "nom/nom"
+### isDirectoryPath "/var/run/nom"
 ## references:
 ### none
 
-isSlashString()
+isDirectoryPath()
 {
     local input_string="${1}"
 
@@ -616,7 +616,7 @@ isVerySpecial()
 ### helper functions:
 #### isEmpty
 #### isNumeric
-#### isSlashString
+#### isDirectoryPath
 ## required permissions:
 ### "${log_directory_path}" must be a (path to a) directory
 ### write permissions in the desired directory
@@ -647,7 +647,7 @@ prepareLogDirectory()
     if $(isEmpty "${log_directory_path}")
     then
         outputErrorAndExit "error" "Entered string is empty: '${log_directory_path}'. Must not be empty." "1"
-    elif ! $(isSlashString "${log_directory_path}")
+    elif ! $(isDirectoryPath "${log_directory_path}")
     then
         outputErrorAndExit "error" "Entered string is not a path: '${log_directory_path}'. Must match regular expression: '${STRING_SLASH_REGEX_STRING}'." "1"
     elif [[ -f "${log_directory_path}" ]]
