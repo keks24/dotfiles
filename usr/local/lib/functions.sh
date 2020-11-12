@@ -38,7 +38,7 @@
 ## checkCommands()......................check, if a command was not found and exit with exit code "127"
 ## prepareLogDirectory()................prepare a log directory
 ## createAndRemoveLockFile()............create a lock file to prevent multiple executions of a script
-## outputErrorAndExit().................helper function, to output a given error message and exit with given error code
+## outputErrorAndExit().................output a given error message and exit with given error code
 ## countDown()..........................countdown timer in seconds
 ## createSystemLogEntry()...............add dynamic system log entries to "/var/log/syslog" and "/var/log/messages"
 ## setGraphicsPowerMethodAndProfile()...set graphics card power method or profile
@@ -256,7 +256,7 @@ resetC()
 
 # function: make given commands quiet
 ## external dependencies:
-### none
+### outputErrorAndExit
 ### helper functions:
 #### isEmpty
 #### isLowercaseUnderscoreString
@@ -611,7 +611,9 @@ isVerySpecial()
 ### outputErrorAndExit
 ### touch
 ### helper functions:
-#### none
+#### isEmpty
+#### isNumeric
+#### isSlashString
 ## required permissions:
 ### "${log_directory_path}" must be a (path to a) directory
 ### write permissions in the desired directory
@@ -686,7 +688,8 @@ prepareLogDirectory()
 ## external dependencies:
 ### echoC
 ### helper functions:
-#### none
+#### isEmpty
+#### isNumeric
 ## required permissions:
 ### none
 ## usage:
@@ -914,7 +917,7 @@ createAndRemoveLockFile()
     fi
 }
 
-# function: helper function, to output a given error message and exit with given error code
+# function: output a given error message and exit with given error code
 ## external dependencies:
 ### none
 ### helper functions:
