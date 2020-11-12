@@ -151,9 +151,9 @@ echoC()
     local input_font_colour="${3}"
     local output_message="${4}"
 
-    if ! $(isAlphanumeric "${echo_parameter}") && ! $(isLowercaseString "${echo_parameter}") && ! $(isEmpty "${echo_parameter}")
+    if ! $(isAlphanumeric "${echo_parameter}") && ! $(isEmpty "${echo_parameter}")
     then
-        outputErrorAndExit "error" "Entered string is not alphanumeric, lowercase or empty: '${echo_parameter}'. Must match any regular expression: '${ALPHANUMERIC_REGEX_STRING}', '${LOWERCASE_REGEX_STRING}', '${EMPTY_REGEX_STRING}'." "1"
+        outputErrorAndExit "error" "Entered string is not alphanumeric or empty: '${echo_parameter}'. Must match any regular expression: '${ALPHANUMERIC_REGEX_STRING}', '${EMPTY_REGEX_STRING}'." "1"
     elif ! $(isLowercaseString "${input_font_type}") && ! $(isEmpty "${input_font_type}")
     then
         outputErrorAndExit "error" "Entered string is not lowercase or empty: '${input_font_type}'. Must match any regular expression: '${LOWERCASE_REGEX_STRING}', '${EMPTY_REGEX_STRING}'." "1"
