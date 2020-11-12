@@ -28,6 +28,7 @@
 ## isEmpty()............................check, if a given string is empty
 ## isNumeric()..........................check, if a given string only contains numeric characters
 ## isString()...........................check, if a given string only contains string characters
+## isSlashString()......................check, if a given string only contains string and slash characters
 ## isLowercaseString()..................check, if a given string only contains lowercase characters
 ## isLowercaseUnderscoreString()........check, if a given string only contains lowercase and underscore characters
 ## isUppercaseString()..................check, if a given string only contains uppercase characters
@@ -52,6 +53,16 @@ COMMAND_LIST=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/bin/sl
 LOCK_FILE_DIRECTORY_PATH="/var/lock"
 LOCK_FILENAME="${SCRIPT_NAME}.lock"
 declare -r LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
+EMPTY_REGEX_STRING="^$"
+NUMERIC_REGEX_STRING="^[+-]?[0-9]+(\.[0-9]+)?$"
+STRING_REGEX_STRING="^[a-zA-Z]+$"
+STRING_SLASH_REGEX_STRING="^.*\/.*$"
+LOWERCASE_REGEX_STRING="^[a-z]+$"
+LOWERCASE_UNDERSCORE_REGEX_STRING="^[_a-z]+$"
+UPPERCASE_REGEX_STRING="^[A-Z]+$"
+ALPHANUMERIC_REGEX_STRING="^[-a-zA-Z0-9]+$"
+PRINTABLE_REGEX_STRING="^[^a-zA-Z0-9]+$"
+NON_PRINTABLE_REGEX_STRING="^[^ -~]+$"
 declare -A FONT_TYPE_LIST
 FONT_TYPE_LIST["bold"]="001"
 FONT_TYPE_LIST["dim"]="002"
@@ -142,16 +153,16 @@ echoC()
 
     if ! $(isAlphanumeric "${echo_parameter}") && ! $(isLowercaseString "${echo_parameter}") && ! $(isEmpty "${echo_parameter}")
     then
-        outputErrorAndExit "error" "Entered string is not alphanumeric, lowercase or empty: '${echo_parameter}'." "1"
+        outputErrorAndExit "error" "Entered string is not alphanumeric, lowercase or empty: '${echo_parameter}'. Must match any regular expression: '${ALPHANUMERIC_REGEX_STRING}', '${LOWERCASE_REGEX_STRING}', '${EMPTY_REGEX_STRING}'." "1"
     elif ! $(isLowercaseString "${input_font_type}") && ! $(isEmpty "${input_font_type}")
     then
-        outputErrorAndExit "error" "Entered string is not lowercase or empty: '${input_font_type}'." "1"
+        outputErrorAndExit "error" "Entered string is not lowercase or empty: '${input_font_type}'. Must match any regular expression: '${LOWERCASE_REGEX_STRING}', '${EMPTY_REGEX_STRING}'." "1"
     elif ! $(isLowercaseUnderscoreString "${input_font_colour}") && ! $(isEmpty "${input_font_colour}")
     then
-        outputErrorAndExit "error" "Entered string is not lowercase (with underscores) or empty: '${input_font_colour}'." "1"
+        outputErrorAndExit "error" "Entered string is not lowercase (with underscores) or empty: '${input_font_colour}'. Must match any regular expression: '${LOWERCASE_UNDERSCORE_REGEX_STRING}', '${EMPTY_REGEX_STRING}'." "1"
     elif $(isEmpty "${output_message}")
     then
-        outputErrorAndExit "error" "Entered string is empty: '${output_message}'." "1"
+        outputErrorAndExit "error" "Entered string is empty: '${output_message}'. Must not be empty." "1"
     fi
 
     local output_font_type
@@ -270,7 +281,7 @@ beQuiet()
 
     if ! $(isLowercaseUnderscoreString "${file_descriptor}")
     then
-        outputErrorAndExit "error" "Entered string is not lowercase (with underscores): '${file_descriptor}'." "1"
+        outputErrorAndExit "error" "Entered string is not lowercase (with underscores): '${file_descriptor}'. Must match regular expression: '${LOWERCASE_UNDERSCORE_REGEX_STRING}'." "1"
     fi
 
     # set positional parameters, to make command execution via "${@}" possible.
@@ -314,9 +325,8 @@ beQuiet()
 isEmpty()
 {
     local input_string="${1}"
-    local empty_regex_string="^$"
 
-    if [[ "${input_string}" =~ ${empty_regex_string} ]]
+    if [[ "${input_string}" =~ ${EMPTY_REGEX_STRING} ]]
     then
         return 0
     else
@@ -349,9 +359,8 @@ isEmpty()
 isNumeric()
 {
     local input_string="${1}"
-    local numeric_regex_string="^[+-]?[0-9]+(\.[0-9]+)?$"
 
-    if [[ "${input_string}" =~ ${numeric_regex_string} ]]
+    if [[ "${input_string}" =~ ${NUMERIC_REGEX_STRING} ]]
     then
         return 0
     else
@@ -380,9 +389,38 @@ isNumeric()
 isString()
 {
     local input_string="${1}"
-    local string_regex_string="^[a-zA-Z]+$"
 
-    if [[ "${input_string}" =~ ${string_regex_string} ]]
+    if [[ "${input_string}" =~ ${STRING_REGEX_STRING} ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# function: check, if a given string only contains string and slash characters
+## external dependencies:
+### none
+### helper functions:
+#### none
+## required permissions:
+### none
+## usage:
+### isSlashString "<character_string>"
+## defaults:
+### none
+## examples:
+### isSlashString "/tmp/nom"
+### isSlashString "nom/nom"
+### isSlashString "/var/run/nom"
+## references:
+### none
+
+isSlashString()
+{
+    local input_string="${1}"
+
+    if [[ "${input_string}" =~ ${STRING_SLASH_REGEX_STRING} ]]
     then
         return 0
     else
@@ -409,9 +447,8 @@ isString()
 isLowercaseString()
 {
     local input_string="${1}"
-    local lowercase_regex_string="^[a-z]+$"
 
-    if [[ "${input_string}" =~ ${lowercase_regex_string} ]]
+    if [[ "${input_string}" =~ ${LOWERCASE_REGEX_STRING} ]]
     then
         return 0
     else
@@ -438,9 +475,8 @@ isLowercaseString()
 isLowercaseUnderscoreString()
 {
     local input_string="${1}"
-    local lowercase_underscore_regex_string="^[_a-z]+$"
 
-    if [[ "${input_string}" =~ ${lowercase_underscore_regex_string} ]]
+    if [[ "${input_string}" =~ ${LOWERCASE_UNDERSCORE_REGEX_STRING} ]]
     then
         return 0
     else
@@ -467,9 +503,8 @@ isLowercaseUnderscoreString()
 isUppercaseString()
 {
     local input_string="${1}"
-    local uppercase_regex_string="^[A-Z]+$"
 
-    if [[ "${input_string}" =~ ${uppercase_regex_string} ]]
+    if [[ "${input_string}" =~ ${UPPERCASE_REGEX_STRING} ]]
     then
         return 0
     else
@@ -501,9 +536,8 @@ isUppercaseString()
 isAlphanumeric()
 {
     local input_string="${1}"
-    local alphanumeric_regex_string="^[-a-zA-Z0-9]+$"
 
-    if [[ "${input_string}" =~ ${alphanumeric_regex_string} ]]
+    if [[ "${input_string}" =~ ${ALPHANUMERIC_REGEX_STRING} ]]
     then
         return 0
     else
@@ -532,9 +566,8 @@ isAlphanumeric()
 isSpecial()
 {
     local input_string="${1}"
-    local printable_regex_string="^[^a-zA-Z0-9]+$"
 
-    if [[ "${input_string}" =~ ${printable_regex_string} ]]
+    if [[ "${input_string}" =~ ${PRINTABLE_REGEX_STRING} ]]
     then
         return 0
     else
@@ -562,9 +595,8 @@ isSpecial()
 isVerySpecial()
 {
     local input_string="${1}"
-    local non_printable_regex_string="^[^ -~]+$"
 
-    if [[ "${input_string}" =~ ${non_printable_regex_string} ]]
+    if [[ "${input_string}" =~ ${NON_PRINTABLE_REGEX_STRING} ]]
     then
         return 0
     else
@@ -593,7 +625,8 @@ isVerySpecial()
 ### application_name_list+=("ssh-agent" "steam")
 ### prepareLogDirectory "/tmp/log" "750" application_name_list[@] "640"
 ### prepareLogDirectory "/tmp/log" "" application_name_list[@] ""
-### prepareLogDirectory "./nom" "" application_name_list[@] ""
+### prepareLogDirectory "./log" "" application_name_list[@] ""
+### prepareLogDirectory "log/" "" application_name_list[@] ""
 ## references:
 ### none
 
@@ -608,22 +641,22 @@ prepareLogDirectory()
 
     if $(isEmpty "${log_directory_path}")
     then
-        outputErrorAndExit "error" "Entered string is empty: '${log_directory_path}'." "1"
+        outputErrorAndExit "error" "Entered string is empty: '${log_directory_path}'. Must not be empty." "1"
+    elif ! $(isSlashString "${log_directory_path}")
+    then
+        outputErrorAndExit "error" "Entered string is not a path: '${log_directory_path}'. Must match regular expression: '${STRING_SLASH_REGEX_STRING}'." "1"
     elif [[ -f "${log_directory_path}" ]]
     then
-        outputErrorAndExit "error" "'${log_directory_path}': Is a file, but should be a directory." "1"
+        outputErrorAndExit "error" "'${log_directory_path}': Is a file, but must be a directory." "1"
     elif ! $(isNumeric "${log_directory_permissions}")
     then
-        outputErrorAndExit "error" "Entered string is not numeric: '${log_directory_permissions}'." "1"
+        outputErrorAndExit "error" "Entered string is not numeric: '${log_directory_permissions}'. Must match regular expression: '${NUMERIC_REGEX_STRING}'." "1"
     elif $(isEmpty "${application_name_list[@]}")
     then
-        outputErrorAndExit "error" "Entered string is empty: '${application_name_list[*]}'." "1"
-    elif [[ "$(declare -p application_name_list)" != *"declare -a"* ]]
-    then
-        outputErrorAndExit "error" "Entered string is not an array: '${application_name_list[*]}'." "1"
+        outputErrorAndExit "error" "Entered array is empty: '${application_name_list[*]}'. Must not be empty." "1"
     elif ! $(isNumeric "${log_file_permissions}")
     then
-        outputErrorAndExit "error" "Entered string is not numeric: '${log_file_permissions}'." "1"
+        outputErrorAndExit "error" "Entered string is not numeric: '${log_file_permissions}'. Must match regular expression: '${NUMERIC_REGEX_STRING}'." "1"
     elif [[ ! -d "${log_directory_path}" ]]
     then
         /bin/mkdir --parents --mode="${log_directory_permissions}" "${log_directory_path}"
