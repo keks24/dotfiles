@@ -270,23 +270,26 @@ resetC()
 ### beQuiet "stdout" "ls -l"
 ### beQuiet "stderr" "unalias ls"
 ### beQuiet "stdout_and_stderr" "unalias ${COMMAND_LIST[*]##*/}"
-### beQuiet "unalias command_which_does_not_exist"
+### beQuiet "" "unalias command_which_does_not_exist"
 ## references:
 ### https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
 
 beQuiet()
 {
     local file_descriptor="${1:-stdout_and_stderr}"
-    local command="${2}"
+    local command_string="${2}"
 
     if ! $(isLowercaseUnderscoreString "${file_descriptor}")
     then
         outputErrorAndExit "error" "Entered string is not lowercase (with underscores): '${file_descriptor}'. Must match regular expression: '${LOWERCASE_UNDERSCORE_REGEX_STRING}'." "1"
+    elif $(isEmpty "${command_string}")
+    then
+        outputErrorAndExit "error" "Entered string is empty: '${command_string}'. Must not be empty." "1"
     fi
 
     # set positional parameters, to make command execution via "${@}" possible.
     # "ls -l -a -t -r" becomes "ls" "-l" "-a" "-t" "-r".
-    set -- ${command}
+    set -- ${command_string}
 
     case "${file_descriptor}" in
         "stdout")
