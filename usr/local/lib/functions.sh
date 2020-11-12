@@ -35,6 +35,7 @@
 ## isAlphanumeric().....................check, if a given string only contains alphanumeric characters
 ## isSpecial()..........................check, if a given string only contains special printable characters
 ## isVerySpecial()......................check, if a given string only contains special non-printable characters
+## isChmodCompatible()..................check, if a given string is chmod compatible
 ## checkCommands()......................check, if a command was not found and exit with exit code "127"
 ## prepareLogDirectory()................prepare a log directory
 ## createAndRemoveLockFile()............create a lock file to prevent multiple executions of a script
@@ -61,8 +62,11 @@ LOWERCASE_REGEX_STRING="^[a-z]+$"
 LOWERCASE_UNDERSCORE_REGEX_STRING="^[_a-z]+$"
 UPPERCASE_REGEX_STRING="^[A-Z]+$"
 ALPHANUMERIC_REGEX_STRING="^[-a-zA-Z0-9]+$"
+# special characters
 PRINTABLE_REGEX_STRING="^[^a-zA-Z0-9]+$"
+# very special characters
 NON_PRINTABLE_REGEX_STRING="^[^ -~]+$"
+CHMOD_REGEX_STRING="^[124]?[0-7]{3}$"
 declare -A FONT_TYPE_LIST
 FONT_TYPE_LIST["bold"]="001"
 FONT_TYPE_LIST["dim"]="002"
@@ -607,6 +611,39 @@ isVerySpecial()
     fi
 }
 
+
+# function: check, if a given string is chmod compatible
+## external dependencies:
+### none
+### helper functions:
+#### none
+## required permissions:
+### none
+## usage:
+### isChmodCompatible "<octal_character_string>"
+## defaults:
+### none
+## examples:
+### isChmodCompatible "444"
+### isChmodCompatible "1444"
+### isChmodCompatible "2444"
+### isChmodCompatible "4111"
+### isChmodCompatible "00444"
+## references:
+### none
+
+isChmodCompatible()
+{
+    local input_string="${1}"
+
+    if [[ "${input_string}" =~ ${CHMOD_REGEX_STRING} ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
 # function: prepare a log directory
 ## external dependencies:
 ### chmod
@@ -653,19 +690,19 @@ prepareLogDirectory()
     elif [[ -f "${log_directory_path}" ]]
     then
         outputErrorAndExit "error" "Entered string is not a directory: '${log_directory_path}'." "1"
-    elif ! $(isNumeric "${log_directory_permissions}")
+    elif ! $(isChmodCompatible "${log_directory_permissions}")
     then
-        outputErrorAndExit "error" "Entered string is not numeric: '${log_directory_permissions}'. Must match regular expression: '${NUMERIC_REGEX_STRING}'." "1"
+        outputErrorAndExit "error" "Entered string is not 'chmod' compatible: '${log_directory_permissions}'. Must match regular expression '${CHMOD_REGEX_STRING}'." "1"
     elif $(isEmpty "${application_name_list[@]}")
     then
         outputErrorAndExit "error" "Entered array is empty: '${application_name_list[*]}'. Must not be empty." "1"
-    elif ! $(isNumeric "${log_file_permissions}")
+    elif ! $(isChmodCompatible "${log_file_permissions}")
     then
-        outputErrorAndExit "error" "Entered string is not numeric: '${log_file_permissions}'. Must match regular expression: '${NUMERIC_REGEX_STRING}'." "1"
+        outputErrorAndExit "error" "Entered string is not 'chmod' compatible: '${log_file_permissions}'. Must match regular expression: '${CHMOD_REGEX_STRING}'." "1"
     elif [[ ! -d "${log_directory_path}" ]]
     then
         /bin/mkdir --parents --mode="${log_directory_permissions}" "${log_directory_path}"
-    # write check must be done here, a non-existing directory is not writable. acutally a chicken-and-egg problem, but just to be sure.
+    # write check must be done here, a non-existing directory is not writable. actually a chicken-and-egg problem, but just to be sure.
     elif [[ ! -w "${log_directory_path}" ]]
     then
         outputErrorAndExit "error" "Directory is not writable: '${log_directory_path}'" "1"
