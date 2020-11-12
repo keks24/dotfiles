@@ -690,18 +690,28 @@ prepareLogDirectory()
 ## required permissions:
 ### none
 ## usage:
-### countDown "<output_message>" "<countdown_seconds>"
+### countDown "[<output_message>]" "[<countdown_seconds>]"
 ## defaults:
+### if "${output_message}" is not set, "Counting down" is assumed.
 ### if "${countdown_seconds}" is not set, "30" is assumed.
 ## examples:
-### countDown "Exiting script in" "30"
+### countDown "Exiting script in" "60"
+### coundDown
 ## references:
 ### none
 
 countDown()
 {
-    local output_message="${1}"
+    local output_message="${1:-Counting down}"
     local countdown_seconds="${2:-30}"
+
+    if $(isEmpty "${output_message}")
+    then
+        outputErrorAndExit "error" "Entered string is empty: '${output_message}'. Must not be empty." "1"
+    elif ! $(isNumeric "${countdown_seconds}")
+    then
+        outputErrorAndExit "error" "Entered string is not numeric: '${countdown_seconds}'. Must match regular expression: '${NUMERIC_REGEX_STRING}'." "1"
+    fi
 
     echoC -n "bold" "red" "${output_message} ... "
     while (( "${countdown_seconds}" > 0 ))
