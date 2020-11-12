@@ -660,7 +660,7 @@ prepareLogDirectory()
     elif [[ ! -d "${log_directory_path}" ]]
     then
         /bin/mkdir --parents --mode="${log_directory_permissions}" "${log_directory_path}"
-    # write check must be done here, a not existing directory is not writable as well.
+    # write check must be done here, a non-existing directory is not writable. acutally a chicken-and-egg problem, but just to be sure.
     elif [[ ! -w "${log_directory_path}" ]]
     then
         outputErrorAndExit "error" "Directory is not writable: '${log_directory_path}'" "1"
