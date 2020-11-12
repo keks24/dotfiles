@@ -647,7 +647,7 @@ prepareLogDirectory()
         outputErrorAndExit "error" "Entered string is not a path: '${log_directory_path}'. Must match regular expression: '${STRING_SLASH_REGEX_STRING}'." "1"
     elif [[ -f "${log_directory_path}" ]]
     then
-        outputErrorAndExit "error" "'${log_directory_path}': Is a file, but must be a directory." "1"
+        outputErrorAndExit "error" "Entered string is not a directory: '${log_directory_path}'." "1"
     elif ! $(isNumeric "${log_directory_permissions}")
     then
         outputErrorAndExit "error" "Entered string is not numeric: '${log_directory_permissions}'. Must match regular expression: '${NUMERIC_REGEX_STRING}'." "1"
