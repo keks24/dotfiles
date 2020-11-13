@@ -15,6 +15,7 @@
 #############################################################################
 
 # this file should only be sourced once at the beginning of a shell script!
+# be careful with inputs, since they do not get intercepted perfectly!
 # no shebang should be used here!
 # all functions are written in "bash".
 # function calls within if statements are executed in subshells, since the return values are not needed.
