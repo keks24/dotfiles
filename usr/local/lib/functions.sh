@@ -49,8 +49,8 @@
 declare -r SCRIPT_NAME="${0##*/}"
 declare -r SCRIPT_DIRECTORY_PATH="${0%/*}"
 declare -r SCRIPT_PID="${$}"
-declare -a COMMAND_LIST
-COMMAND_LIST=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/bin/sleep" "/usr/bin/sudo" "/usr/bin/tee" "/bin/touch")
+declare -a COMMAND_ARRAY
+COMMAND_ARRAY=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/bin/sleep" "/usr/bin/sudo" "/usr/bin/tee" "/bin/touch")
 LOCK_FILE_DIRECTORY_PATH="/var/lock"
 LOCK_FILENAME="${SCRIPT_NAME}.lock"
 declare -r LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
@@ -67,64 +67,64 @@ declare -r PRINTABLE_REGEX_STRING="^[^a-zA-Z0-9]+$"
 # very special characters
 declare -r NON_PRINTABLE_REGEX_STRING="^[^ -~]+$"
 declare -r CHMOD_REGEX_STRING="^[124]?[0-7]{3}$"
-declare -A FONT_TYPE_LIST
-FONT_TYPE_LIST["bold"]="001"
-FONT_TYPE_LIST["dim"]="002"
-FONT_TYPE_LIST["underline"]="004"
-FONT_TYPE_LIST["blink"]="005"
-FONT_TYPE_LIST["reverse"]="007"
-FONT_TYPE_LIST["hidden"]="008"
-FONT_TYPE_LIST["strikethrough"]="009"
-declare -r FONT_TYPE_LIST
-declare -A FONT_COLOUR_LIST
-FONT_COLOUR_LIST["default"]="039"
-FONT_COLOUR_LIST["black"]="030"
-FONT_COLOUR_LIST["red"]="031"
-FONT_COLOUR_LIST["green"]="032"
-FONT_COLOUR_LIST["yellow"]="033"
-FONT_COLOUR_LIST["blue"]="034"
-FONT_COLOUR_LIST["magenta"]="035"
-FONT_COLOUR_LIST["cyan"]="036"
-FONT_COLOUR_LIST["light_grey"]="037"
-FONT_COLOUR_LIST["dark_grey"]="090"
-FONT_COLOUR_LIST["light_red"]="091"
-FONT_COLOUR_LIST["light_green"]="092"
-FONT_COLOUR_LIST["light_yellow"]="093"
-FONT_COLOUR_LIST["light_blue"]="094"
-FONT_COLOUR_LIST["light_magenta"]="095"
-FONT_COLOUR_LIST["light_cyan"]="096"
-FONT_COLOUR_LIST["white"]="097"
-FONT_COLOUR_LIST["background_default"]="049"
-FONT_COLOUR_LIST["background_black"]="040"
-FONT_COLOUR_LIST["background_red"]="041"
-FONT_COLOUR_LIST["background_green"]="042"
-FONT_COLOUR_LIST["background_yellow"]="043"
-FONT_COLOUR_LIST["background_blue"]="044"
-FONT_COLOUR_LIST["background_magenta"]="045"
-FONT_COLOUR_LIST["background_cyan"]="046"
-FONT_COLOUR_LIST["background_light_grey"]="047"
-FONT_COLOUR_LIST["background_dark_grey"]="100"
-FONT_COLOUR_LIST["background_light_red"]="101"
-FONT_COLOUR_LIST["background_light_green"]="102"
-FONT_COLOUR_LIST["background_light_yellow"]="103"
-FONT_COLOUR_LIST["background_light_blue"]="104"
-FONT_COLOUR_LIST["background_light_magenta"]="105"
-FONT_COLOUR_LIST["background_light_cyan"]="106"
-FONT_COLOUR_LIST["background_light_white"]="107"
-declare -r FONT_COLOUR_LIST
-declare -A RESET_TYPE_LIST
-RESET_TYPE_LIST["all"]="000"
-RESET_TYPE_LIST["colour"]="039"
-RESET_TYPE_LIST["background"]="049"
+declare -A FONT_TYPE_ARRAY
+FONT_TYPE_ARRAY["bold"]="001"
+FONT_TYPE_ARRAY["dim"]="002"
+FONT_TYPE_ARRAY["underline"]="004"
+FONT_TYPE_ARRAY["blink"]="005"
+FONT_TYPE_ARRAY["reverse"]="007"
+FONT_TYPE_ARRAY["hidden"]="008"
+FONT_TYPE_ARRAY["strikethrough"]="009"
+declare -r FONT_TYPE_ARRAY
+declare -A FONT_COLOUR_ARRAY
+FONT_COLOUR_ARRAY["default"]="039"
+FONT_COLOUR_ARRAY["black"]="030"
+FONT_COLOUR_ARRAY["red"]="031"
+FONT_COLOUR_ARRAY["green"]="032"
+FONT_COLOUR_ARRAY["yellow"]="033"
+FONT_COLOUR_ARRAY["blue"]="034"
+FONT_COLOUR_ARRAY["magenta"]="035"
+FONT_COLOUR_ARRAY["cyan"]="036"
+FONT_COLOUR_ARRAY["light_grey"]="037"
+FONT_COLOUR_ARRAY["dark_grey"]="090"
+FONT_COLOUR_ARRAY["light_red"]="091"
+FONT_COLOUR_ARRAY["light_green"]="092"
+FONT_COLOUR_ARRAY["light_yellow"]="093"
+FONT_COLOUR_ARRAY["light_blue"]="094"
+FONT_COLOUR_ARRAY["light_magenta"]="095"
+FONT_COLOUR_ARRAY["light_cyan"]="096"
+FONT_COLOUR_ARRAY["white"]="097"
+FONT_COLOUR_ARRAY["background_default"]="049"
+FONT_COLOUR_ARRAY["background_black"]="040"
+FONT_COLOUR_ARRAY["background_red"]="041"
+FONT_COLOUR_ARRAY["background_green"]="042"
+FONT_COLOUR_ARRAY["background_yellow"]="043"
+FONT_COLOUR_ARRAY["background_blue"]="044"
+FONT_COLOUR_ARRAY["background_magenta"]="045"
+FONT_COLOUR_ARRAY["background_cyan"]="046"
+FONT_COLOUR_ARRAY["background_light_grey"]="047"
+FONT_COLOUR_ARRAY["background_dark_grey"]="100"
+FONT_COLOUR_ARRAY["background_light_red"]="101"
+FONT_COLOUR_ARRAY["background_light_green"]="102"
+FONT_COLOUR_ARRAY["background_light_yellow"]="103"
+FONT_COLOUR_ARRAY["background_light_blue"]="104"
+FONT_COLOUR_ARRAY["background_light_magenta"]="105"
+FONT_COLOUR_ARRAY["background_light_cyan"]="106"
+FONT_COLOUR_ARRAY["background_light_white"]="107"
+declare -r FONT_COLOUR_ARRAY
+declare -A RESET_TYPE_ARRAY
+RESET_TYPE_ARRAY["all"]="000"
+RESET_TYPE_ARRAY["colour"]="039"
+RESET_TYPE_ARRAY["background"]="049"
 # "\e[021m" does not work in "alacritty"
-RESET_TYPE_LIST["bold"]="003"
-RESET_TYPE_LIST["dim"]="022"
-RESET_TYPE_LIST["underline"]="024"
-RESET_TYPE_LIST["blink"]="025"
-RESET_TYPE_LIST["reverse"]="027"
-RESET_TYPE_LIST["hidden"]="028"
-RESET_TYPE_LIST["strikethrough"]="029"
-declare -r RESET_TYPE_LIST
+RESET_TYPE_ARRAY["bold"]="003"
+RESET_TYPE_ARRAY["dim"]="022"
+RESET_TYPE_ARRAY["underline"]="024"
+RESET_TYPE_ARRAY["blink"]="025"
+RESET_TYPE_ARRAY["reverse"]="027"
+RESET_TYPE_ARRAY["hidden"]="028"
+RESET_TYPE_ARRAY["strikethrough"]="029"
+declare -r RESET_TYPE_ARRAY
 
 # function: output colourised text
 ## external dependencies:
@@ -229,11 +229,11 @@ echoC()
     then
         output_font_delimiter=""
     else
-        for font_type in "${!FONT_TYPE_LIST[@]}"
+        for font_type in "${!FONT_TYPE_ARRAY[@]}"
         do
             if [[ "${input_font_type}" == "${font_type}" ]]
             then
-                output_font_type="${FONT_TYPE_LIST[${font_type}]}"
+                output_font_type="${FONT_TYPE_ARRAY[${font_type}]}"
                 break
             fi
         done
@@ -243,11 +243,11 @@ echoC()
     then
         output_font_delimiter=""
     else
-        for font_colour in "${!FONT_COLOUR_LIST[@]}"
+        for font_colour in "${!FONT_COLOUR_ARRAY[@]}"
         do
             if [[ "${input_font_colour}" == "${font_colour}" ]]
             then
-                output_font_colour="${FONT_COLOUR_LIST[${font_colour}]}"
+                output_font_colour="${FONT_COLOUR_ARRAY[${font_colour}]}"
                 break
             fi
         done
@@ -303,11 +303,11 @@ resetC()
     then
         output_font_reset="000"
     else
-        for reset_type in "${!RESET_TYPE_LIST[@]}"
+        for reset_type in "${!RESET_TYPE_ARRAY[@]}"
         do
             if [[ "${input_font_type}" == "${reset_type}" ]]
             then
-                output_font_reset="${RESET_TYPE_LIST[${reset_type}]}"
+                output_font_reset="${RESET_TYPE_ARRAY[${reset_type}]}"
                 break
             fi
         done
@@ -331,7 +331,7 @@ resetC()
 ## examples:
 ### beQuiet "stdout" "ls -l"
 ### beQuiet "stderr" "unalias ls"
-### beQuiet "stdout_and_stderr" "unalias ${COMMAND_LIST[*]##*/}"
+### beQuiet "stdout_and_stderr" "unalias ${COMMAND_ARRAY[*]##*/}"
 ### beQuiet "" "unalias command_which_does_not_exist"
 ## possible values:
 ### file descriptors:
@@ -749,11 +749,11 @@ isChmodCompatible()
 ### if "log_directory_permissions" is not set, "750" is assumed.
 ### if "log_file_permissions" is not set, "640" is assumed.
 ## examples:
-### application_name_list+=("ssh-agent" "steam")
-### prepareLogDirectory "/tmp/log" "750" application_name_list[@] "640"
-### prepareLogDirectory "/tmp/log" "" application_name_list[@] ""
-### prepareLogDirectory "./log" "" application_name_list[@] ""
-### prepareLogDirectory "log/" "" application_name_list[@] ""
+### application_name_array+=("ssh-agent" "steam")
+### prepareLogDirectory "/tmp/log" "750" application_name_array[@] "640"
+### prepareLogDirectory "/tmp/log" "" application_name_array[@] ""
+### prepareLogDirectory "./log" "" application_name_array[@] ""
+### prepareLogDirectory "log/" "" application_name_array[@] ""
 ## possible values:
 ### none
 ## references:
@@ -763,7 +763,7 @@ prepareLogDirectory()
 {
     local log_directory_path="${1}"
     local log_directory_permissions="${2:-750}"
-    local application_name_list=("${!3}")
+    local application_name_array=("${!3}")
     local log_file_permissions="${4:-640}"
 
     if $(isEmpty "${log_directory_path}")
@@ -778,9 +778,9 @@ prepareLogDirectory()
     elif ! $(isChmodCompatible "${log_directory_permissions}")
     then
         outputErrorAndExit "error" "Entered string is not 'chmod' compatible: '${log_directory_permissions}'. Must match regular expression '${CHMOD_REGEX_STRING}'." "1"
-    elif $(isEmpty "${application_name_list[@]}")
+    elif $(isEmpty "${application_name_array[@]}")
     then
-        outputErrorAndExit "error" "Entered array is empty: '${application_name_list[*]}'. Must not be empty." "1"
+        outputErrorAndExit "error" "Entered array is empty: '${application_name_array[*]}'. Must not be empty." "1"
     elif ! $(isChmodCompatible "${log_file_permissions}")
     then
         outputErrorAndExit "error" "Entered string is not 'chmod' compatible: '${log_file_permissions}'. Must match regular expression: '${CHMOD_REGEX_STRING}'." "1"
@@ -796,7 +796,7 @@ prepareLogDirectory()
     local application_name
     local log_file_suffix="log"
 
-    for application_name in "${application_name_list[@]}"
+    for application_name in "${application_name_array[@]}"
     do
         local log_directory="${log_directory_path}/${application_name}"
         local log_file="${log_directory}/${application_name}.${log_file_suffix}"
@@ -1004,12 +1004,12 @@ getGraphicsPowerMethodType()
 ## required permissions:
 ### none
 ## usage:
-### COMMAND_LIST+=("<command1>" "<command2>" "<commandn>")
+### COMMAND_ARRAY+=("<command1>" "<command2>" "<commandn>")
 ### checkCommands
 ## defaults:
-### "${COMMAND_LIST[@]}" always contains the commands of this script.
+### "${COMMAND_ARRAY[@]}" always contains the commands of this script.
 ## examples:
-### COMMAND_LIST+=("tail" "/usr/bin/tmux")
+### COMMAND_ARRAY+=("tail" "/usr/bin/tmux")
 ### checkCommands
 ## possible values:
 ### none
@@ -1020,9 +1020,9 @@ checkCommands()
 {
     local current_command
 
-    beQuiet "" "unalias ${COMMAND_LIST[*]##*/}"
+    beQuiet "" "unalias ${COMMAND_ARRAY[*]##*/}"
 
-    for current_command in "${COMMAND_LIST[@]}"
+    for current_command in "${COMMAND_ARRAY[@]}"
     do
         if [[ ! $(command -v "${current_command}") ]]
         then
