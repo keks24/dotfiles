@@ -236,7 +236,6 @@ echoC()
 resetC()
 {
     local input_font_type="${1:-}"
-    local output_font_reset="000"
     local output_font_start_sequence="\e["
     local output_font_end_sequence="m"
     local reset_type
@@ -678,8 +677,6 @@ prepareLogDirectory()
     local log_directory_permissions="${2:-750}"
     local application_name_list=("${!3}")
     local log_file_permissions="${4:-640}"
-    local application_name
-    local log_file_suffix="log"
 
     if $(isEmpty "${log_directory_path}")
     then
@@ -707,6 +704,9 @@ prepareLogDirectory()
     then
         outputErrorAndExit "error" "Directory is not writable: '${log_directory_path}'" "1"
     fi
+
+    local application_name
+    local log_file_suffix="log"
 
     for application_name in "${application_name_list[@]}"
     do
@@ -747,13 +747,14 @@ countDown()
 {
     local output_message="${1:-Counting down}"
     local countdown_seconds="${2:-30}"
-    local font_type="bold"
-    local font_colour="red"
 
     if ! $(isNumeric "${countdown_seconds}")
     then
         outputErrorAndExit "error" "Entered string is not numeric: '${countdown_seconds}'. Must match regular expression: '${NUMERIC_REGEX_STRING}'." "1"
     fi
+
+    local font_type="bold"
+    local font_colour="red"
 
     echoC -n "${font_type}" "${font_colour}" "${output_message} ... "
     while (( "${countdown_seconds}" > 0 ))
@@ -798,7 +799,7 @@ createSystemLogEntry()
 ### sudo
 ### tee
 ### helper functions:
-#### none
+#### isLowercaseString
 ## required permissions:
 ### The following entries in "/etc/sudoers.d/98-gfx-power-method-profile":
 ### <username> <hostname>=NOPASSWD: /usr/bin/tee /sys/class/drm/card0/device/power_method
@@ -821,7 +822,6 @@ setGraphicsPowerMethodAndProfile()
 {
     local graphics_power_method_set="${1}"
     local graphics_power_profile_set="${2}"
-    local graphics_power_profile_file="/sys/class/drm/card0/device/power_profile"
     local current_graphics_power_method_type=$(getGraphicsPowerMethodType)
 
     if ! $(isLowercaseString "${graphics_power_method_set}")
@@ -833,7 +833,11 @@ setGraphicsPowerMethodAndProfile()
     elif ! $(isLowercaseString "${current_graphics_power_method_type}")
     then
         outputErrorAndExit "error" "Entered string is not lowercase: '${current_graphics_power_method_type}'. Must match regular expression: '${LOWERCASE_REGEX_STRING}'." "1"
-    elif [[ ! -f "${graphics_power_profile_file}" ]]
+    fi
+
+    local graphics_power_profile_file="/sys/class/drm/card0/device/power_profile"
+
+    if [[ ! -f "${graphics_power_profile_file}" ]]
     then
         outputErrorAndExit "error" "File not found: '${graphics_power_profile_file}'." "1"
     elif [[ "${graphics_power_method_set}" == "${current_graphics_power_method_type}" ]]
