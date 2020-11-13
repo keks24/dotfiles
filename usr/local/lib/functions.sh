@@ -57,7 +57,7 @@ declare -r LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
 EMPTY_REGEX_STRING="^$"
 NUMERIC_REGEX_STRING="^[+-]?[0-9]+(\.[0-9]+)?$"
 STRING_REGEX_STRING="^[a-zA-Z]+$"
-STRING_SLASH_REGEX_STRING="^.*\/.*$"
+DIRECTORY_PATH_REGEX_STRING="^.*\/.*$"
 LOWERCASE_REGEX_STRING="^[a-z]+$"
 LOWERCASE_UNDERSCORE_REGEX_STRING="^[_a-z]+$"
 UPPERCASE_REGEX_STRING="^[A-Z]+$"
@@ -427,7 +427,7 @@ isDirectoryPath()
 {
     local input_string="${1}"
 
-    if [[ "${input_string}" =~ ${STRING_SLASH_REGEX_STRING} ]]
+    if [[ "${input_string}" =~ ${DIRECTORY_PATH_REGEX_STRING} ]]
     then
         return 0
     else
@@ -686,7 +686,7 @@ prepareLogDirectory()
         outputErrorAndExit "error" "Entered string is empty: '${log_directory_path}'. Must not be empty." "1"
     elif ! $(isDirectoryPath "${log_directory_path}")
     then
-        outputErrorAndExit "error" "Entered string is not a path: '${log_directory_path}'. Must match regular expression: '${STRING_SLASH_REGEX_STRING}'." "1"
+        outputErrorAndExit "error" "Entered string is not a directory path: '${log_directory_path}'. Must match regular expression: '${DIRECTORY_PATH_REGEX_STRING}'." "1"
     elif [[ -f "${log_directory_path}" ]]
     then
         outputErrorAndExit "error" "Entered string is not a directory: '${log_directory_path}'." "1"
