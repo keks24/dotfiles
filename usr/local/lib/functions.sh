@@ -46,27 +46,27 @@
 ## getGraphicsPowerMethodType().........get graphics card power method type
 
 # define environment variables
-SCRIPT_NAME="${0##*/}"
-SCRIPT_DIRECTORY_PATH="${0%/*}"
-SCRIPT_PID="${$}"
+declare -r SCRIPT_NAME="${0##*/}"
+declare -r SCRIPT_DIRECTORY_PATH="${0%/*}"
+declare -r SCRIPT_PID="${$}"
 declare -a COMMAND_LIST
 COMMAND_LIST=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/bin/sleep" "/usr/bin/sudo" "/usr/bin/tee" "/bin/touch")
 LOCK_FILE_DIRECTORY_PATH="/var/lock"
 LOCK_FILENAME="${SCRIPT_NAME}.lock"
 declare -r LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
-EMPTY_REGEX_STRING="^$"
-NUMERIC_REGEX_STRING="^[+-]?[0-9]+(\.[0-9]+)?$"
-STRING_REGEX_STRING="^[a-zA-Z]+$"
-DIRECTORY_PATH_REGEX_STRING="^.*\/.*$"
-LOWERCASE_REGEX_STRING="^[a-z]+$"
-LOWERCASE_UNDERSCORE_REGEX_STRING="^[_a-z]+$"
-UPPERCASE_REGEX_STRING="^[A-Z]+$"
-ALPHANUMERIC_REGEX_STRING="^[-a-zA-Z0-9]+$"
+declare -r EMPTY_REGEX_STRING="^$"
+declare -r NUMERIC_REGEX_STRING="^[+-]?[0-9]+(\.[0-9]+)?$"
+declare -r STRING_REGEX_STRING="^[a-zA-Z]+$"
+declare -r DIRECTORY_PATH_REGEX_STRING="^.*\/.*$"
+declare -r LOWERCASE_REGEX_STRING="^[a-z]+$"
+declare -r LOWERCASE_UNDERSCORE_REGEX_STRING="^[_a-z]+$"
+declare -r UPPERCASE_REGEX_STRING="^[A-Z]+$"
+declare -r ALPHANUMERIC_REGEX_STRING="^[-a-zA-Z0-9]+$"
 # special characters
-PRINTABLE_REGEX_STRING="^[^a-zA-Z0-9]+$"
+declare -r PRINTABLE_REGEX_STRING="^[^a-zA-Z0-9]+$"
 # very special characters
-NON_PRINTABLE_REGEX_STRING="^[^ -~]+$"
-CHMOD_REGEX_STRING="^[124]?[0-7]{3}$"
+declare -r NON_PRINTABLE_REGEX_STRING="^[^ -~]+$"
+declare -r CHMOD_REGEX_STRING="^[124]?[0-7]{3}$"
 declare -A FONT_TYPE_LIST
 FONT_TYPE_LIST["bold"]="001"
 FONT_TYPE_LIST["dim"]="002"
@@ -75,6 +75,7 @@ FONT_TYPE_LIST["blink"]="005"
 FONT_TYPE_LIST["reverse"]="007"
 FONT_TYPE_LIST["hidden"]="008"
 FONT_TYPE_LIST["strikethrough"]="009"
+declare -r FONT_TYPE_LIST
 declare -A FONT_COLOUR_LIST
 FONT_COLOUR_LIST["default"]="039"
 FONT_COLOUR_LIST["black"]="030"
@@ -110,6 +111,7 @@ FONT_COLOUR_LIST["background_light_blue"]="104"
 FONT_COLOUR_LIST["background_light_magenta"]="105"
 FONT_COLOUR_LIST["background_light_cyan"]="106"
 FONT_COLOUR_LIST["background_light_white"]="107"
+declare -r FONT_COLOUR_LIST
 declare -A RESET_TYPE_LIST
 RESET_TYPE_LIST["all"]="000"
 RESET_TYPE_LIST["colour"]="039"
@@ -122,6 +124,7 @@ RESET_TYPE_LIST["blink"]="025"
 RESET_TYPE_LIST["reverse"]="027"
 RESET_TYPE_LIST["hidden"]="028"
 RESET_TYPE_LIST["strikethrough"]="029"
+declare -r RESET_TYPE_LIST
 
 # function: output colourised text
 ## external dependencies:
