@@ -743,8 +743,8 @@ isChmodCompatible()
 ### "${log_directory_path}" must be a (path to a) directory
 ### write permissions in the desired directory
 ## usage:
-### application_name_list+=("<application_name1>" "<application_name2>" "<application_namen>")
-### prepareLogDirectory "<log_directory_path>" "<log_directory_permissions>" <application_name_list> "<log_permissions>"
+### application_name_array+=("<application_name1>" "<application_name2>" "<application_namen>")
+### prepareLogDirectory "<log_directory_path>" "[<log_directory_permissions>]" <application_name_array> "[<log_permissions>]"
 ## defaults:
 ### if "log_directory_permissions" is not set, "750" is assumed.
 ### if "log_file_permissions" is not set, "640" is assumed.
