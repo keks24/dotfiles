@@ -702,7 +702,7 @@ prepareLogDirectory()
     # write check must be done here, a non-existing directory is not writable. actually a chicken-and-egg problem, but just to be sure.
     elif [[ ! -w "${log_directory_path}" ]]
     then
-        outputErrorAndExit "error" "Directory is not writable: '${log_directory_path}'" "1"
+        outputErrorAndExit "error" "Directory is not writable: '${log_directory_path}'. Permission denied." "1"
     fi
 
     local application_name
