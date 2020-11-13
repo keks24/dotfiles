@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-source "/usr/local/lib/functions.sh"
+source "functions.sh"
 
 echo "Script name: '${SCRIPT_NAME}'"
 echo "Script directory path: '${SCRIPT_DIRECTORY_PATH}'"
