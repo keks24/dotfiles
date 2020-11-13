@@ -740,6 +740,7 @@ prepareLogDirectory()
 ## examples:
 ### countDown "Exiting script in" "60"
 ### coundDown
+### coundDown "" "20"
 ## references:
 ### none
 
