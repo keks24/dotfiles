@@ -728,7 +728,6 @@ prepareLogDirectory()
 ## external dependencies:
 ### echoC
 ### helper functions:
-#### isEmpty
 #### isNumeric
 ## required permissions:
 ### none
