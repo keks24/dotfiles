@@ -38,7 +38,7 @@
 ## isChmodCompatible()..................check, if a given string is chmod compatible
 ## checkCommands()......................check, if a command was not found and exit with exit code "127"
 ## prepareLogDirectory()................prepare a log directory
-## createAndRemoveLockFile()............create a lock file to prevent multiple executions of a script
+## createAndRemoveLockFile()............create a lock file, to prevent multiple executions of a script
 ## outputErrorAndExit().................output a given error message and exit with given error code
 ## countDown()..........................countdown timer in seconds
 ## createSystemLogEntry()...............add dynamic system log entries to "/var/log/syslog" and "/var/log/messages"
@@ -893,7 +893,7 @@ getGraphicsPowerMethodType()
 ## defaults:
 ### "${COMMAND_LIST[@]}" always contains the commands of this script.
 ## examples:
-### COMMAND_LIST=("tail" "/usr/bin/tmux")
+### COMMAND_LIST+=("tail" "/usr/bin/tmux")
 ### checkCommands
 ## references:
 ### none
@@ -913,7 +913,7 @@ checkCommands()
     done
 }
 
-# function: create a lock file to prevent multiple executions of a script
+# function: create a lock file, to prevent multiple executions of a script
 ## external dependencies:
 ### chmod
 ### flock
