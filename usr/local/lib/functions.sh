@@ -751,10 +751,7 @@ countDown()
     local font_type="bold"
     local font_colour="red"
 
-    if $(isEmpty "${output_message}")
-    then
-        outputErrorAndExit "error" "Entered string is empty: '${output_message}'. Must not be empty." "1"
-    elif ! $(isNumeric "${countdown_seconds}")
+    if ! $(isNumeric "${countdown_seconds}")
     then
         outputErrorAndExit "error" "Entered string is not numeric: '${countdown_seconds}'. Must match regular expression: '${NUMERIC_REGEX_STRING}'." "1"
     fi
