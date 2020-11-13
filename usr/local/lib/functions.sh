@@ -148,6 +148,50 @@ declare -r RESET_TYPE_LIST
 ### echoC "" "reverse" "" "this text is reversed."
 ### echoC "" "" "blue" "this text is blue."
 ### echoC "" "" "background_yellow" "this text's background is yellow."
+## possible values:
+### font types:
+#### bold
+#### dim
+#### underline
+#### blink
+#### reverse
+#### hidden
+#### strikethrough
+### font colours:
+#### default
+#### black
+#### red
+#### green
+#### yellow
+#### blue
+#### magenta
+#### cyan
+#### light_grey
+#### dark_grey
+#### light_red
+#### light_green
+#### light_yellow
+#### light_blue
+#### light_magenta
+#### light_cyan
+#### white
+#### background_default
+#### background_black
+#### background_red
+#### background_green
+#### background_yellow
+#### background_blue
+#### background_magenta
+#### background_cyan
+#### background_light_grey
+#### background_dark_grey
+#### background_light_red
+#### background_light_green
+#### background_light_yellow
+#### background_light_blue
+#### background_light_magenta
+#### background_light_cyan
+#### background_light_white
 ## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
@@ -233,6 +277,18 @@ echoC()
 ### echoC "" "" "background_yellow" "this text's background is yellow.$(resetC 'background') this text is terminal default. $(echoC '' 'background_yellow' 'this text'"'"'s background is yellow again')."
 ### echoC "" "reverse" "blue" "This is reversed and blue.$(resetC 'nonsenseentry') This is terminal default."
 ### echoC "" "reverse" "magenta" "This is reversed and magenta.$(resetC) This is terminal default."
+## possible values:
+### reset types:
+#### all
+#### colour
+#### background
+#### bold
+#### dim
+#### underline
+#### blink
+#### reverse
+#### hidden
+#### strikethrough
 ## references:
 ### https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
@@ -277,6 +333,11 @@ resetC()
 ### beQuiet "stderr" "unalias ls"
 ### beQuiet "stdout_and_stderr" "unalias ${COMMAND_LIST[*]##*/}"
 ### beQuiet "" "unalias command_which_does_not_exist"
+## possible values:
+### file descriptors:
+#### stdout
+#### stderr
+#### stdout_and_stderr
 ## references:
 ### https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
 
@@ -328,6 +389,8 @@ beQuiet()
 ### none
 ## examples:
 ### isEmpty ""
+## possible values:
+### none
 ## references:
 ### none
 
@@ -362,6 +425,8 @@ isEmpty()
 ### isNumeric "24.24"
 ### isNumeric "-24.24"
 ### isNumeric "+24.24"
+## possible values:
+### none
 ## references:
 ### none
 
@@ -392,6 +457,8 @@ isNumeric()
 ### isString "nom"
 ### isString "NOM"
 ### isString "NoM"
+## possible values:
+### none
 ## references:
 ### none
 
@@ -422,6 +489,8 @@ isString()
 ### isDirectoryPath "/tmp/nom"
 ### isDirectoryPath "nom/nom"
 ### isDirectoryPath "/var/run/nom"
+## possible values:
+### none
 ## references:
 ### none
 
@@ -450,6 +519,8 @@ isDirectoryPath()
 ### none
 ## examples:
 ### isLowercaseString "nom"
+## possible values:
+### none
 ## references:
 ### none
 
@@ -478,6 +549,8 @@ isLowercaseString()
 ### none
 ## examples:
 ### isLowercaseUnderscoreString "nom_nom"
+## possible values:
+### none
 ## references:
 ### none
 
@@ -506,6 +579,8 @@ isLowercaseUnderscoreString()
 ### none
 ## examples:
 ### isLowercaseString "NOM"
+## possible values:
+### none
 ## references:
 ### none
 
@@ -539,6 +614,8 @@ isUppercaseString()
 ### isAlphanumeric "24-nom"
 ### isAlphanumeric "nom-24"
 ### isAlphanumeric "24-NoM"
+## possible values:
+### none
 ## references:
 ### none
 
@@ -568,6 +645,8 @@ isAlphanumeric()
 ## examples:
 ### isSpecial "!\"§$%&/()=?\`\\"
 ### isSpecial '!"§$%&/()=?`\'
+## possible values:
+### none
 ## references:
 ### https://www.ascii-code.com/
 ### https://www.regular-expressions.info/posixbrackets.html
@@ -597,6 +676,8 @@ isSpecial()
 ### none
 ## examples:
 ### isVerySpecial "ł¶ŧ←↓→øþ¨æſðđŋħł˝’»«¢„“”µ·…"
+## possible values:
+### none
 ## references:
 ### https://www.ascii-code.com/
 ### https://www.regular-expressions.info/posixbrackets.html
@@ -631,6 +712,8 @@ isVerySpecial()
 ### isChmodCompatible "2444"
 ### isChmodCompatible "4111"
 ### isChmodCompatible "00444"
+## possible values:
+### none
 ## references:
 ### none
 
@@ -671,6 +754,8 @@ isChmodCompatible()
 ### prepareLogDirectory "/tmp/log" "" application_name_list[@] ""
 ### prepareLogDirectory "./log" "" application_name_list[@] ""
 ### prepareLogDirectory "log/" "" application_name_list[@] ""
+## possible values:
+### none
 ## references:
 ### none
 
@@ -743,6 +828,8 @@ prepareLogDirectory()
 ### countDown "Exiting script in" "60"
 ### coundDown
 ### coundDown "" "20"
+## possible values:
+### none
 ## references:
 ### none
 
@@ -783,6 +870,8 @@ countDown()
 ## examples:
 ### createSystemLogEntry "executed"
 ### createSystemLogEntry "set graphics card power profile to '${graphics_power_profile_set}'"
+## possible values:
+### none
 ## references:
 ### none
 
@@ -868,6 +957,11 @@ setGraphicsPowerMethodAndProfile()
 ### none
 ## examples:
 ### getGraphicsPowerMethodType
+## possible values:
+### profile types:
+#### dynpm
+#### profile
+#### dpm
 ## references:
 ### https://wiki.gentoo.org/wiki/Radeon#Power_management
 ### https://www.x.org/wiki/RadeonFeature/#kmspowermanagementoptions
@@ -902,6 +996,8 @@ getGraphicsPowerMethodType()
 ## examples:
 ### COMMAND_LIST+=("tail" "/usr/bin/tmux")
 ### checkCommands
+## possible values:
+### none
 ## references:
 ### none
 
@@ -939,6 +1035,9 @@ checkCommands()
 ### createAndRemoveLockFile
 ### createAndRemoveLockFile "exclusive"
 ### createAndRemoveLockFile "shared"
+## possible values:
+### exclusive
+### shared
 ## references:
 ### https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s09.html
 ### https://dmorgan.info/posts/linux-lock-files/
@@ -994,6 +1093,8 @@ createAndRemoveLockFile()
 ### outputErrorAndExit "warning" "Something went wrong." "1"
 ### outputErrorAndExit "error" "Something went wrong, but do not exit."
 ### outputErrorAndExit "warning" "Something went wrong, but do not exit."
+## possible values:
+### none
 ## references:
 ### https://tldp.org/LDP/abs/html/exitcodes.html
 
