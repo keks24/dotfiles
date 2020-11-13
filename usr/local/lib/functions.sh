@@ -897,23 +897,38 @@ createSystemLogEntry()
 ### <username> <hostname>=NOPASSWD: /usr/bin/tee /sys/class/drm/card0/device/power_method
 ### <username> <hostname>=NOPASSWD: /usr/bin/tee /sys/class/drm/card0/device/power_profile
 ## usage:
-### setGraphicsPowerMethodAndProfile "<power_method>" "<profile_type>"
+### setGraphicsPowerMethodAndProfile "[<power_method>]" "[<profile_type>]"
 ## defaults:
-### none
+### if "${graphics_power_method_set}" is not set, "profile" is assumed.
+### if "${graphics_power_profile_set}" is not set, "low" is assumed.
 ## examples:
 ### setGraphicsPowerMethodAndProfile "profile" "default"
 ### setGraphicsPowerMethodAndProfile "profile" "auto"
 ### setGraphicsPowerMethodAndProfile "profile" "low"
 ### setGraphicsPowerMethodAndProfile "profile" "mid"
 ### setGraphicsPowerMethodAndProfile "profile" "high"
+### setGraphicsPowerMethodAndProfile "" "default"
+### setGraphicsPowerMethodAndProfile "profile" ""
+### setGraphicsPowerMethodAndProfile
+## possible values:
+### profile types:
+#### dynpm
+#### profile
+#### dpm
+### power profiles:
+#### default
+#### auto
+#### low
+#### mid
+#### high
 ## references:
 ### https://wiki.gentoo.org/wiki/Radeon#Power_management
 ### https://www.x.org/wiki/RadeonFeature/#kmspowermanagementoptions
 
 setGraphicsPowerMethodAndProfile()
 {
-    local graphics_power_method_set="${1}"
-    local graphics_power_profile_set="${2}"
+    local graphics_power_method_set="${1:-profile}"
+    local graphics_power_profile_set="${2:-low}"
     local current_graphics_power_method_type=$(getGraphicsPowerMethodType)
 
     if ! $(isLowercaseString "${graphics_power_method_set}")
