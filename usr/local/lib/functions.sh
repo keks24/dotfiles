@@ -944,6 +944,12 @@ checkCommands()
 createAndRemoveLockFile()
 {
     local lock_file_type="${1:-exclusive}"
+
+    if ! $(isLowercaseString "${lock_file_type}")
+    then
+        outputErrorAndExit "error" "Entered string is not lowercase: '${lock_file_type}'. Must match regular expression: '${LOWERCASE_REGEX_STRING}'." "1"
+    fi
+
     local lock_file_file_descriptor
     local lock_file_max_string_length="10"
     local script_pid_string_length="${#SCRIPT_PID}"
