@@ -748,6 +748,8 @@ countDown()
 {
     local output_message="${1:-Counting down}"
     local countdown_seconds="${2:-30}"
+    local font_type="bold"
+    local font_colour="red"
 
     if $(isEmpty "${output_message}")
     then
@@ -757,10 +759,10 @@ countDown()
         outputErrorAndExit "error" "Entered string is not numeric: '${countdown_seconds}'. Must match regular expression: '${NUMERIC_REGEX_STRING}'." "1"
     fi
 
-    echoC -n "bold" "red" "${output_message} ... "
+    echoC -n "${font_type}" "${font_colour}" "${output_message} ... "
     while (( "${countdown_seconds}" > 0 ))
     do
-        echoC -n "bold" "red" "${countdown_seconds} "
+        echoC -n "${font_type}" "${font_colour}" "${countdown_seconds} "
         /bin/sleep 1
         (( countdown_seconds-- ))
     done
