@@ -824,7 +824,16 @@ setGraphicsPowerMethodAndProfile()
     local graphics_power_profile_file="/sys/class/drm/card0/device/power_profile"
     local current_graphics_power_method_type=$(getGraphicsPowerMethodType)
 
-    if [[ ! -f "${graphics_power_profile_file}" ]]
+    if ! $(isLowercaseString "${graphics_power_method_set}")
+    then
+        outputErrorAndExit "error" "Entered string is not lowercase: '${graphics_power_method_set}'. Must match regular expression: '${LOWERCASE_REGEX_STRING}'." "1"
+    elif ! $(isLowercaseString "${graphics_power_profile_set}")
+    then
+        outputErrorAndExit "error" "Entered string is not lowercase: '${graphics_power_profile_set}'. Must match regular expression: '${LOWERCASE_REGEX_STRING}'." "1"
+    elif ! $(isLowercaseString "${current_graphics_power_method_type}")
+    then
+        outputErrorAndExit "error" "Entered string is not lowercase: '${current_graphics_power_method_type}'. Must match regular expression: '${LOWERCASE_REGEX_STRING}'." "1"
+    elif [[ ! -f "${graphics_power_profile_file}" ]]
     then
         outputErrorAndExit "error" "File not found: '${graphics_power_profile_file}'." "1"
     elif [[ "${graphics_power_method_set}" == "${current_graphics_power_method_type}" ]]
