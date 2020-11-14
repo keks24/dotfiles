@@ -55,7 +55,6 @@ COMMAND_ARRAY=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/bin/s
 LOCK_FILE_DIRECTORY_PATH="/var/lock"
 LOCK_FILENAME="${SCRIPT_NAME}.lock"
 declare -r LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
-declare -r EMPTY_REGEX_STRING="^$"
 declare -r NUMERIC_REGEX_STRING="^[+-]?[0-9]+(\.[0-9]+)?$"
 declare -r STRING_REGEX_STRING="^[a-zA-Z]+$"
 declare -r DIRECTORY_PATH_REGEX_STRING="^.*\/.*$"
@@ -399,7 +398,7 @@ isEmpty()
 {
     local input_string="${1}"
 
-    if [[ "${input_string}" =~ ${EMPTY_REGEX_STRING} ]]
+    if [[ "${input_string}" == "" ]]
     then
         return 0
     else
