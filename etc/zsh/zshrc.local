@@ -78,7 +78,7 @@ getLastPortageSync()
 ## generate strong passwords with ~130 bit entropy
 genpw()
 {
-    local -i password_length=20
+    local -i password_length=24
     local remove_characters="[:space:]"
     local -i password_count=20
 
