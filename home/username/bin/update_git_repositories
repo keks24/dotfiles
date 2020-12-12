@@ -34,7 +34,7 @@ checkCommands
 
 for repository_directory in $(/usr/bin/find -L . -type d -name ".git" -printf "%h\n")
 do
-    echo -e "\n### ${repository_directory} ###\n"
+    echo -e "\n### ${repository_directory} ###"
     pushd "${repository_directory}" >/dev/null
     /usr/bin/git pull
     popd >/dev/null
