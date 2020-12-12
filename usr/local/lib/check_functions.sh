@@ -43,7 +43,7 @@ echo "Command list from 'functions.sh':"
 echo "${COMMAND_ARRAY[@]}"
 echo ""
 
-COMMAND_ARRAY+=("ls" "tmux")
+COMMAND_ARRAY+=("ls" "md5sum")
 echo "New command list from '${SCRIPT_NAME}':"
 echo "${COMMAND_ARRAY[@]}"
 
