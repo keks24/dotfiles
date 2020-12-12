@@ -1057,6 +1057,7 @@ checkCommands()
 ### https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s09.html
 ### https://dmorgan.info/posts/linux-lock-files/
 ### https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html
+### https://mywiki.wooledge.org/SignalTrap
 
 createAndRemoveLockFile()
 {
