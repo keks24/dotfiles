@@ -186,7 +186,6 @@ alias history="history -i"
 alias ip="ip --color"
 alias l="ls -vC --classify"
 alias la="ls -v --all"
-alias less="less --ignore-case"
 alias listgroups="awk --field-separator \":\" '{ printf \"Group name: %-20s GID: %-10s Members: %-10s\n\", \$1, \$3, \$4 }' /etc/group | sort --numeric-sort --key=5"
 alias listusers="awk --field-separator \":\" '{ printf \"Username: %-20s UID: %-10s GID: %-10s Shell: %-10s\n\", \$1, \$3, \$4, \$7 }' /etc/passwd | sort --numeric-sort --key=4"
 alias ll="ls -vl"
@@ -216,7 +215,7 @@ export XDG_CACHE_HOME="${HOME}/.cache"
 export LS_COLORS="mh=44;37:or=40;31;01"
 ## less
 ### general settings
-export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --shift 5"
+export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --shift 5 --ignore-case --chop-long-lines"
 ### enable syntax highlighting
 export LESSOPEN="| lesspipe.sh %s"
 ### do not save search entries at "~/.lesshst"
