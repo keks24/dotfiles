@@ -1024,7 +1024,7 @@ checkCommands()
 
     for current_command in "${COMMAND_ARRAY[@]}"
     do
-        if [[ ! $(command -v "${current_command}") ]]
+        if ! beQuiet "" "command -v ${current_command}"
         then
             outputErrorAndExit "error" "Command not found: '${current_command}'." "127"
         fi
