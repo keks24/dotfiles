@@ -593,6 +593,7 @@ set whichwrap+=<,>,h,l
     nnoremap <leader>p :CtrlP<cr>
     nnoremap <leader>b :CtrlPBuffer<cr>
     nnoremap <leader>C :CtrlClearAllCaches<cr>
+    let g:ctrlp_show_hidden = 1
 
     " syntastic
     set statusline+=%#warningmsg#
