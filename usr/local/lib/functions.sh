@@ -202,16 +202,16 @@ echoC()
     local input_font_colour="${3}"
     local output_message="${4}"
 
-    if ! $(isAlphanumeric "${echo_parameter}") && ! $(isEmpty "${echo_parameter}")
+    if ! isAlphanumeric "${echo_parameter}" && ! isEmpty "${echo_parameter}"
     then
         outputErrorAndExit "error" "Entered string is not alphanumeric or empty: '${echo_parameter}'. Must match any regular expression: '${ALPHANUMERIC_REGEX_STRING}', '${EMPTY_REGEX_STRING}'." "1"
-    elif ! $(isLowercaseString "${input_font_type}") && ! $(isEmpty "${input_font_type}")
+    elif ! isLowercaseString "${input_font_type}" && ! isEmpty "${input_font_type}"
     then
         outputErrorAndExit "error" "Entered string is not lowercase or empty: '${input_font_type}'. Must match any regular expression: '${LOWERCASE_REGEX_STRING}', '${EMPTY_REGEX_STRING}'." "1"
-    elif ! $(isLowercaseUnderscoreString "${input_font_colour}") && ! $(isEmpty "${input_font_colour}")
+    elif ! isLowercaseUnderscoreString "${input_font_colour}" && ! isEmpty "${input_font_colour}"
     then
         outputErrorAndExit "error" "Entered string is not lowercase (with underscores) or empty: '${input_font_colour}'. Must match any regular expression: '${LOWERCASE_UNDERSCORE_REGEX_STRING}', '${EMPTY_REGEX_STRING}'." "1"
-    elif $(isEmpty "${output_message}")
+    elif isEmpty "${output_message}"
     then
         outputErrorAndExit "error" "Entered string is empty: '${output_message}'. Must not be empty." "1"
     fi
@@ -299,7 +299,7 @@ resetC()
     local output_font_end_sequence="m"
     local reset_type
 
-    if $(isEmpty "${input_font_type}") && ! $(isLowercaseString "${input_font_type}")
+    if isEmpty "${input_font_type}" && ! isLowercaseString "${input_font_type}"
     then
         output_font_reset="000"
     else
@@ -346,10 +346,10 @@ beQuiet()
     local file_descriptor="${1:-stdout_and_stderr}"
     local command_string="${2}"
 
-    if ! $(isLowercaseUnderscoreString "${file_descriptor}")
+    if ! isLowercaseUnderscoreString "${file_descriptor}"
     then
         outputErrorAndExit "error" "Entered string is not lowercase (with underscores): '${file_descriptor}'. Must match regular expression: '${LOWERCASE_UNDERSCORE_REGEX_STRING}'." "1"
-    elif $(isEmpty "${command_string}")
+    elif isEmpty "${command_string}"
     then
         outputErrorAndExit "error" "Entered string is empty: '${command_string}'. Must not be empty." "1"
     fi
@@ -766,22 +766,22 @@ prepareLogDirectory()
     local application_name_array=("${!3}")
     local log_file_permissions="${4:-640}"
 
-    if $(isEmpty "${log_directory_path}")
+    if isEmpty "${log_directory_path}"
     then
         outputErrorAndExit "error" "Entered string is empty: '${log_directory_path}'. Must not be empty." "1"
-    elif ! $(isDirectoryPath "${log_directory_path}")
+    elif ! isDirectoryPath "${log_directory_path}"
     then
         outputErrorAndExit "error" "Entered string is not a directory path: '${log_directory_path}'. Must match regular expression: '${DIRECTORY_PATH_REGEX_STRING}'." "1"
     elif [[ -f "${log_directory_path}" ]]
     then
         outputErrorAndExit "error" "Entered string is not a directory: '${log_directory_path}'." "1"
-    elif ! $(isChmodCompatible "${log_directory_permissions}")
+    elif ! isChmodCompatible "${log_directory_permissions}"
     then
         outputErrorAndExit "error" "Entered string is not 'chmod' compatible: '${log_directory_permissions}'. Must match regular expression '${CHMOD_REGEX_STRING}'." "1"
-    elif $(isEmpty "${application_name_array[@]}")
+    elif isEmpty "${application_name_array[@]}"
     then
         outputErrorAndExit "error" "Entered array is empty: '${application_name_array[*]}'. Must not be empty." "1"
-    elif ! $(isChmodCompatible "${log_file_permissions}")
+    elif ! isChmodCompatible "${log_file_permissions}"
     then
         outputErrorAndExit "error" "Entered string is not 'chmod' compatible: '${log_file_permissions}'. Must match regular expression: '${CHMOD_REGEX_STRING}'." "1"
     elif [[ ! -d "${log_directory_path}" ]]
@@ -838,7 +838,7 @@ countDown()
     local output_message="${1:-Counting down}"
     local countdown_seconds="${2:-30}"
 
-    if ! $(isNumeric "${countdown_seconds}")
+    if ! isNumeric "${countdown_seconds}"
     then
         outputErrorAndExit "error" "Entered string is not numeric: '${countdown_seconds}'. Must match regular expression: '${NUMERIC_REGEX_STRING}'." "1"
     fi
@@ -931,13 +931,13 @@ setGraphicsPowerMethodAndProfile()
     local graphics_power_profile_set="${2:-low}"
     local current_graphics_power_method_type=$(getGraphicsPowerMethodType)
 
-    if ! $(isLowercaseString "${graphics_power_method_set}")
+    if ! isLowercaseString "${graphics_power_method_set}"
     then
         outputErrorAndExit "error" "Entered string is not lowercase: '${graphics_power_method_set}'. Must match regular expression: '${LOWERCASE_REGEX_STRING}'." "1"
-    elif ! $(isLowercaseString "${graphics_power_profile_set}")
+    elif ! isLowercaseString "${graphics_power_profile_set}"
     then
         outputErrorAndExit "error" "Entered string is not lowercase: '${graphics_power_profile_set}'. Must match regular expression: '${LOWERCASE_REGEX_STRING}'." "1"
-    elif ! $(isLowercaseString "${current_graphics_power_method_type}")
+    elif ! isLowercaseString "${current_graphics_power_method_type}"
     then
         outputErrorAndExit "error" "Entered string is not lowercase: '${current_graphics_power_method_type}'. Must match regular expression: '${LOWERCASE_REGEX_STRING}'." "1"
     fi
@@ -1063,7 +1063,7 @@ createAndRemoveLockFile()
 {
     local lock_file_type="${1:-exclusive}"
 
-    if ! $(isLowercaseString "${lock_file_type}")
+    if ! isLowercaseString "${lock_file_type}"
     then
         outputErrorAndExit "error" "Entered string is not lowercase: '${lock_file_type}'. Must match regular expression: '${LOWERCASE_REGEX_STRING}'." "1"
     fi
@@ -1082,7 +1082,7 @@ createAndRemoveLockFile()
         exec {lock_file_file_descriptor}< "${LOCK_FILE}"
 
         # "flock" must not be executed in a test block here!
-        if $(/usr/bin/flock --"${lock_file_type}" --nonblock "${lock_file_file_descriptor}")
+        if /usr/bin/flock --"${lock_file_type}" --nonblock "${lock_file_file_descriptor}"
         then
             # unlock the file descriptor and remove the file on signal "EXIT"
             trap "/usr/bin/flock --unlock ${lock_file_file_descriptor} && /bin/rm --force ${LOCK_FILE}" EXIT
