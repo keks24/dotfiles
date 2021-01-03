@@ -180,6 +180,7 @@ alias aria2c="aria2c --force-sequential=true --min-split-size=20M --split=8 --ma
 alias bc="bc --mathlib"
 alias dd="dd bs=64K status=progress"
 alias diff="diff --side-by-side --suppress-common-lines --color"
+alias dvdbackup="dvdbackup --progress"
 alias growisofs="growisofs -speed=1"
 alias halt="echo 'Are you sure? Please run: /sbin/halt'"
 alias hexdump="hexdump --canonical"
