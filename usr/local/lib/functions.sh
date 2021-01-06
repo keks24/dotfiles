@@ -743,13 +743,13 @@ isChmodCompatible()
 ### "${log_directory_path}" must be a (path to a) directory
 ### write permissions in the desired directory
 ## usage:
-### application_name_array+=("<application_name1>" "<application_name2>" "<application_namen>")
+### application_name_array=("<application_name1>" "<application_name2>" "<application_namen>")
 ### prepareLogDirectory "<log_directory_path>" "[<log_directory_permissions>]" <application_name_array> "[<log_permissions>]"
 ## defaults:
 ### if "log_directory_permissions" is not set, "750" is assumed.
 ### if "log_file_permissions" is not set, "640" is assumed.
 ## examples:
-### application_name_array+=("ssh-agent" "steam")
+### application_name_array=("ssh-agent" "steam")
 ### prepareLogDirectory "/tmp/log" "750" application_name_array[@] "640"
 ### prepareLogDirectory "/tmp/log" "" application_name_array[@] ""
 ### prepareLogDirectory "./log" "" application_name_array[@] ""
@@ -1004,12 +1004,12 @@ getGraphicsPowerMethodType()
 ## required permissions:
 ### none
 ## usage:
-### COMMAND_ARRAY+=("<command1>" "<command2>" "<commandn>")
+### COMMAND_ARRAY=("<command1>" "<command2>" "<commandn>")
 ### checkCommands
 ## defaults:
 ### "${COMMAND_ARRAY[@]}" always contains the commands of this script.
 ## examples:
-### COMMAND_ARRAY+=("tail" "/usr/bin/tmux")
+### COMMAND_ARRAY=("tail" "/usr/bin/tmux")
 ### checkCommands
 ## possible values:
 ### none

@@ -33,7 +33,7 @@ echo ""
 #echo "${COMMAND_ARRAY[@]}"
 #echo ""
 
-#COMMAND_ARRAY+=("this_command_does_not_exist")
+#COMMAND_ARRAY=("this_command_does_not_exist")
 #echo "New command list: '${COMMAND_ARRAY[@]}'"
 #checkCommands
 #echo ""
@@ -43,7 +43,7 @@ echo "Command list from 'functions.sh':"
 echo "${COMMAND_ARRAY[@]}"
 echo ""
 
-COMMAND_ARRAY+=("ls" "hexdump")
+COMMAND_ARRAY=("ls" "hexdump")
 echo "New command list from '${SCRIPT_NAME}':"
 echo "${COMMAND_ARRAY[@]}"
 
@@ -252,7 +252,7 @@ echo ""
 
 log_directory_path="/tmp/log"
 declare -a application_name_array
-application_name_array+=("application1" "application2" "applicaton3" "application4")
+application_name_array=("application1" "application2" "applicaton3" "application4")
 prepareLogDirectory "${log_directory_path}" "750" application_name_array[@] "640"
 
 echo "Do the directories have the access permissions 'drwxr-xr--' and the files '-rw-r-----'?"
@@ -276,7 +276,7 @@ echo ""
 # this should fail
 #log_directory_path="/var/empty"
 #declare -a application_name_array
-#application_name_array+=("application1" "application2" "applicaton3" "application4")
+#application_name_array=("application1" "application2" "applicaton3" "application4")
 #prepareLogDirectory "${log_directory_path}" "750" application_name_array[@] "640"
 #
 #echo "Do the directories have the access permissions 'drwxr-xr--' and the files '-rw-r-----'?"
