@@ -59,9 +59,9 @@ psig()
     # refactor me: only "SigCgt" for now, more to come, when needed
     local pid_signal_name="SigCgt:"
     local pid_signal_hex_value=$(echo "${pid_status}" | awk --assign="pid_signal_name=${pid_signal_name}" '$0 ~ pid_signal_name { print $2 }')
-    declare -a pid_signal_hex_value_array
-    declare -a pid_signal_bin_value_array
-    declare -a pid_signal_bin_value_delimited_array
+    declare -a pid_signal_hex_value_delimited_array
+    declare -a pid_signal_bin_value_4bit_array
+    declare -a pid_signal_bin_value_1bit_array
     declare -a pid_signal_array
     local pid_signal_array["1"]="SIGHUP"
     local pid_signal_array["2"]="SIGINT"
@@ -145,7 +145,7 @@ psig()
     local hex_value_array["d"]="13"
     local hex_value_array["e"]="14"
     local hex_value_array["f"]="15"
-    declare -a bin_value_array=({0..1}{0..1}{0..1}{0..1})
+    declare -a bin_value_4bit_array=({0..1}{0..1}{0..1}{0..1})
     local hex_position
     local hex_value
     local binary_position
@@ -158,24 +158,24 @@ psig()
     # split hexadecimal string per character
     # from: 0000000180004a03
     # to:   0 0 0 0 0 0 0 1 8 0 0 0 4 a 0 3
-    unset pid_signal_hex_value_array
+    unset pid_signal_hex_value_delimited_array
     for hex_position in {0.."${#pid_signal_hex_value}"}
     do
-        pid_signal_hex_value_array+=("${pid_signal_hex_value:${hex_position}:1}")
+        pid_signal_hex_value_delimited_array+=("${pid_signal_hex_value:${hex_position}:1}")
     done
 
     # convert hexadecimal to binary per character
     # from:    0    0    0    0    0    0    0    1    8    0    0    0    4    a    0    3
     # to:   0000 0000 0000 0000 0000 0000 0000 0001 1000 0000 0000 0000 0100 1010 0000 0011
-    unset pid_signal_bin_value_array
-    for hex_value in "${pid_signal_hex_value_array[@]}"
+    unset pid_signal_bin_value_4bit_array
+    for hex_value in "${pid_signal_hex_value_delimited_array[@]}"
     do
         if [[ "${hex_value}" =~ ^[0-9]$ ]]
         then
-            pid_signal_bin_value_array+="${bin_value_array[${hex_value}+1]} "
+            pid_signal_bin_value_4bit_array+="${bin_value_4bit_array[${hex_value}+1]} "
         elif [[ "${hex_value}" =~ ^[a-fA-F]$ ]]
         then
-            pid_signal_bin_value_array+="${bin_value_array[hex_value_array[${hex_value}]+1]} "
+            pid_signal_bin_value_4bit_array+="${bin_value_4bit_array[hex_value_array[${hex_value}]+1]} "
         fi
     done
 
@@ -183,10 +183,10 @@ psig()
     # from: 0000 0000 0000 0000 0000 0000 0000 0001 1000 0000 0000 0000 0100 1010 0000 0011
     # to:   0000000000000000000000000000000110000000000000000100101000000011
     # to:   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0 0 1 1
-    pid_signal_bin_value_concatenated="${pid_signal_bin_value_array[@]// /}"
+    pid_signal_bin_value_concatenated="${pid_signal_bin_value_4bit_array[@]// /}"
     for binary_position in {0.."$(( ${#pid_signal_bin_value_concatenated} - 1 ))"}
     do
-        pid_signal_bin_value_delimited_array+=("${pid_signal_bin_value_concatenated:${binary_position}:1}")
+        pid_signal_bin_value_1bit_array+=("${pid_signal_bin_value_concatenated:${binary_position}:1}")
     done
 
     # convert binary to signal name per character
@@ -195,7 +195,7 @@ psig()
     local binary_array_index="${#pid_signal_bin_value_concatenated}"
 
     echo "${pid_signal_name/:/}"
-    for binary_value in "${pid_signal_bin_value_delimited_array[@]}"
+    for binary_value in "${pid_signal_bin_value_1bit_array[@]}"
     do
         # signal "32" and "33" are undefined
         if [[ "${binary_array_index}" == "32" || "${binary_array_index}" == "33" ]]
@@ -215,7 +215,7 @@ psig()
     done
 
     echo ""
-    echo -e "Hexadecimal: ${pid_signal_hex_value_array[@]}\nBinary: ${pid_signal_bin_value_array[@]}" | column --table
+    echo -e "Hexadecimal: ${pid_signal_hex_value_delimited_array[@]}\nBinary: ${pid_signal_bin_value_4bit_array[@]}" | column --table
 }
 
 ## do not include faulty commands in history
