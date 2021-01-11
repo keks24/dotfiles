@@ -193,7 +193,6 @@ psig()
     # from: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0 0 1 1
     # to:   Signal <signal_number>: <signal_name>
     local binary_array_index="${#pid_signal_bin_value_concatenated}"
-
     echo "${pid_signal_name/:/}"
     for binary_value in "${pid_signal_bin_value_1bit_array[@]}"
     do
