@@ -23,11 +23,10 @@ source_directory_list=("/home" "/media/animes")
 countdown_seconds="5"
 current_iso_date=$(/bin/date +%Y%m%d)
 current_time=$(/bin/date +%H%M%S)
-log_directory="./logs"
+log_directory="${script_directory_path}/logs"
 log_filename="${current_iso_date}-${current_time}_${script_name}.log"
 log_file="${log_directory}/${log_filename}"
-# do not use "${script_directory_path}" here. when executed manually, the variable will expand to "create_backup.sh"!
-backup_directory="./backup"
+backup_directory="${script_directory_path}/backup"
 checksum_filename="checksums.b2"
 
 calculateChecksums()
