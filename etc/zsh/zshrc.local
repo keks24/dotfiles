@@ -133,8 +133,7 @@ psig()
 
 # bookmark: convert binary to process signal here
 
-    echo "${pid_signal_hex_value_delimited[@]}"
-    echo "${pid_signal_bin_value_delimited[@]}"
+    echo -e "Hexadecimal: ${pid_signal_hex_value_array[@]}\nBinary: ${pid_signal_bin_value_array[@]}" | column --table
 }
 
 ## do not include faulty commands in history
