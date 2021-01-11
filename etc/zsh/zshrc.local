@@ -53,7 +53,8 @@ psig()
 {
     # refactor me: refactor this function to accept multiple pids
     local pid="${1}"
-    local pid_status_information=$(< /proc/${pid}/status)
+    local pid_directory_path="/proc/${pid}"
+    local pid_status_information=$(< "${pid_directory_path}/status")
     # refactor me: only "SigCgt" for now, more to come, when needed
     local pid_signal_name="SigCgt:"
     local pid_signal_hex_value=$(echo "${pid_status_information}" | awk --assign="pid_signal_name=${pid_signal_name}" '$0 ~ pid_signal_name { print $2 }')
