@@ -161,7 +161,7 @@ psig()
         local binary_value
 
         echo ""
-        echo "PID: ${pid}"
+        echo -n "PID: ${pid}"
 
         for pid_signal_name in "${(k)pid_signal_name_array[@]}"
         do
