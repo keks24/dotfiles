@@ -141,8 +141,11 @@ psig()
     local hex_value_array["f"]="15"
     declare -a bin_value_4bit_array=({0..1}{0..1}{0..1}{0..1})
     declare -A pid_signal_name_array
-    local pid_signal_name_array["SigIgn:"]="Signals ignored"
-    local pid_signal_name_array["SigCgt:"]="Signals caught"
+    local pid_signal_name_array["SigPnd:"]="Signals pending (thread):"
+    local pid_signal_name_array["ShdPnd:"]="Signals pending (process):"
+    local pid_signal_name_array["SigBlk:"]="Signals blocked:"
+    local pid_signal_name_array["SigIgn:"]="Signals ignored:"
+    local pid_signal_name_array["SigCgt:"]="Signals caught:"
     declare -a pid_signal_bin_value_4bit_array
     declare -a pid_signal_bin_value_1bit_array
     local hex_position
@@ -198,8 +201,8 @@ psig()
         local binary_array_index="${#pid_signal_bin_value_concatenated}"
 
         echo ""
-        echo "${pid_signal_name}"
-        echo "${pid_signal_name//[a-zA-Z:]/-}"
+        echo "${pid_signal_name_array[${pid_signal_name}]}"
+        echo "${pid_signal_name_array[${pid_signal_name}]//[a-zA-Z :()]/-}"
         for binary_value in "${pid_signal_bin_value_1bit_array[@]}"
         do
             # signal "32" and "33" are undefined
