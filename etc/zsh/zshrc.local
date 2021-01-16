@@ -162,7 +162,6 @@ psig()
 
         echo ""
         echo -n "PID: ${pid}"
-
         for pid_signal_name in "${(k)pid_signal_name_array[@]}"
         do
             local pid_signal_hex_value=$(echo "${pid_status}" | awk --assign="pid_signal_name=${pid_signal_name}" '$0 ~ pid_signal_name { print $2 }')
