@@ -128,7 +128,7 @@ myawesomemenu = {
 
 -- custom - 20200510 - rfischer: add browser variable
 chromium_browser = "chromium"
-torbrowser = "torbrowser --torbrowser-version 10.0.7"
+torbrowser = "torbrowser --torbrowser-version 10.0.10"
 email = "thunderbird-bin"
 downloader = "jdownloader"
 scanner = "xsane"
