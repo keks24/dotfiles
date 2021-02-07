@@ -36,6 +36,7 @@ compile new kernel
             cp "/usr/src/custom-initramfs-<new_kernel_version>.cpio.gz" "/boot/"
 
     6. update the intel cpu microcode, if necessary
+        emerge --ask sys-firmware/intel-microcode
         iucode_tool --scan-system --write-earlyfw="/boot/early_ucode.cpio" "/lib/firmware/intel-ucode"/* --overwrite
 
         6.1. check the current revision and date
