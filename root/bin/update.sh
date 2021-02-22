@@ -45,7 +45,7 @@ script_name="${0##*/}"
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/gem update
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user --no-warn-script-location
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip check
-/usr/bin/flatpak update
+/usr/bin/sudo --shell --user="${SUDO_USER}" /usr/bin/flatpak update
 /usr/bin/eix-sync
 /usr/bin/emerge --ask --update --deep --newuse --tree --verbose @world
 /usr/sbin/etc-update
