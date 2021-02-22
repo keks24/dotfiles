@@ -53,7 +53,7 @@ declare -r SCRIPT_PID="${$}"
 declare -a COMMAND_ARRAY
 COMMAND_ARRAY=("/bin/chmod" "/usr/bin/flock" "/usr/bin/logger" "/bin/rm" "/bin/sleep" "/usr/bin/sudo" "/usr/bin/tee" "/bin/touch")
 declare -r LOCK_FILE_DIRECTORY_PATH="/var/lock"
-declare -r LOCK_FILENAME="${SCRIPT_NAME}.lock"
+declare -r LOCK_FILENAME="LCK..${SCRIPT_NAME}"
 declare -r LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
 declare -r NUMERIC_REGEX_STRING="^[+-]?[0-9]+(\.[0-9]+)?$"
 declare -r STRING_REGEX_STRING="^[a-zA-Z]+$"
