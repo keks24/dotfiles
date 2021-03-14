@@ -212,6 +212,10 @@ alias webcam_live_capture="mpv --demuxer-lavf-format='video4linux2' --profile='l
 alias webcam_record="ffmpeg -f v4l2 -framerate 30 -video_size 1920x1080 -input_format mjpeg -i /dev/video0 -f alsa -i default -c:a aac '$(date +%Y%m%d)_webcam_record.mkv'"
 alias youtube-dl="youtube-dl --ignore-errors --extract-audio --audio-quality 0 --output './%(uploader)s/%(playlist_title)s/%(title)s.%(ext)s'"
 alias zerofree="zerofree -v"
+if [[ $(id --user) == "0" ]]
+then
+    alias pip="echo -e \"\e[01;31m'pip' should not be run with root privileges!\e[0m\""
+fi
 
 # export
 ## set default text editor
