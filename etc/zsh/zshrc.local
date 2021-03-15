@@ -51,7 +51,7 @@ fi
 exclude_remove_on()
 {
     setopt extended_glob
-    echo -e "\e[01;31mZsh's glob syntax has been activated.\e[0m"
+    echo -e "\e[01;31mGlob syntax has been activated.\e[0m"
     echo "Examples:"
     echo "Remove all files, except the file 'nom': rm -- ^\"nom\""
     echo "Remove all files, except files with the suffix 'png' and 'jpg': rm -- ^.*(png|jpg)"
@@ -60,7 +60,7 @@ exclude_remove_on()
 exclude_remove_off()
 {
     unsetopt extended_glob
-    echo -e "\e[01;31mZsh's glob syntax has been deactivated.\e[0m"
+    echo -e "\e[01;31mGlob syntax has been deactivated.\e[0m"
 }
 
 ## do not include faulty commands in history
