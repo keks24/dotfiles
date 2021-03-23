@@ -193,7 +193,7 @@ source "/usr/local/share/git/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting
 # aliases
 alias aria2c="aria2c --force-sequential='true' --min-split-size='20M' --split='8' --max-connection-per-server='8'"
 alias bc="bc --mathlib"
-alias dd="dd bs='512b' status='progress' conv='fdatasync'"
+alias dd="dd bs='512b' conv='fdatasync' status='progress'"
 alias diff="diff --side-by-side --suppress-common-lines --color"
 alias dvdbackup="dvdbackup --progress"
 alias fallocate="fallocate --verbose"
