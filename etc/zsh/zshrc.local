@@ -210,32 +210,32 @@ alias ll="ls -vl"
 alias ln="ln --verbose"
 alias locate="locate --ignore-case"
 alias mkdir="mkdir --parents"
-alias mktorrent="mktorrent --verbose --announce='\
-    udp://tracker.coppersurfer.tk:6969/announce,\
-    udp://tracker.ccc.de:80/announce,\
-    udp://tracker.publicbt.com:80,\
-    udp://tracker.istole.it:80,\
-    http://tracker.openbittorrent.com:80/announce,\
-    udp://tracker.internetwarriors.net:1337/announce,\
-    udp://tracker.opentrackr.org:1337/announce,\
-    udp://exodus.desync.com:6969/announce,\
-    udp://tracker.tiny-vps.com:6969/announce,\
-    udp://tracker.cyberia.is:6969/announce,\
-    udp://retracker.lanta-net.ru:2710/announce,\
-    udp://open.stealth.si:80/announce,\
-    udp://www.torrent.eu.org:451/announce,\
-    udp://tracker.torrent.eu.org:451/announce,\
-    udp://tracker.moeking.me:6969/announce,\
-    udp://vibe.community:6969/announce,\
-    udp://valakas.rollo.dnsabr.com:2710/announce,\
-    udp://u.wwwww.wtf:1/announce,\
-    udp://tracker0.ufibox.com:6969/announce,\
-    udp://tracker.zerobytes.xyz:1337/announce,\
-    udp://tracker.v6speed.org:6969/announce,\
-    udp://tracker.uw0.xyz:6969/announce,\
-    udp://tracker.shkinev.me:6969/announce,\
-    udp://tracker.nighthawk.pw:2052/announce,\
-    udp://tracker.lelux.fi:6969/announce'"
+alias mktorrent="mktorrent --verbose \
+    --announce='udp://tracker.coppersurfer.tk:6969/announce' \
+    --announce='udp://tracker.ccc.de:80/announce' \
+    --announce='udp://tracker.publicbt.com:80' \
+    --announce='udp://tracker.istole.it:80' \
+    --announce='http://tracker.openbittorrent.com:80/announce' \
+    --announce='udp://tracker.internetwarriors.net:1337/announce' \
+    --announce='udp://tracker.opentrackr.org:1337/announce' \
+    --announce='udp://exodus.desync.com:6969/announce' \
+    --announce='udp://tracker.tiny-vps.com:6969/announce' \
+    --announce='udp://tracker.cyberia.is:6969/announce' \
+    --announce='udp://retracker.lanta-net.ru:2710/announce' \
+    --announce='udp://open.stealth.si:80/announce' \
+    --announce='udp://www.torrent.eu.org:451/announce' \
+    --announce='udp://tracker.torrent.eu.org:451/announce' \
+    --announce='udp://tracker.moeking.me:6969/announce' \
+    --announce='udp://vibe.community:6969/announce' \
+    --announce='udp://valakas.rollo.dnsabr.com:2710/announce' \
+    --announce='udp://u.wwwww.wtf:1/announce' \
+    --announce='udp://tracker0.ufibox.com:6969/announce' \
+    --announce='udp://tracker.zerobytes.xyz:1337/announce' \
+    --announce='udp://tracker.v6speed.org:6969/announce' \
+    --announce='udp://tracker.uw0.xyz:6969/announce' \
+    --announce='udp://tracker.shkinev.me:6969/announce' \
+    --announce='udp://tracker.nighthawk.pw:2052/announce' \
+    --announce='udp://tracker.lelux.fi:6969/announce'"
 alias path="echo ${PATH//:/'\n'}"
 alias poweroff="echo 'Are you sure? Please run: /sbin/poweroff'"
 alias ps="ps axo user,group,uid,gid,ppid,pid,pgid,sid,sgid,%cpu,%mem,vsz,rss,tty,stat,start,time,comm,args=ARGS"
