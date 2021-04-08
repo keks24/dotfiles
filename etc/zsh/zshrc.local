@@ -202,6 +202,7 @@ alias dd="dd bs='512b' conv='fdatasync' status='progress'"
 alias diff="diff --side-by-side --suppress-common-lines --color"
 alias dvdbackup="dvdbackup --progress"
 alias fallocate="fallocate --verbose"
+alias fping="fping --generate --rdns"
 alias growisofs="growisofs -speed='1'"
 alias halt="echo 'Are you sure? Please run: /sbin/halt'"
 alias hexdump="hexdump --canonical"
@@ -214,6 +215,7 @@ alias listusers="awk --field-separator ':' '{ printf \"Username: %-20s UID: %-10
 alias ll="ls -vl"
 alias ln="ln --verbose"
 alias locate="locate --ignore-case"
+alias lsblk="lsblk --discard --fs --merge --perms --zoned"
 alias mkdir="mkdir --parents"
 alias mktorrent="mktorrent --verbose \
     --announce='http://tracker.openbittorrent.com:80/announce' \
