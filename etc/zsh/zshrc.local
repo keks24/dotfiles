@@ -159,7 +159,8 @@ genpw()
 
 ptree()
 {
-    namei --long --mountpoints "$(pwd)"
+    local directory_path="${1:-$(pwd)}"
+    namei --long --mountpoints "${directory_path}"
 }
 
 ## notify after a command has finished
