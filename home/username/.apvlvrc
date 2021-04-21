@@ -34,6 +34,9 @@ set continuouspad = yes
 "" set the default zoom level to "160%"
 set zoom = 1.6
 
+" also consider wrapped text, when searching
+set wrapscan = yes
+
 " keyboard settings
 "" open link
 map l <C-]>
