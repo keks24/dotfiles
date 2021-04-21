@@ -20,7 +20,7 @@
 "" save cursor position; the file "~/.apvlvinfo" will be created
 set noinfo = no
 
-"" select a word on double-click
+"" select page on double-click
 set doubleclick = page
 
 "" do not start with the table of contents
