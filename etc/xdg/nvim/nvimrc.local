@@ -744,3 +744,6 @@ endif
 highlight CursorLine ctermbg=black guibg=lightgrey
 " toggle cursor highlighting
 nnoremap <silent> <f4> :set cursorline! cursorcolumn!<cr>
+
+" enable syntax highlighting for custom ssh directories
+au BufNewFile,BufRead ssh_config,*/.ssh/config.d/* setf sshconfig
