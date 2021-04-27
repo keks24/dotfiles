@@ -244,7 +244,7 @@ alias pstree="pstree --unicode --arguments --highlight-all --show-pids --show-pg
 alias radeontop="radeontop --color"
 alias rdesktop="rdesktop -g 1920x1080 -P -z -x -l -r sound:off -k '/usr/share/rdesktop/keymaps/de'"
 alias reboot="echo 'Are you sure? Please run: /sbin/reboot'"
-alias rsync="rsync --archive --hard-links --acls --xattrs --one-file-system --numeric-ids --info='progress2' --rsh='ssh -T -c aes256-gcm@openssh.com -o Compression=no -x'"
+alias rsync="rsync --archive --hard-links --acls --xattrs --one-file-system --numeric-ids --info='progress2' --rsh='ssh -T -c chacha20-poly1305@openssh.com,aes256-gcm@openssh.com -o Compression=no -x'"
 alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
 alias shred="shred --verbose"
 alias tree="tree -F"
