@@ -9,6 +9,6 @@ then
 
     "/home/ramon/.local/games/terra_nil/Terra Nil.x86_64"
 else
-    echo -e "\e[01;31mno display detected, exiting...\e[0m"
+    echo -e "\e[01;31mNo display detected, exiting...\e[0m" >&2
     exit 1
 fi
