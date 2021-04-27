@@ -1,0 +1,14 @@
+#!/bin/bash
+# custom - 20210426 - rfischer: start "terra nil"
+
+if [[ "${DISPLAY}" != "" ]]
+then
+    export DRI_PRIME="1"
+    export VDPAU_DRIVER="r600"
+    # amdgpu: export VDPAU_DRIVER="radeonsi"
+
+    "/home/ramon/.local/games/the_forgotten_halls/TheForgottenHalls.x86_64"
+else
+    echo -e "\e[01;31mNo display detected.\e[0m" >&2
+    exit 1
+fi
