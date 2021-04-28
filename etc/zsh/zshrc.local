@@ -248,7 +248,7 @@ alias rsync="rsync --archive --hard-links --acls --xattrs --one-file-system --nu
 alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
 alias shred="shred --verbose"
 alias tree="tree -F"
-alias vmstat="vmstat --timestamp --wide 2"
+alias vmstat="vmstat --unit M --timestamp --wide 2"
 alias watch="watch --differences"
 alias webcam_live_capture="mpv --demuxer-lavf-format='video4linux2' --profile='low-latency' --demuxer-lavf-o-set=input_format='mjpeg' --untimed 'av://v4l2:/dev/video0'"
 alias webcam_record="ffmpeg -f v4l2 -framerate 30 -video_size 1920x1080 -input_format mjpeg -i /dev/video0 -f alsa -i default -c:a aac '$(date +%Y%m%d)_webcam_record.mkv'"
