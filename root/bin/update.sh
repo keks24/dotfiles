@@ -51,7 +51,7 @@ script_name="${0##*/}"
 if /usr/bin/eix --upgrade sys-apps/portage >/dev/null
 then
     /bin/echo -e "\e[01;31mA new version of 'sys-apps/portage' was found. Updating it first...\e[0m"
-    /usr/bin/emerge sys-apps/portage
+    /usr/bin/emerge --ask sys-apps/portage
 fi
 
 /usr/bin/emerge --ask --update --deep --newuse --tree --verbose @world
