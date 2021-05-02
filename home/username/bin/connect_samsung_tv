@@ -24,7 +24,7 @@ checkCommands()
         unalias ${current_command} 2>/dev/null
         if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
         then
-            /bin/echo -e "\e[01;31mcould not find command '${current_command}'.\e[0m"
+            /bin/echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
             exit 1
         fi
     done
@@ -50,7 +50,7 @@ then
         # "--signal" does not work
         /bin/kill -s HUP $(/usr/bin/pgrep --euid "$(/usr/bin/id --user --name)" "awesome")
     else
-        /bin/echo -e "\e[01;31msamsung tv is not connected, exiting ...\e[0m"
+        /bin/echo -e "\e[01;31mSamsung tv is not connected, exiting ...\e[0m"
         exit 1
     fi
 fi
