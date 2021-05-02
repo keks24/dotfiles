@@ -1,6 +1,6 @@
 #!/bin/bash
 #############################################################################
-# Copyright 2020 Ramon Fischer                                              #
+# Copyright 2020-2021 Ramon Fischer                                         #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -24,7 +24,7 @@ checkCommands()
         unalias ${current_command} 2>/dev/null
         if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
         then
-            /bin/echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
+            /bin/echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m" >&2
             exit 1
         fi
     done
@@ -50,7 +50,7 @@ then
         # "--signal" does not work
         /bin/kill -s HUP $(/usr/bin/pgrep --euid "$(/usr/bin/id --user --name)" "awesome")
     else
-        /bin/echo -e "\e[01;31mSamsung tv is not connected, exiting ...\e[0m"
+        /bin/echo -e "\e[01;31mSamsung TV is not connected.\e[0m" >&2
         exit 1
     fi
 fi
