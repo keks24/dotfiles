@@ -7,7 +7,7 @@ checkCommands()
         unalias ${current_command} 2>/dev/null
         if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
         then
-            /bin/echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
+            echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
             exit 1
         fi
     done
@@ -43,7 +43,7 @@ checkAndMountPartitions()
         if /bin/mountpoint --quiet "${source_directory}"
         then
             /bin/mount "${source_directory}"
-            /bin/echo -e "\e[01;33mMounted '${source_directory}'.\e[0m"
+            echo -e "\e[01;33mMounted '${source_directory}'.\e[0m"
         fi
     done
 }
@@ -57,14 +57,14 @@ countDown()
 {
     local current_countdown_seconds="${countdown_seconds}"
 
-    /bin/echo -ne "\e[01;31mexecuting backup in ... \e[0m"
+    echo -ne "\e[01;31mexecuting backup in ... \e[0m"
     while (( "${current_countdown_seconds}" > 0 ))
     do
-        /bin/echo -ne "\e[01;31m${current_countdown_seconds} \e[0m"
+        echo -ne "\e[01;31m${current_countdown_seconds} \e[0m"
         /bin/sleep 1
         (( current_countdown_seconds-- ))
     done
-    /bin/echo ""
+    echo ""
 }
 
 createSystemLogEntry()
