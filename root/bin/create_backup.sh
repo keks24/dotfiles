@@ -19,7 +19,7 @@ checkCommands
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 declare -a source_directory_list
-source_directory_list=("/home" "/media/animes")
+source_directory_list=("/home")
 countdown_seconds="5"
 current_iso_date=$(/bin/date +%Y%m%d)
 current_time=$(/bin/date +%H%M%S)
