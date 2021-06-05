@@ -42,8 +42,8 @@ checkAndMountPartitions()
     do
         if /bin/mountpoint --quiet "${source_directory}"
         then
-            /bin/echo -e "\e[01;33mmounted ${source_directory}.\e[0m"
             /bin/mount "${source_directory}"
+            /bin/echo -e "\e[01;33mMounted '${source_directory}'.\e[0m"
         fi
     done
 }
