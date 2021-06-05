@@ -40,7 +40,7 @@ checkAndMountPartitions()
 {
     for source_directory in ${source_directory_list[@]}
     do
-        if /bin/mountpoint --quiet "${source_directory}"
+        if ! /bin/mountpoint --quiet "${source_directory}"
         then
             /bin/mount "${source_directory}"
             echo -e "\e[01;33mMounted '${source_directory}'.\e[0m"
