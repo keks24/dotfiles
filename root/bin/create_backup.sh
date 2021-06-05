@@ -40,14 +40,10 @@ checkAndMountPartitions()
 {
     for source_directory in ${source_directory_list[@]}
     do
-        /bin/mountpoint --quiet "${source_directory}"
-        local return_code="${?}"
-
-        if [[ "${return_code}" != "0" ]]
+        if /bin/mountpoint --quiet "${source_directory}"
         then
             /bin/echo -e "\e[01;33mmounted ${source_directory}.\e[0m"
             /bin/mount "${source_directory}"
-            unset return_code
         fi
     done
 }
