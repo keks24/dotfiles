@@ -73,7 +73,7 @@ do
             ;;
 
         *)
-            echo -e "\e[01;31mSomething went wrong starting application: '${APPLICATION_NAME}'.\e[0m"
+            continue
     esac
 done
 unset APPLICATION_NAME
