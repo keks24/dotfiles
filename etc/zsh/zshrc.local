@@ -197,7 +197,7 @@ source "/usr/local/share/git/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "/usr/local/share/git/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # aliases
-alias aria2c="aria2c --force-sequential='true' --min-split-size='20M' --split='8' --max-connection-per-server='8'"
+alias aria2c="aria2c --force-sequential='true' --min-split-size='20M' --split='8' --max-connection-per-server='8' --seed-time='0'"
 alias bc="bc --mathlib"
 alias cdrecord="cdrecord -sao -speed='0' -eject -v"
 alias dd="dd bs='512b' conv='fdatasync' status='progress'"
