@@ -17,12 +17,10 @@
 # client-specific
 ## tmux
 ### attach or create tmux session
-if [[ $(/usr/bin/pgrep --euid "$(/usr/bin/id --user --name)" "tmux") && "${TMUX}" == "" && $(/bin/tty) != "/dev/tty1" ]]
+if [[ $(pgrep --euid "$(id --user --name)" "tmux") && "${TMUX}" == "" && $(tty) != "/dev/tty1" ]]
 then
-    /usr/bin/tmux attach 2>/dev/null
-else
-    if [[ ! $(/usr/bin/pgrep --euid "$(/usr/bin/id --user --name)" "script") && $(/bin/tty) != "/dev/tty1" ]]
-    then
-        /usr/bin/tmux new-session 2>/dev/null
-    fi
+    tmux attach 2>/dev/null
+elif [[ ! $(pgrep --euid "$(id --user --name)" "script") && $(tty) != "/dev/tty1" ]]
+then
+    tmux new-session 2>/dev/null
 fi
