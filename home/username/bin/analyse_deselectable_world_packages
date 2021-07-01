@@ -44,7 +44,7 @@ else
     done
 fi
 
-echo -e "\e[01;33mNext steps:\e[0m"
+echo -e "\n\e[01;33mNext steps:\e[0m"
 echo -e 'List removable dependency packages: \e[01;31memerge --pretend --depclean --verbose $(< "/var/tmp/deselect.list")\e[0m'
 echo -e "Add packages to @world, if they would be unmerged: \e[01;31m'emerge --ask --noreplace <package_name>'\e[0m"
 echo -e 'Remove packages from @world: \e[01;31memerge --ask --depclean --verbose $(< "/var/tmp/deselect.list")\e[0m'
