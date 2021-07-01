@@ -1,0 +1,50 @@
+#!/bin/bash
+portage_lib_directory_path="/var/lib/portage"
+portage_world_file="${portage_lib_directory_path}/world"
+deselect_list_file="/var/tmp/deselect.list"
+
+command_list=(emerge qdepends touch)
+checkCommands()
+{
+    for current_command in "${command_list[@]}"
+    do
+        unalias ${current_command} 2>/dev/null
+        if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
+        then
+            /bin/echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
+            exit 1
+        fi
+    done
+}
+
+checkCommands
+
+/usr/bin/touch "${deselect_list_file}"
+: > "${deselect_list_file}"
+
+if [[ ! -f "${portage_world_file}" ]]
+then
+    echo -e "\e[01;31mCould not find file '${portage_world_file}'.\e[0m" >&2
+    exit 1
+else
+    for package_name in $(< "${portage_world_file}")
+    do
+        if /usr/bin/qdepends --query "${package_name}" >/dev/null 2>&1
+        then
+            echo -en "Checking '\e[01;34m${package_name}\e[0m': "
+
+            if [[ "$(/usr/bin/emerge --pretend --quiet --depclean ${package_name})" != "" ]]
+            then
+                echo -e "\e[01;31mMust stay in @world!.\e[0m" >&2
+            else
+                echo -e "\e[01;32mCan be deselected.\e[0m"
+                echo "${package_name}" >> "${deselect_list_file}"
+            fi
+        fi
+    done
+fi
+
+echo -e "\e[01;33mNext steps:\e[0m"
+echo -e 'List removable dependency packages: \e[01;31memerge --pretend --depclean --verbose $(< "/var/tmp/deselect.list")\e[0m'
+echo -e "Add packages to @world, if they would be unmerged: \e[01;31m'emerge --ask --noreplace <package_name>'\e[0m"
+echo -e 'Remove packages from @world: \e[01;31memerge --ask --depclean --verbose $(< "/var/tmp/deselect.list")\e[0m'
