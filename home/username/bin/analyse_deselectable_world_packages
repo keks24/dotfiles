@@ -35,7 +35,7 @@ else
 
             if [[ "$(/usr/bin/emerge --pretend --quiet --depclean ${package_name})" != "" ]]
             then
-                echo -e "\e[01;31mMust stay in @world!.\e[0m" >&2
+                echo -e "\e[01;31mMust stay in @world!\e[0m" >&2
             else
                 echo -e "\e[01;32mCan be deselected.\e[0m"
                 echo "${package_name}" >> "${deselect_list_file}"
