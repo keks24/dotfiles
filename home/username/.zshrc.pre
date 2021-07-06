@@ -19,7 +19,7 @@
 
 ## exports
 ### set default scanner device
-export SANE_DEFAULT_DEVICE="net:raspberrypi-printer.local:genesys"
+export SANE_DEFAULT_DEVICE="net:sane.local:genesys"
 ### use local man pages
 export MANPATH="/home/$(id --user --name)/.local/share/man:${MANPATH}"
 
