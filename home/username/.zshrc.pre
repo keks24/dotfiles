@@ -19,7 +19,7 @@
 
 ## exports
 ### set default scanner device
-export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:004"
+export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:003"
 ### use local man pages
 export MANPATH="/home/$(id --user --name)/.local/share/man:${MANPATH}"
 
