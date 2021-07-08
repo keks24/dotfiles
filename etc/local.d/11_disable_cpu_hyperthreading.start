@@ -7,5 +7,5 @@ script_name="${0##*/}"
 # disable cpu hyperthreading on cpu 1, 3, 5 and 7
 for cpu_number in {1..7..2}
 do
-    /bin/echo "0" > "/sys/devices/system/cpu/cpu${cpu_number}/online"
+    echo "0" > "/sys/devices/system/cpu/cpu${cpu_number}/online"
 done
