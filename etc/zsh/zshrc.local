@@ -204,12 +204,12 @@ alias aria2c="aria2c --enable-rpc='false' \
     --continue='true' \
     --auto-save-interval='30' \
     --http-accept-gzip='true' \
-    --netrc-path='/home/ramon/.cache/aria2/netrc' \
+    --netrc-path='${HOME}/.cache/aria2/netrc' \
     --max-concurrent-downloads='4' \
     --max-connection-per-server='8' \
     --min-split-size='20M' \
     --split='8' \
-    --save-session='/home/ramon/.cache/aria2/aria2_session.gz' \
+    --save-session='${HOME}/.cache/aria2/aria2_session.gz' \
     --save-session-interval='60' \
     --bt-detach-seed-only='true' \
     --bt-enable-lpd='true' \
@@ -219,8 +219,8 @@ alias aria2c="aria2c --enable-rpc='false' \
     --enable-dht='true' \
     --enable-dht6='true' \
     --dht-listen-port='6881-6999' \
-    --dht-file-path='/home/ramon/.cache/aria2/dht.dat' \
-    --dht-file-path6='/home/ramon/.cache/aria2/dht6.dat' \
+    --dht-file-path='${HOME}/.cache/aria2/dht.dat' \
+    --dht-file-path6='${HOME}/.cache/aria2/dht6.dat' \
     --bt-force-encryption='true' \
     --bt-require-crypto='true' \
     --bt-min-crypto-level='arc4' \
