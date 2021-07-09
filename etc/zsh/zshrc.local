@@ -286,6 +286,8 @@ export HISTORY_IGNORE="(*--clear*|*--force*|*cd*|*chmod*|*chown*|*clear*|*dd*|*d
 export PATH="/usr/lib/ccache/bin:${PATH}"
 export CCACHE_DIR="/home/ramon/.var/tmp/ccache"
 export DISTCC_DIR="/home/ramon/.var/tmp/distcc"
+## mimic bash's cursor movement for paths
+export WORDCHARS="${WORDCHARS/\/}"
 ## always use the best compression method of "xz"
 export XZ_OPT="-9"
 
