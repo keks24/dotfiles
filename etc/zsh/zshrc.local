@@ -196,6 +196,12 @@ source "/usr/local/share/git/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 ## zsh-syntax-highlighting
 source "/usr/local/share/git/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
+# keybindings
+bindkey -r "^N" # up-line-or-history
+bindkey -r "^P" # down-line-or-history
+bindkey "^N" down-line-or-search
+bindkey "^P" up-line-or-search
+
 # aliases
 alias aria2c="aria2c --enable-rpc='false' \
     --rpc-allow-origin-all='false' \
