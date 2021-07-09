@@ -1,5 +1,5 @@
 #############################################################################
-# Copyright 2020 Ramon Fischer                                              #
+# Copyright 2020-2021 Ramon Fischer                                         #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -17,10 +17,10 @@
 # client-specific
 ## tmux
 ### attach or create tmux session
-if [[ $(pgrep --euid "$(id --user --name)" "tmux") && "${TMUX}" == "" && $(tty) != "/dev/tty1" ]]
+if [[ $(pgrep --euid "${USER}" "tmux") && "${TMUX}" == "" && $(tty) != "/dev/tty1" ]]
 then
     tmux attach 2>/dev/null
-elif [[ ! $(pgrep --euid "$(id --user --name)" "script") && $(tty) != "/dev/tty1" ]]
+elif [[ ! $(pgrep --euid "${USER}" "script") && $(tty) != "/dev/tty1" ]]
 then
     tmux new-session 2>/dev/null
 fi

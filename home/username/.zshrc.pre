@@ -21,8 +21,8 @@
 ### set default scanner device
 export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:003"
 ### use local man pages
-export MANPATH="/home/$(id --user --name)/.local/share/man:${MANPATH}"
+export MANPATH="${HOME}/.local/share/man:${MANPATH}"
 
 ## aliases
 ### ruby
-alias ruby-install="ruby-install --jobs='4' --cleanup --src-dir '/home/$(id --user --name)/.local/src' --install-dir '/home/$(id --user --name)/.local'"
+alias ruby-install="ruby-install --jobs='4' --cleanup --src-dir '${HOME}/.local/src' --install-dir '${HOME}/.local'"
