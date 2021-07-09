@@ -14,7 +14,7 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# client-specific
+# user-specific
 ## tmux
 ### attach or create tmux session
 if [[ $(pgrep --euid "${USER}" "tmux") && "${TMUX}" == "" && $(tty) != "/dev/tty1" ]]
