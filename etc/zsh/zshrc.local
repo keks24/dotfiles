@@ -38,13 +38,13 @@ then
         # append the current directory (%~), substitute home directories with a tilde.
         # "\a" bell (man 1 echo)
         # "print" must be used here; echo cannot handle prompt expansions (%L)
-        print -Pn "\e]0;$(id --user --name)@$(hostname): zsh[%L] %~\a"
+        print -Pn "\e]0;${USER}@${HOSTNAME}: zsh[%L] %~\a"
     }
 
     preexec()
     {
         # output current executed command with parameters
-        echo -en "\e]0;$(id --user --name)@$(hostname): ${1}\a"
+        echo -en "\e]0;${USER}@${HOSTNAME}: ${1}\a"
     }
 fi
 
@@ -181,7 +181,7 @@ notifyme()
 
 # prompt shell
 ## colour
-#if [[ $(id --user) == "0" ]]
+#if [[ "${EUID}" == "0" ]]
 #then
 #    zstyle ':prompt:grml:*:items:user' pre '%F{yellow}'
 #else
@@ -298,7 +298,7 @@ alias youtube-dl="youtube-dl --ignore-errors --extract-audio --audio-quality 0 -
 alias zerofree="zerofree -v"
 alias zstd="zstd --verbose"
 alias zstdmt="zstdmt --verbose"
-if [[ $(id --user) == "0" ]]
+if [[ "${EUID}" == "0" ]]
 then
     alias pip="echo -e \"\e[01;31m'pip' should not be executed with root privileges!\e[0m\""
 fi
