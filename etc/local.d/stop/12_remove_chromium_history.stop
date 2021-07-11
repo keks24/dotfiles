@@ -49,10 +49,10 @@ chromium_log_filename_regex="[0-9][0-9][0-9][0-9][0-9][0-9]"
 chromium_log_filename_suffix="log"
 chromium_ldb_filename_regex="[0-9][0-9][0-9][0-9][0-9][0-9]"
 chromium_ldb_filename_suffix="ldb"
-## full page screen capture extension (fdpohaocaechififmbbbbbknoalclacl)
-fpsc_ext_path="${chromium_profile_path}/IndexedDB/chrome-extension_fdpohaocaechififmbbbbbknoalclacl_0.indexeddb.leveldb"
-fpsc_ext_ldb_filename_regex="[0-9][0-9][0-9][0-9][0-9][0-9]"
-fpsc_ext_ldb_filename_suffix="ldb"
+## gofullpage extension (fdpohaocaechififmbbbbbknoalclacl)
+gfp_ext_path="${chromium_profile_path}/IndexedDB/chrome-extension_fdpohaocaechififmbbbbbknoalclacl_0.indexeddb.leveldb"
+gfp_ext_ldb_filename_regex="[0-9][0-9][0-9][0-9][0-9][0-9]"
+gfp_ext_ldb_filename_suffix="ldb"
 
 removeRegexFiles()
 {
@@ -93,7 +93,7 @@ main()
 
     removeRegexFiles "${chromium_profile_path}" "${chromium_ldb_filename_regex}" "${chromium_ldb_filename_suffix}"
 
-    removeRegexFiles "${fpsc_ext_path}" "${fpsc_ext_ldb_filename_regex}" "${fpsc_ext_ldb_filename_suffix}"
+    removeRegexFiles "${gfp_ext_path}" "${gfp_ext_ldb_filename_regex}" "${gfp_ext_ldb_filename_suffix}"
 }
 
 main
