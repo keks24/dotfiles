@@ -19,7 +19,21 @@
 dic()
 {
     input_string=${*// /+}
-    w3m -dump "http://pocket.dict.cc/?s=${input_string}" | head --lines="-6" | tail --lines="+6" | tac
+    w3m -dump "https://pocket.dict.cc/?s=${input_string}" | head --lines="-6" | tail --lines="+6" | tac
+}
+
+## get current wan ip address
+wan()
+{
+    declare -a ip_version_array
+    ip_version_array[1]="ipv4"
+    ip_version_array[2]="ipv6"
+    local ip_version
+
+    for ip_version in "${ip_version_array[@]}"
+    do
+        curl --request GET --"${ip_version}" "ifconfig.co"
+    done
 }
 
 ## bash: execute bell when command is finished
