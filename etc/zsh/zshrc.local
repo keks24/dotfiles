@@ -15,7 +15,7 @@
 #############################################################################
 
 # functions
-## translate words (english<->german)
+## translate words (english-german,german-english)
 dic()
 {
     input_string=${*// /+}
