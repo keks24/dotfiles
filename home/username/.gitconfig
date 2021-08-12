@@ -6,6 +6,7 @@
     path = ~/.gitconfig.d/gitalias.txt
 [alias]
     call = commit --all
+    d = diff --word-diff="color"
 #[pull]
 #    rebase = true
 [commit]
