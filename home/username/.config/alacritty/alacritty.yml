@@ -14,7 +14,6 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# custom - 20201001 - rfischer: add custom configuration file for "alacritty"
 # get the newest configuration file from the release page:
 # https://github.com/alacritty/alacritty/releases
 
@@ -585,7 +584,6 @@ window:
   title: "alacritty"
 
 scrolling:
-  # custom - 20201001 - rfischer: disable history
   history: 0
 
 font:
