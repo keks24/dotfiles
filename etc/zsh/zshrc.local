@@ -26,8 +26,7 @@ dic()
 wan()
 {
     declare -a ip_version_array
-    ip_version_array[1]="ipv4"
-    ip_version_array[2]="ipv6"
+    ip_version_array=("ipv4" "ipv6")
     local ip_version
 
     for ip_version in "${ip_version_array[@]}"
