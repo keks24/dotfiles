@@ -1,5 +1,5 @@
 #############################################################################
-# Copyright 2020 Ramon Fischer                                              #
+# Copyright 2020-2021 Ramon Fischer                                         #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -18,5 +18,6 @@
     path = ~/.gitconfig.d/gitalias.txt
 [alias]
     call = commit --all
+    d = diff --word-diff="color"
 #[pull]
 #    rebase = true
