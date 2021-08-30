@@ -31,7 +31,8 @@ wan()
 
     for ip_version in "${ip_version_array[@]}"
     do
-        curl --request GET --"${ip_version}" "https://ifconfig.co/"
+        echo -n "${ip_version}: "
+        curl --request GET --silent --"${ip_version}" "https://ifconfig.co/"
     done
 }
 
