@@ -58,7 +58,7 @@ then
 fi
 
 /usr/bin/emerge --ask --update --deep --newuse --tree --verbose --exclude="${large_package_list//$'\n'/ }" @world
-/usr/bin/emerge --ask --update --deep --newuse --tree --verbose @world
+/usr/bin/emerge --update --deep --newuse --tree --verbose @world
 /usr/sbin/etc-update
 /usr/bin/emerge --ask --depclean --verbose
 /usr/bin/glsa-check --test all
