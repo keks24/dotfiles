@@ -31,11 +31,11 @@ checkCommands()
 
 checkCommands
 
-#date=$(/bin/date +%Y%m%d)
-#time=$(/bin/date +%H%M)
+# define global variables
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 #log_directory_path="/var/log/custom/update"
+# the output contains colour escape sequences. how to remove them? using "unbuffer" (dev-tcltk/expect)?
 # | /usr/bin/tee --append "${log_directory_path}/${date}-${time}-update"
 
 /usr/bin/clear
