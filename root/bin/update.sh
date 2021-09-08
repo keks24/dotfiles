@@ -15,7 +15,7 @@
 # limitations under the License.                                            #
 #############################################################################
 
-command_list=(clear date echo eclean eix eix-sync eix-test-obsolete emerge eselect etc-update glsa-check logger revdep-rebuild tee unalias)
+command_list=(clear date echo eclean eix eix-sync eix-test-obsolete emerge eselect etc-update glsa-check grep logger revdep-rebuild tee unalias)
 checkCommands()
 {
     for current_command in "${command_list[@]}"
@@ -34,6 +34,9 @@ checkCommands
 # define global variables
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
+large_package_list=$(/bin/grep --extended-regexp --only-matching "[a-z]+-[a-z]+\/[-0-9a-zA-Z]+" "/etc/portage/package.env/no_tmpfs.conf")
+#date=$(/bin/date +%Y%m%d)
+#time=$(/bin/date +%H%M)
 #log_directory_path="/var/log/custom/update"
 # the output contains colour escape sequences. how to remove them? using "unbuffer" (dev-tcltk/expect)?
 # | /usr/bin/tee --append "${log_directory_path}/${date}-${time}-update"
@@ -54,6 +57,7 @@ then
     /usr/bin/emerge --ask --oneshot sys-apps/portage
 fi
 
+/usr/bin/emerge --ask --update --deep --newuse --tree --verbose --exclude="${large_package_list//$'\n'/ }" @world
 /usr/bin/emerge --ask --update --deep --newuse --tree --verbose @world
 /usr/sbin/etc-update
 /usr/bin/emerge --ask --depclean --verbose
