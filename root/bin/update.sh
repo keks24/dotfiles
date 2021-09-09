@@ -34,7 +34,7 @@ checkCommands
 # define global variables
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
-large_package_list=$(/bin/grep --extended-regexp --only-matching "[a-z]+-[a-z]+\/[-0-9a-zA-Z]+" "/etc/portage/package.env/no_tmpfs.conf")
+large_package_list=$(/bin/grep --extended-regexp --only-matching "[0-9a-zA-Z]+-[0-9a-zA-Z]+\/[-0-9a-zA-Z]+" "/etc/portage/package.env/no_tmpfs.conf")
 #date=$(/bin/date +%Y%m%d)
 #time=$(/bin/date +%H%M)
 #log_directory_path="/var/log/custom/update"
