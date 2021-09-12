@@ -133,7 +133,6 @@ email = "thunderbird-bin"
 downloader = "jdownloader"
 scanner = "xsane"
 office = "libreoffice"
-steam = "steam"
 terra_nil = "terra_nil"
 the_forgotten_halls = "the_forgotten_halls"
 minecraft = "minecraft-launcher"
@@ -148,8 +147,7 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "open libreoffice", office },
                                     { "open minecraft", minecraft },
                                     { "open terra nil", terra_nil },
-                                    { "open the forgotten halls", the_forgotten_halls },
-                                    { "open steam", steam }
+                                    { "open the forgotten halls", the_forgotten_halls }
                                   }
                         })
 
