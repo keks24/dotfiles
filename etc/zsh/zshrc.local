@@ -83,17 +83,6 @@ zshaddhistory()
     whence ${${(z)1}[1]} >| /dev/null || return 1
 }
 
-## search for pip packages (https://github.com/pypa/pip/issues/5216#issuecomment-746018654)
-pip()
-{
-    if [[ "${1}" == "search" ]]
-    then
-        pip_search "$2"
-    else
-        pip "$@"
-    fi
-}
-
 ## determine last portage synchronisation
 getLastPortageSync()
 {
