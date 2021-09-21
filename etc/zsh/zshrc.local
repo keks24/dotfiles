@@ -341,7 +341,7 @@ export LESSHISTFILE="/dev/null"
 ## do not include certain commands in history
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
 ## do not include critical commands in history
-export HISTORY_IGNORE="(*--clear*|*--force*|*cd*|*chmod*|*chown*|*clear*|*dd*|*delete*|*exit*|*find*|*for*|*halt*|*mkfs*|*lpr*|*ls*|*mv*|*perl-rename*|*poweroff*|*pwd*|*reboot*|*rename*|*remove*|*rm*|*shred*|*shutdown*|*sudo*|*suspend*|*touch*|*while*)"
+export HISTORY_IGNORE="(*--clear*|*--force*|*cd*|*chmod*|*chown*|*clear*|*dd*|*delete*|*exit*|*find*|*for*|*halt*|*mkfs*|*lpr*|*ls*|*mv*|*perl-rename*|*poweroff*|*pwd*|*reboot*|*rename*|*remove*|*rm*|*sed*|*shred*|*shutdown*|*sudo*|*suspend*|*touch*|*while*)"
 ## use "ccache" via "distcc". see also "/etc/conf.d/distccd", "/etc/distcc/hosts", "/etc/env.d/03distcc_ccache" and "/etc/portage/make.conf"
 export PATH="/usr/lib/ccache/bin:${PATH}"
 export CCACHE_DIR="/home/ramon/.var/tmp/ccache"
