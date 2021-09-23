@@ -34,12 +34,14 @@ checkCommands
 # define global variables
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
-large_package_list=$(/bin/grep --extended-regexp --only-matching "[0-9a-zA-Z]+-[0-9a-zA-Z]+\/[-0-9a-zA-Z]+" "/etc/portage/package.env/no_tmpfs.conf")
-#date=$(/bin/date +%Y%m%d)
-#time=$(/bin/date +%H%M)
-#log_directory_path="/var/log/custom/update"
-# the output contains colour escape sequences. how to remove them? using "unbuffer" (dev-tcltk/expect)?
-# | /usr/bin/tee --append "${log_directory_path}/${date}-${time}-update"
+no_tmpfs_file="/etc/portage/package.env/no_tmpfs.conf"
+if [[ ! -f "${no_tmpfs_file}" ]]
+then
+    echo -e "\e[01;31mCould not find '${no_tmpfs_file}'.\e[0m" >&2
+    exit 1
+else
+    large_package_list=$(/bin/grep --extended-regexp --only-matching "[0-9a-zA-Z]+-[0-9a-zA-Z]+\/[-0-9a-zA-Z]+" "${no_tmpfs_file}")
+fi
 
 /usr/bin/clear
 /usr/bin/logger --tag "update" --id --stderr "${script_directory_path}/${script_name}: executed"
@@ -50,14 +52,13 @@ large_package_list=$(/bin/grep --extended-regexp --only-matching "[0-9a-zA-Z]+-[
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip check
 /usr/bin/sudo --shell --user="${SUDO_USER}" /usr/bin/flatpak update
 /usr/bin/eix-sync
-
 if /usr/bin/eix --upgrade sys-apps/portage >/dev/null
 then
     /bin/echo -e "\e[01;31mA new version of 'sys-apps/portage' was found. Updating it first...\e[0m"
     /usr/bin/emerge --ask --oneshot sys-apps/portage
 fi
-
 /usr/bin/emerge --ask --update --deep --newuse --tree --verbose --exclude="${large_package_list//$'\n'/ }" @world
+# always compile large packages as last packages
 /usr/bin/emerge --update --deep --newuse --tree --verbose @world
 /usr/sbin/etc-update
 /usr/bin/emerge --ask --depclean --verbose
