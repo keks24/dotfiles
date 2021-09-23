@@ -17,10 +17,11 @@
 # user-specific
 ## tmux
 ### attach or create tmux session
-if [[ $(pgrep --euid "${USER}" "tmux") && "${TMUX}" == "" && $(tty) != "/dev/tty1" ]]
+### see also "/home/ramon/.zlogin"
+if [[ $(pgrep --euid "${USER}" "tmux") && "${TMUX}" == "" && $(tty) != "/dev/tty7" ]]
 then
     tmux attach 2>/dev/null
-elif [[ ! $(pgrep --euid "${USER}" "script") && $(tty) != "/dev/tty1" ]]
+elif [[ ! $(pgrep --euid "${USER}" "script") && $(tty) != "/dev/tty7" ]]
 then
     tmux new-session 2>/dev/null
 fi

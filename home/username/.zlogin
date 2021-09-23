@@ -80,8 +80,9 @@ unset APPLICATION_NAME
 
 # startx (awesomewm)
 ## this part must be started at the very end!
-## after autologin on "tty1", start "awesome" on "tty1"
-if [[ "${DISPLAY}" == "" && "$(id --user)" != "0" && -o login && $(tty) == "/dev/tty1" ]]
+## after autologin on "tty7", start "awesome" on "tty7"
+## see also "/home/ramon/.zshrc.local"
+if [[ "${DISPLAY}" == "" && "$(id --user)" != "0" && -o login && $(tty) == "/dev/tty7" ]]
 then
     startx >> "${LOG_DIRECTORY}/startx/startx.log" 2>&1 &!
 fi
