@@ -22,46 +22,7 @@ dic()
     w3m -dump "https://pocket.dict.cc/?s=${input_string}" | head --lines="-6" | tail --lines="+6" | tac
 }
 
-## get current wan ip address
-wan()
-{
-    declare -a ip_version_array
-    ip_version_array=("ipv4" "ipv6")
-    local ip_version
-
-    for ip_version in "${ip_version_array[@]}"
-    do
-        echo -n "${ip_version}: "
-        curl --request GET --silent --show-error --"${ip_version}" "https://ifconfig.co/"
-    done
-}
-
-## bash: execute bell when command is finished
-precmd()
-{
-    eval "${PROMPT_COMMAND}"
-}
-PROMPT_COMMAND+='tput bel;'
-
-## dynamically change the window title for terminals
-if [[ "${TERM}" != "" && "${TERM}" == "st"* || "${TERM}" == "alacritty" ]]
-then
-    precmd()
-    {
-        # output on which level (%L) this shell is running on.
-        # append the current directory (%~), substitute home directories with a tilde.
-        # "\a" bell (man 1 echo)
-        # "print" must be used here; echo cannot handle prompt expansions (%L)
-        print -Pn "\e]0;${USER}@${HOSTNAME}: zsh[%L] %~\a"
-    }
-
-    preexec()
-    {
-        # output current executed command with parameters
-        echo -en "\e]0;${USER}@${HOSTNAME}: ${1}\a"
-    }
-fi
-
+## toggle exclude remove feature via "globbing"
 exclude_remove_on()
 {
     setopt extended_glob
@@ -70,38 +31,10 @@ exclude_remove_on()
     echo "Remove all files, except the file 'nom': rm -- ^\"nom\""
     echo "Remove all files, except files with the suffix 'png' and 'jpg': rm -- ^.*(png|jpg)"
 }
-
 exclude_remove_off()
 {
     unsetopt extended_glob
     echo -e "\e[01;31mGlob syntax has been deactivated.\e[0m"
-}
-
-## do not include faulty commands in history
-zshaddhistory()
-{
-    whence ${${(z)1}[1]} >| /dev/null || return 1
-}
-
-## determine last portage synchronisation
-getLastPortageSync()
-{
-    current_unix_time="$(date +%s)"
-    portage_unix_time="$(date --date="$(< /var/db/repos/gentoo/metadata/timestamp.chk)" +%s)"
-    days_since_last_sync="$(( (${current_unix_time} - ${portage_unix_time}) / 86400.0 ))"
-
-    if (( ${days_since_last_sync} >= 3.5 && ${days_since_last_sync} < 7 ))
-    then
-        printf "\e[01;33m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
-    elif (( ${days_since_last_sync} >= 7 ))
-    then
-        printf "\e[01;31;5m[%.2f] days since last portage synchronisation!\e[0m \e[01;31m(execute as root: /root/bin/update.sh)\e[0m\n" "${days_since_last_sync}"
-    elif [[ "${1}" == "-v" ]]
-    then
-        printf "\e[01;34m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
-    else
-        printf ""
-    fi
 }
 
 ## generate strong passwords with ~130 bit entropy
@@ -171,10 +104,25 @@ genpw()
     done
 }
 
-ptree()
+## determine last portage synchronisation
+getLastPortageSync()
 {
-    local directory_path="${1:-$(pwd)}"
-    namei --long --mountpoints "${directory_path}"
+    current_unix_time="$(date +%s)"
+    portage_unix_time="$(date --date="$(< /var/db/repos/gentoo/metadata/timestamp.chk)" +%s)"
+    days_since_last_sync="$(( (${current_unix_time} - ${portage_unix_time}) / 86400.0 ))"
+
+    if (( ${days_since_last_sync} >= 3.5 && ${days_since_last_sync} < 7 ))
+    then
+        printf "\e[01;33m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
+    elif (( ${days_since_last_sync} >= 7 ))
+    then
+        printf "\e[01;31;5m[%.2f] days since last portage synchronisation!\e[0m \e[01;31m(execute as root: /root/bin/update.sh)\e[0m\n" "${days_since_last_sync}"
+    elif [[ "${1}" == "-v" ]]
+    then
+        printf "\e[01;34m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
+    else
+        printf ""
+    fi
 }
 
 ## notify after a command has finished
@@ -191,6 +139,60 @@ notifyme()
     #then
         notify-send --app-name="Notification" --icon="notifications" --urgency="critical" "Command finished [${total_execution_time} seconds]" "'$(echo ${@})'"
     #fi
+}
+
+## bash: execute bell when command is finished
+precmd()
+{
+    eval "${PROMPT_COMMAND}"
+}
+PROMPT_COMMAND+='tput bel;'
+
+## dynamically change the window title for terminals
+if [[ "${TERM}" != "" && "${TERM}" == "st"* || "${TERM}" == "alacritty" ]]
+then
+    precmd()
+    {
+        # output on which level (%L) this shell is running on.
+        # append the current directory (%~), substitute home directories with a tilde.
+        # "\a" bell (man 1 echo)
+        # "print" must be used here; echo cannot handle prompt expansions (%L)
+        print -Pn "\e]0;${USER}@${HOSTNAME}: zsh[%L] %~\a"
+    }
+
+    preexec()
+    {
+        # output current executed command with parameters
+        echo -en "\e]0;${USER}@${HOSTNAME}: ${1}\a"
+    }
+fi
+
+
+## list access, owner and group permissions for files and directories
+ptree()
+{
+    local directory_path="${1:-$(pwd)}"
+    namei --long --mountpoints "${directory_path}"
+}
+
+## get current wan ip address
+wan()
+{
+    declare -a ip_version_array
+    ip_version_array=("ipv4" "ipv6")
+    local ip_version
+
+    for ip_version in "${ip_version_array[@]}"
+    do
+        echo -n "${ip_version}: "
+        curl --request GET --silent --show-error --"${ip_version}" "https://ifconfig.co/"
+    done
+}
+
+## do not include faulty commands in history
+zshaddhistory()
+{
+    whence ${${(z)1}[1]} >| /dev/null || return 1
 }
 
 # prompt shell
