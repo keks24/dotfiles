@@ -189,6 +189,13 @@ wan()
     done
 }
 
+weather()
+{
+    local zip_code="${1}"
+
+    curl --request GET --silent --show-error "https://wttr.in/${zip_code}"
+}
+
 ## do not include faulty commands in history
 zshaddhistory()
 {
