@@ -168,7 +168,7 @@ then
 fi
 
 
-## list access, owner and group permissions for files and directories
+## list access, owner and group permission tree for the current or defined working directory
 ptree()
 {
     local directory_path="${1:-$(pwd)}"
