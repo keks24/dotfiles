@@ -27,7 +27,7 @@
 "lamp-switch"
 0
 "lampoff-time"
-30
+300
 "lamp-off-at-exit"
 1
 "warmup-time"
