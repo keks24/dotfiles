@@ -190,7 +190,8 @@ lsig()
     echo "61: SIGRTMAX-3"
     echo "62: SIGRTMAX-2"
     echo "63: SIGRTMAX-1"
-    echo "64: SIGRTMAX"
+    echo -e "64: SIGRTMAX\n"
+    echo "See also: man 7 signal"
 }
 
 ## notify after a command has finished
