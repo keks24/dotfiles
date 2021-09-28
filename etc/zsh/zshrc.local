@@ -245,6 +245,7 @@ alias aria2c="aria2c --enable-rpc='false' \
     --bt-enable-lpd='true' \
     --bt-stop-timeout='21600' \
     --check-integrity='true' \
+    --seed-ratio='1.0' \
     --seed-time='0' \
     --enable-dht='true' \
     --enable-dht6='true' \
