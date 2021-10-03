@@ -43,7 +43,7 @@
 "color-filter"
 "Green"
 "calibration-file"
-"/var/lib/saned/.sane/hewlett-packard-scanjet-2300c.cal"
+"/var/lib/saned/.sane/Hewlett_Packard_Scanjet_2300c.cal"
 "expiration-time"
 -1
 "xsane-main-window-x-position"
