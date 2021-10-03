@@ -75,7 +75,6 @@ removeRegularFiles()
             /bin/rm "${path}/${filename}"
         fi
     done
-
 }
 
 writeSystemLogEntry()
