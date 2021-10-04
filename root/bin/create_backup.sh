@@ -57,7 +57,7 @@ countDown()
 {
     local current_countdown_seconds="${countdown_seconds}"
 
-    echo -ne "\e[01;31mexecuting backup in ... \e[0m"
+    echo -ne "\e[01;31mExecuting backup in ... \e[0m"
     while (( "${current_countdown_seconds}" > 0 ))
     do
         echo -ne "\e[01;31m${current_countdown_seconds} \e[0m"
