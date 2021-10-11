@@ -401,6 +401,7 @@ alias webcam_record="ffmpeg -f v4l2 -framerate 30 -video_size 1920x1080 -input_f
 alias wget="wget --hsts-file='/dev/null'"
 alias youtube-dl="youtube-dl --ignore-errors --extract-audio --audio-quality 0 --output './%(uploader)s/%(playlist_title)s/%(title)s.%(ext)s'"
 alias zerofree="zerofree -v"
+alias zip="zip -9"
 alias zstd="zstd -22 --verbose"
 alias zstdmt="zstdmt -22 --verbose"
 if [[ "${EUID}" == "0" ]]
