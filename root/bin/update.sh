@@ -50,7 +50,7 @@ fi
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/gem update
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user --no-warn-script-location
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip check
-/usr/bin/sudo --shell --user="${SUDO_USER}" /usr/bin/flatpak update
+#/usr/bin/sudo --shell --user="${SUDO_USER}" /usr/bin/flatpak update
 /usr/bin/eix-sync
 if /usr/bin/eix --upgrade sys-apps/portage >/dev/null
 then
