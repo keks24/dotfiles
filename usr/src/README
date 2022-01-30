@@ -45,9 +45,6 @@ compile new kernel
         6.2. reload the microcode manually
             echo "1" > /sys/devices/system/cpu/microcode/reload
 
-        6.3. check, if the microcode was updated
-            dmesg | grep "microcode"
-
     7. update the grub configuration
         grub-mkconfig --output="/boot/grub/grub.cfg"
 
@@ -57,8 +54,11 @@ compile new kernel
     9. use the new kernel
         reboot
 
-   10. clean up "/lib/modules/"
+    10. check, if the microcode was updated
+        dmesg | grep "microcode"
 
-   11. clean up "/usr/src/"
+   11. clean up "/lib/modules/"
 
-   12. clean up "/boot/"
+   12. clean up "/usr/src/"
+
+   13. clean up "/boot/"
