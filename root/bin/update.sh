@@ -57,9 +57,9 @@ then
     /bin/echo -e "\e[01;31mA new version of 'sys-apps/portage' was found. Updating it first...\e[0m"
     /usr/bin/emerge --ask --oneshot sys-apps/portage
 fi
-/usr/bin/emerge --ask --update --deep --newuse --tree --verbose --exclude="${large_package_list//$'\n'/ }" @world
+/usr/bin/emerge --ask --update --deep --changed-use --tree --verbose --exclude="${large_package_list//$'\n'/ }" @world
 # always compile large packages as last packages
-/usr/bin/emerge --update --deep --newuse --tree --verbose @world
+/usr/bin/emerge --update --deep --changed-use --tree --verbose @world
 /usr/sbin/etc-update
 /usr/bin/emerge --ask --depclean --verbose
 /usr/bin/glsa-check --test all
