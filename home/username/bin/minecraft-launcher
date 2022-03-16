@@ -22,7 +22,7 @@ then
     export DRI_PRIME="1"
     export VDPAU_DRIVER="r600"
     # amdgpu: export VDPAU_DRIVER="radeonsi"
-    /usr/bin/java -jar "/home/ramon/.local/games/minecraft/TLauncher-MCL.jar"
+    /usr/bin/java -jar "/home/ramon/.local/games/minecraft/TL-MCL.jar"
 else
     echo -e "\e[01;31mno display detected, exiting...\e[0m"
     exit 1
