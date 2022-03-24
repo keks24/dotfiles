@@ -244,6 +244,15 @@ ptree()
     namei --long --mountpoints "${directory_path}"
 }
 
+## upload files to "transfer.sh"
+transfer()
+{
+    local file="${1}"
+    local filename="${file##*/}"
+    # show delete link from the response header after upload. the command "sed" is necessary to clean up the output, "gsub()" in "awk" does not work.
+    curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}" | sed "s/#//g" | awk '/x-url-delete/ { print "Delete command: curl --request DELETE " $2 } END{ print "Download link: " $1 }'
+}
+
 ## get current wan ip address
 wan()
 {
