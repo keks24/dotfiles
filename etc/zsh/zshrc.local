@@ -125,6 +125,7 @@ getLastPortageSync()
     fi
 }
 
+## list all process signals
 lsig()
 {
     echo "1:  SIGHUP"
