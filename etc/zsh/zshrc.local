@@ -249,9 +249,17 @@ ptree()
 transfer()
 {
     local file="${1}"
-    local filename="${file##*/}"
-    # show delete link from the response header after upload. the command "sed" is necessary to clean up the output, "gsub()" in "awk" does not work.
-    curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}" | sed "s/#//g" | awk '/x-url-delete/ { print "Delete command: curl --request DELETE " $2 } END{ print "Download link: " $1 }'
+    if [[ ! -f "${file}" ]]
+    then
+        echo -e "\e[01;31mCould not find file: '${file}'.\e[0m" >&2
+        return 1
+    else
+        local filename="${file##*/}"
+        # show delete link from the response header after upload. the command "sed" is necessary to clean up the output, "gsub()" in "awk" does not work.
+        curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}" \
+            | sed "s/#//g" \
+            | awk '/x-url-delete/ { print "Delete command: curl --request DELETE " $2 } END{ print "Download link: " $1 }'
+    fi
 }
 
 ## get current wan ip address
