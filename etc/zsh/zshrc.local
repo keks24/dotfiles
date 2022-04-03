@@ -255,9 +255,11 @@ transfer()
         return 1
     else
         local filename="${file##*/}"
-        # show delete link from the response header after upload. the command "sed" is necessary to clean up the output, "gsub()" in "awk" does not work.
+        # show delete link from the response header after upload.
+        # it is important to save the output of "curl" in a variable or redirect it to another command, which justs redirects to "stdout" in order to have a sane output.
+        # the progress bar is redirected to "stderr" and the header to "stdout".
         curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}" \
-            | sed "s/#//g" \
+            | awk '{ print }' \
             | awk 'tolower($0) ~ /x-url-delete/ { print "Delete command: curl --request DELETE " $2 } END{ print "Download link: " $1 }'
     fi
 }
