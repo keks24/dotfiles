@@ -259,8 +259,10 @@ transfer()
         # show delete link and filter out the delete token from the response header after upload.
         # it is important to save "curl's" "stdout" via a subshell to a variable or redirect it to another command,
         # which just redirects to "stdout" in order to have a sane output afterwards.
-        # the progress bar is redirected to "stderr" and the response header to "stdout".
-        # duplicating "curl's" "stderr" to "stdout" ("2>&1") will hide the progress bar.
+        # the progress bar is redirected to "stderr" and is only displayed,
+        # if "stdout" is redirected to something; e.g. ">/dev/null", "tee /dev/null" or "| <some_command>".
+        # the response header is redirected to "stdout", so redirecting "stdout" to "/dev/null" does not make any sense.
+        # redirecting "curl's" "stderr" to "stdout" ("2>&1") will hide the progress bar.
         local curl_output=$(curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}")
 
         awk 'tolower($0) ~ /x-url-delete/ \
