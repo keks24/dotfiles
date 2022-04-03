@@ -263,9 +263,10 @@ transfer()
         # duplicating "curl's" "stderr" to "stdout" ("2>&1") will hide the progress bar.
         local curl_output=$(curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}")
 
-        awk 'tolower($0) ~ /x-url-delete/ { gsub("\r", ""); print "Delete command: curl --request DELETE " "\""$2"\""; \
-                                            gsub(".*/", ""); print "Delete token: " $0 } \
-                                            END{ print "Download link: " $1 }' <<< "${curl_output}"
+        awk 'tolower($0) ~ /x-url-delete/ \
+            { gsub("\r", "", $0); print "Delete command: curl --request DELETE " "\""$2"\""; \
+              gsub(".*/", "", $2); print "Delete token: " $2 } \
+              END{ print "Download link: " $1 }' <<< "${curl_output}"
     fi
 }
 
