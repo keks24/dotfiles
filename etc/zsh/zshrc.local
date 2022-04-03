@@ -248,13 +248,45 @@ ptree()
 ## upload files to "transfer.sh"
 transfer()
 {
-    local file="${1}"
+    local file
+    local file_array=("${@}")
 
-    if [[ ! -f "${file}" ]]
+    if [[ "${file_array[@]}" == "" || "${1}" == "--help" || "${1}" == "-h" ]]
     then
-        echo -e "\e[01;31m'${file}' could not be found or is not a file.\e[0m" >&2
-        return 1
+        echo "Upload arbitrary files to \"transfer.sh\""
+        echo ""
+        echo "Usage: ${0} [options...] <file> [file...]"
+        echo ""
+        echo "OPTIONS:"
+        echo "  -h, --help"
+        echo "      show this message"
+        echo ""
+        echo "EXAMPLES:"
+        echo "Upload a single file:"
+        echo "  ${0} \"image.img\""
+        echo ""
+        echo "Upload multiple files:"
+        echo "  ${0} \"image.img\" \"image2.img\""
+        echo ""
+        echo "Show help text from \"transfer.sh\""
+        echo "  curl --request GET \"https://transfer.sh\""
+        return 0
     else
+        for file in "${file_array[@]}"
+        do
+            if [[ ! -f "${file}" ]]
+            then
+                echo -e "\e[01;31m'${file}' could not be found or is not a file.\e[0m" >&2
+                return 1
+            fi
+        done
+    fi
+    unset file
+
+    # for the sake of the progress bar, execute "curl" for each file.
+    # "--include" and "--form" will suppress the progress bar.
+    for file in "${file_array[@]}"
+    do
         local filename="${file##*/}"
         # show delete link and filter out the delete token from the response header after upload.
         # it is important to save "curl's" "stdout" via a subshell to a variable or redirect it to another command,
@@ -268,8 +300,11 @@ transfer()
         awk 'tolower($0) ~ /x-url-delete/ \
             { gsub("\r", "", $0); print "Delete command: curl --request DELETE " "\""$2"\""; \
               gsub(".*/", "", $2); print "Delete token: " $2 } \
-              END{ print "Download link: " $1 }' <<< "${curl_output}"
-    fi
+              END{ print "Download link: " $0 "\n"}' <<< "${curl_output}"
+
+        # avoid rate limiting ("nginx: too many requests") as much as possible.
+        sleep 5
+    done
 }
 
 ## get current wan ip address
