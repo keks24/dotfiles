@@ -252,7 +252,7 @@ transfer()
 
     if [[ ! -f "${file}" ]]
     then
-        echo -e "\e[01;31mCould not find file: '${file}'.\e[0m" >&2
+        echo -e "\e[01;31m'${file}' could not be found or is not a file.\e[0m" >&2
         return 1
     else
         local filename="${file##*/}"
