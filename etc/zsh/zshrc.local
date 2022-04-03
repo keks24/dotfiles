@@ -265,7 +265,7 @@ transfer()
         echo "Upload a single file:"
         echo "  ${0} \"image.img\""
         echo ""
-        echo "Upload multiple files:"
+        echo "Upload multiple files from the current working directory:"
         echo "  ${0} \"image.img\" \"image2.img\""
         echo ""
         echo "Show help text from \"transfer.sh\""
