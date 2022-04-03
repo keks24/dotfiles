@@ -253,7 +253,7 @@ transfer()
 
     if [[ "${file_array[@]}" == "" || "${1}" == "--help" || "${1}" == "-h" ]]
     then
-        echo "Upload arbitrary files to \"transfer.sh\""
+        echo "Upload arbitrary files to \"transfer.sh\"."
         echo ""
         echo "Usage: ${0} [options...] <file> [file...]"
         echo ""
@@ -262,17 +262,17 @@ transfer()
         echo "      show this message"
         echo ""
         echo "EXAMPLES:"
-        echo "Upload a single file:"
-        echo "  ${0} \"image.img\""
+        echo "  Upload a single file:"
+        echo "      ${0} \"image.img\""
         echo ""
-        echo "Upload multiple files from the current working directory:"
-        echo "  ${0} \"image.img\" \"image2.img\""
+        echo "  Upload multiple files from the current working directory:"
+        echo "      ${0} \"image.img\" \"image2.img\""
         echo ""
-        echo "Upload all files from the current working directory. Be aware of the webserver's rate limiting!:"
-        echo "  ${0} *"
+        echo "  Upload all files from the current working directory. Be aware of the webserver's rate limiting!:"
+        echo "      ${0} *"
         echo ""
-        echo "Show help text from \"transfer.sh\""
-        echo "  curl --request GET \"https://transfer.sh\""
+        echo "  Show help text from \"transfer.sh\":"
+        echo "      curl --request GET \"https://transfer.sh\""
         return 0
     else
         for file in "${file_array[@]}"
