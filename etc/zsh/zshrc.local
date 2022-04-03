@@ -258,7 +258,7 @@ transfer()
         # show delete link from the response header after upload. the command "sed" is necessary to clean up the output, "gsub()" in "awk" does not work.
         curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}" \
             | sed "s/#//g" \
-            | awk '/x-url-delete/ { print "Delete command: curl --request DELETE " $2 } END{ print "Download link: " $1 }'
+            | awk 'tolower($0) ~ /x-url-delete/ { print "Delete command: curl --request DELETE " $2 } END{ print "Download link: " $1 }'
     fi
 }
 
