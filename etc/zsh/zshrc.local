@@ -289,7 +289,7 @@ transfer()
     fi
     unset file
 
-    echo "${file_array// /\n}"
+    du --block-size="K" --dereference "${file_array[@]}"
     read $'upload_files?\e[01;31mDo you really want to upload the above files to "transfer.sh"? (Y/n): \e[0m'
 
     case "${upload_files:-y}" in
