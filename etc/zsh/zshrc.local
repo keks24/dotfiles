@@ -313,7 +313,7 @@ transfer()
                       gsub(".*/", "", $2); print "Delete token: " $2 } \
                       END{ print "Download link: " $0 "\n"}' <<< "${curl_output}"
 
-                # avoid rate limiting ("nginx: too many requests") as much as possible.
+                # avoid rate limiting as much as possible; nginx: too many requests.
                 sleep 5
             done
             ;;
