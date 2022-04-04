@@ -295,7 +295,7 @@ transfer()
     case "${upload_files:-y}" in
         "y"|"Y")
             # for the sake of the progress bar, execute "curl" for each file.
-            # "--include" and "--form" will suppress the progress bar.
+            # the parameters "--include" and "--form" will suppress the progress bar.
             for file in "${file_array[@]}"
             do
                 local filename="${file##*/}"
@@ -305,7 +305,7 @@ transfer()
                 # the progress bar is redirected to "stderr" and is only displayed,
                 # if "stdout" is redirected to something; e.g. ">/dev/null", "tee /dev/null" or "| <some_command>".
                 # the response header is redirected to "stdout", so redirecting "stdout" to "/dev/null" does not make any sense.
-                # redirecting "curl's" "stderr" to "stdout" ("2>&1") will hide the progress bar.
+                # redirecting "curl's" "stderr" to "stdout" ("2>&1") will suppress the progress bar.
                 local curl_output=$(curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}")
 
                 awk 'tolower($1) ~ /x-url-delete/ \
