@@ -248,10 +248,6 @@ ptree()
 ## upload files to "transfer.sh"
 transfer()
 {
-    local upload_files
-    local curl_output
-    local awk_output
-    local filename
     local file
     declare -a file_array
     file_array=("${@}")
@@ -294,8 +290,13 @@ transfer()
                 return 1
             fi
         done
+        unset file
     fi
-    unset file
+
+    local upload_files
+    local curl_output
+    local awk_output
+    local filename
 
     du --total --block-size="K" --dereference "${file_array[@]}" >&2
     # be compatible with "bash"
