@@ -289,28 +289,41 @@ transfer()
     fi
     unset file
 
-    # for the sake of the progress bar, execute "curl" for each file.
-    # "--include" and "--form" will suppress the progress bar.
-    for file in "${file_array[@]}"
-    do
-        local filename="${file##*/}"
-        # show delete link and filter out the delete token from the response header after upload.
-        # it is important to save "curl's" "stdout" via a subshell to a variable or redirect it to another command,
-        # which just redirects to "stdout" in order to have a sane output afterwards.
-        # the progress bar is redirected to "stderr" and is only displayed,
-        # if "stdout" is redirected to something; e.g. ">/dev/null", "tee /dev/null" or "| <some_command>".
-        # the response header is redirected to "stdout", so redirecting "stdout" to "/dev/null" does not make any sense.
-        # redirecting "curl's" "stderr" to "stdout" ("2>&1") will hide the progress bar.
-        local curl_output=$(curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}")
+    echo "${file_array// /\n}"
+    read $'upload_files?\e[01;31mDo you really want to upload above files to "transfer.sh"? (Y/n): \e[0m'
 
-        awk 'tolower($0) ~ /x-url-delete/ \
-            { gsub("\r", "", $0); print "Delete command: curl --request DELETE " "\""$2"\""; \
-              gsub(".*/", "", $2); print "Delete token: " $2 } \
-              END{ print "Download link: " $0 "\n"}' <<< "${curl_output}"
+    case "${upload_files:-y}" in
+        "y"|"Y")
+            # for the sake of the progress bar, execute "curl" for each file.
+            # "--include" and "--form" will suppress the progress bar.
+            for file in "${file_array[@]}"
+            do
+                local filename="${file##*/}"
+                # show delete link and filter out the delete token from the response header after upload.
+                # it is important to save "curl's" "stdout" via a subshell to a variable or redirect it to another command,
+                # which just redirects to "stdout" in order to have a sane output afterwards.
+                # the progress bar is redirected to "stderr" and is only displayed,
+                # if "stdout" is redirected to something; e.g. ">/dev/null", "tee /dev/null" or "| <some_command>".
+                # the response header is redirected to "stdout", so redirecting "stdout" to "/dev/null" does not make any sense.
+                # redirecting "curl's" "stderr" to "stdout" ("2>&1") will hide the progress bar.
+                local curl_output=$(curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}")
 
-        # avoid rate limiting ("nginx: too many requests") as much as possible.
-        sleep 5
-    done
+                awk 'tolower($0) ~ /x-url-delete/ \
+                    { gsub("\r", "", $0); print "Delete command: curl --request DELETE " "\""$2"\""; \
+                      gsub(".*/", "", $2); print "Delete token: " $2 } \
+                      END{ print "Download link: " $0 "\n"}' <<< "${curl_output}"
+
+                # avoid rate limiting ("nginx: too many requests") as much as possible.
+                sleep 5
+            done
+            ;;
+        "n"|"N")
+            return 1
+            ;;
+        *)
+            echo -e "\e[01;31mWrong input: '${upload_files}'.\e[0m" >&2
+            return 1
+    esac
 }
 
 ## get current wan ip address
