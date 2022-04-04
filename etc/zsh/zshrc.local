@@ -75,7 +75,7 @@ genpw()
 
             "-h" | "--help")
                 echo ""
-                echo "Usage: ${0} [options] <arguments>"
+                echo "Usage: ${0} [options]... <arguments>..."
                 echo ""
                 echo "OPTIONS:"
                 echo "  -a, --no-lowercase              exclude lowercase characters"
