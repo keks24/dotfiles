@@ -317,9 +317,11 @@ transfer()
                 sleep 5
             done
             ;;
+
         "n"|"N")
             return 1
             ;;
+
         *)
             echo -e "\e[01;31mWrong input: '${upload_files}'.\e[0m" >&2
             return 1
