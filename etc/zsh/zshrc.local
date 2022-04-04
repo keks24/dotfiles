@@ -253,9 +253,9 @@ transfer()
 
     if [[ "${file_array[@]}" == "" || "${1}" == "--help" || "${1}" == "-h" ]]
     then
-        echo "Upload arbitrary files to \"transfer.sh\"."
+        echo "${0} - Upload arbitrary files to \"transfer.sh\"."
         echo ""
-        echo "Usage: ${0} [options...] <file> [file...]"
+        echo "Usage: ${0} [options] [<file>]..."
         echo ""
         echo "OPTIONS:"
         echo "  -h, --help"
