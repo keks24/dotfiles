@@ -249,7 +249,8 @@ ptree()
 transfer()
 {
     local file
-    local file_array=("${@}")
+    declare -a file_array
+    file_array=("${@}")
 
     if [[ "${file_array[@]}" == "" || "${1}" == "--help" || "${1}" == "-h" ]]
     then
