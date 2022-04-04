@@ -248,6 +248,10 @@ ptree()
 ## upload files to "transfer.sh"
 transfer()
 {
+    local upload_files
+    local curl_output
+    local awk_output
+    local filename
     local file
     declare -a file_array
     file_array=("${@}")
@@ -275,6 +279,9 @@ transfer()
         echo "  Upload all files from the current working directory. Be aware of the webserver's rate limiting!:"
         echo "      ${0} *"
         echo ""
+        echo "  Upload a single file from the current working directory and filter out the delete command:"
+        echo "      ${0} \"image.img\" | awk --field-separator=\"Delete command:\" '/Delete command:/ { print \$2 }'"
+        echo ""
         echo "  Show help text from \"transfer.sh\":"
         echo "      curl --request GET \"https://transfer.sh\""
         return 0
@@ -290,8 +297,15 @@ transfer()
     fi
     unset file
 
-    du --total --block-size="K" --dereference "${file_array[@]}"
-    read $'upload_files?\e[01;31mDo you really want to upload the above files ('"${#file_array[@]}"$') to "transfer.sh"? (Y/n): \e[0m'
+    du --total --block-size="K" --dereference "${file_array[@]}" >&2
+    # be compatible with "bash"
+    if [[ "${ZSH_NAME}" == "zsh" ]]
+    then
+        read $'upload_files?\e[01;31mDo you really want to upload the above files ('"${#file_array[@]}"$') to "transfer.sh"? (Y/n): \e[0m'
+    elif [[ "${BASH}" == *"bash"* ]]
+    then
+        read -p $'\e[01;31mDo you really want to upload the above files ('"${#file_array[@]}"$') to "transfer.sh"? (Y/n): \e[0m' upload_files
+    fi
 
     case "${upload_files:-y}" in
         "y"|"Y")
@@ -299,7 +313,7 @@ transfer()
             # the parameters "--include" and "--form" will suppress the progress bar.
             for file in "${file_array[@]}"
             do
-                local filename="${file##*/}"
+                filename="${file##*/}"
                 # show delete link and filter out the delete token from the response header after upload.
                 # it is important to save "curl's" "stdout" via a subshell to a variable or redirect it to another command,
                 # which just redirects to "stdout" in order to have a sane output afterwards.
@@ -307,15 +321,20 @@ transfer()
                 # if "stdout" is redirected to something; e.g. ">/dev/null", "tee /dev/null" or "| <some_command>".
                 # the response header is redirected to "stdout", so redirecting "stdout" to "/dev/null" does not make any sense.
                 # redirecting "curl's" "stderr" to "stdout" ("2>&1") will suppress the progress bar.
-                local curl_output=$(curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}")
-
-                awk 'tolower($1) ~ /x-url-delete/ \
+                curl_output=$(curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${filename}")
+                awk_output=$(awk 'tolower($1) ~ /x-url-delete/ \
                     { gsub("\r", "", $0); print "Delete command: curl --request DELETE " "\""$2"\""; \
                       gsub(".*/", "", $2); print "Delete token: " $2 } \
-                      END{ print "Download link: " $0 "\n"}' <<< "${curl_output}"
+                      END{ print "Download link: " $0 }' <<< "${curl_output}")
+
+                # return the results via "stdout", "awk" does not do this for some reason.
+                echo -e "${awk_output}\n"
 
                 # avoid rate limiting as much as possible; nginx: too many requests.
-                sleep 5
+                if (( ${#file_array[@]} > 4 ))
+                then
+                    sleep 5
+                fi
             done
             ;;
 
