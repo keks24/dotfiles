@@ -359,6 +359,16 @@ transfer()
     esac
 }
 
+thingsIalwaysForget()
+{
+    echo "iproute2"
+    echo "  Configure a static IP address:"
+    echo "      ip address add <local_ip_address>/<cidr_subnet_mask> dev <inferface>"
+    echo ""
+    echo "  Configure a default gateway:"
+    echo "      ip route add default via <default_gateway> dev <interface>"
+}
+
 ## get current wan ip address
 wan()
 {
