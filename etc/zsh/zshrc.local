@@ -361,7 +361,7 @@ transfer()
 
 thingsIalwaysForget()
 {
-    echo -e "\e[01;34miproute2\e[0m"
+    echo -e "\e[01;34miproute2:\e[0m"
     echo "  Configure a static IP address:"
     echo "      ip address add <local_ip_address>/<cidr_subnet_mask> dev <inferface>"
     echo ""
