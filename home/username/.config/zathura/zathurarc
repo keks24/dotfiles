@@ -17,6 +17,7 @@
 # global
 set database "null"
 set guioptions "svh"
+set first-page-column "2:1"
 
 # normal mode
 map [normal] b adjust_window "best-fit"
