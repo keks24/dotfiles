@@ -43,6 +43,17 @@ genpw()
     local -i password_length=24
     local remove_characters="[:space:]"
     local -i password_count=20
+    local password_output
+    local password_entropy
+    local entropy_result
+    local lowercase_letter_regex="[a-z]"
+    local lowercase_letter_amount="26"
+    local uppercase_letter_regex="[A-Z]"
+    local uppercase_letter_amount="26"
+    local numeric_regex="[0-9]"
+    local numeric_amount="10"
+    local ascii_character_string="[[:punct:]]"
+    local ascii_character_amount="32"
 
     while (( ${#} ))
     do
@@ -99,8 +110,37 @@ genpw()
 
     for i in {1..${password_count}}
     do
-        strings --bytes=1 /dev/urandom | tr --delete "${remove_characters}" | head --bytes="${password_length}"
-        echo ""
+        password_entropy="0"
+        password_output=$(strings --bytes="1" "/dev/urandom" | tr --delete "${remove_characters}" | head --bytes="${password_length}")
+
+        if [[ "${password_output}" =~ "${lowercase_letter_regex}" ]]
+        then
+            # add 26
+            (( password_entropy+=lowercase_letter_amount ))
+        fi
+        if [[ "${password_output}" =~ "${uppercase_letter_regex}" ]]
+        then
+            # add 26
+            (( password_entropy+=uppercase_letter_amount ))
+        fi
+        if [[ "${password_output}" =~ "${numeric_regex}" ]]
+        then
+            # add 10
+            (( password_entropy+=numeric_amount ))
+        fi
+        if [[ "${password_output}" =~ "${ascii_character_string}" ]]
+        then
+            # add 32
+            (( password_entropy+=ascii_character_amount ))
+        fi
+
+        entropy_result=$(awk \
+            --assign="password_entropy=${password_entropy}" '\
+            {
+                printf "%.4f", log(password_entropy^$0)/log(2);
+            }' <<< "${password_length}")
+
+        printf "%s    %s bit (%s)\n" "${password_output}" "${entropy_result}" "${password_entropy}"
     done
 }
 
