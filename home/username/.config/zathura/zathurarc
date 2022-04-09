@@ -1,0 +1,25 @@
+# normal mode
+map [normal] b adjust_window "best-fit"
+map [normal] w adjust_window "width"
+map [normal] f toggle_fullscreen
+map [normal] F follow
+map [normal] i recolor
+map [normal] n navigate next
+map [normal] p navigate previous
+map [normal] r reload
+map [normal] R rotate
+map [normal] z zoom in
+map [normal] Z zoom out
+
+# fullscreen mode
+map [fullscreen] b adjust_window "best-fit"
+map [fullscreen] w adjust_window "width"
+map [fullscreen] f toggle_fullscreen
+map [fullscreen] F follow
+map [fullscreen] i recolor
+map [fullscreen] n navigate next
+map [fullscreen] p navigate previous
+map [fullscreen] r reload
+map [fullscreen] R rotate
+map [fullscreen] z zoom in
+map [fullscreen] Z zoom out
