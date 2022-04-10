@@ -3,7 +3,7 @@
 # - intercept missing commands
 #
 #############################################################################
-# Copyright 2020-2021 Ramon Fischer                                         #
+# Copyright 2020-2022 Ramon Fischer                                         #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -47,7 +47,7 @@ do
     case "${APPLICATION_NAME}" in
         # parcellite (clipboard manager)
         "${APPLICATION_NAME_LIST[1]}")
-            if [[ ! $(pgrep --euid "$(id --user --name)" "${APPLICATION_NAME}") ]]
+            if [[ ! $(pgrep --euid "${USER}" "${APPLICATION_NAME}") ]]
             then
                 parcellite --no-icon >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1 &!
             fi
@@ -55,7 +55,7 @@ do
 
         # ssh-agent
         "${APPLICATION_NAME_LIST[2]}")
-            if [[ ! $(pgrep --euid "$(id --user --name)" "${APPLICATION_NAME}") ]]
+            if [[ ! $(pgrep --euid "${USER}" "${APPLICATION_NAME}") ]]
             then
                 # start "ssh-agent" with environment variables and save passwords for one hour
                 # further configurations are located at "/etc/ssh/ssh_config"
@@ -65,10 +65,10 @@ do
 
         # xautolock
         "${APPLICATION_NAME_LIST[3]}")
-            if [[ ! $(pgrep --euid "$(id --user --name)" "${APPLICATION_NAME}") ]]
+            if [[ ! $(pgrep --euid "${USER}" "${APPLICATION_NAME}") ]]
             then
                 # start "physlock" after ten minutes to lock all screens; notify 30 seconds before
-                xautolock -corners --00 -time 10 -locker "/home/ramon/bin/locker" -notify 30 -notifier '/home/ramon/bin/awesome_notifier 10 critical "xautolock" "Locking screen in 30 seconds..."' >/dev/null 2>&1 &!
+                xautolock -corners --00 -time 10 -locker "${HOME}/bin/locker" -notify 30 -notifier '${HOME}/bin/awesome_notifier 10 critical "xautolock" "Locking screen in 30 seconds..."' >/dev/null 2>&1 &!
             fi
             ;;
 
@@ -81,8 +81,8 @@ unset APPLICATION_NAME
 # startx (awesomewm)
 ## this part must be started at the very end!
 ## after autologin on "tty7", start "awesome" on "tty7"
-## see also "/home/ramon/.zshrc.local"
-if [[ "${DISPLAY}" == "" && "$(id --user)" != "0" && -o login && $(tty) == "/dev/tty7" ]]
+## see also "${HOME}/.zshrc.local"
+if [[ "${DISPLAY}" == "" && "${UID}" != "0" && -o login && "${TTY}" == "/dev/tty7" ]]
 then
     startx >> "${LOG_DIRECTORY}/startx/startx.log" 2>&1 &!
 fi
