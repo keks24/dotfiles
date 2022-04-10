@@ -1,5 +1,5 @@
 #############################################################################
-# Copyright 2020-2021 Ramon Fischer                                         #
+# Copyright 2022 Ramon Fischer                                              #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -14,13 +14,13 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# user-specific
-## tmux
-### attach or create tmux session
-if [[ $(pgrep --euid "${USER}" "tmux") && "${TMUX}" == "" && $(tty) != "/dev/tty1" ]]
-then
-    tmux attach 2>/dev/null
-elif [[ ! $(pgrep --euid "${USER}" "script") && $(tty) != "/dev/tty1" ]]
-then
-    tmux new-session 2>/dev/null
-fi
+# global
+## exports
+### set a different configuration directory
+export ZDOTDIR="${HOME}/.config/zsh"
+### use the cache directory in "/root/"
+export GRML_COMP_CACHE_DIR="${HOME}/.cache"
+### set default scanner device
+export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:003"
+### use local man pages
+export MANPATH="${HOME}/.local/share/man:${MANPATH}"
