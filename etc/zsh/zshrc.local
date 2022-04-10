@@ -22,6 +22,81 @@ dic()
     w3m -dump "https://pocket.dict.cc/?s=${input_string}" | head --lines="-6" | tail --lines="+6" | tac
 }
 
+## prepare a chroot environment conveniently
+pchroot()
+{
+    if [[ "${EUID}" == "0" ]]
+    then
+        declare -a system_directory_array
+        system_directory_array=("/proc/" "/sys/" "/dev/")
+        local system_directory
+        declare -a chroot_directory_array
+        chroot_directory_array=("./proc/" "./sys/" "./dev/")
+        local chroot_directory
+
+        for system_directory in "${system_directory_array[@]}"
+        do
+            if [[ ! -d "${system_directory}" ]]
+            then
+                echo -e "\e[01;31m'${system_directory}' could not be found or is not a directory.\e[0m" >&2
+                return 1
+            fi
+        done
+
+        for chroot_directory in "${chroot_directory_array[@]}"
+        do
+            if [[ ! -d "${chroot_directory}" ]]
+            then
+                echo -e "\e[01;31m'${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
+                return 1
+            fi
+        done
+
+        mount --verbose --types proc "${system_directory_array[1]}" "${chroot_directory_array[1]}"
+        mount --verbose --rbind "${system_directory_array[2]}" "${chroot_directory_array[2]}"
+        mount --verbose --make-rslave "${chroot_directory_array[2]}"
+        mount --verbose --rbind "${system_directory_array[3]}" "${chroot_directory_array[3]}"
+        mount --verbose --make-rslave "${chroot_directory_array[3]}"
+
+        echo -e "\e[01;33mPrepared the chroot environment.\e[0m\n" >&2
+        echo -e "\e[01;33mExecute the following command to enter it: chroot . \"/bin/bash\"\e[0m" >&2
+        echo -e "\e[01;33mIf the CPU architectures differ, the binary \"qemu-<arch>-static\" may be used: cp \"qemu-<arch>-static\" \"usr/bin/\" && chroot . qemu-<arch>-static \"/bin/bash\"\e[0m" >&2
+        echo -e "\e[01;33mExecute the following command to prepare the environment within the chroot: source \"/etc/profile\" && export PS1=\"(chroot) \${PS1}\"\e[0m" >&2
+    else
+        echo -e "\e[01;31mEntering a chroot environment requires root privileges!\e[0m" >&2
+        return 1
+    fi
+}
+
+uchroot()
+{
+    if [[ "${EUID}" == "0" ]]
+    then
+        declare -a chroot_directory_array
+        chroot_directory_array=("./proc/" "./sys/" "./dev/")
+        local chroot_directory
+
+        for chroot_directory in "${chroot_directory_array[@]}"
+        do
+            if [[ ! -d "${chroot_directory}" ]]
+            then
+                echo -e "\e[01;31m'${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
+                return 1
+            elif ! mountpoint --quiet "${chroot_directory}"
+            then
+                echo -e "\e[01;31m'${chroot_directory}' is not mounted.\e[0m" >&2
+            fi
+        done
+
+        umount --verbose --lazy --recursive ${chroot_directory_array[@]}
+
+        echo -e "\e[01;33mUnprepared the chroot environment.\e[0m" >&2
+    else
+        echo -e "\e[01;31mUnpreparing a chroot environment requires root privileges!\e[0m" >&2
+        return 1
+    fi
+}
+
 ## toggle exclude remove feature via "globbing"
 exclude_remove_on()
 {
