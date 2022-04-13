@@ -222,9 +222,17 @@ genpw()
 ## determine last portage synchronisation
 getLastPortageSync()
 {
-    current_unix_time="$(date +%s)"
-    portage_unix_time="$(date --date="$(< /var/db/repos/gentoo/metadata/timestamp.chk)" +%s)"
-    days_since_last_sync="$(( (${current_unix_time} - ${portage_unix_time}) / 86400.0 ))"
+    local portage_timestamp_file="/var/db/repos/gentoo/metadata/timestamp.chk"
+
+    if [[ ! -f "${portage_timestamp_file}" ]]
+    then
+        echo -e "\e[01;31m'${portage_timestamp_file}' could not be found or is not a file.\e[0m" >&2
+        return 1
+    else
+        local current_unix_time="$(date +%s)"
+        local portage_unix_time="$(date --date="$(< ${portage_timestamp_file})" +%s)"
+        local days_since_last_sync="$(( (${current_unix_time} - ${portage_unix_time}) / 86400.0 ))"
+    fi
 
     if (( ${days_since_last_sync} >= 3.5 && ${days_since_last_sync} < 7 ))
     then
