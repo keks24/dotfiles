@@ -514,6 +514,11 @@ weather()
 {
     local input_string="${*// /+}"
 
+    if [[ ${input_string} == "" || "${input_string}" == "--help" || "${input_string}" == "-h" ]]
+    then
+        input_string=":help"
+    fi
+
     curl --request GET --silent --show-error "https://wttr.in/${input_string}"
 }
 
