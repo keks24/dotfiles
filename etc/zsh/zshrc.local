@@ -514,7 +514,7 @@ weather()
 {
     local input_string="${*// /+}"
 
-    if [[ ${input_string} == "" || "${input_string}" == "--help" || "${input_string}" == "-h" ]]
+    if [[ "${input_string}" == "--help" || "${input_string}" == "-h" ]]
     then
         input_string=":help"
     fi
