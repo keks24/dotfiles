@@ -15,7 +15,7 @@
 # limitations under the License.                                            #
 #############################################################################
 
-command_list=(clear date echo eclean eix eix-sync eix-test-obsolete emerge eselect etc-update glsa-check grep logger revdep-rebuild tee unalias)
+command_list=(clear date echo eclean eix eix-sync eix-test-obsolete emerge eselect etc-update glsa-check grep logger revdep-rebuild sleep tee unalias)
 checkCommands()
 {
     for current_command in "${command_list[@]}"
@@ -52,6 +52,8 @@ fi
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip check
 #/usr/bin/sudo --shell --user="${SUDO_USER}" /usr/bin/flatpak update
 /usr/bin/eix-sync
+/usr/bin/eselect news read
+/bin/sleep 3
 if /usr/bin/eix --upgrade sys-apps/portage >/dev/null
 then
     /bin/echo -e "\e[01;31mA new version of 'sys-apps/portage' was found. Updating it first...\e[0m"
@@ -70,4 +72,3 @@ fi
 /usr/bin/eclean --deep --time-limit="1m" packages
 /usr/bin/eix-test-obsolete
 /usr/bin/elogv
-/usr/bin/eselect news read
