@@ -1,6 +1,6 @@
 #!/bin/bash
 # custom - 20200701 - rfischer: start "minecraft-launcher" via "java"
-command_list=(java)
+command_list=(id java pgrep sudo tail tee)
 checkCommands()
 {
     for current_command in "${command_list[@]}"
@@ -16,13 +16,22 @@ checkCommands()
 
 checkCommands
 
+# define global variables
+graphics_power_profile_file="/sys/class/drm/card0/device/power_profile"
+current_username=$(/usr/bin/id --user --name)
+
 if [[ "${DISPLAY}" != "" ]]
 then
     # custom - 20191108 - rfischer: set the environment variable "DRI_PRIME=1" to always use the hybrid graphics card
     export DRI_PRIME="1"
     export VDPAU_DRIVER="r600"
     # amdgpu: export VDPAU_DRIVER="radeonsi"
+
+    echo "high" | /usr/bin/sudo /usr/bin/tee "${graphics_power_profile_file}" >/dev/null
     /usr/bin/java -jar "/home/ramon/.local/games/minecraft/TL-MCL.jar"
+    # must be done here. java forks to the background.
+    /usr/bin/tail --follow --pid=$(/usr/bin/pgrep --euid "${current_username}" "java") /dev/null
+    echo "low" | /usr/bin/sudo /usr/bin/tee "${graphics_power_profile_file}" >/dev/null
 else
     echo -e "\e[01;31mno display detected, exiting...\e[0m"
     exit 1
