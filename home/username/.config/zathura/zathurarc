@@ -18,6 +18,8 @@
 set database "null"
 set guioptions "svh"
 set first-page-column "1:1"
+## workaround to open links
+#set sandbox "none"
 
 # normal mode
 map [normal] b adjust_window "best-fit"
