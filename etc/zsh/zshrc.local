@@ -597,6 +597,7 @@ alias aria2c="aria2c --enable-rpc='false' \
 alias bc="bc --mathlib"
 alias cdrecord="cdrecord -sao -speed='0' -eject -v"
 alias crontab="crontab -i"
+alias curl="--show-error"
 alias dd="dd bs='512b' conv='fdatasync' status='progress'"
 alias diff="diff --side-by-side --suppress-common-lines --color"
 alias dvdbackup="dvdbackup --progress"
