@@ -18,7 +18,6 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# custom - 20200619 - rfischer: start non-daemon processes in the background on boot ("/dev/tty1"). all variables are global to "zsh"!
 # define global variables
 declare -a APPLICATION_NAME_LIST
 ## do not change the order of this list, only append new commands!

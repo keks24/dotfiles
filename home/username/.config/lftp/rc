@@ -1,5 +1,5 @@
 #############################################################################
-# Copyright 2020 Ramon Fischer                                              #
+# Copyright 2020-2022 Ramon Fischer                                         #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -112,6 +112,5 @@ set dns:order "inet6 inet"
 set ssl:verify-certificate no
 set mirror:use-pget-n 2
 set mirror:parallel-transfer-count 4
-
 alias mirror "mirror -c"
 alias mget "mget -c"

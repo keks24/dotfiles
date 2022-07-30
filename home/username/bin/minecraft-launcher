@@ -37,7 +37,6 @@ current_username=$(/usr/bin/id --user --name)
 
 if [[ "${DISPLAY}" != "" ]]
 then
-    # custom - 20191108 - rfischer: set the environment variable "DRI_PRIME=1" to always use the hybrid graphics card
     export DRI_PRIME="1"
     export VDPAU_DRIVER="r600"
     # amdgpu: export VDPAU_DRIVER="radeonsi"

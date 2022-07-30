@@ -1,6 +1,6 @@
 #!/bin/sh
 #############################################################################
-# Copyright 2020 Ramon Fischer                                              #
+# Copyright 2020-2022 Ramon Fischer                                         #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -17,10 +17,8 @@
 
 xprofile_file="/home/$(id --user --name)/.xprofile"
 
-# custom - 20200502 - rfischer: start an "x" session with "awesome" using "startx"
 if [[ "${DBUS_SESSION_BUS_ADDRESS}" == "" ]]
 then
-    # custom - 20201001 - rfischer: make this file static by sourcing a dynamic configuration file
     if [[ -f "${xprofile_file}" ]]
     then
         . "${xprofile_file}"

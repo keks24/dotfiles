@@ -1,5 +1,5 @@
 #############################################################################
-# Copyright 2020 Ramon Fischer                                              #
+# Copyright 2020-2022 Ramon Fischer                                         #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -14,7 +14,6 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# custom - 20200721 - rfischer: set custom cursor theme for gtk applications
 gtk-theme-name = gentoo
 #gtk-icon-theme-name = gnome
 gtk-cursor-theme-name = gentoo
