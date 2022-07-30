@@ -15,7 +15,6 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# custom - 20200701 - rfischer: create dynamic notifications
 command_list=(notify-send)
 checkCommands()
 {

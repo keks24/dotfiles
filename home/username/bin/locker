@@ -15,7 +15,6 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# custom - 20200701 - rfischer: lock all screens using "physlock"
 command_list=(physlock)
 checkCommands()
 {

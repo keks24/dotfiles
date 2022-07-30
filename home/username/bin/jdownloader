@@ -15,7 +15,6 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# custom - 20200701 - rfischer: start "jdownloader" via "java"
 command_list=(java)
 checkCommands()
 {
