@@ -53,6 +53,7 @@ fi
 #/usr/bin/sudo --shell --user="${SUDO_USER}" /usr/bin/flatpak update
 /usr/bin/eix-sync
 /usr/bin/eselect news read
+echo ""
 echo -e "\e[01;33mPress any key to continue...\e[0m" >&2
 read
 if /usr/bin/eix --upgrade sys-apps/portage >/dev/null
