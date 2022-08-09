@@ -43,7 +43,7 @@ compile new kernel
             dmesg | grep "microcode"
 
         6.2. reload the microcode manually
-            echo "1" > /sys/devices/system/cpu/microcode/reload
+            echo "1" > "/sys/devices/system/cpu/microcode/reload"
 
     7. update the grub configuration
         grub-mkconfig --output="/boot/grub/grub.cfg"
