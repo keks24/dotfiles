@@ -23,7 +23,7 @@ checkCommands()
         unalias ${current_command} 2>/dev/null
         if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
         then
-            echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
+            echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m" >&2
             exit 1
         fi
     done
