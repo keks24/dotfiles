@@ -46,7 +46,7 @@ fi
 /usr/bin/clear
 /usr/bin/logger --tag "update" --id --stderr "${script_directory_path}/${script_name}: executed"
 
-/bin/echo -e "\e[01;33mChecking for new updates...\e[0m" >&2
+echo -e "\e[01;33mChecking for new updates...\e[0m" >&2
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/gem update
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user --no-warn-script-location
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip check
@@ -57,7 +57,7 @@ echo -e "\n\e[01;33mPress any key to continue...\e[0m" >&2
 read
 if /usr/bin/eix --upgrade sys-apps/portage >/dev/null
 then
-    /bin/echo -e "\e[01;31mA new version of 'sys-apps/portage' was found. Updating it first...\e[0m" >&2
+    echo -e "\e[01;31mA new version of 'sys-apps/portage' was found. Updating it first...\e[0m" >&2
     /usr/bin/emerge --ask --oneshot sys-apps/portage
 fi
 /usr/bin/emerge --ask --update --deep --changed-use --tree --verbose --exclude="${large_package_list//$'\n'/ }" @world
