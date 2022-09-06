@@ -318,6 +318,20 @@ lsig()
     echo "See also: man 7 signal"
 }
 
+## monitor a single process
+pmon()
+{
+    local process_name="${1}"
+    local process_name_last_character="${process_name:(-1)}"
+    local search_string="${process_name/%${process_name_last_character}/[${process_name_last_character}]}"
+    local watch_interval="0.1"
+
+    # use the command "ps" with single quotes in order to use as an unaliased command.
+    watch --interval "${watch_interval}" \
+        "awk --assign search_string="${search_string}" \
+            'NR == 1; \$0 ~ search_string' < <('ps' faux)"
+}
+
 ## notify after a command has finished
 ## usage: notifyme some_command
 notifyme()
