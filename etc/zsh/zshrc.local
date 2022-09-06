@@ -326,6 +326,8 @@ pmon()
     local watch_interval="0.1"
 
     # use the command "ps" with single quotes in order to use it as an unaliased command.
+    # the command "unalias" could be used here, but once executed,
+    # this would affect the current shell.
     watch --interval "${watch_interval}" \
         "awk --assign search_string="${search_string}" \
             'NR == 1; \$0 ~ search_string' < <('ps' faux)"
