@@ -15,7 +15,7 @@
 # limitations under the License.                                            #
 #############################################################################
 
-command_list=(b2sum chmod clear date find logger mount mountpoint rsync sleep tee touch)
+command_list=(b2sum chmod clear date find logger mount mountpoint nproc rsync sleep tee touch xargs)
 checkCommands()
 {
     for current_command in "${command_list[@]}"
@@ -43,12 +43,26 @@ log_directory="${script_directory_path}/logs"
 log_filename="${current_iso_date}-${current_time}_${script_name}.log"
 log_file="${log_directory}/${log_filename}"
 backup_directory="${script_directory_path}/backup"
-checksum_filename="checksums.b2"
+checksum_file="./checksums.b2"
 
 calculateChecksums()
 {
+    local available_processors=$(/usr/bin/nproc --all)
+    local max_arguments="1"
+    local file_list
+
     pushd "${backup_directory}" >/dev/null
-    /usr/bin/find . -type f -not -name "${checksum_filename}" -exec /usr/bin/b2sum "{}" + > "${checksum_filename}"
+    file_list=$(/usr/bin/find "." \
+                    -type f \
+                    -not \
+                    -name "${checksum_file/\.\//}" \
+                    -print0)
+
+    xargs \
+        --null \
+        --max-procs="${available_processors}" \
+        --max-args="${max_arguments}" \
+        /usr/bin/b2sum --zero > "${checksum_file}" < <(printf "%s" "${file_list}")
     popd >/dev/null
 }
 
