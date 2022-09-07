@@ -22,7 +22,7 @@ dic()
     w3m -dump "https://pocket.dict.cc/?s=${input_string}" | head --lines="-6" | tail --lines="+6" | tac
 }
 
-## generate and check file checksums via "blake2"
+## generate and check file checksums via "blake2" in parallel
 gcheck()
 {
     local checksum_file="./checksums.b2"
