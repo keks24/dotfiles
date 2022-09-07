@@ -47,7 +47,7 @@ gcheck()
                     -print0)
 
     # the command "printf" is important here to keep a null-character-separated string.
-    # using "herestring" ("<<<") would add a trailing newline.
+    # using "here-string" ("<<<") would add a trailing newline.
     xargs \
         --null \
         --max-procs="${available_processors}" \
