@@ -22,7 +22,60 @@ dic()
     w3m -dump "https://pocket.dict.cc/?s=${input_string}" | head --lines="-6" | tail --lines="+6" | tac
 }
 
-## prepare a chroot environment conveniently
+## generate and check file checksums via "blake2"
+gcheck()
+{
+    local checksum_file="./checksums.b2"
+    local available_processors=$(nproc --all)
+    local max_arguments="1"
+    local overwrite_checksum_file
+    local file_list
+
+    if [[ -f "${checksum_file}" ]]
+    then
+        read $'overwrite_checksum_file?\e[01;31mThe file: '"'${checksum_file}'"$' was found. Do you really want to overwrite it? (y/N): \e[0m' >&2
+        if [[ "${overwrite_checksum_file:-n}" =~ [nN] ]]
+        then
+            return 1
+        fi
+    fi
+
+    file_list=$(find "." \
+                    -type f \
+                    -not \
+                    -name "${checksum_file/\.\//}" \
+                    -print0)
+
+    # the command "printf" is important here to keep a null-character-separated string.
+    # using "herestring" ("<<<") would add a trailing newline.
+    xargs \
+        --null \
+        --max-procs="${available_processors}" \
+        --max-args="${max_arguments}" \
+        b2sum --zero > "${checksum_file}" < <(printf "%s" "${file_list}")
+}
+ccheck()
+{
+    local checksum_file="./checksums.b2"
+    local available_processors=$(nproc --all)
+
+    if [[ ! -f "${checksum_file}" ]]
+    then
+        echo -e "\e[01;31mCould not find file: '${checksum_file}' or is not a file.\e[0m" >&2
+        return 1
+    else
+        # the parameter "--replace" and a subshell ("sh") must be used here!
+        xargs \
+            --null \
+            --arg-file="${checksum_file}" \
+            --max-procs="${available_processors}" \
+            --replace="{}" \
+            sh -c \
+                "b2sum --check --quiet <<< '{}'"
+    fi
+}
+
+## prepare and "unprepare" a chroot environment conveniently
 pchroot()
 {
     if [[ "${EUID}" == "0" ]]
@@ -321,9 +374,9 @@ lsig()
 pmon()
 {
     local process_name="${1}"
+    local watch_interval="${2:-0.1}"
     local process_name_last_character="${process_name:(-1)}"
     local search_string="${process_name/%${process_name_last_character}/[${process_name_last_character}]}"
-    local watch_interval="0.1"
 
     # use the command "command watch" and "command ps"
     # in order to use them as unaliased commands.
