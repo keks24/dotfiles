@@ -711,6 +711,7 @@ alias mktorrent="mktorrent --verbose \
     --announce='udp://tracker.shkinev.me:6969/announce' \
     --announce='udp://tracker.nighthawk.pw:2052/announce' \
     --announce='udp://tracker.lelux.fi:6969/announce'"
+alias ncdu="ncdu --color='dark'"
 alias nload="nload -u K"
 alias path="echo ${PATH//:/'\n'}"
 alias poweroff="echo 'Are you sure? Please run: /sbin/poweroff'"
