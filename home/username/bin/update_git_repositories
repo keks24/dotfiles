@@ -31,10 +31,20 @@ checkCommands()
 
 checkCommands
 
-for repository_directory in $(/usr/bin/find -L . -type d -name ".git" -printf "%h\n")
-do
-    echo -e "\n### ${repository_directory} ###"
-    pushd "${repository_directory}" >/dev/null
-    /usr/bin/git pull
-    popd >/dev/null
-done
+# define global variables
+declare -a repository_directory_array
+repository_directory_array=($(/usr/bin/find -L "." -type d -name ".git" -printf "%h\n"))
+
+if [[ "${repository_directory_array[@]}" == "" ]]
+then
+    echo -e "\e[01;31mCould not find any '.git/' directories.\e[0m" >&2
+    exit 1
+else
+    for repository_directory in "${repository_directory_array[@]}"
+    do
+        echo -e "\n### ${repository_directory} ###"
+        pushd "${repository_directory}" >/dev/null
+        /usr/bin/git pull
+        popd >/dev/null
+    done
+fi
