@@ -164,6 +164,48 @@ exclude_remove_off()
     echo -e "\e[01;31mGlob syntax has been deactivated.\e[0m"
 }
 
+## print invoice files in chronological descending order
+lpr_invoice()
+{
+    local directory_file_list=$(ls -1t)
+    local directory_file
+    declare -a invoice_file_array
+    local print_files
+    local invoice_index_number="1"
+
+    if [[ "${directory_file_list}" != "" ]]
+    then
+        while read -r directory_file
+        do
+            if [[ -f "${directory_file}" ]]
+            then
+                invoice_file_array+=("${directory_file}")
+                echo -e "\e[01;35m${invoice_index_number}: ${directory_file}\e[0m"
+                (( invoice_index_number++ ))
+            fi
+        done <<< "${directory_file_list}"
+
+        read $'print_files?\e[01;31mDo you really want to print the above files in this particular order? (Y/n): \e[0m' >&2
+
+        case "${print_files:-y}" in
+            "y"|"Y")
+                lpr "${invoice_file_array[@]}"
+                ;;
+
+            "n"|"N")
+                return 1
+                ;;
+
+            *)
+                echo -e "\e[01;31mWrong input: '${print_files}'.\e[0m" >&2
+                return 1
+        esac
+    else
+        echo -e "\e[01;31mThe invoice file array: '${invoice_file_array[@]}' is empty. Nothing to do...\e[0m" >&2
+        return 1
+    fi
+}
+
 ## generate strong passwords with ~130 bit entropy
 genpw()
 {
@@ -691,7 +733,6 @@ alias listvariables="echo '${(k)parameters// /\n}'"
 alias ll="ls -vl"
 alias ln="ln --verbose"
 alias locate="locate --ignore-case"
-alias lpr_invoice="lpr $(ls -1t)"
 alias lsblk="lsblk --discard --fs --merge --perms --zoned"
 alias mkdir="mkdir --parents"
 alias mktorrent="mktorrent --verbose \
