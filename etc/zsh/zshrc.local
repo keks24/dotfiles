@@ -691,6 +691,7 @@ alias listvariables="echo '${(k)parameters// /\n}'"
 alias ll="ls -vl"
 alias ln="ln --verbose"
 alias locate="locate --ignore-case"
+alias lpr_invoice="lpr $(ls -1t)"
 alias lsblk="lsblk --discard --fs --merge --perms --zoned"
 alias mkdir="mkdir --parents"
 alias mktorrent="mktorrent --verbose \
