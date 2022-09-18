@@ -185,23 +185,29 @@ lpr_invoice()
             fi
         done <<< "${directory_file_list}"
 
-        read $'print_files?\e[01;31mDo you really want to print the above files in this particular order? (Y/n): \e[0m' >&2
+        if [[ "${invoice_file_array[@]}" != "" ]]
+        then
+            read $'print_files?\e[01;31mDo you really want to print the above files in this particular order? (y/N): \e[0m' >&2
 
-        case "${print_files:-y}" in
-            "y"|"Y")
-                lpr "${invoice_file_array[@]}"
-                ;;
+            case "${print_files:-n}" in
+                "y"|"Y")
+                    lpr "${invoice_file_array[@]}"
+                    ;;
 
-            "n"|"N")
-                return 1
-                ;;
+                "n"|"N")
+                    return 1
+                    ;;
 
-            *)
-                echo -e "\e[01;31mWrong input: '${print_files}'.\e[0m" >&2
-                return 1
-        esac
+                *)
+                    echo -e "\e[01;31mWrong input: '${print_files}'.\e[0m" >&2
+                    return 1
+            esac
+        else
+            echo -e "\e[01;31mThe invoice file array: '${invoice_file_array[@]}' is empty. Nothing to do...\e[0m" >&2
+            return 1
+        fi
     else
-        echo -e "\e[01;31mThe invoice file array: '${invoice_file_array[@]}' is empty. Nothing to do...\e[0m" >&2
+        echo -e "\e[01;31mThe directory file list: '${directory_file_list}' is empty. Nothing to do...\e[0m" >&2
         return 1
     fi
 }
