@@ -19,10 +19,8 @@
 # the slash character is left out, since linux does not allow this character in filenames.
 declare -a fat_illegal_character_array
 fat_illegal_character_array=("<" ">" ":" "\"" "\\" "?" "*")
-fat_illegal_character=
 declare -a music_directory_array
 music_directory_array=("audiobooks" "normal_music" "playlists" "podcasts" "record" "unusual_music")
-music_directory=
 
 for music_directory in "${music_directory_array[@]}"
 do
