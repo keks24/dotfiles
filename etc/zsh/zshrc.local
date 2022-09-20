@@ -33,7 +33,7 @@ gsum()
 
     if [[ -f "${checksum_file}" ]]
     then
-        read $'overwrite_checksum_file?\e[01;31mThe file: '"'${checksum_file}'"$' was found. Do you really want to overwrite it? (y/N): \e[0m' >&2
+        read $'overwrite_checksum_file?\e[01;31mThe file: '"'${checksum_file}'"$' already exists. Do you really want to overwrite it? (y/N): \e[0m' >&2
         if [[ "${overwrite_checksum_file:-n}" =~ [nN] ]]
         then
             return 1
