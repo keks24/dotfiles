@@ -61,7 +61,7 @@ csum()
 
     if [[ ! -f "${checksum_file}" ]]
     then
-        echo -e "\e[01;31mCould not find file: '${checksum_file}' or is not a file.\e[0m" >&2
+        echo -e "\e[01;31mThe file: '${checksum_file}' could not be found or is not a file.\e[0m" >&2
         return 1
     else
         # the parameter "--replace" and a subshell ("sh") must be used here!
@@ -91,7 +91,7 @@ pchroot()
         do
             if [[ ! -d "${system_directory}" ]]
             then
-                echo -e "\e[01;31m'${system_directory}' could not be found or is not a directory.\e[0m" >&2
+                echo -e "\e[01;31mThe system directory: '${system_directory}' could not be found or is not a directory.\e[0m" >&2
                 return 1
             fi
         done
@@ -100,7 +100,7 @@ pchroot()
         do
             if [[ ! -d "${chroot_directory}" ]]
             then
-                echo -e "\e[01;31m'${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
+                echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
                 return 1
             fi
         done
@@ -132,11 +132,11 @@ uchroot()
         do
             if [[ ! -d "${chroot_directory}" ]]
             then
-                echo -e "\e[01;31m'${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
+                echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
                 return 1
             elif ! mountpoint --quiet "${chroot_directory}"
             then
-                echo -e "\e[01;31m'${chroot_directory}' is not mounted.\e[0m" >&2
+                echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' is not mounted.\e[0m" >&2
             fi
         done
 
@@ -326,7 +326,7 @@ getLastPortageSync()
 
     if [[ ! -f "${portage_timestamp_file}" ]]
     then
-        echo -e "\e[01;31m'${portage_timestamp_file}' could not be found or is not a file.\e[0m" >&2
+        echo -e "\e[01;31mThe file: '${portage_timestamp_file}' could not be found or is not a file.\e[0m" >&2
         return 1
     else
         local current_unix_time="$(date +%s)"
@@ -532,7 +532,7 @@ transfer()
         do
             if [[ ! -f "${file}" ]]
             then
-                echo -e "\e[01;31m'${file}' could not be found or is not a file.\e[0m" >&2
+                echo -e "\e[01;31mThe file: '${file}' could not be found or is not a file.\e[0m" >&2
                 return 1
             fi
         done
