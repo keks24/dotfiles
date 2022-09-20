@@ -23,7 +23,7 @@ dic()
 }
 
 ## generate and check file checksums via "blake2" in parallel
-gcheck()
+gsum()
 {
     local checksum_file="./checksums.b2"
     local available_processors=$(nproc --all --ignore="1")
@@ -54,7 +54,7 @@ gcheck()
         --max-args="${max_arguments}" \
         b2sum --zero > "${checksum_file}" < <(printf "%s" "${file_list}")
 }
-ccheck()
+csum()
 {
     local checksum_file="./checksums.b2"
     local available_processors=$(nproc --all --ignore="1")
