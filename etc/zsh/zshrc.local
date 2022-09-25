@@ -27,7 +27,7 @@ gsum()
 {
     local checksum_file="./checksums.b2"
     local available_processors=$(nproc --all --ignore="1")
-    local max_arguments="1"
+    local xargs_max_args="1"
     local overwrite_checksum_file
     local file_list
 
@@ -51,7 +51,7 @@ gsum()
     xargs \
         --null \
         --max-procs="${available_processors}" \
-        --max-args="${max_arguments}" \
+        --max-args="${xargs_max_args}" \
         b2sum --zero > "${checksum_file}" < <(printf "%s" "${file_list}")
 }
 csum()
