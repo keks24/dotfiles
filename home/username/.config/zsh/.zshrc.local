@@ -20,7 +20,7 @@
 ### see also "/home/ramon/.zlogin"
 if [[ $(pgrep --euid "${USER}" "tmux") && "${TMUX}" == "" && "${TTY}" != "/dev/tty7" ]]
 then
-    tmux attach 2>/dev/null
+    tmux attach-session 2>/dev/null
 elif [[ ! $(pgrep --euid "${USER}" "script") && "${TTY}" != "/dev/tty7" ]]
 then
     tmux new-session 2>/dev/null
