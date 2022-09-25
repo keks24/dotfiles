@@ -18,5 +18,7 @@
 # do not start any programs here. use "~/.zshrc.local" for this!
 
 ## exports
+### man pages
+export MANPATH="${MANPATH}:${HOME}/.local/share/man"
 
 ## aliases

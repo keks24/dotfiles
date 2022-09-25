@@ -17,6 +17,10 @@
 # global
 # do not start any programs here. use "~/.zshrc.local" for this!
 
+## exports
+### man pages
+export MANPATH="${MANPATH}:${HOME}/.local/share/man"
+
 ## aliases
 ### ruby
 alias ruby-install="ruby-install --jobs='4' --cleanup --src-dir '${HOME}/.local/src' --install-dir '${HOME}/.local'"
