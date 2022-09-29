@@ -454,10 +454,32 @@ notifyme()
 ## list real and effective user and group ids in a more convenient way
 listids()
 {
-    local username="${1}"
-    local id_list=$(id ${username})
+    declare -a username_array
+    username_array=("${@}")
+    local username
+    declare -A username_id_array
+    local username_id
+    local id_name_list
 
-    awk --field-separator ',' '{ gsub("[, ]", "\n"); print }' <<< "${id_list}"
+    # fill associative array
+    for username in "${username_array[@]}"
+    do
+        id_name_list=$(id "${username}")
+
+        if [[ "${id_name_list}" == "" ]]
+        then
+            continue
+        else
+            username_id_array[${username}]="${id_name_list}"
+        fi
+    done
+
+    # output associative array
+    for username_id in ${(k)username_id_array}
+    do
+        echo -e "\e[01;34mIDs of the user '\e[01;33m${username_id}\e[0m\e[01;34m':\e[0m"
+        awk --field-separator ',' '{ gsub("[, ]", "\n    "); sub("^", "    "); print $0"\n"}' <<< ${username_id_array[${username_id}]}
+    done
 }
 
 ## bash: execute bell when command is finished
