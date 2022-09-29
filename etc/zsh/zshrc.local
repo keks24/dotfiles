@@ -867,6 +867,8 @@ export DISTCC_DIR="/home/ramon/.var/tmp/distcc"
 export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 ## always use the best compression method of "xz"
 export XZ_OPT="-9"
+## workaround for "tmux" to create proper conditionals
+export EUID="${EUID}"
 
 # output when opening shell
 ## list who is logged in
