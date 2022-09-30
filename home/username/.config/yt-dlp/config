@@ -24,13 +24,13 @@
 --audio-quality="0"
 --exec="filename={} \
     && filename_suffix=\"${filename##*\.}\" \
-    && ffmpeg \
+    && /usr/bin/ffmpeg \
         -i {} \
         -n \
-        -c:a aac \
+        -codec:a aac \
         -b:a 128k \
         -ar:a 44100 \
         -filter:a 'volume=1.2,silenceremove=stop_periods=-1:stop_duration=1:stop_threshold=-40dB' \
         \"${filename//\.${filename_suffix}/.aac}\" \
-    ; rm --force --verbose {}"
+    ; /bin/rm --force --verbose {}"
 --output="./%(uploader)s/%(playlist_title|)s/%(title)s [%(id)s].%(ext)s"
