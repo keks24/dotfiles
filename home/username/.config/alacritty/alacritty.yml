@@ -922,7 +922,7 @@ colors:
     white:   "#ffffff"
 
 selection:
-  semantic_escape_chars: ",│`|\"' ()[]{}<>\t¬»·║"
+  semantic_escape_chars: ",│`|\"' ()[]{}<>\t¬»·║═"
 
 hints:
   enabled:
