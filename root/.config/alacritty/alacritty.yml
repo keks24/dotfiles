@@ -885,6 +885,7 @@ window:
 scrolling:
   history: 0
 
+# fetch information from the command "fc-list"
 font:
   normal:
     Default:
@@ -897,7 +898,7 @@ font:
     family: "xos4Terminus"
     style: "Italic"
   bold_italic:
-    family: 'xos4Terminus'
+    family: "xos4Terminus"
     style: "Bold Italic"
   size: 10.0
 
@@ -927,8 +928,7 @@ colors:
     white:   "#ffffff"
 
 selection:
-  semantic_escape_chars: ",│`|\"' ()[]{}<>\t¬»·"
-
+  semantic_escape_chars: ",│`|\"' ()[]{}<>\t¬»·║"
 
 hints:
   enabled:
