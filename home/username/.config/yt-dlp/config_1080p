@@ -19,4 +19,5 @@
 # the substitution "${filename//\.${filename_suffix}/.aac}" is executed on the entire directory path and filename, which is very unprecise!
 # "\.${filename_suffix}$" does not work for some reason.
 --format="bestvideo[height<=1080]"
+--download-archive="/var/tmp/youtube-dl/youtube-dl_download_archive_1080p.list"
 --output="./%(uploader)s/%(playlist_title|)s/%(title)s [%(format_note)s].%(ext)s"

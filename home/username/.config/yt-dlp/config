@@ -22,6 +22,8 @@
 --extract-audio
 --audio-format="best"
 --audio-quality="0"
+--download-archive="/var/tmp/youtube-dl_download_archive.list"
+--no-post-overwrites
 --exec="filename={} \
     && filename_suffix=\"${filename##*\.}\" \
     && /usr/bin/ffmpeg \
