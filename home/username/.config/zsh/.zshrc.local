@@ -16,48 +16,6 @@
 
 # user-specific
 # functions
-## push mirror to external repositories
-gitpall()
-{
-    local repository_configuration_file="./.git/config"
-    local current_repository_name
-    declare -a repository_name_array
-    repository_url_array=("codeberg.org" "github.com" "gitlab.com")
-    local repository_url
-    local git_username="keks24"
-    local remote_git_username="git"
-    local push_files
-
-    if [[ ! -f "${repository_configuration_file}" ]]
-    then
-        echo -e "\e[01;31mCould not find configuration file: '${repository_configuration_file}' or is not a file.\e[0m" >&2
-        echo -e "\e[01;31mIs your current working directory a 'git' repository?\e[0m" >&2
-        return 1
-    else
-        current_repository_name=$(awk 'printnext > 0 { print $3; printnext-- } /\[remote "origin"\]/ { printnext=1 } { previous=$0 }' "${repository_configuration_file}")
-        current_repository_name="${current_repository_name##*/}"
-
-        for repository_url in "${repository_url_array[@]}"
-        do
-            echo -e "\e[01;33mgit push --mirror to: '${remote_git_username}@${repository_url}:${git_username}/${current_repository_name}'\e[0m" >&2
-        done
-        unset repository_url
-
-        read $'push_files?\e[01;31mDo you really want to push all files from the repository '"'./${current_repository_name}'"$' to the above repositories? (y/N): \e[0m' >&2
-
-        if [[ "${push_files:-n}" =~ [nN] ]]
-        then
-            return 1
-        else
-            for repository_url in "${repository_url_array[@]}"
-            do
-                echo -e "\e[01;34mPushing files to: '\e[01;33m${repository_url}\e[0m\e[01;34m':\e[0m" >&2
-                git push --mirror "${remote_git_username}@${repository_url}:${git_username}/${current_repository_name}"
-                echo ""
-            done
-        fi
-    fi
-}
 
 # prompt shell
 
