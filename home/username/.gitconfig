@@ -8,9 +8,9 @@
     call = commit --all
     d = diff --color-words
     dp = checkout --patch
-    lft = lfs track
-    lfmt = lfs migrate info --everything --fixup
-    lfmi = lfs migrate import --fixup
+    lt = lfs track
+    ltt = lfs migrate info --everything --fixup
+    lti = lfs migrate import --fixup --verbose
     # git config lfs.https://<some_fqdn>/keks24/<some_repository_name>/info/lfs.locksverify true
     rp = reset --patch
 #[pull]
