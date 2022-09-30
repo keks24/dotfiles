@@ -1,0 +1,24 @@
+#############################################################################
+# Copyright 2022 Ramon Fischer                                              #
+#                                                                           #
+# Licensed under the Apache License, Version 2.0 (the "License");           #
+# you may not use this file except in compliance with the License.          #
+# You may obtain a copy of the License at                                   #
+#                                                                           #
+#     http://www.apache.org/licenses/LICENSE-2.0                            #
+#                                                                           #
+# Unless required by applicable law or agreed to in writing, software       #
+# distributed under the License is distributed on an "AS IS" BASIS,         #
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  #
+# See the License for the specific language governing permissions and       #
+# limitations under the License.                                            #
+#############################################################################
+
+--ignore-errors
+--extract-audio
+--audio-quality="0"
+# the curly braces are already escaped. shell ("sh") variables must be escaped with quotes, otherwise they will not expand before execution!
+# using \"${filename//\.${filename_suffix}/.aac}\" is executed on the entire filename, which is very unprecise.
+# "\.${filename_suffix}$" does not work for some reason.
+--exec="filename={} && filename_suffix=\"${filename##*\.}\" && ffmpeg -i {} -n -c:a aac -b:a 128k -ar:a 44100 -filter:a volume=1.2 \"${filename//\.${filename_suffix}/.aac}\" && rm --force --verbose {}"
+--output="./%(uploader)s/%(playlist_title|)s/%(title)s.%(ext)s"
