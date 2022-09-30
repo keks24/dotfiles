@@ -14,11 +14,12 @@
 # limitations under the License.                                            #
 #############################################################################
 
+# curly braces are already escaped
+# shell ("sh") variables must be escaped with quotes, otherwise they are not expanded before execution!
+# the substitution "${filename//\.${filename_suffix}/.aac}" is executed on the entire directory path and filename, which is very unprecise!
+# "\.${filename_suffix}$" does not work for some reason.
 --ignore-errors
 --extract-audio
 --audio-quality="0"
-# the curly braces are already escaped. shell ("sh") variables must be escaped with quotes, otherwise they will not expand before execution!
-# using \"${filename//\.${filename_suffix}/.aac}\" is executed on the entire filename, which is very unprecise.
-# "\.${filename_suffix}$" does not work for some reason.
 --exec="filename={} && filename_suffix=\"${filename##*\.}\" && ffmpeg -i {} -n -c:a aac -b:a 128k -ar:a 44100 -filter:a volume=1.2 \"${filename//\.${filename_suffix}/.aac}\" && rm --force --verbose {}"
 --output="./%(uploader)s/%(playlist_title|)s/%(title)s.%(ext)s"
