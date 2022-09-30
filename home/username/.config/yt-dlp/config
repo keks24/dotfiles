@@ -20,6 +20,7 @@
 # "\.${filename_suffix}$" does not work for some reason.
 --ignore-errors
 --extract-audio
+--audio-format="best"
 --audio-quality="0"
 --exec="filename={} && filename_suffix=\"${filename##*\.}\" && ffmpeg -i {} -n -c:a aac -b:a 128k -ar:a 44100 -filter:a volume=1.2 \"${filename//\.${filename_suffix}/.aac}\" && rm --force --verbose {}"
---output="./%(uploader)s/%(playlist_title|)s/%(title)s.%(ext)s"
+--output="./%(uploader)s/%(playlist_title|)s/%(title)s [%(id)s].%(ext)s"
