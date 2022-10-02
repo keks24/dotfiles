@@ -130,7 +130,7 @@ main()
         #    break
         #fi
         #(( debug_counter++ ))
-    done <<< $(/usr/bin/find "${music_directory_array[@]}" -type d)
+    done < <(/usr/bin/find "${music_directory_array[@]}" -type d)
 }
 
 main
