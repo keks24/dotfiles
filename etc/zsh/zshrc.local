@@ -19,14 +19,14 @@
 dic()
 {
     input_string=${*// /+}
-    w3m -dump "https://pocket.dict.cc/?s=${input_string}" | head --lines="-6" | tail --lines="+6" | tac
+    \w3m -dump "https://pocket.dict.cc/?s=${input_string}" | \head --lines="-6" | \tail --lines="+6" | \tac
 }
 
 ## generate and check file checksums via "blake2" in parallel
 gsum()
 {
     local checksum_file="./checksums.b2"
-    local available_processors=$(nproc --all --ignore="1")
+    local available_processors=$(\nproc --all --ignore="1")
     local xargs_max_args="1"
     local overwrite_checksum_file
     local file_list
@@ -40,7 +40,7 @@ gsum()
         fi
     fi
 
-    file_list=$(find "." \
+    file_list=$(\find "." \
                     -type f \
                     -not \
                     -name "${checksum_file/\.\//}" \
@@ -48,16 +48,16 @@ gsum()
 
     # the command "printf" is important here to keep a null-character-separated string.
     # using "here-string" ("<<<") would add a trailing newline.
-    xargs \
+    \xargs \
         --null \
         --max-procs="${available_processors}" \
         --max-args="${xargs_max_args}" \
-        b2sum --zero > "${checksum_file}" < <(printf "%s" "${file_list}")
+        \b2sum --zero > "${checksum_file}" < <(printf "%s" "${file_list}")
 }
 csum()
 {
     local checksum_file="./checksums.b2"
-    local available_processors=$(nproc --all --ignore="1")
+    local available_processors=$(\nproc --all --ignore="1")
 
     if [[ ! -f "${checksum_file}" ]]
     then
@@ -65,13 +65,13 @@ csum()
         return 1
     else
         # the parameter "--replace" and a subshell ("sh") must be used here!
-        xargs \
+        \xargs \
             --null \
             --arg-file="${checksum_file}" \
             --max-procs="${available_processors}" \
             --replace="{}" \
-            sh -c \
-                "b2sum --check --quiet <<< '{}'"
+            \sh -c \
+                "\b2sum --check --quiet <<< '{}'"
     fi
 }
 
@@ -105,11 +105,11 @@ pchroot()
             fi
         done
 
-        mount --verbose --types proc "${system_directory_array[1]}" "${chroot_directory_array[1]}"
-        mount --verbose --rbind "${system_directory_array[2]}" "${chroot_directory_array[2]}"
-        mount --verbose --make-rslave "${chroot_directory_array[2]}"
-        mount --verbose --rbind "${system_directory_array[3]}" "${chroot_directory_array[3]}"
-        mount --verbose --make-rslave "${chroot_directory_array[3]}"
+        \mount --verbose --types proc "${system_directory_array[1]}" "${chroot_directory_array[1]}"
+        \mount --verbose --rbind "${system_directory_array[2]}" "${chroot_directory_array[2]}"
+        \mount --verbose --make-rslave "${chroot_directory_array[2]}"
+        \mount --verbose --rbind "${system_directory_array[3]}" "${chroot_directory_array[3]}"
+        \mount --verbose --make-rslave "${chroot_directory_array[3]}"
 
         echo -e "\e[01;33mPrepared the chroot environment.\e[0m\n" >&2
         echo -e "\e[01;33mExecute the following command to enter it: chroot . \"/bin/bash\"\e[0m" >&2
@@ -134,13 +134,13 @@ uchroot()
             then
                 echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
                 return 1
-            elif ! mountpoint --quiet "${chroot_directory}"
+            elif ! \mountpoint --quiet "${chroot_directory}"
             then
                 echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' is not mounted.\e[0m" >&2
             fi
         done
 
-        umount --verbose --lazy --recursive ${chroot_directory_array[@]}
+        \umount --verbose --lazy --recursive ${chroot_directory_array[@]}
 
         echo -e "\e[01;33mUnprepared the chroot environment.\e[0m" >&2
     else
@@ -167,7 +167,7 @@ exclude_remove_off()
 ## print invoice files in chronological descending order
 lpr_invoice()
 {
-    local directory_file_list=$(ls -1t)
+    local directory_file_list=$(\ls -1t)
     local directory_file
     declare -a invoice_file_array
     local print_files
@@ -191,7 +191,7 @@ lpr_invoice()
 
             case "${print_files:-n}" in
                 "y"|"Y")
-                    lpr "${invoice_file_array[@]}"
+                    \lpr "${invoice_file_array[@]}"
                     ;;
 
                 "n"|"N")
@@ -286,7 +286,7 @@ genpw()
     for i in {1..${password_count}}
     do
         password_entropy="0"
-        password_output=$(strings --bytes="1" "/dev/urandom" | tr --delete "${remove_characters}" | head --bytes="${password_length}")
+        password_output=$(\strings --bytes="1" "/dev/urandom" | \tr --delete "${remove_characters}" | \head --bytes="${password_length}")
 
         if [[ "${password_output}" =~ "${lowercase_letter_regex}" ]]
         then
@@ -309,7 +309,7 @@ genpw()
             (( password_entropy+=ascii_character_amount ))
         fi
 
-        entropy_result=$(awk \
+        entropy_result=$(\awk \
             --assign="password_entropy=${password_entropy}" '\
             {
                 printf "%.4f", log(password_entropy^$0)/log(2);
@@ -329,8 +329,8 @@ getLastPortageSync()
         echo -e "\e[01;31mThe file: '${portage_timestamp_file}' could not be found or is not a file.\e[0m" >&2
         return 1
     else
-        local current_unix_time="$(date +%s)"
-        local portage_unix_time="$(date --date="$(< ${portage_timestamp_file})" +%s)"
+        local current_unix_time="$(\date +%s)"
+        local portage_unix_time="$(\date --date="$(< ${portage_timestamp_file})" +%s)"
         local days_since_last_sync="$(( (${current_unix_time} - ${portage_unix_time}) / 86400.0 ))"
     fi
 
@@ -430,9 +430,9 @@ pmon()
     # in order to use them as unaliased commands.
     # the command "unalias" could be used here, but once executed,
     # this would affect the current shell.
-    command watch --differences --interval "${watch_interval}" \
-        "awk --assign search_string="${search_string}" \
-            'NR == 1; \$0 ~ search_string' < <(command ps faux)"
+    \watch --differences --interval "${watch_interval}" \
+        "\awk --assign search_string="${search_string}" \
+            'NR == 1; \$0 ~ search_string' < <(\ps faux)"
 }
 
 ## follow a single running process and always exit with error code "0"
@@ -440,10 +440,10 @@ fpid()
 {
     local process_name="${1}"
     declare -a process_id_array
-    process_id_array=($(command pgrep "${process_name}"))
+    process_id_array=($(\pgrep "${process_name}"))
 
     # "zsh"'s array index starts at "1"
-    command tail --follow "/dev/null" --pid="${process_id_array[1]}"
+    \tail --follow "/dev/null" --pid="${process_id_array[1]}"
     return 0
 }
 
@@ -451,15 +451,15 @@ fpid()
 ## usage: notifyme <some_command>
 notifyme()
 {
-    local -i start_time="$(date +%s)"
+    local -i start_time="$(\date +%s)"
 
     "${@}"
 
-    local end_time="$(date +%s)"
+    local end_time="$(\date +%s)"
     local total_execution_time="$(( end_time - start_time ))"
     #if (( total_execution_time >= 15 ))
     #then
-        notify-send --app-name="Notification" --icon="notifications" --urgency="critical" "Command finished [${total_execution_time} seconds]" "'$(echo ${@})'"
+        \notify-send --app-name="Notification" --icon="notifications" --urgency="critical" "Command finished [${total_execution_time} seconds]" "'$(echo ${@})'"
     #fi
 }
 
@@ -476,7 +476,7 @@ listids()
     # fill associative array
     for username in "${username_array[@]}"
     do
-        id_name_list=$(id "${username}")
+        id_name_list=$(\id "${username}")
 
         if [[ "${id_name_list}" == "" ]]
         then
@@ -490,7 +490,7 @@ listids()
     for username_id in ${(k)username_id_array}
     do
         echo -e "\e[01;34mIDs of the user '\e[01;33m${username_id}\e[0m\e[01;34m':\e[0m"
-        awk --field-separator ',' '{ gsub("[, ]", "\n    "); sub("^", "    "); print $0"\n"}' <<< ${username_id_array[${username_id}]}
+        \awk --field-separator ',' '{ gsub("[, ]", "\n    "); sub("^", "    "); print $0"\n"}' <<< ${username_id_array[${username_id}]}
     done
 }
 
@@ -524,8 +524,8 @@ fi
 ## list access, owner and group permission tree for the current or defined working directory
 ptree()
 {
-    local directory_path="${1:-$(pwd)}"
-    namei --long --mountpoints "${directory_path}"
+    local directory_path="${1:-$(\pwd)}"
+    \namei --long --mountpoints "${directory_path}"
 }
 
 ## upload files to "transfer.sh"
@@ -587,7 +587,7 @@ transfer()
     local awk_output
     local url_filename
 
-    du --total --block-size="K" --dereference "${file_array[@]}" >&2
+    \du --total --block-size="K" --dereference "${file_array[@]}" >&2
     # be compatible with "bash"
     if [[ "${ZSH_NAME}" == "zsh" ]]
     then
@@ -612,8 +612,8 @@ transfer()
                 # if "stdout" is redirected to something; e.g. ">/dev/null", "tee /dev/null" or "| <some_command>".
                 # the response header is redirected to "stdout", so redirecting "stdout" to "/dev/null" does not make any sense.
                 # redirecting "curl's" "stderr" to "stdout" ("2>&1") will suppress the progress bar.
-                curl_output=$(curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${url_filename}")
-                awk_output=$(awk \
+                curl_output=$(\curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${url_filename}")
+                awk_output=$(\awk \
                     'gsub("\r", "", $0) && tolower($1) ~ /x-url-delete/ \
                     {
                         delete_link=$2;
@@ -633,7 +633,7 @@ transfer()
                 # avoid rate limiting as much as possible; nginx: too many requests.
                 if (( ${#file_array[@]} > 4 ))
                 then
-                    sleep 5
+                    \sleep 5
                 fi
             done
             ;;
@@ -671,7 +671,7 @@ wan()
     for ip_version in "${ip_version_array[@]}"
     do
         echo -n "${ip_version}: "
-        curl --request GET --silent --show-error --"${ip_version}" "https://ifconfig.co/"
+        \curl --request GET --silent --show-error --"${ip_version}" "https://ifconfig.co/"
     done
 }
 
@@ -685,7 +685,7 @@ weather()
         input_string=":help"
     fi
 
-    curl --request GET --silent --show-error "https://wttr.in/${input_string}"
+    \curl --request GET --silent --show-error "https://wttr.in/${input_string}"
 }
 
 ## output the paths to binary files from "${PATH}" and functions of the current shell
@@ -702,19 +702,19 @@ wherefrom()
     echo -e "\e[01;34mOutput of '\e[01;33mcommand -v\e[0m\e[01;34m':\e[0m"
     for binary_name_command in "${binary_name_array[@]}"
     do
-        echo "    $(command -v ${binary_name_command})"
+        echo "    $(\command -v ${binary_name_command})"
     done
 
     echo -e "\n\e[01;34mOutput of '\e[01;33mwhich'\e[0m\e[01;34m:\e[0m"
     for binary_name_which in "${binary_name_array[@]}"
     do
-        echo -e "\n    $(which ${binary_name_which})"
+        echo -e "\n    $(\which ${binary_name_which})"
     done
 
     echo -e "\n\e[01;34mOutput of '\e[01;33mwhereis\e[0m\e[01;34m':\e[0m"
     for binary_name_whereis in "${binary_name_array[@]}"
     do
-        echo "    $(whereis ${binary_name_whereis})"
+        echo "    $(\whereis ${binary_name_whereis})"
     done
 
 }
@@ -861,8 +861,8 @@ alias webcam_record="ffmpeg -f v4l2 -framerate 30 -video_size 1920x1080 -input_f
 alias wget="wget --hsts-file='/dev/null'"
 alias xargs="xargs --max-procs='$(nproc --all --ignore="1")' --max-args='1'"
 alias xstow="xstow -verbose"
-alias youtube-dl_720p="command youtube-dl --ignore-config --config-location='${HOME}/.config/youtube-dl/config_720p'"
-alias youtube-dl_1080p="command youtube-dl --ignore-config --config-location='${HOME}/.config/youtube-dl/config_1080p'"
+alias youtube-dl_720p="\youtube-dl --ignore-config --config-location='${HOME}/.config/youtube-dl/config_720p'"
+alias youtube-dl_1080p="\youtube-dl --ignore-config --config-location='${HOME}/.config/youtube-dl/config_1080p'"
 alias zerofree="zerofree -v"
 alias zip="zip -9"
 alias zstd="zstd --ultra -22 --verbose"
@@ -905,11 +905,11 @@ export EUID="${EUID}"
 
 # output when opening shell
 ## list who is logged in
-who
+\who
 ## list tmux sessions
-if [[ $(pgrep "tmux") ]]
+if [[ $(\pgrep "tmux") ]]
 then
-    tmux ls
+    \tmux ls
 fi
 ## portage
 ### last synchronisation in days
