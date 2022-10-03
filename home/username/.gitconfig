@@ -5,7 +5,7 @@
 [include]
     path = ~/.gitconfig.d/gitalias.txt
 [alias]
-    call = commit --all
+    callm = commit --all --message
     cv = commit --verbose
     d = diff --color-words
     dp = checkout --patch
