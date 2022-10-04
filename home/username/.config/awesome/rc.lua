@@ -381,9 +381,15 @@ globalkeys = gears.table.join(
 
     -- custom - 20200618 - rfischer: add keyboard shortcut for screenshots via "import". use "zlib" compression level 8 (quality / 10) with adaptive png filtering. see also: file:///usr/share/doc/imagemagick-7.0.10.9/html/www/command-line-options.html#quality
     --- selection (left click + hold), focused screen (left click)
-    awful.key({ }, "Print", function () awful.util.spawn_with_shell("current_date_time=$(date +%Y%m%d-%H%M%S) && import -frame -quality 80 /home/ramon/pictures/screenshots/${current_date_time}_screenshot.png && feh /home/ramon/pictures/screenshots/${current_date_time}_screenshot.png") end),
+    awful.key({ }, "Print", function () awful.util.spawn_with_shell("\
+                                            screenshot_file=\"/home/ramon/pictures/screenshots/$(date +%Y%m%dT%H%M%S%z)_screenshot.png\" && \
+                                            import -frame -colorspace YPbPr -depth 16 -quality 80 \"${screenshot_file}\" && \
+                                            feh \"${screenshot_file}\"") end),
     --- all displays
-    awful.key({ "Shift" }, "Print", function () awful.util.spawn_with_shell("current_date_time=$(date +%Y%m%d-%H%M%S) && import -frame -quality 80 -window root /home/ramon/pictures/screenshots/${current_date_time}_screenshot.png && feh /home/ramon/pictures/screenshots/${current_date_time}_screenshot.png") end),
+    awful.key({ "Shift" }, "Print", function () awful.util.spawn_with_shell("\
+                                            screenshot_file=\"/home/ramon/pictures/screenshots/$(date +%Y%m%dT%H%M%S%z)_screenshot.png\" && \
+                                            import -frame -window root -colorspace YPbPr -depth 16 -quality 80 \"${screenshot_file}\" && \
+                                            feh \"${screenshot_file}\"") end),
     -- custom - 20200630 - rfischer: lock tty and lock screens via "physlock"
     awful.key({ modkey }, "l", function () awful.util.spawn_with_shell("/home/ramon/bin/locker") end)
 
