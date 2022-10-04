@@ -441,9 +441,11 @@ fpid()
     local process_name="${1}"
     declare -a process_id_array
     process_id_array=($(\pgrep "${process_name}"))
-
     # "zsh"'s array index starts at "1"
-    \tail --follow "/dev/null" --pid="${process_id_array[1]}"
+    first_process_id="${process_id_array[1]}"
+
+    echo -e "\e[01;34mWaiting for process to exit: '\e[01;33m${process_name}/${first_process_id}\e[0m\e[01;34m'.\e[0m"
+    \tail --follow "/dev/null" --pid="${first_process_id}"
     return 0
 }
 
