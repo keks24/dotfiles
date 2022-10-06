@@ -469,7 +469,7 @@ notifyme()
 listids()
 {
     declare -a username_array
-    username_array=("${@}")
+    username_array=("${@:-${USER}}")
     local username
     declare -A username_id_array
     local username_id
