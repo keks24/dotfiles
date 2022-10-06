@@ -1,5 +1,5 @@
 #############################################################################
-# Copyright 2020-2021 Ramon Fischer                                         #
+# Copyright 2022 Ramon Fischer                                              #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -14,16 +14,8 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# global
-# do not start any programs here. use "~/.zshrc.local" for this!
-
-## exports
-### man pages
-export MANPATH="${MANPATH}:${HOME}/.local/share/man"
-
-## aliases
-### ruby
-alias ruby-install="ruby-install --jobs='4' --cleanup --src-dir '${HOME}/.local/src' --install-dir '${HOME}/.local'"
-### youtube-dl
-alias youtube-dl_720p="\youtube-dl --ignore-config --config-location='${HOME}/.config/youtube-dl/config_720p'"
-alias youtube-dl_1080p="\youtube-dl --ignore-config --config-location='${HOME}/.config/youtube-dl/config_1080p'"
+# curly braces are already escaped
+# shell ("sh") variables must be escaped with double quotes, otherwise they are not expanded before execution!
+# the substitution "${filename//\.${filename_suffix}/.aac}" is executed on the entire directory path and filename, which is very unprecise!
+# "\.${filename_suffix}$" does not work for some reason.
+--batch-file="/home/ramon/music/youtube-dl/batch_file_lists/domian_live_2021_fanclub"
