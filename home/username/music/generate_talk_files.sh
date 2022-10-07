@@ -37,7 +37,7 @@ checkCommands
 
 # define global variables
 declare -a music_directory_array
-music_directory_array=("audiobooks" "normal_music" "playlists" "podcasts" "record" "unusual_music")
+music_directory_array=("./audiobooks" "./normal_music" "./playlists" "./podcasts" "./record" "./unusual_music")
 music_filename_suffix="aac"
 rockbox_directory_filename="_dirname"
 rockbox_filename_suffix="talk"
@@ -68,7 +68,7 @@ main()
     local directory_path
     while read -r directory_path
     do
-        echo "Entering directory: '${directory_path}'."
+        echo -e "\e[01;33mEntering directory: '${directory_path}'.\e[0m" >&2
         pushd "${directory_path}" >/dev/null
 
         local directory_name="${directory_path##*/}"
@@ -77,17 +77,17 @@ main()
         # create ".wav" files for rockbox's "rbspeexenc" program and encode them to ".talk" files
         if [[ ! -f "${rockbox_directory_voice_file}" ]]
         then
-            echo -e "    \e[01;34mGenerating\e[0m\t'espeak' voice file: '${espeak_directory_voice_file}'."
+            echo -e "\n    \e[01;37mGenerating:\tespeak voice file: '${espeak_directory_voice_file}'.\e[0m" >&2
             /usr/bin/espeak -s "${espeak_reading_speed}" -b 1 -z -w "${espeak_directory_voice_file}" -- "${directory_name}"
 
-            echo -e "    \e[01;35mEncoding\e[0m\t'espeak' voice file: '${espeak_directory_voice_file}' to 'rockbox' voice file: '${rockbox_directory_voice_file}'."
+            echo -e "    \e[01;34mEncoding:\tespeak voice file: '${espeak_directory_voice_file}'\n\t\tto 'rockbox' voice file: '${rockbox_directory_voice_file}'.\e[0m" >&2
             "/home/ramon/git/external/github.com/rockbox/tools/rbspeexenc" \
                 -q "${rockbox_voice_quality_value}" \
                 -c "${rockbox_voice_complexity_value}" \
                 -v "${rockbox_voice_volume_value}" \
                 "${espeak_directory_voice_file}" "${rockbox_directory_voice_file}"
 
-            echo -e "    \e[01;31mRemoving\e[0m\t'espeak' voice file: '${espeak_directory_voice_file}'."
+            echo -e "    \e[01;31mRemoving:\tespeak voice file: '${espeak_directory_voice_file}'.\e[0m" >&2
             /bin/rm --force -- "${espeak_directory_voice_file}"
         fi
 
@@ -102,17 +102,17 @@ main()
                 then
                     local espeak_voice_file="${music_file}.${espeak_filename_suffix}"
 
-                    echo -e "    \e[01;34mGenerating\e[0m\t'espeak' voice file: '${espeak_voice_file}'."
+                    echo -e "\n    \e[01;37mGenerating:\tespeak voice file: '${espeak_voice_file}'.\e[0m" >&2
                     /usr/bin/espeak -s "${espeak_reading_speed}" -b 1 -z -w "${espeak_voice_file}" -- "${music_file/\.${music_filename_suffix}/}"
 
-                    echo -e "    \e[01;35mEncoding\e[0m\t'espeak' voice file: '${espeak_voice_file}' to 'rockbox' voice file: '${rockbox_voice_file}'."
+                    echo -e "    \e[01;34mEncoding:\tespeak voice file: '${espeak_voice_file}'\n\t\tto 'rockbox' voice file: '${rockbox_voice_file}'.\e[0m" >&2
                     "/home/ramon/git/external/github.com/rockbox/tools/rbspeexenc" \
                         -q "${rockbox_voice_quality_value}" \
                         -c "${rockbox_voice_complexity_value}" \
                         -v "${rockbox_voice_volume_value}" \
                         "${espeak_voice_file}" "${rockbox_voice_file}"
 
-                    echo -e "    \e[01;31mRemoving\e[0m\t'espeak' voice file: '${espeak_voice_file}'."
+                    echo -e "    \e[01;31mRemoving:\tespeak voice file: '${espeak_voice_file}'.\e[0m" >&2
                     /bin/rm --force -- "${espeak_voice_file}"
                 fi
             done <<< "${music_file_list}"
@@ -121,7 +121,7 @@ main()
             #/bin/rm --force -- *."${espeak_filename_suffix}"
         fi
 
-        echo -e "Leaving directory: '${directory_path}'.\n"
+        echo -e "\n\e[01;33mLeaving directory: '${directory_path}'.\e[0m\n" >&2
         popd >/dev/null
 
         # uncomment for debugging. cleanup must be done manually afterwards!
