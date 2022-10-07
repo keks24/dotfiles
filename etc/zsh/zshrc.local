@@ -172,6 +172,7 @@ lpr_invoice()
     declare -a invoice_file_array
     local print_files
     local invoice_index_number="1"
+    local invoice_index_prefix
 
     if [[ "${directory_file_list}" != "" ]]
     then
@@ -179,15 +180,22 @@ lpr_invoice()
         do
             if [[ -f "${directory_file}" ]]
             then
+                if (( "${invoice_index_number}" < 10 ))
+                then
+                    invoice_index_prefix="0"
+                else
+                    unset invoice_index_prefix
+                fi
+
                 invoice_file_array+=("${directory_file}")
-                echo -e "\e[01;35m${invoice_index_number}: ${directory_file}\e[0m"
+                echo -e "\e[01;35m${invoice_index_prefix}${invoice_index_number}: ${directory_file}\e[0m"
                 (( invoice_index_number++ ))
             fi
         done <<< "${directory_file_list}"
 
         if [[ "${invoice_file_array[@]}" != "" ]]
         then
-            read $'print_files?\e[01;31mDo you really want to print the above files in this particular order? (y/N): \e[0m' >&2
+            read $'print_files?\n\e[01;31mDo you really want to print the above files in this particular order? (y/N): \e[0m' >&2
 
             case "${print_files:-n}" in
                 "y"|"Y")
