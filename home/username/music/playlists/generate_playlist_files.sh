@@ -15,7 +15,13 @@
 # limitations under the License.                                            #
 #############################################################################
 
-command_list=("/bin/cat" "/usr/bin/find" "/bin/rm" "/usr/bin/sort")
+command_list=("/bin/cat" \
+              "/usr/bin/find" \
+              "/usr/bin/nproc" \
+              "/bin/rm" \
+              "/usr/bin/sort" \
+              "/usr/bin/xargs" \
+             )
 checkCommands()
 {
     for current_command in "${command_list[@]}"
@@ -23,7 +29,7 @@ checkCommands()
         unalias ${current_command} 2>/dev/null
         if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
         then
-            /bin/echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
+            /bin/echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m" >&2
             exit 1
         fi
     done
@@ -33,27 +39,44 @@ checkCommands
 
 # define global directories
 declare -a music_directory_array
-declare -a existing_playlist_filename_array
-music_directory_array=("../normal_music" "../unusual_music")
+declare -a playlist_file_array
+music_directory_array=("../audiobooks" \
+                       "../normal_music" \
+                       "../unusual_music"\
+                      )
 music_filename_suffix="aac"
 playlist_filename_suffix="m3u8"
 playlist_all_filename="all.${playlist_filename_suffix}"
-existing_playlist_filename_array=("./all.m3u8" "./normal_music.m3u8" "./unusual_music.m3u8")
+playlist_all_file="./${playlist_all_filename}"
+playlist_file_array=("${playlist_all_file}" \
+                     "./audiobooks.${playlist_filename_suffix}" \
+                     "./normal_music.${playlist_filename_suffix}" \
+                     "./unusual_music.${playlist_filename_suffix}" \
+                    )
+available_processors=$(/usr/bin/nproc --all --ignore="1")
 
 checkAndPromptExistingPlaylists()
 {
-    if [[ "${existing_playlist_filename_array[@]}" != "" ]]
+    if [[ "${playlist_file_array[@]}" != "" ]]
     then
+        local playlist_file
         local remove_playlist_files
-        read -p $'\e[01;31mFound existing playlists in this directory. Remove them before generating new playlists? (Y/n): \e[0m' remove_playlist_files
 
-        case "${remove_playlist_files:-y}" in
+        echo ""
+        for playlist_file in "${playlist_file_array[@]}"
+        do
+            echo -e "\e[01;34m'${playlist_file}'\e[0m"
+        done
+        read -p $'\n\e[01;31mFound above playlists in this directory. Remove them before generating new playlists? (y/N): \e[0m' remove_playlist_files >&2
+
+        case "${remove_playlist_files:-n}" in
             "y"|"Y")
-                /bin/rm --force --verbose "${existing_playlist_filename_array[@]}"
+                echo ""
+                /bin/rm --force --verbose "${playlist_file_array[@]}"
                 ;;
 
             "n"|"N")
-                continue
+                exit 1
                 ;;
         esac
     fi
@@ -61,26 +84,25 @@ checkAndPromptExistingPlaylists()
 
 concatenateGeneratedPlaylistFiles()
 {
-    local music_directory
-    declare -a playlist_filename_array
-
-    for music_directory in "${music_directory_array[@]}"
-    do
-        playlist_filename_array+=("${music_directory##*/}.${playlist_filename_suffix}")
-    done
-
-    /bin/cat "${playlist_filename_array[@]}" > "${playlist_all_filename}"
+    echo -e "\n\e[01;33mConcatenating all playlists to file: '${playlist_all_file}'.\e[0m" >&2
+    /bin/cat "${playlist_file_array[@]}" > "${playlist_all_file}"
 }
 
 generatePlaylistFiles()
 {
     local music_directory
-    local playlist_filename
+    local playlist_file
 
+    echo ""
     for music_directory in "${music_directory_array[@]}"
     do
-        playlist_filename="${music_directory##*/}.${playlist_filename_suffix}"
-        /usr/bin/find "${music_directory}" -type f -name "*.${music_filename_suffix}" | /usr/bin/sort --ignore-case > "${playlist_filename}"
+        playlist_file="./${music_directory##*/}.${playlist_filename_suffix}"
+
+        echo -e "\e[01;33mGenerating playlist file: '${playlist_file}'.\e[0m" >&2
+
+        /usr/bin/find "${music_directory}" -type f -name "*.${music_filename_suffix}" -print0 \
+            | /usr/bin/xargs --null --max-procs="${available_processors}" --max-args="1" echo \
+            | /usr/bin/sort --ignore-case > "${playlist_file}"
     done
 }
 
