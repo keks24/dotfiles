@@ -18,4 +18,5 @@
 # shell ("sh") variables must be escaped with double quotes, otherwise they are not expanded before execution!
 # the substitution "${filename//\.${filename_suffix}/.aac}" is executed on the entire directory path and filename, which is very unprecise!
 # "\.${filename_suffix}$" does not work for some reason.
---batch-file="/home/ramon/music/youtube-dl/batch_file_lists/domian_live_2021_fanclub"
+--download-archive="/home/ramon/music/youtube-dl/archive_lists/domian_live_2021_fanclub.list"
+--batch-file="/home/ramon/music/youtube-dl/batch_file_lists/domian_live_2021_fanclub.list"

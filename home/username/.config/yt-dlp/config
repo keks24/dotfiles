@@ -22,7 +22,7 @@
 --extract-audio
 --audio-format="best"
 --audio-quality="0"
---download-archive="/home/ramon/music/youtube-dl/archive_lists/youtube-dl_download_archive.list"
+--download-archive="/home/ramon/music/youtube-dl/archive_lists/download_archive.list"
 --no-post-overwrites
 --exec="filename={} \
     && filename_suffix=\"${filename##*\.}\" \
