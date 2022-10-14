@@ -84,7 +84,7 @@ checkAndPromptExistingPlaylists()
 
 concatenateGeneratedPlaylistFiles()
 {
-    echo -e "\n\e[01;33mConcatenating all playlists to file: '${playlist_all_file}'.\e[0m" >&2
+    echo -e "\n\e[01;33mConcatenating all playlists to file: '${playlist_all_file}'.\e[0m\n" >&2
     /bin/cat "${playlist_file_array[@]}" > "${playlist_all_file}"
 }
 
