@@ -23,7 +23,6 @@
 --audio-format="best"
 --audio-quality="0"
 --download-archive="/home/ramon/music/youtube-dl/archive_lists/domian_live_2021_fanclub.list"
---batch-file="/home/ramon/music/youtube-dl/batch_file_lists/domian_live_2021_fanclub.list"
 --no-post-overwrites
 --exec="filename={} \
     && filename_suffix=\"${filename##*\.}\" \
@@ -37,3 +36,4 @@
         \"${filename//\.${filename_suffix}/.aac}\" \
     ; /bin/rm --force --verbose {}"
 --output="./%(uploader)s/%(playlist_title|)s/%(title)s [%(id)s].%(ext)s"
+"https://www.youtube.com/user/danielskate14"
