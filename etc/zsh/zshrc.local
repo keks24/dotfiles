@@ -885,6 +885,7 @@ alias rsync="rsync --archive --hard-links --acls --xattrs --one-file-system --nu
 alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
 alias shred="shred --verbose"
 alias tree="LS_COLORS='' tree -FC"
+alias updatedb="updatedb --require-visibility='yes'"
 alias vmstat="vmstat --unit='M' --timestamp --wide 2"
 alias watch="watch --differences"
 alias webcam_live_capture="mpv --demuxer-lavf-format='video4linux2' --profile='low-latency' --demuxer-lavf-o-set=input_format='mjpeg' --untimed 'av://v4l2:/dev/video0'"
