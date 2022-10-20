@@ -173,6 +173,7 @@ lpr_invoice()
     local print_files
     local invoice_index_number="1"
     local invoice_index_prefix
+    local invoice_page_count
 
     if [[ "${directory_file_list}" != "" ]]
     then
@@ -188,8 +189,23 @@ lpr_invoice()
                     unset invoice_index_prefix
                 fi
 
+                invoice_page_count=$(\pdfinfo "${directory_file}" | \awk '/Pages:/ { print $2 }')
+
+                if (( invoice_page_count > 19 ))
+                then
+                    invoice_page_count="\e[01;31m${invoice_page_count}\e[0m"
+                elif (( invoice_page_count > 9 ))
+                then
+                    invoice_page_count="\e[01;33m${invoice_page_count}\e[0m"
+                fi
+
                 invoice_file_array+=("${directory_file}")
-                echo -e "   \e[01;35m${invoice_index_prefix}${invoice_index_number}: ${directory_file}\e[0m"
+                if (( invoice_index_number % 2 == 0 ))
+                then
+                    echo -e "   \e[01;34m${invoice_index_prefix}${invoice_index_number} (Pages: ${invoice_page_count}\e[01;34m):\t${directory_file}\e[0m"
+                else
+                    echo -e "   \e[01;37m${invoice_index_prefix}${invoice_index_number} (Pages: ${invoice_page_count}\e[01;37m):\t${directory_file}\e[0m"
+                fi
                 (( invoice_index_number++ ))
             fi
         done <<< "${directory_file_list}"
