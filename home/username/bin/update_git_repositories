@@ -19,9 +19,10 @@ command_list=(find git)
 checkCommands()
 {
     unalias "${command_list[@]}" 2>/dev/null
+
     for current_command in "${command_list[@]}"
     do
-        if ! command -v "${current_command}" 2>/dev/null
+        if [[ ! $(command -v "${current_command}") ]]
         then
             echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
             exit 1
@@ -40,9 +41,9 @@ if [[ "${repository_directory_array[@]}" != "" ]]
 then
     for repository_directory in "${repository_directory_array[@]}"
     do
-        echo -e "\n### ${repository_directory} ###"
+        echo -e "\n\e[01;34m### ${repository_directory} ###\e[0m"
         pushd "${repository_directory}" >/dev/null
-        /usr/bin/git pull --jobs="${available_processors}"
+        /usr/bin/git pull --recurse-submodules --jobs="${available_processors}"
         popd >/dev/null
     done
 else
