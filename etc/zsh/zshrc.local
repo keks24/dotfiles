@@ -176,6 +176,7 @@ lpr_invoice()
 
     if [[ "${directory_file_list}" != "" ]]
     then
+        echo ""
         while read -r directory_file
         do
             if [[ -f "${directory_file}" ]]
@@ -188,7 +189,7 @@ lpr_invoice()
                 fi
 
                 invoice_file_array+=("${directory_file}")
-                echo -e "\e[01;35m${invoice_index_prefix}${invoice_index_number}: ${directory_file}\e[0m"
+                echo -e "   \e[01;35m${invoice_index_prefix}${invoice_index_number}: ${directory_file}\e[0m"
                 (( invoice_index_number++ ))
             fi
         done <<< "${directory_file_list}"
