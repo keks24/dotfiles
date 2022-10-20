@@ -167,7 +167,7 @@ exclude_remove_off()
 ## print invoice files in chronological descending order
 lpr_invoice()
 {
-    local directory_file_list=$(\ls -1t)
+    local directory_file_list=$(\ls -1tr)
     local directory_file
     declare -a invoice_file_array
     local print_files
@@ -196,11 +196,14 @@ lpr_invoice()
 
         if [[ "${invoice_file_array[@]}" != "" ]]
         then
-            read $'print_files?\n\e[01;31mDo you really want to print the above files in this particular order? (y/N): \e[0m' >&2
+            read $'print_files?\n\e[01;31mDo you really want to print the above files in chronologically descending order? (y/N): \e[0m' >&2
 
             case "${print_files:-n}" in
                 "y"|"Y")
                     \lpr "${invoice_file_array[@]}"
+                    echo -e "\n\e[01;33mDo not forget to sort the printed files chronologically!\e[0m" >&2
+                    echo -e "\e[01;33mDo not forget to sort the printed files chronologically!\e[0m" >&2
+                    echo -e "\e[01;33mDo not forget to sort the printed files chronologically!\e[0m\n" >&2
                     ;;
 
                 "n"|"N")
