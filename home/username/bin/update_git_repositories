@@ -18,12 +18,12 @@
 command_list=(find git)
 checkCommands()
 {
+    unalias "${command_list[@]}" 2>/dev/null
     for current_command in "${command_list[@]}"
     do
-        unalias ${current_command} 2>/dev/null
-        if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
+        if ! command -v "${current_command}" 2>/dev/null
         then
-            /bin/echo -e "\e[01;31mcould not find command '${current_command}'.\e[0m"
+            echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
             exit 1
         fi
     done
@@ -34,17 +34,18 @@ checkCommands
 # define global variables
 declare -a repository_directory_array
 repository_directory_array=($(/usr/bin/find -L "." -type d -name ".git" -printf "%h\n"))
+available_processors=$(/usr/bin/nproc --all)
 
-if [[ "${repository_directory_array[@]}" == "" ]]
+if [[ "${repository_directory_array[@]}" != "" ]]
 then
-    echo -e "\e[01;31mCould not find any '.git/' directories.\e[0m" >&2
-    exit 1
-else
     for repository_directory in "${repository_directory_array[@]}"
     do
         echo -e "\n### ${repository_directory} ###"
         pushd "${repository_directory}" >/dev/null
-        /usr/bin/git pull
+        /usr/bin/git pull --jobs="${available_processors}"
         popd >/dev/null
     done
+else
+    echo -e "\e[01;31mCould not find any '.git/' directories.\e[0m" >&2
+    exit 1
 fi
