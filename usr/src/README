@@ -24,7 +24,14 @@ compile new kernel
                 make oldconfig
 
         4.2. compile the kernel and kernel modules
-            make --jobs 4 --load-average 3.6 && make --jobs 4 --load-average 3.6 modules_install
+            available_processors=$(nproc --all)
+            system_max_load=$(printf "%.2f" "$(( available_processors * 0.75 ))")
+            make \
+                --jobs="${available_processors}" \
+                --load-average="${system_max_load}"  \
+            && make \
+                --jobs="${available_processors}" \
+                --load-average="${system_max_load}"
 
         4.3. install the kernel and copy it to "/boot/":
             make install
