@@ -708,7 +708,12 @@ thingsIalwaysForget()
     echo "      ip route add default via <default_gateway> dev <interface>"
     echo ""
     echo -e "\e[01;34mTranslations:\e[0m"
-    echo "  anticipate - ahnen, erhoffen"
+    echo "  None."
+    echo ""
+    echo -e "\e[01;34mPortage:\e[0m"
+    echo "  Downgrading a package:"
+    echo "      emerge --oneshot \=<package_name>-<major_version>.<minor_version>.<patch_version>"
+    echo "      emerge --oneshot \=<package_name>:<major_version>.<minor_version>.<patch_version>"
 }
 
 ## get current wan ip address

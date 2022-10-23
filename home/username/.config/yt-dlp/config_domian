@@ -14,7 +14,7 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# curly braces are already escaped
+# curly braces are already escaped with single quotes!
 # shell ("sh") variables must be escaped with double quotes, otherwise they are not expanded before execution!
 # the substitution "${filename//\.${filename_suffix}/.aac}" is executed on the entire directory path and filename, which is very unprecise!
 # "\.${filename_suffix}$" does not work for some reason.
