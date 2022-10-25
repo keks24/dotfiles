@@ -68,12 +68,13 @@ checkAndPromptExistingPlaylists()
         do
             echo -e "\e[01;34m'${playlist_file}'\e[0m"
         done
-        read -p $'\n\e[01;31mFound above playlists in this directory. Remove them before generating new playlists? (y/N): \e[0m' remove_playlist_files >&2
+        read -p $'\n\e[01;31mFound the above playlists in this directory. Remove them before generating new playlists? (y/N): \e[0m' remove_playlist_files >&2
 
         case "${remove_playlist_files:-n}" in
             "y"|"Y")
-                echo ""
+                echo -e "\e[01;31m"
                 /bin/rm --force --verbose "${playlist_file_array[@]}"
+                echo -ne "\e[0m"
                 ;;
 
             "n"|"N")
