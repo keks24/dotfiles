@@ -20,4 +20,4 @@
 # "\.${filename_suffix}$" does not work for some reason.
 --format="bestvideo[height<=1080]"
 #--download-archive="/home/ramon/music/youtube-dl/archive_lists/youtube-dl_1080p_download_archive.list"
---output="./%(uploader)s/%(playlist_title|)s/%(title)s [%(format_note)s][%(format_note)s].%(ext)s"
+--output="./%(uploader)s/%(playlist_title|)s/%(title)s [%(id)s][%(format_note)s].%(ext)s"
