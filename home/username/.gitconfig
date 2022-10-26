@@ -16,8 +16,10 @@
     lfl = lfs ls-files
     lfss = lfs status
     rp = reset --patch
+    # this also restores the staging directory
+    stashai = stash apply --index
     stashp = stash pop
-    stashpi = stash pop --index
+    stashs = stash show
 #[pull]
 #    rebase = true
 [commit]
