@@ -24,6 +24,7 @@ download_archive_list_file="${home_directory}/music/youtube-dl/archive_lists/you
 
 /usr/bin/youtube-dl \
     --download-archive="${download_archive_list_file}" \
+    --force-download-archive \
     --get-id "${youtube_channel_url}" \
         | /usr/bin/xargs --replace="{}" echo "${youtube_video_url}{}" \
         | /usr/bin/tee --append "${youtube_playlist_file}"
