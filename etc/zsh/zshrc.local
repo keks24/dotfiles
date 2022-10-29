@@ -721,6 +721,14 @@ thingsIalwaysForget()
     echo "  Downgrading a package:"
     echo "      emerge --oneshot \=<package_name>-<major_version>.<minor_version>.<patch_version>"
     echo "      emerge --oneshot \=<package_name>:<major_version>.<minor_version>.<patch_version>"
+    echo ""
+    echo -e "\e[01;34mHTML:\e[0m"
+    echo "  Collapsable details:"
+    echo "      <details><summary>Expand</summary><p>"
+    echo ""
+    echo "          ### Heading"
+    echo "          Text"
+    echo "      </details></p>"
 }
 
 ## get current wan ip address
