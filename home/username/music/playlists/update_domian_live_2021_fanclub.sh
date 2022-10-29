@@ -22,7 +22,7 @@ youtube_video_url="https://www.youtube.com/watch?v="
 youtube_playlist_file="${home_directory}/music/playlists/youtube_-_${youtube_channel_name}.m3u8"
 download_archive_list_file="${home_directory}/music/youtube-dl/archive_lists/youtube_-_${youtube_channel_name}.list"
 
-/usr/bin/youtube-dl \
+/usr/bin/yt-dlp \
     --download-archive="${download_archive_list_file}" \
     --force-download-archive \
     --get-id "${youtube_channel_url}" \
