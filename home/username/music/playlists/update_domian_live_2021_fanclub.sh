@@ -16,9 +16,9 @@
 #############################################################################
 
 home_directory="${HOME}"
-youtube_channel_name="domian_live_2021_fanclub"
-youtube_channel_url="https://www.youtube.com/user/danielskate14"
 youtube_url="https://www.youtube.com"
+youtube_channel_name="domian_live_2021_fanclub"
+youtube_channel_url="${youtube_url}/user/danielskate14"
 youtube_playlist_file="${home_directory}/music/playlists/youtube_-_${youtube_channel_name}.m3u8"
 download_archive_list_file="${home_directory}/music/youtube-dl/archive_lists/youtube_-_${youtube_channel_name}.list"
 
