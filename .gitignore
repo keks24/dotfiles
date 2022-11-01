@@ -3,8 +3,12 @@
 
 # music: ignore "m3u8" playlist files
 /home/username/music/playlists/*.m3u8
+## but not "youtube_-_domian_live_2021_fanclub.m3u8"
+!/home/username/music/playlists/youtube_-_domian_live_2021_fanclub.m3u8
 ## yotuube-dl: ignore "list" files
 /home/username/music/youtube-dl/archive_lists/*.list
+### but not "youtube_-_domian_live_2021_fanclub.list"
+!/home/username/music/youtube-dl/archive_lists/youtube_-_domian_live_2021_fanclub.list
 /home/username/music/youtube-dl/batch_file_lists/*.list
 
 # nvim: ignore undo files
