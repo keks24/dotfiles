@@ -36,7 +36,8 @@ do
         --ignore-config \
         --download-archive="${youtube_download_archive_list_file}" \
         --force-download-archive \
-        --get-id "${youtube_channel_array[${youtube_channel}]}" \
+        --get-id \
+        "${youtube_channel_array[${youtube_channel}]}" \
             | /usr/bin/xargs --replace="{}" echo "${youtube_url}/watch?v={}" \
             | /usr/bin/tee --append "${youtube_playlist_file}"
 done
