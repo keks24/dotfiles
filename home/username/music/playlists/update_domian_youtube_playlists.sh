@@ -17,15 +17,15 @@
 
 home_directory="${HOME}"
 youtube_url="https://www.youtube.com"
+music_directory_path="${home_directory}/music"
+playlist_directory_path="${music_directory_path}/playlists"
+youtube_download_archive_list_directory_path="${music_directory_path}/youtube-dl/archive_lists"
 declare -A youtube_channel_array
 youtube_channel_array=( \
                         ["domian_live_2021_fanclub"]="${youtube_url}/user/danielskate14" \
                         ["domian4ever"]="${youtube_url}/channel/UCS3EcW5FS_p0MzapOPcNooA" \
                         ["domianarchiv.de"]="${youtube_url}/c/DomianarchivDe" \
                       )
-music_directory_path="${home_directory}/music"
-playlist_directory_path="${music_directory_path}/playlists"
-youtube_download_archive_list_directory_path="${music_directory_path}/youtube-dl/archive_lists"
 
 for youtube_channel in "${!youtube_channel_array[@]}"
 do
