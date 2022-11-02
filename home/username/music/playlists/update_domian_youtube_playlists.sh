@@ -21,7 +21,7 @@ declare -A youtube_channel_array
 youtube_channel_array=( \
                         ["domian_live_2021_fanclub"]="${youtube_url}/user/danielskate14" \
                         ["domian4ever"]="${youtube_url}/channel/UCS3EcW5FS_p0MzapOPcNooA" \
-                        ["domianarchiv_de"]="${youtube_url}/c/DomianarchivDe" \
+                        ["domianarchiv.de"]="${youtube_url}/c/DomianarchivDe" \
                       )
 music_directory_path="${home_directory}/music"
 playlist_directory_path="${music_directory_path}/playlists"
