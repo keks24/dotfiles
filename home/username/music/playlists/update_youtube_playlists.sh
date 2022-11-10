@@ -27,8 +27,8 @@ youtube_channel_array=( \
                         ["domian_live_2021_fanclub"]="${youtube_url}/user/danielskate14" \
                         ["jürgen_von_der_lippe_leselust"]="${youtube_url}/c/J%C3%BCrgenvonderLippeKanal/search?query=leselust" \
                         ["jürgen_von_der_lippe_was_liest_du"]="${youtube_url}/c/J%C3%BCrgenvonderLippeKanal/search?query=was+liest+du" \
-                        ["prechtarchiv"]="${youtube_url}/c/PRECHTARCHIV"
-                        ["swr_nachtcafe"]="${youtube_url}/c/SWR/search?query=nachtcaf%C3%A9" \
+                        ["prechtarchiv"]="${youtube_url}/c/PRECHTARCHIV" \
+                        ["swr_nachtcafe"]="${youtube_url}/c/SWR/search?query=nachtcafe" \
                       )
 
 for youtube_channel in "${!youtube_channel_array[@]}"
