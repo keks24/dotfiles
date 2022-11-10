@@ -22,13 +22,19 @@ playlist_directory_path="${music_directory_path}/playlists"
 youtube_download_archive_list_directory_path="${music_directory_path}/youtube-dl/archive_lists"
 declare -A youtube_channel_array
 youtube_channel_array=( \
-                        ["domian_live_2021_fanclub"]="${youtube_url}/user/danielskate14" \
                         ["domian4ever"]="${youtube_url}/channel/UCS3EcW5FS_p0MzapOPcNooA" \
                         ["domianarchiv.de"]="${youtube_url}/c/DomianarchivDe" \
+                        ["domian_live_2021_fanclub"]="${youtube_url}/user/danielskate14" \
+                        ["jürgen_von_der_lippe_leselust"]="${youtube_url}/c/J%C3%BCrgenvonderLippeKanal/search?query=leselust" \
+                        ["jürgen_von_der_lippe_was_liest_du"]="${youtube_url}/c/J%C3%BCrgenvonderLippeKanal/search?query=was+liest+du" \
+                        ["prechtarchiv"]="${youtube_url}/c/PRECHTARCHIV"
+                        ["swr_nachtcafe"]="${youtube_url}/c/SWR/search?query=nachtcaf%C3%A9" \
                       )
 
 for youtube_channel in "${!youtube_channel_array[@]}"
 do
+    echo -e "\n\e[01;33mFetching video IDs from '${youtube_channel} - ${youtube_channel_array[${youtube_channel}]}':\e[0m" >&2
+
     youtube_playlist_file="${playlist_directory_path}/youtube_-_${youtube_channel}.m3u8"
     youtube_download_archive_list_file="${youtube_download_archive_list_directory_path}/youtube_-_${youtube_channel}.list"
 
