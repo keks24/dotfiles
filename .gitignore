@@ -3,17 +3,25 @@
 
 # music: ignore "m3u8" playlist files
 /home/username/music/playlists/*.m3u8
-## but not domian playlists
-!/home/username/music/playlists/youtube_-_domian_live_2021_fanclub.m3u8
+## but not certain playlists
 !/home/username/music/playlists/youtube_-_domian4ever.m3u8
 !/home/username/music/playlists/youtube_-_domianarchiv.de.m3u8
+!/home/username/music/playlists/youtube_-_domian_live_2021_fanclub.m3u8
+!/home/username/music/playlists/youtube_-_jürgen_von_der_lippe_leselust.m3u8
+!/home/username/music/playlists/youtube_-_jürgen_von_der_lippe_was_liest_du.m3u8
+!/home/username/music/playlists/youtube_-_prechtarchiv.m3u8
+!/home/username/music/playlists/youtube_-_swr_nachtcafe.m3u8
 ## yotuube-dl: ignore "list" files
 /home/username/music/youtube-dl/archive_lists/*.list
 /home/username/music/youtube-dl/batch_file_lists/*.list
-### but not domian archive lists
-!/home/username/music/youtube-dl/archive_lists/youtube_-_domian_live_2021_fanclub.list
+### but not certain archive lists
 !/home/username/music/youtube-dl/archive_lists/youtube_-_domian4ever.list
 !/home/username/music/youtube-dl/archive_lists/youtube_-_domianarchiv.de.list
+!/home/username/music/youtube-dl/archive_lists/youtube_-_domian_live_2021_fanclub.list
+!/home/username/music/youtube-dl/archive_lists/youtube_-_jürgen_von_der_lippe_leselust.list
+!/home/username/music/youtube-dl/archive_lists/youtube_-_jürgen_von_der_lippe_was_liest_du.list
+!/home/username/music/youtube-dl/archive_lists/youtube_-_prechtarchiv.list
+!/home/username/music/youtube-dl/archive_lists/youtube_-_swr_nachtcafe.list
 
 # nvim: ignore undo files
 /home/username/.config/nvim/tmp/backup/*
