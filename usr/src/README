@@ -31,7 +31,8 @@ compile new kernel
                 --load-average="${system_max_load}" \
             && make \
                 --jobs="${available_processors}" \
-                --load-average="${system_max_load}"
+                --load-average="${system_max_load}" \
+                modules_install
 
         4.3. install the kernel and copy it to "/boot/":
             make install
