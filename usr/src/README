@@ -28,7 +28,7 @@ compile new kernel
             system_max_load=$(printf "%.2f" "$(( available_processors * 0.75 ))")
             make \
                 --jobs="${available_processors}" \
-                --load-average="${system_max_load}"  \
+                --load-average="${system_max_load}" \
             && make \
                 --jobs="${available_processors}" \
                 --load-average="${system_max_load}"
