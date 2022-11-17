@@ -171,6 +171,37 @@ exclude_remove_off()
     echo -e "\e[01;31mGlob syntax has been deactivated.\e[0m"
 }
 
+## be able to use "gpg", when connected via "ssh"
+gpg_ssh_init()
+{
+    if [[ "${EUID}" != "0" ]]
+    then
+        if [[ "${SSH_TTY}" != "" ]]
+        then
+            # "killall --ns" to kill multiple pids does not work.
+            \killall $(\find "/usr/bin" -type f -name "pinentry*" -printf "%P ") >/dev/null 2>&1
+            export PINENTRY_USER_DATA="\pinentry-curses"
+
+            # see "man 1 gpg-agent"
+            unset SSH_AGENT_PID
+            if [[ "${gnupg_SSH_AUTH_SOCK_by:-0}" != "${$}" ]]
+            then
+                export SSH_AUTH_SOCK="$(\gpgconf --list-dirs agent-ssh-socket)"
+            fi
+
+            # exporting the environment variable "GPG_TTY" must be done manually,
+            # otherwise the scroll buffer and the input of "tmux" is messed up and unusuable.
+            echo -e "\e[01;31mExport the environment variable 'GPG_TTY' with the current 'PTS' ('${SSH_TTY}') in order to use 'gpg' in a pseudo terminal: export GPG_TTY=\"\$(tty)\"\e[0m" >&2
+        else
+            echo -e "\e[01;31mThe environment variable 'SSH_TTY' is not set: '${SSH_TTY}'.\e[0m" >&2
+            return 1
+        fi
+    else
+        echo -e "\e[01;31mThis function must be executed as non-privileged user!\e[0m" >&2
+        return 1
+    fi
+}
+
 ## print invoice files in chronological descending order
 lpr_invoice()
 {
