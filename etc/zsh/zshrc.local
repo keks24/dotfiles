@@ -132,7 +132,7 @@ uchroot()
     if [[ "${EUID}" == "0" ]]
     then
         declare -a chroot_directory_array
-        chroot_directory_array=("./proc/" "./sys/" "./dev/")
+        chroot_directory_array=("./proc/" "./sys/" "./dev/" "./boot")
         local chroot_directory
 
         for chroot_directory in "${chroot_directory_array[@]}"
