@@ -15,12 +15,34 @@
 # limitations under the License.                                            #
 #############################################################################
 
+# define global variables
+home_directory="${HOME}"
+aria2c_netrc_path="${home_directory}/.cache/aria2/netrc"
+aria2c_save_session="${home_directory}/.cache/aria2/aria2_session.gz"
+audio_format="opus"
+podcast_rss_url="https://verbraucherpod.podigee.io/feed/${audio_format}"
+podcast_url_list=$(/usr/bin/curl --silent --show-error "${podcast_rss_url}" \
+                    | /usr/bin/gawk \
+                        --field-separator='"' \
+                        --assign="audio_format=.${audio_format}.*feed" \
+                        '$0 ~ audio_format { print $2 }')
 declare -a podcast_url_array
 
 while read -r podcast_url
 do
     podcast_url_array+=("${podcast_url}")
-done < <(/usr/bin/curl --silent --show-error "https://verbraucherpod.podigee.io/feed/mp3" \
-            | /usr/bin/gawk --field-separator='"' '/\.mp3/ { print $2 }')
+done <<< "${podcast_url_list}"
 
-/usr/bin/aria2c --force-sequential "${podcast_url_array[@]}"
+/usr/bin/aria2c \
+    --force-sequential="true" \
+    --continue="true" \
+    --auto-save-interval="30" \
+    --http-accept-gzip="true" \
+    --netrc-path="${aria2c_netrc_path}" \
+    --max-concurrent-downloads="4" \
+    --max-connection-per-server="8" \
+    --min-split-size="4M" \
+    --split="8" \
+    --save-session="${aria2c_save_session}" \
+    --save-session-interval="60" \
+    "${podcast_url_array[@]}"
