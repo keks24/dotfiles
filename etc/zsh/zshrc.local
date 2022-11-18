@@ -227,7 +227,7 @@ lpr_invoice()
                     unset invoice_index_prefix
                 fi
 
-                invoice_page_count=$(\pdfinfo "${directory_file}" | \awk '/Pages:/ { print $2 }')
+                invoice_page_count=$(\pdfinfo "${directory_file}" 2>&1 | \gawk '/Pages:/ { print $2 }')
 
                 if (( invoice_page_count > 19 ))
                 then
