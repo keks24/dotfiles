@@ -850,7 +850,8 @@ bindkey "^N" down-line-or-search
 bindkey "^P" up-line-or-search
 
 # aliases
-alias aria2c="aria2c --enable-rpc='false' \
+alias aria2c="aria2c \
+    --enable-rpc='false' \
     --rpc-allow-origin-all='false' \
     --rpc-listen-all='false' \
     --force-sequential='true' \
