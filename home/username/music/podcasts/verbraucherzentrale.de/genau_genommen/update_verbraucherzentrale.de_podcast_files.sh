@@ -19,14 +19,16 @@
 home_directory="${HOME}"
 aria2c_netrc_path="${home_directory}/.cache/aria2/netrc"
 aria2c_save_session="${home_directory}/.cache/aria2/aria2_session.gz"
-audio_format="opus"
-podcast_rss_url="https://verbraucherpod.podigee.io/feed/${audio_format}"
+podcast_audio_format="opus"
+podcast_rss_url="https://verbraucherpod.podigee.io/feed/${podcast_audio_format}"
 podcast_url_list=$(/usr/bin/curl --silent --show-error "${podcast_rss_url}" \
                     | /usr/bin/gawk \
                         --field-separator='"' \
-                        --assign="audio_format=.${audio_format}.*feed" \
-                        '$0 ~ audio_format { print $2 }')
+                        --assign="podcast_audio_format=.${podcast_audio_format}.*feed" \
+                        '$0 ~ podcast_audio_format { print $2 }')
 declare -a podcast_url_array
+declare -a podcast_audio_file_array
+ffmpeg_output_audio_format="aac"
 
 while read -r podcast_url
 do
@@ -46,3 +48,18 @@ done <<< "${podcast_url_list}"
     --save-session="${aria2c_save_session}" \
     --save-session-interval="60" \
     "${podcast_url_array[@]}"
+
+podcast_audio_file_array=(*."${podcast_audio_format}")
+for podcast_audio_file in "${podcast_audio_file_array[@]}"
+do
+    /usr/bin/ffmpeg \
+        -i "${podcast_audio_file}" \
+        -n \
+        -codec:a aac \
+        -b:a 128k \
+        -ar:a 44100 \
+        -filter:a "volume=1.2" \
+        "${podcast_audio_file//\.${podcast_audio_format}/.${ffmpeg_output_audio_format}}"
+
+    /bin/rm --force --verbose "${podcast_audio_file}"
+done
