@@ -375,7 +375,7 @@ genpw()
             (( password_entropy+=ascii_character_amount ))
         fi
 
-        entropy_result=$(\awk \
+        entropy_result=$(\gawk \
             --assign="password_entropy=${password_entropy}" '\
             {
                 printf "%.4f", log(password_entropy^$0)/log(2);
@@ -517,7 +517,7 @@ pmon()
     # the command "unalias" could be used here, but once executed,
     # this would affect the current shell.
     \watch --differences --interval "${watch_interval}" \
-        "\awk --assign search_string="${search_string}" \
+        "\gawk --assign search_string="${search_string}" \
             'NR == 1; \$0 ~ search_string' < <(\ps faux)"
 }
 
@@ -578,7 +578,7 @@ listids()
     for username_id in ${(k)username_id_array}
     do
         echo -e "\e[01;34mIDs of the user '\e[01;33m${username_id}\e[0m\e[01;34m':\e[0m"
-        \awk --field-separator ',' '{ gsub("[, ]", "\n    "); sub("^", "    "); print $0"\n"}' <<< ${username_id_array[${username_id}]}
+        \gawk --field-separator ',' '{ gsub("[, ]", "\n    "); sub("^", "    "); print $0"\n"}' <<< ${username_id_array[${username_id}]}
     done
 }
 
@@ -653,7 +653,7 @@ transfer()
         echo "      ${0} *"
         echo ""
         echo "  Upload a single file from the current working directory and filter out the delete token and download link:"
-        echo "      ${0} \"image.img\" | awk --field-separator=\": \" '/Delete token:/ { print \$2 } /Download link:/ { print \$2 }'"
+        echo "      ${0} \"image.img\" | gawk --field-separator=\": \" '/Delete token:/ { print \$2 } /Download link:/ { print \$2 }'"
         echo ""
         echo "  Show help text from \"transfer.sh\":"
         echo "      curl --request GET \"https://transfer.sh\""
@@ -672,7 +672,7 @@ transfer()
 
     local upload_files
     local curl_output
-    local awk_output
+    local gawk_output
     local url_filename
 
     \du --total --block-size="K" --dereference "${file_array[@]}" >&2
@@ -701,7 +701,7 @@ transfer()
                 # the response header is redirected to "stdout", so redirecting "stdout" to "/dev/null" does not make any sense.
                 # redirecting "curl's" "stderr" to "stdout" ("2>&1") will suppress the progress bar.
                 curl_output=$(\curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${url_filename}")
-                awk_output=$(\awk \
+                gawk_output=$(\gawk \
                     'gsub("\r", "", $0) && tolower($1) ~ /x-url-delete/ \
                     {
                         delete_link=$2;
@@ -715,8 +715,8 @@ transfer()
                         print "Download link: " $0;
                     }' <<< "${curl_output}")
 
-                # return the results via "stdout", "awk" does not do this for some reason.
-                echo -e "${awk_output}\n"
+                # return the results via "stdout", "gawk" does not do this for some reason.
+                echo -e "${gawk_output}\n"
 
                 # avoid rate limiting as much as possible; nginx: too many requests.
                 if (( ${#file_array[@]} > 4 ))
@@ -914,8 +914,8 @@ alias la="ls -v --all"
 alias lbzip2"lbzp2 --best"
 alias listaliases="echo '${(k)aliases// /\n}'"
 alias listfunctions="echo '${(k)functions// /\n}'"
-alias listgroups="awk --field-separator ':' '{ printf \"Group name: %-20s GID: %-10s Members: %-10s\n\", \$1, \$3, \$4 }' '/etc/group' | sort --numeric-sort --key='5'"
-alias listusers="awk --field-separator ':' '{ printf \"Username: %-20s UID: %-10s GID: %-10s Shell: %-10s\n\", \$1, \$3, \$4, \$7 }' '/etc/passwd' | sort --numeric-sort --key='4'"
+alias listgroups="gawk --field-separator ':' '{ printf \"Group name: %-20s GID: %-10s Members: %-10s\n\", \$1, \$3, \$4 }' '/etc/group' | sort --numeric-sort --key='5'"
+alias listusers="gawk --field-separator ':' '{ printf \"Username: %-20s UID: %-10s GID: %-10s Shell: %-10s\n\", \$1, \$3, \$4, \$7 }' '/etc/passwd' | sort --numeric-sort --key='4'"
 alias listvariables="echo '${(k)parameters// /\n}'"
 alias ll="ls -vl"
 alias ln="ln --verbose"
