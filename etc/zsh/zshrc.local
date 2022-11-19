@@ -895,6 +895,8 @@ alias aria2c="aria2c \
     --remove-control-file='false'"
 alias bc="bc --mathlib"
 alias cdrecord="cdrecord -sao -speed='0' -eject -v"
+alias cdparanoia="cdparanoia --batch --force-read-speed='1' --abort-on-skip --log-summary='cdparanoia.log'"
+alias cdda2wav="cdda2wav -v all -cddb='0' -speed='1' -paranoia -paraopts='proof' -bulk -device='/dev/sr0'"
 alias crontab="crontab -i"
 alias curl="curl --show-error"
 alias dd="dd bs='512b' conv='fsync' status='progress'"
