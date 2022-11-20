@@ -896,7 +896,13 @@ alias aria2c="aria2c \
 alias bc="bc --mathlib"
 alias cdrecord="cdrecord -sao -speed='0' -eject -v"
 alias cdparanoia="cdparanoia --batch --force-read-speed='1' --abort-on-skip --log-summary='cdparanoia.log'"
-alias cdda2wav="cdda2wav -v all -cddb='0' -speed='1' -paranoia -paraopts='proof' -bulk -device='/dev/sr0'"
+if [[ "${EUID}" == "0" ]]
+then
+    alias cdda2wav="cdda2wav -verbose-level='all' -cddb='0' -speed='1' -paranoia -paraopts='proof' -bulk -device='/dev/sr0'"
+else
+    # the package "app-cdr/cdrtools" is broken, even with correct read-write permissions for "/dev/sr0"!
+    alias cdda2wav="sudo cdda2wav -verbose-level='all' -cddb='0' -speed='1' -paranoia -paraopts='proof' -bulk -device='/dev/sr0'"
+fi
 alias crontab="crontab -i"
 alias curl="curl --show-error"
 alias dd="dd bs='512b' conv='fsync' status='progress'"
