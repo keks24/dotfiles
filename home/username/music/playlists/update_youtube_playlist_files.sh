@@ -22,6 +22,7 @@ playlist_directory_path="${music_directory_path}/playlists"
 youtube_download_archive_list_directory_path="${music_directory_path}/youtube-dl/archive_lists"
 declare -A youtube_channel_array
 youtube_channel_array=( \
+                        ["ambient_noise"]="${youtube_url}/c/crysknife007" \
                         ["domian4ever"]="${youtube_url}/channel/UCS3EcW5FS_p0MzapOPcNooA" \
                         ["domianarchiv.de"]="${youtube_url}/c/DomianarchivDe" \
                         ["domian_live_2021_fanclub"]="${youtube_url}/user/danielskate14" \
