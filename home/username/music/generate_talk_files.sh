@@ -72,7 +72,7 @@ main()
         pushd "${directory_path}" >/dev/null
 
         local directory_name="${directory_path##*/}"
-        local music_file_list=$(/usr/bin/find . -maxdepth 1 -type f -name "*.${music_filename_suffix}" -printf "%f\n")
+        local music_file_list=$(/usr/bin/find "." -maxdepth 1 -type f -name "*.${music_filename_suffix}" -printf "%f\n")
 
         # create ".wav" files for rockbox's "rbspeexenc" program and encode them to ".talk" files
         if [[ ! -f "${rockbox_directory_voice_file}" ]]
