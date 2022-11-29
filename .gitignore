@@ -12,6 +12,7 @@
 !/home/username/music/playlists/youtube_-_jürgen_von_der_lippe_was_liest_du.m3u8
 !/home/username/music/playlists/youtube_-_prechtarchiv.m3u8
 !/home/username/music/playlists/youtube_-_swr_nachtcafe.m3u8
+!/home/username/music/playlists/youtube_-_myspass.com.m3u8
 ## yotuube-dl: ignore "list" files
 /home/username/music/youtube-dl/archive_lists/*.list
 /home/username/music/youtube-dl/batch_file_lists/*.list
@@ -24,6 +25,7 @@
 !/home/username/music/youtube-dl/archive_lists/youtube_-_jürgen_von_der_lippe_was_liest_du.list
 !/home/username/music/youtube-dl/archive_lists/youtube_-_prechtarchiv.list
 !/home/username/music/youtube-dl/archive_lists/youtube_-_swr_nachtcafe.list
+!/home/username/music/youtube-dl/archive_lists/youtube_-_myspass.com.list
 
 # nvim: ignore undo files
 /home/username/.config/nvim/tmp/backup/*
