@@ -30,6 +30,7 @@ youtube_channel_array=( \
                         ["jürgen_von_der_lippe_was_liest_du"]="${youtube_url}/c/J%C3%BCrgenvonderLippeKanal/search?query=was+liest+du" \
                         ["prechtarchiv"]="${youtube_url}/c/PRECHTARCHIV" \
                         ["swr_nachtcafe"]="${youtube_url}/c/SWR/search?query=nachtcafe" \
+                        ["myspass.com"]="${youtube_url}/@Myspass" \
                       )
 
 for youtube_channel in "${!youtube_channel_array[@]}"
