@@ -11,8 +11,8 @@
     dp = checkout --patch
     # git config lfs.https://<some_fqdn>/keks24/<some_repository_name>/info/lfs.locksverify true
     lfst = lfs track
-    lfsin = lfs migrate info --everything --fixup
-    lfsim = lfs migrate import --fixup --verbose
+    lfsmin = lfs migrate info --everything --fixup
+    lfsmim = lfs migrate import --fixup --verbose
     lfsl = lfs ls-files
     lfss = lfs status
     rp = reset --patch
