@@ -80,7 +80,7 @@ main()
             echo -e "\n    \e[01;37mGenerating:\tespeak voice file: '${espeak_directory_voice_file}'.\e[0m" >&2
             /usr/bin/espeak -s "${espeak_reading_speed}" -b 1 -z -w "${espeak_directory_voice_file}" -- "${directory_name}"
 
-            echo -e "    \e[01;34mEncoding:\tespeak voice file: '${espeak_directory_voice_file}'\n\t\tto rockbox voice file: '${rockbox_directory_voice_file}'.\e[0m" >&2
+            echo -e "    \e[01;35mEncoding:\tespeak voice file: '${espeak_directory_voice_file}'\n\t\tto rockbox voice file: '${rockbox_directory_voice_file}'.\e[0m" >&2
             "/home/ramon/git/external/github.com/rockbox/tools/rbspeexenc" \
                 -q "${rockbox_voice_quality_value}" \
                 -c "${rockbox_voice_complexity_value}" \
@@ -105,7 +105,7 @@ main()
                     echo -e "\n    \e[01;37mGenerating:\tespeak voice file: '${espeak_voice_file}'.\e[0m" >&2
                     /usr/bin/espeak -s "${espeak_reading_speed}" -b 1 -z -w "${espeak_voice_file}" -- "${music_file/\.${music_filename_suffix}/}"
 
-                    echo -e "    \e[01;34mEncoding:\tespeak voice file: '${espeak_voice_file}'\n\t\tto rockbox voice file: '${rockbox_voice_file}'.\e[0m" >&2
+                    echo -e "    \e[01;35mEncoding:\tespeak voice file: '${espeak_voice_file}'\n\t\tto rockbox voice file: '${rockbox_voice_file}'.\e[0m" >&2
                     "/home/ramon/git/external/github.com/rockbox/tools/rbspeexenc" \
                         -q "${rockbox_voice_quality_value}" \
                         -c "${rockbox_voice_complexity_value}" \
