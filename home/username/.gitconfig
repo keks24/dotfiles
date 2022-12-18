@@ -10,10 +10,10 @@
     d = diff --color-words
     dp = checkout --patch
     # git config lfs.https://<some_fqdn>/keks24/<some_repository_name>/info/lfs.locksverify true
-    lft = lfs track
-    lft = lfs migrate info --everything --fixup
-    lfi = lfs migrate import --fixup --verbose
-    lfl = lfs ls-files
+    lfst = lfs track
+    lfsin = lfs migrate info --everything --fixup
+    lfsim = lfs migrate import --fixup --verbose
+    lfsl = lfs ls-files
     lfss = lfs status
     rp = reset --patch
     # this also restores the staging directory
