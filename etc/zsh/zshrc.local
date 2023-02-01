@@ -982,6 +982,7 @@ alias zstd="zstd --ultra -22 --rm --verbose"
 alias zstdmt="zstdmt --ultra -22 --rm --verbose"
 if [[ "${EUID}" == "0" ]]
 then
+    alias joplin="echo -e \"\e[01;31m'joplin' should not be executed with root privileges!\e[0m\""
     alias pip="echo -e \"\e[01;31m'pip' should not be executed with root privileges!\e[0m\""
 fi
 
