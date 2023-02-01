@@ -13,6 +13,7 @@
     { "keys": ["ss"], "command": "status", "cursorPosition": -1 },
     { "keys": [" "], "command": "todo toggle $n" },
     { "keys": ["tt"], "command": "todo clear $n" },
+    { "keys": ["R"], "type": "prompt", "command": "ren $n \"\"", "cursorPosition": -2 },
     { "keys": ["n"], "type": "function", "command": "next_link" },
     { "keys": ["N"], "type": "function", "command": "previous_link" },
     { "keys": ["o"], "type": "function", "command": "open_link" },
