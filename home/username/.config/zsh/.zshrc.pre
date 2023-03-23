@@ -15,7 +15,7 @@
 #############################################################################
 
 # global
-# do not start any programs here. use "~/.zshrc.local" for this!
+# do not start any programs here. use "${HOME}/.zshrc.local" for this!
 
 ## exports
 ### man pages
