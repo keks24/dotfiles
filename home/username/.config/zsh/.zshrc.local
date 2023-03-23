@@ -20,6 +20,11 @@
 # prompt shell
 
 # source
+## include notes file
+if [[ -r "${HOME}/.config/zsh/.zshrc.notes" ]]
+then
+    source "${HOME}/.config/zsh/.zshrc.notes"
+fi
 
 # aliases
 
