@@ -127,7 +127,7 @@ myawesomemenu = {
 }
 
 -- custom - 20200510 - rfischer: add browser variable
-chromium_browser = "chromium"
+browser = "firefox"
 torbrowser = "torbrowser --torbrowser-version 10.5.10"
 email = "thunderbird-bin"
 downloader = "jdownloader"
@@ -139,7 +139,7 @@ minecraft = "minecraft-launcher"
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "open terminal", terminal },
                                     -- custom - 20200510 - rfischer: add browser variable
-                                    { "open chromium", chromium_browser },
+                                    { "open firefox", browser },
                                     { "open torbrowser", torbrowser },
                                     { "open thunderbird", email },
                                     { "open jdownloader", downloader },
