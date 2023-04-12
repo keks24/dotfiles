@@ -1,5 +1,5 @@
 #############################################################################
-# Copyright 2020-2022 Ramon Fischer                                         #
+# Copyright 2023 Ramon Fischer                                              #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -14,30 +14,10 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# user-specific
-# functions
-
-# prompt shell
-
-# source
-## include notes file
-if [[ -r "${HOME}/.config/zsh/.zshrc.notes" ]]
-then
-    source "${HOME}/.config/zsh/.zshrc.notes"
-fi
-
-# aliases
-
-# output on each shell execution
-
-# executing commands on each shell execution
-## tmux
-### attach or create tmux session
-### see also "/home/ramon/.zlogin"
-if [[ $(pgrep --euid "${USER}" "tmux") && "${TMUX}" == "" && "${TTY}" != "/dev/tty7" ]]
-then
-    tmux attach-session 2>/dev/null
-elif [[ ! $(pgrep --euid "${USER}" "script") && "${TTY}" != "/dev/tty7" ]]
-then
-    tmux new-session 2>/dev/null
-fi
+# this file is for notes only!
+# examples:
+# echo "<some_note>"
+#
+# cat << ZSH_EOF
+# <some_text>
+# ZSH_EOF
