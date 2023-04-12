@@ -15,5 +15,9 @@
 #############################################################################
 
 # this file is for notes only!
+# examples:
 # echo "<some_note>"
-
+#
+# cat << ZSH_EOF
+# <some_text>
+# ZSH_EOF
