@@ -797,6 +797,7 @@ wherefrom()
     local binary_name_command
     local binary_name which
     local binary_name_whereis
+    local binary_name_type
 
     #unalias "${binary_name_array[@]}" 2>/dev/null
 
@@ -812,12 +813,17 @@ wherefrom()
         echo -e "\n    $(\which ${binary_name_which})"
     done
 
+    echo -e "\n\e[01;34mOutput of '\e[01;33mtype\e[0m\e[01;34m':\e[0m"
+    for binary_name_type in "${binary_name_array[@]}"
+    do
+        echo "    $(\type ${binary_name_type})"
+    done
+
     echo -e "\n\e[01;34mOutput of '\e[01;33mwhereis\e[0m\e[01;34m':\e[0m"
     for binary_name_whereis in "${binary_name_array[@]}"
     do
         echo "    $(\whereis ${binary_name_whereis})"
     done
-
 }
 
 ## do not include faulty commands in history
