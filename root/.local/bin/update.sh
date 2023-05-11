@@ -48,7 +48,7 @@ fi
 
 echo -e "\e[01;33mChecking for new updates...\e[0m" >&2
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/gem update
-/usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user --no-warn-script-location
+/usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user --no-warn-script-location --break-system-packages
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip check
 #/usr/bin/sudo --shell --user="${SUDO_USER}" /usr/bin/flatpak update
 /bin/su - "${SUDO_USER}" --command="/usr/bin/npm update"
