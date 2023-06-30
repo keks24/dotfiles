@@ -135,6 +135,7 @@ scanner = "xsane"
 office = "libreoffice"
 terra_nil = "terra_nil"
 the_forgotten_halls = "the_forgotten_halls"
+setris = "setris"
 minecraft = "minecraft-launcher"
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "open terminal", terminal },
@@ -147,6 +148,7 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "open libreoffice", office },
                                     { "open minecraft", minecraft },
                                     { "open terra nil", terra_nil },
+                                    { "open setris", setris },
                                     { "open the forgotten halls", the_forgotten_halls }
                                   }
                         })
