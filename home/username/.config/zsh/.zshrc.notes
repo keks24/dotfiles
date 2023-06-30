@@ -19,6 +19,7 @@
 # echo "<some_note>"
 #
 # cat --number << ZSH_NOTES_EOF
+# [33mFrom "${0}": [0m
 # <some_note>
 # [31m<some_coloured_note>[0m
 # ZSH_NOTES_EOF
