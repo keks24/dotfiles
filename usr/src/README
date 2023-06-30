@@ -27,7 +27,7 @@ Compile new kernel
             $ make \
                 --jobs="${available_processors}" \
                 --load-average="${system_max_load}" \
-            && make \
+              && make \
                 --jobs="${available_processors}" \
                 --load-average="${system_max_load}" \
                 modules_install
