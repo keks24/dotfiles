@@ -15,11 +15,23 @@
 #############################################################################
 
 # this file is for notes only!
-## examples:
+# examples
+## simple single line
 # echo "<some_note>"
 #
+## simple multiline
 # cat --number << ZSH_NOTES_EOF
-# [33mFrom "${0}": [0m
 # <some_note>
-# [31m<some_coloured_note>[0m
+# [33m<some_coloured_note>[0m
 # ZSH_NOTES_EOF
+#
+## sophisticated
+#headline="From '${0}':"
+#underline="${headline//[a-zA-Z0-9\/\.:\' ]/-}"
+#
+#echo -e "\e[33m${headline}\n${underline}"
+#cat --number << ZSH_NOTES_EOF
+# <some_note>
+# [33m<some_coloured_note>[0m
+#ZSH_NOTES_EOF
+#echo -e "${underline}\e[0m"
