@@ -1025,6 +1025,8 @@ export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 export XZ_OPT="-9"
 ## workaround for "tmux" to create proper conditionals
 export EUID="${EUID}"
+## set default parameters for "progress"
+export PROGRESS_ARGS="--wait-delay='2.0' --monitor-continuously"
 
 # output when opening shell
 ## list who is logged in
