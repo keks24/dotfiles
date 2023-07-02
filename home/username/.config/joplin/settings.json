@@ -1,16 +1,17 @@
 {
 	"$schema": "https://joplinapp.org/schema/settings.json",
-	"locale": "en_GB",
 	"api.token": "<censored>",
-	"markdown.plugin.softbreaks": false,
-	"markdown.plugin.typographer": false,
 	"sync.target": 6,
 	"sync.6.path": "https://<censored>",
 	"sync.maxConcurrentConnections": 4,
+	"sync.interval": 0,
+	"sync.6.username": "<censored>",
+	"sync.8.url": "",
 	"dateFormat": "DD.MM.YYYY",
 	"timeFormat": "HH:mm",
 	"trackLocation": false,
-	"sync.interval": 0,
-	"sync.6.username": "<censored>",
-	"sync.8.url": ""
+	"locale": "en_GB",
+	"uncompletedTodosOnTop": false,
+	"markdown.plugin.softbreaks": false,
+	"markdown.plugin.typographer": false
 }
