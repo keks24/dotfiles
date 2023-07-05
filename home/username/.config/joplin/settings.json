@@ -1,10 +1,10 @@
 {
 	"$schema": "https://joplinapp.org/schema/settings.json",
 	"api.token": "<censored>",
-	"sync.target": 6,
-	"sync.6.path": "https://<censored>",
 	"sync.maxConcurrentConnections": 4,
 	"sync.interval": 0,
+	"sync.target": 6,
+	"sync.6.path": "https://<censored>",
 	"sync.6.username": "<censored>",
 	"sync.8.url": "",
 	"dateFormat": "DD.MM.YYYY",
