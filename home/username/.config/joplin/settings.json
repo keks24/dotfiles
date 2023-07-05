@@ -7,10 +7,10 @@
 	"sync.6.path": "https://<censored>",
 	"sync.6.username": "<censored>",
 	"sync.8.url": "",
+	"locale": "en_GB",
 	"dateFormat": "DD.MM.YYYY",
 	"timeFormat": "HH:mm",
 	"trackLocation": false,
-	"locale": "en_GB",
 	"uncompletedTodosOnTop": false,
 	"markdown.plugin.softbreaks": false,
 	"markdown.plugin.typographer": false
