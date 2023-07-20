@@ -1,5 +1,11 @@
+" Filename:      /etc/vim/vimrc
+" Purpose:       configuration file for vim
+" Authors:       grml-team (grml.org), (c) Michael Prokop <mika@grml.org>
+" Bug-Reports:   see http://grml.org/bugs/
+" License:       This file is licensed under the GPL v2.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " #############################################################################
-" # Copyright 2022 Ramon Fischer                                              #
+" # Copyright 2023 Ramon Fischer                                              #
 " #                                                                           #
 " # Licensed under the Apache License, Version 2.0 (the "License");           #
 " # you may not use this file except in compliance with the License.          #
@@ -13,14 +19,6 @@
 " # See the License for the specific language governing permissions and       #
 " # limitations under the License.                                            #
 " #############################################################################
-
-
-" Filename:      /etc/vim/vimrc
-" Purpose:       configuration file for vim
-" Authors:       grml-team (grml.org), (c) Michael Prokop <mika@grml.org>
-" Bug-Reports:   see http://grml.org/bugs/
-" License:       This file is licensed under the GPL v2.
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
 " /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime you
