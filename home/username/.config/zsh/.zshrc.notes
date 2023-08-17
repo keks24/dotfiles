@@ -26,12 +26,22 @@
 # ZSH_NOTES_EOF
 #
 ## sophisticated
-# headline="From '${0}':"
-# underline="${headline//[a-zA-Z0-9\/\.:\' ]/-}"
+#SHOW_NOTES="true"
 #
-# echo -e "\e[33m${headline}\n${underline}"
-# \cat --number << ZSH_NOTES_EOF
-#  <some_note>
-#  [33m<some_coloured_note>[0m
-# ZSH_NOTES_EOF
-# echo -e "${underline}\e[0m"
+#outputNotes()
+#{
+#    local headline="From '${0}':"
+#    local underline="${headline//[a-zA-Z0-9\/\.:\' ]/-}"
+#
+#    echo -e "\e[33m${headline}\n${underline}"
+#    \cat --number << ZSH_NOTES_EOF
+#<some_note>
+#[33m<some_coloured_note>[0m
+#ZSH_NOTES_EOF
+#    echo -e "${underline}\e[0m"
+#}
+#
+#if [[ "${SHOW_NOTES}" == "true" ]]
+#then
+#    outputNotes
+#fi
