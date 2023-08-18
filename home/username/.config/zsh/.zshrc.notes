@@ -27,16 +27,46 @@
 #
 ## sophisticated
 #SHOW_NOTES="true"
+#ZSH_NOTES_FILE="${0}"
 #
 #outputNotes()
 #{
-#    local headline="From '${0}':"
+#    local headline="From '${ZSH_NOTES_FILE}':"
 #    local underline="${headline//[a-zA-Z0-9\/\.:\' ]/-}"
+#
+#    outputSubheadline()
+#    {
+#        local subheadline="${1}"
+#        # 80 characters
+#        local subheadline_border="################################################################################"
+#        # get the first and last character from the string
+#        local subheadline_front="${subheadline_border: -1} "
+#        local subheadline_back=" ${subheadline_border: -1}"
+#        # determine the spacing length in order to close the border.
+#        # 80 - (<starting_character> + <space_character> + <subheadline_characters> + <space_character> + <end_character>)
+#        local spacing_length=$(( "${#subheadline_border}" - ("${#subheadline_front}" + "${#subheadline}" + "${#subheadline_back}") ))
+#
+#        # for loop solution
+#        #local spacing_counter
+#        #for spacing_counter in {1..${spacing_length}}
+#        #do
+#        #    spacing_characters+=" "
+#        #done
+#
+#        # shell solution
+#        spacing_characters="${subheadline_border//\#/ }"
+#        spacing_characters="${spacing_characters:0:${spacing_length}}"
+#
+#        echo "${subheadline_border}"
+#        echo "${subheadline_front}${subheadline}${spacing_characters}${subheadline_back}"
+#        echo "${subheadline_border}"
+#    }
 #
 #    echo -e "\e[33m${headline}\n${underline}"
 #    \cat --number << ZSH_NOTES_EOF
+#$(outputSubheadline '<some_subheadline>')
 #<some_note>
-#[33m<some_coloured_note>[0m
+#[31m<some_coloured_note>[0m
 #ZSH_NOTES_EOF
 #    echo -e "${underline}\e[0m"
 #}
