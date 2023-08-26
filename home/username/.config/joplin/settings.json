@@ -13,5 +13,7 @@
 	"trackLocation": false,
 	"uncompletedTodosOnTop": false,
 	"markdown.plugin.softbreaks": false,
-	"markdown.plugin.typographer": false
+	"markdown.plugin.typographer": false,
+	"revisionService.enabled": false,
+	"revisionService.ttlDays": 90
 }
