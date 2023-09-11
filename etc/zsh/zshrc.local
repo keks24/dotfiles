@@ -902,6 +902,7 @@ alias aria2c="aria2c \
     --auto-file-renaming='false' \
     --conditional-get='true' \
     --remove-control-file='false'"
+alias badblocks="badblocks -sv"
 alias bc="bc --mathlib"
 alias cdrecord="cdrecord -sao -speed='0' -eject -v"
 alias cdparanoia="cdparanoia --batch --force-read-speed='1' --abort-on-skip --log-summary='cdparanoia.log'"
