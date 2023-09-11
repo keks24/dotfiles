@@ -47,7 +47,7 @@ fi
 /usr/bin/logger --tag "update" --id --stderr "${script_directory_path}/${script_name}: executed"
 
 echo -e "\e[01;33mChecking for new updates...\e[0m" >&2
-/usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/gem update
+/usr/bin/sudo --shell --user="${SUDO_USER}" CCACHE_DISABLE="1" /home/${SUDO_USER}/bin/gem update
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user --no-warn-script-location --break-system-packages
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip check
 #/usr/bin/sudo --shell --user="${SUDO_USER}" /usr/bin/flatpak update
