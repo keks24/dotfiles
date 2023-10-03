@@ -1049,6 +1049,8 @@ export XZ_OPT="-9"
 export EUID="${EUID}"
 ## set default parameters for "progress"
 export PROGRESS_ARGS="--wait-delay='2.0' --monitor-continuously"
+## always activate anti-aliasing for "java" apps
+export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings='lcd'"
 
 # output when opening shell
 ## list who is logged in
