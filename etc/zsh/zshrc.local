@@ -521,7 +521,7 @@ pmon()
             'NR == 1; \$0 ~ search_string' < <(\ps faux)"
 }
 
-## follow a single running process and always exit with error code "0"
+## follow a single running process
 fpid()
 {
     local process_name="${1}"
@@ -530,9 +530,15 @@ fpid()
     # "zsh"'s array index starts at "1"
     first_process_id="${process_id_array[1]}"
 
-    echo -e "\e[01;34mWaiting for process to exit: '\e[01;33m${process_name}/${first_process_id}\e[0m\e[01;34m'.\e[0m"
-    \tail --follow "/dev/null" --pid="${first_process_id}"
-    return 0
+    if [[ "${first_process_id}" != "" ]]
+    then
+        echo -e "\e[01;34mWaiting for process to exit: '\e[01;33m${process_name}/${first_process_id}\e[0m\e[01;34m'.\e[0m"
+        \tail --follow "/dev/null" --pid="${first_process_id}"
+        return 0
+    else
+        echo -e "\e[01;31mCould not find any process IDs for: '${process_name}'.\e[0m" >&2
+        return 1
+    fi
 }
 
 ## notify after a command has finished
