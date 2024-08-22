@@ -417,91 +417,91 @@ getLastPortageSync()
 ## list all process signals
 lsig()
 {
-    cat <<EOF
- Signal             Standard    Action      Comment
- ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
- 1: SIGHUP          P1990       Term        Hangup detected on controlling terminal or death of controlling process
- 2: SIGINT          P1990       Term        Interrupt from keyboard
- 3: SIGQUIT         P1990       Core        Quit from keyboard
- 4: SIGKILL         P1990       Term        Kill signal
- 5: SIGTRAP         P2001       Core        Trace/breakpoint trap
- 6: SIGABRT         P1990       Core        Abort signal from abort(3)
- 7: SIGBUS          P2001       Core        Bus error (bad memory access)
- 8: SIGFPE          P1990       Core        Floating-point exception
- 9: SIGKILL         P1990       Core        Illegal Instruction
-10: SIGUSR1         P1990       Term        User-defined signal 1
-11: SIGSEGV         P1990       Core        Invalid memory reference
-12: SIGUSR2         P1990       Term        User-defined signal 2
-13: SIGPIPE         P1990       Term        Broken pipe: write to pipe with no readers; see pipe(7)
-14: SIGALRM         P1990       Term        Timer signal from alarm(2)
-15: SIGTERM         P1990       Term        Termination signal
-16: SIGSTKFLT         -         Term        Stack fault on coprocessor (unused)
-17: SIGCHLD         P1990       Ign         Child stopped or terminated
-18: SIGCONT         P1990       Cont        Continue if stopped
-19: SIGSTOP         P1990       Stop        Stop process
-20: SIGTSTP         P1990       Stop        Stop typed at terminal
-21: SIGTTIN         P1990       Stop        Terminal input for background process
-22: SIGTTOU         P1990       Stop        Terminal output for background process
-23: SIGURG          P2001       Ign         Urgent condition on socket (4.2BSD)
-24: SIGXCPU         P2001       Core        CPU time limit exceeded (4.2BSD); see strlimit(2)
-25: SIGXFSZ         P2001       Core        File size limit exceeded (4.2BSD); see strlimit(2)
-26: SIGVTALRM       P2001       Term        Virtual alarm clock (4.2BSD)
-27: SIGPROF         P2001       Term        Profiling timer expired
-28: SIGWINCH          -         Ign         Window resize signal (4.3BSD, Sun)
-29: SIGIO             -         Term        I/O now possible (4.2BSD)
-30: SIGPWR            -         Term        Power failure (System V)
-31: SIGSYS          P2001       Core        Bad system call (SVr4); see also seccomp(2)
-32: Not defined       -          -          -
-33: Not defined       -          -          -
-34: SIGRTMIN        P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-35: SIGRTMIN+1      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-36: SIGRTMIN+2      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-37: SIGRTMIN+3      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-38: SIGRTMIN+4      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-39: SIGRTMIN+5      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-40: SIGRTMIN+6      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-41: SIGRTMIN+7      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-42: SIGRTMIN+8      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-43: SIGRTMIN+9      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-44: SIGRTMIN+10     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-45: SIGRTMIN+11     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-46: SIGRTMIN+12     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-47: SIGRTMIN+13     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-48: SIGRTMIN+14     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-49: SIGRTMIN+15     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-50: SIGRTMAX-14     P2001       (Term)      Real-time signal max
-51: SIGRTMAX-13     P2001       (Term)      Real-time signal max
-52: SIGRTMAX-12     P2001       (Term)      Real-time signal max
-53: SIGRTMAX-11     P2001       (Term)      Real-time signal max
-54: SIGRTMAX-10     P2001       (Term)      Real-time signal max
-55: SIGRTMAX-9      P2001       (Term)      Real-time signal max
-56: SIGRTMAX-8      P2001       (Term)      Real-time signal max
-57: SIGRTMAX-7      P2001       (Term)      Real-time signal max
-58: SIGRTMAX-6      P2001       (Term)      Real-time signal max
-59: SIGRTMAX-5      P2001       (Term)      Real-time signal max
-60: SIGRTMAX-4      P2001       (Term)      Real-time signal max
-61: SIGRTMAX-3      P2001       (Term)      Real-time signal max
-62: SIGRTMAX-2      P2001       (Term)      Real-time signal max
-63: SIGRTMAX-1      P2001       (Term)      Real-time signal max
-64: SIGRTMAX        P2001       (Term)      Real-time signal max
-
-The signals SIGKILL and SIGSTOP cannot be caught, blocked, or ignored.
-
-Up to and including Linux 2.2, the default behavior for SIGSYS, SIGXCPU, SIGXFSZ, and (on architectures other
-than SPARC and MIPS) SIGBUS was to terminate the process (without a core dump).  (On some other UNIX  systems
-the  default action for SIGXCPU and SIGXFSZ is to terminate the process without a core dump.)  Linux 2.4 con‐
-forms to the POSIX.1-2001 requirements for these signals, terminating the process with a core dump.
-
-SIGEMT is not specified in POSIX.1-2001, but nevertheless appears on most other UNIX systems, where  its  de‐
-fault action is typically to terminate the process with a core dump.
-
-SIGPWR  (which  is not specified in POSIX.1-2001) is typically ignored by default on those other UNIX systems
-where it appears.
-
-SIGIO (which is not specified in POSIX.1-2001) is ignored by default on several other UNIX systems.
-
-See also: man 7 signal
-EOF
+    cat <<- LSIG_EOF
+		 Signal             Standard    Action      Comment
+		 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+		 1: SIGHUP          P1990       Term        Hangup detected on controlling terminal or death of controlling process
+		 2: SIGINT          P1990       Term        Interrupt from keyboard
+		 3: SIGQUIT         P1990       Core        Quit from keyboard
+		 4: SIGKILL         P1990       Term        Kill signal
+		 5: SIGTRAP         P2001       Core        Trace/breakpoint trap
+		 6: SIGABRT         P1990       Core        Abort signal from abort(3)
+		 7: SIGBUS          P2001       Core        Bus error (bad memory access)
+		 8: SIGFPE          P1990       Core        Floating-point exception
+		 9: SIGKILL         P1990       Core        Illegal Instruction
+		10: SIGUSR1         P1990       Term        User-defined signal 1
+		11: SIGSEGV         P1990       Core        Invalid memory reference
+		12: SIGUSR2         P1990       Term        User-defined signal 2
+		13: SIGPIPE         P1990       Term        Broken pipe: write to pipe with no readers; see pipe(7)
+		14: SIGALRM         P1990       Term        Timer signal from alarm(2)
+		15: SIGTERM         P1990       Term        Termination signal
+		16: SIGSTKFLT         -         Term        Stack fault on coprocessor (unused)
+		17: SIGCHLD         P1990       Ign         Child stopped or terminated
+		18: SIGCONT         P1990       Cont        Continue if stopped
+		19: SIGSTOP         P1990       Stop        Stop process
+		20: SIGTSTP         P1990       Stop        Stop typed at terminal
+		21: SIGTTIN         P1990       Stop        Terminal input for background process
+		22: SIGTTOU         P1990       Stop        Terminal output for background process
+		23: SIGURG          P2001       Ign         Urgent condition on socket (4.2BSD)
+		24: SIGXCPU         P2001       Core        CPU time limit exceeded (4.2BSD); see strlimit(2)
+		25: SIGXFSZ         P2001       Core        File size limit exceeded (4.2BSD); see strlimit(2)
+		26: SIGVTALRM       P2001       Term        Virtual alarm clock (4.2BSD)
+		27: SIGPROF         P2001       Term        Profiling timer expired
+		28: SIGWINCH          -         Ign         Window resize signal (4.3BSD, Sun)
+		29: SIGIO             -         Term        I/O now possible (4.2BSD)
+		30: SIGPWR            -         Term        Power failure (System V)
+		31: SIGSYS          P2001       Core        Bad system call (SVr4); see also seccomp(2)
+		32: Not defined       -          -          -
+		33: Not defined       -          -          -
+		34: SIGRTMIN        P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		35: SIGRTMIN+1      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		36: SIGRTMIN+2      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		37: SIGRTMIN+3      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		38: SIGRTMIN+4      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		39: SIGRTMIN+5      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		40: SIGRTMIN+6      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		41: SIGRTMIN+7      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		42: SIGRTMIN+8      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		43: SIGRTMIN+9      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		44: SIGRTMIN+10     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		45: SIGRTMIN+11     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		46: SIGRTMIN+12     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		47: SIGRTMIN+13     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		48: SIGRTMIN+14     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		49: SIGRTMIN+15     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
+		50: SIGRTMAX-14     P2001       (Term)      Real-time signal max
+		51: SIGRTMAX-13     P2001       (Term)      Real-time signal max
+		52: SIGRTMAX-12     P2001       (Term)      Real-time signal max
+		53: SIGRTMAX-11     P2001       (Term)      Real-time signal max
+		54: SIGRTMAX-10     P2001       (Term)      Real-time signal max
+		55: SIGRTMAX-9      P2001       (Term)      Real-time signal max
+		56: SIGRTMAX-8      P2001       (Term)      Real-time signal max
+		57: SIGRTMAX-7      P2001       (Term)      Real-time signal max
+		58: SIGRTMAX-6      P2001       (Term)      Real-time signal max
+		59: SIGRTMAX-5      P2001       (Term)      Real-time signal max
+		60: SIGRTMAX-4      P2001       (Term)      Real-time signal max
+		61: SIGRTMAX-3      P2001       (Term)      Real-time signal max
+		62: SIGRTMAX-2      P2001       (Term)      Real-time signal max
+		63: SIGRTMAX-1      P2001       (Term)      Real-time signal max
+		64: SIGRTMAX        P2001       (Term)      Real-time signal max
+		
+		The signals SIGKILL and SIGSTOP cannot be caught, blocked, or ignored.
+		
+		Up to and including Linux 2.2, the default behavior for SIGSYS, SIGXCPU, SIGXFSZ, and (on architectures other
+		than SPARC and MIPS) SIGBUS was to terminate the process (without a core dump).  (On some other UNIX  systems
+		the  default action for SIGXCPU and SIGXFSZ is to terminate the process without a core dump.)  Linux 2.4 con‐
+		forms to the POSIX.1-2001 requirements for these signals, terminating the process with a core dump.
+		
+		SIGEMT is not specified in POSIX.1-2001, but nevertheless appears on most other UNIX systems, where  its  de‐
+		fault action is typically to terminate the process with a core dump.
+		
+		SIGPWR  (which  is not specified in POSIX.1-2001) is typically ignored by default on those other UNIX systems
+		where it appears.
+		
+		SIGIO (which is not specified in POSIX.1-2001) is ignored by default on several other UNIX systems.
+		
+		See also: man 7 signal
+	LSIG_EOF
 }
 
 ## monitor a single running process
