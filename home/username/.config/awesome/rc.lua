@@ -385,6 +385,8 @@ globalkeys = gears.table.join(
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
 
+    -- custom - 20240827T165938+0200 - rfischer: comment the below line, in order to close focussed window with "modkey+x"
+    --[[
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run {
@@ -395,6 +397,7 @@ globalkeys = gears.table.join(
                   }
               end,
               {description = "lua execute prompt", group = "awesome"}),
+    --]]
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
@@ -422,7 +425,9 @@ clientkeys = gears.table.join(
             c:raise()
         end,
         {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+    --awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+    -- custom - 20240827T165717+0200 - rfischer: close focussed window with "modkey+x"
+    awful.key({ modkey            }, "x",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
