@@ -27,5 +27,5 @@ then
     fi
 
     # the following part somehow gets expanded to "0xc00005". using "eval" here will cause the error "command not found", but "x" will be started anyways.
-    dbus-launch --sh-syntax --exit-with-session awesome
+    exec dbus-launch --sh-syntax --exit-with-session awesome
 fi
