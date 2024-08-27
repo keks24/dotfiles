@@ -20,6 +20,9 @@
 ## exports
 ### man pages
 export MANPATH="${MANPATH}:${HOME}/.local/share/man"
+### unprivileged docker setup
+export DOCKER_HOST="unix:///run/user/1000/docker.sock"
+export PATH="${PATH}:/usr/share/docker/contrib"
 
 ## aliases
 ### ruby
