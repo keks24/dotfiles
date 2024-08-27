@@ -351,9 +351,8 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
-    -- custom - 20200630 - rfischer: comment the next line to lock the screen via "modkey + l"
-    --awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
-    --          {description = "increase master width factor", group = "layout"}),
+    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
+              {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
@@ -409,8 +408,8 @@ globalkeys = gears.table.join(
                                             screenshot_file=\"/home/ramon/pictures/screenshots/$(date +%Y%m%dT%H%M%S%z)_screenshot.png\" && \
                                             import -frame -window root -colorspace YPbPr -depth 16 -quality 80 \"${screenshot_file}\" && \
                                             feh --geometry 800x600 --scale-down \"${screenshot_file}\"") end),
-    -- custom - 20200630 - rfischer: lock tty and lock screens via "physlock"
-    awful.key({ modkey }, "l", function () awful.util.spawn_with_shell("/home/ramon/bin/locker") end)
+    -- custom - 20200630 - rfischer: lock tty and lock screens via "physlock" (ctrl+alt+l)
+    awful.key({ "Control", "Mod1" }, "l", function () awful.util.spawn_with_shell("/home/ramon/bin/locker") end)
 
 )
 
