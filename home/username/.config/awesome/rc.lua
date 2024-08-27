@@ -16,6 +16,21 @@
 #############################################################################
 --]]
 
+--[[
+Mod keys:
+
+xmodmap:  up to 4 keys per modifier, (keycodes in parentheses):
+
+shift       Shift_L (0x32),  Shift_R (0x3e)
+lock        Caps_Lock (0x42)
+control     Control_L (0x25),  Control_R (0x69)
+mod1        Alt_L (0x40),  Alt_L (0xcc),  Meta_L (0xcd)
+mod2        Num_Lock (0x4d)
+mod3        ISO_Level5_Shift (0xcb)
+mod4        Super_L (0x85),  Super_R (0x86),  Super_L (0xce),  Hyper_L (0xcf)
+mod5        ISO_Level3_Shift (0x5c)
+--]]
+
 -- custom - 20200509 - rfischer: copy the configuration file from "/etc/xdg/awesome/rc.lua"
 -- Standard awesome library
 local gears = require("gears")
@@ -82,8 +97,10 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
+    awful.layout.suit.floating,
+    -- custom - 20240827T155351+0200 - rfischer: set "tile" layout as default
+    --awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
