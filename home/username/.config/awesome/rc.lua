@@ -80,6 +80,8 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
 -- custom - 20240827T162954+0200 - rfischer: set "beautiful.font" to "terminus 8"
 beautiful.font = "terminus 8"
+-- custom - 20240828T144135+0200 - rfischer: set "beautiful.useless_gap to "5"
+beautiful.useless_gap="5"
 
 -- This is used later as the default terminal and editor to run.
 --terminal = "xterm"
