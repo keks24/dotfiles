@@ -16,12 +16,12 @@
 #############################################################################
 --]]
 
-local dpi         = require("beautiful.xresources").apply_dpi
 local gears       = require("gears.filesystem")
 local themes_path = gears.get_themes_dir()
 local theme       = dofile(themes_path .. "zenburn/theme.lua")
+local dpi         = require("beautiful.xresources").apply_dpi
 
     theme.font = "terminus 8"
-    theme.useless_gap = "dpi(5)"
+    theme.useless_gap = dpi(5)
 
 return theme
