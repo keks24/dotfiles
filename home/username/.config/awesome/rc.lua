@@ -76,12 +76,8 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 --beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
--- custom - 20200614 - rfischer: set "beautiful.init(gears.filesystem.get_themes_dir() " to "zenburn/theme.lua"
-beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
--- custom - 20240827T162954+0200 - rfischer: set "beautiful.font" to "terminus 8"
-beautiful.font = "terminus 8"
--- custom - 20240828T144135+0200 - rfischer: set "beautiful.useless_gap to "5"
-beautiful.useless_gap = "5"
+-- custom - 20240902T102247+0200 - rfischer: set "beautiful.init(gears.filesystem.get_configuration_dir() " to "themes/zenburn/theme.lua"
+beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 --terminal = "xterm"
