@@ -21,7 +21,7 @@
 # define global variables
 declare -a APPLICATION_NAME_LIST
 ## do not change the order of this list, only append new commands!
-APPLICATION_NAME_LIST=(parcellite ssh-agent xautolock aria2)
+APPLICATION_NAME_LIST=(parcellite ssh-agent xautolock)
 LOG_DIRECTORY="${HOME}/.log"
 
 # log directory
