@@ -573,6 +573,12 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
+    -- custom - 20241106T135957+0100 - rfischer: always open "firefox" on "screen 1, tag 2".
+    { rule = { class = "firefox" },
+      properties = { screen = 1, tag = "2" } },
+    -- custom - 20241106T140033+0100 - rfischer: always open "thunderbird" on "screen 1, tag 3".
+    { rule = { class = "thunderbird" },
+      properties = { screen = 1, tag = "3" } },
 }
 -- }}}
 
