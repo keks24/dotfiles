@@ -283,6 +283,7 @@ genpw()
 {
     local -i password_length=24
     local remove_characters="[:space:]"
+    local -i password_counter
     local -i password_count=20
     local password_output
     local password_entropy
@@ -349,7 +350,7 @@ genpw()
         shift 1 >/dev/null 2>&1 || break
     done
 
-    for i in {1..${password_count}}
+    for password_counter in {1..${password_count}}
     do
         password_entropy="0"
         password_output=$(\strings --bytes="1" "/dev/urandom" | \tr --delete "${remove_characters}" | \head --bytes="${password_length}")
