@@ -249,7 +249,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     -- custom - 20241108T081424+0100 - rfischer: use custom tags. see also: rule mapping.
-    awful.tag({ "terminal", "web", "e-mail", "office", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "terminal", "web", "e-mail", "office", "download", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -584,6 +584,9 @@ awful.rules.rules = {
     -- custom - 20241108T081820+0100 - rfischer: always open "libreoffice" on "screen 1", "tag office".
     { rule = { class = "libreoffice" },
       properties = { screen = 1, tag = "office" } },
+    -- custom - 20241108T151051+0100 - rfischer: always open "jdownloader" on "screen 1", "tag download".
+    { rule = { class = "jdownloader" },
+      properties = { screen = 1, tag = "download" } },
 }
 -- }}}
 
