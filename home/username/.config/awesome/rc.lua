@@ -248,8 +248,12 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-    -- custom - 20241108T081424+0100 - rfischer: use custom tags. see also: rule mapping.
-    awful.tag({ "terminal", "web", "e-mail", "office", "download", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    -- custom - 20241110T195111+0100 - rfischer: use custom tags on two seperate screens. see also: rule mapping.
+    if s.index == 1 then
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "6", "7", "8", "9" }, screen[1], awful.layout.layouts[1])
+    elseif s.index == 2 then
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "6", "7", "8", "9" }, screen[2], awful.layout.layouts[1])
+    end
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -575,18 +579,18 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
-    -- custom - 20241106T135957+0100 - rfischer: always open "firefox" on "screen 1", "tag web".
+    -- custom - 20241106T135957+0100 - rfischer: always open "firefox" on "screen 2", "tag web".
     { rule = { class = "firefox" },
-      properties = { screen = 1, tag = "web" } },
-    -- custom - 20241106T140033+0100 - rfischer: always open "thunderbird" on "screen 1", "tag e-mail".
+      properties = { screen = 2, tag = "web" } },
+    -- custom - 20241106T140033+0100 - rfischer: always open "thunderbird" on "screen 2", "tag e-mail".
     { rule = { class = "thunderbird" },
-      properties = { screen = 1, tag = "e-mail" } },
-    -- custom - 20241108T081820+0100 - rfischer: always open "libreoffice" on "screen 1", "tag office".
+      properties = { screen = 2, tag = "e-mail" } },
+    -- custom - 20241108T081820+0100 - rfischer: always open "libreoffice" on "screen 2", "tag office".
     { rule = { class = "libreoffice" },
-      properties = { screen = 1, tag = "office" } },
-    -- custom - 20241108T151051+0100 - rfischer: always open "jdownloader" on "screen 1", "tag download".
+      properties = { screen = 2, tag = "office" } },
+    -- custom - 20241108T151051+0100 - rfischer: always open "jdownloader" on "screen 2", "tag download".
     { rule = { class = "jdownloader" },
-      properties = { screen = 1, tag = "download" } },
+      properties = { screen = 2, tag = "download" } },
 }
 -- }}}
 
