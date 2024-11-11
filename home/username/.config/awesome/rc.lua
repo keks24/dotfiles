@@ -235,7 +235,24 @@ local function set_wallpaper(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.maximized(wallpaper, s, true)
+
+        -- custom - 20241111T110118+0100 - rfischer: scale wallpaper on each screen differently.
+        local offset_x_percentage = -0.975
+        local offset_y_percentage = 0.0
+        -- get screen dimensions
+        local screen_width = s.geometry.width
+        local screen_height = s.geometry.height
+        -- calculate pixel offset
+        local offset_x_pixels = offset_x_percentage * screen_width
+        local offset_y_pixels = offset_y_percentage * screen_height
+
+        if s.index == 1 then
+            gears.wallpaper.maximized(wallpaper, s, true)
+        elseif s.index == 2 then
+            -- do not ignore aspect ratio and move the wallpaper by 97.5% (~1022 pixels) to the left.
+            --gears.wallpaper.maximized(wallpaper, s, false, { x = -1022, y = 0 })
+            gears.wallpaper.maximized(wallpaper, s, false, { x = offset_x_pixels, y = offset_y_pixels })
+        end
     end
 end
 
