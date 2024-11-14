@@ -263,9 +263,9 @@ awful.screen.connect_for_each_screen(function(s)
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     -- custom - 20241110T195111+0100 - rfischer: use custom tags on two seperate screens. see also: rule mapping.
     if s.index == 1 then
-        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image_editing", "7", "8", "9" }, screen[1], awful.layout.layouts[1])
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "7", "8", "9" }, screen[1], awful.layout.layouts[1])
     elseif s.index == 2 then
-        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image_editing", "7", "8", "9" }, screen[2], awful.layout.layouts[1])
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "7", "8", "9" }, screen[2], awful.layout.layouts[1])
     end
 
     -- Create a promptbox for each screen
@@ -592,21 +592,27 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
-    -- custom - 20241106T135957+0100 - rfischer: always open "firefox" on "screen 2", "tag web".
-    { rule = { class = "firefox" },
-      properties = { screen = 2, tag = "web" } },
-    -- custom - 20241106T140033+0100 - rfischer: always open "thunderbird" on "screen 2", "tag e-mail".
-    { rule = { class = "thunderbird" },
+    -- custom - 20241106T135957+0100 - rfischer: always open "firefox" on "screen 2", tag "web" and focus "screen 2".
+    -- get the value "WM_CLASS" via "xprop":
+    ---- $ <start_some_programme>
+    ---- $ while read -r i; do echo -ne "${i}:\t"; xprop -id "${i}" WM_CLASS; done < <(xprop -root _NET_CLIENT_LIST | grep --extended-regexp --only-matching "0x[a-z0-9]+")
+    { rule = { class = "firefox-esr" },
+      properties = { screen = 2, tag = "web", switchtotag = true,
+      function() awful.screen.focus(screen[2]) end } },
+    -- custom - 20241106T140033+0100 - rfischer: always open "thunderbird" on "screen 2", tag "e-mail".
+    { rule = { class = "thunderbird-esr" },
       properties = { screen = 2, tag = "e-mail" } },
-    -- custom - 20241108T081820+0100 - rfischer: always open "libreoffice" on "screen 2", "tag office".
+    -- custom - 20241108T081820+0100 - rfischer: always open "libreoffice" on "screen 2", tag "office" and focus "screen 2".
     { rule = { class = "libreoffice" },
-      properties = { screen = 2, tag = "office" } },
-    -- custom - 20241108T151051+0100 - rfischer: always open "jdownloader" on "screen 2", "tag download".
+      properties = { screen = 2, tag = "office", switchtotag = true,
+      function() awful.screen.focus(screen[2]) end } },
+    -- custom - 20241108T151051+0100 - rfischer: always open "jdownloader" on "screen 2", tag "download".
     { rule = { class = "jdownloader" },
       properties = { screen = 2, tag = "download" } },
-    -- custom - 20241114T131244+0100- rfischer: always open "gimp" on "screen 1", "tag image_editing".
-    { rule = { class = "gimp" },
-      properties = { screen = 1, tag = "image_editing" } },
+    -- custom - 20241114T131244+0100- rfischer: always open "gimp" on "screen 1", tag "image".
+    { rule = { class = "Gimp-2.10" },
+      properties = { screen = 1, tag = "image", switchtotag = true,
+      function() awful.screen.focus(screen[1]) end } },
 }
 -- }}}
 
