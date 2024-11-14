@@ -243,16 +243,12 @@ local function set_wallpaper(s)
         local screen_width = s.geometry.width
         local screen_height = s.geometry.height
         -- calculate pixel offset
-        local offset_x_pixels = offset_x_percentage * screen_width
-        local offset_y_pixels = offset_y_percentage * screen_height
+        local offset_x_pixels = screen_width * offset_x_percentage
+        local offset_y_pixels = screen_height * offset_y_percentage
 
-        if s.index == 1 then
-            gears.wallpaper.maximized(wallpaper, s, true)
-        elseif s.index == 2 then
-            -- do not ignore aspect ratio and move the wallpaper by 97.5% (~1022 pixels) to the left.
-            --gears.wallpaper.maximized(wallpaper, s, false, { x = -1022, y = 0 })
-            gears.wallpaper.maximized(wallpaper, s, false, { x = offset_x_pixels, y = offset_y_pixels })
-        end
+        gears.wallpaper.maximized(wallpaper, screen[1], true)
+        -- do not ignore aspect ratio and move the wallpaper by 97.5% (~1022 pixels) to the left.
+        gears.wallpaper.maximized(wallpaper, screen[2], false, { x = offset_x_pixels, y = offset_y_pixels })
     end
 end
 
@@ -267,9 +263,9 @@ awful.screen.connect_for_each_screen(function(s)
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     -- custom - 20241110T195111+0100 - rfischer: use custom tags on two seperate screens. see also: rule mapping.
     if s.index == 1 then
-        awful.tag({ "terminal", "web", "e-mail", "office", "download", "6", "7", "8", "9" }, screen[1], awful.layout.layouts[1])
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image_editing", "7", "8", "9" }, screen[1], awful.layout.layouts[1])
     elseif s.index == 2 then
-        awful.tag({ "terminal", "web", "e-mail", "office", "download", "6", "7", "8", "9" }, screen[2], awful.layout.layouts[1])
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image_editing", "7", "8", "9" }, screen[2], awful.layout.layouts[1])
     end
 
     -- Create a promptbox for each screen
@@ -608,6 +604,9 @@ awful.rules.rules = {
     -- custom - 20241108T151051+0100 - rfischer: always open "jdownloader" on "screen 2", "tag download".
     { rule = { class = "jdownloader" },
       properties = { screen = 2, tag = "download" } },
+    -- custom - 20241114T131244+0100- rfischer: always open "gimp" on "screen 1", "tag image_editing".
+    { rule = { class = "gimp" },
+      properties = { screen = 1, tag = "image_editing" } },
 }
 -- }}}
 
