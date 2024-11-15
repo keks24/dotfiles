@@ -599,9 +599,10 @@ awful.rules.rules = {
     { rule = { class = "firefox-esr" },
       properties = { screen = 2, tag = "web", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
-    -- custom - 20241106T140033+0100 - rfischer: always open "thunderbird" on "screen 2", tag "e-mail".
+    -- custom - 20241106T140033+0100 - rfischer: always open "thunderbird" on "screen 2", tag "e-mail" and focus "screen 2".
     { rule = { class = "thunderbird-esr" },
-      properties = { screen = 2, tag = "e-mail" } },
+      properties = { screen = 2, tag = "e-mail", switchtotag = true,
+      function() awful.screen.focus(screen[2]) end } },
     -- custom - 20241108T081820+0100 - rfischer: always open "libreoffice" on "screen 2", tag "office" and focus "screen 2".
     { rule = { class = "Soffice" },
       properties = { screen = 2, tag = "office", switchtotag = true,
