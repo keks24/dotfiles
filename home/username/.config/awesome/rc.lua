@@ -603,7 +603,7 @@ awful.rules.rules = {
     { rule = { class = "thunderbird-esr" },
       properties = { screen = 2, tag = "e-mail" } },
     -- custom - 20241108T081820+0100 - rfischer: always open "libreoffice" on "screen 2", tag "office" and focus "screen 2".
-    { rule = { class = "libreoffice" },
+    { rule = { class = "Soffice" },
       properties = { screen = 2, tag = "office", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
     -- custom - 20241108T151051+0100 - rfischer: always open "jdownloader" on "screen 2", tag "download".
