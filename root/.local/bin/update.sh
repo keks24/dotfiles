@@ -1,6 +1,6 @@
 #!/bin/bash
 #############################################################################
-# Copyright 2020-2022 Ramon Fischer                                         #
+# Copyright 2020-2024 Ramon Fischer                                         #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -47,8 +47,8 @@ fi
 /usr/bin/logger --tag "update" --id --stderr "${script_directory_path}/${script_name}: executed"
 
 echo -e "\e[01;33mChecking for new updates...\e[0m" >&2
-/usr/bin/sudo --shell --user="${SUDO_USER}" CCACHE_DISABLE="1" /home/${SUDO_USER}/bin/gem update
-/usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user
+#/usr/bin/sudo --shell --user="${SUDO_USER}" CCACHE_DISABLE="1" /home/${SUDO_USER}/bin/gem update
+/usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user --no-warn-script-location
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip check
 #/usr/bin/sudo --shell --user="${SUDO_USER}" /usr/bin/flatpak update
 /bin/su - "${SUDO_USER}" --command="/usr/bin/npm update"
