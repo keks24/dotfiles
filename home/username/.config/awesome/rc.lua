@@ -609,7 +609,7 @@ awful.rules.rules = {
     -- custom - 20241108T151051+0100 - rfischer: always open "jdownloader" on "screen 2", tag "download".
     { rule = { class = "org-jdownloader-update-launcher-JDLauncher" },
       properties = { screen = 2, tag = "download" } },
-    -- custom - 20241114T131244+0100- rfischer: always open "gimp" on "screen 1", tag "image" and focus "screen 2"
+    -- custom - 20241114T131244+0100- rfischer: always open "gimp" on "screen 1", tag "image" and focus "screen 1"
     { rule = { class = "Gimp-2.10" },
       properties = { screen = 1, tag = "image", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
