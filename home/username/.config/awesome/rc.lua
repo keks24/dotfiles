@@ -604,8 +604,15 @@ awful.rules.rules = {
       properties = { screen = 2, tag = "e-mail", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
     -- custom - 20241108T081820+0100 - rfischer: always open "libreoffice" on "screen 2", tag "office" and focus "screen 2".
-    -- fix me: how to match all?: "libreoffice", "libreoffice-calc", ..., "libreoffice <some_filename>.<some_suffix>"
-    { rule = { class = "Soffice" },
+    { rule_any = { class = {
+                       "Soffice",
+                       "libreoffice-startcenter",
+                       "libreoffice-base",
+                       "libreoffice-calc",
+                       "libreoffice-draw",
+                       "libreoffice-impress",
+                       "libreoffice-math",
+                       "libreoffice-writer" } },
       properties = { screen = 2, tag = "office", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
     -- custom - 20241108T151051+0100 - rfischer: always open "jdownloader" on "screen 2", tag "download".
