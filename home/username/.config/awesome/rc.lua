@@ -592,11 +592,11 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
-    -- custom - 20241106T135957+0100 - rfischer: always open "firefox" on "screen 2", tag "web" and focus "screen 2".
-    -- get the value "WM_CLASS" via "xprop":
+    -- custom - 20241106T135957+0100 - rfischer: always open "firefox" and "chromium" on "screen 2", tag "web" and focus "screen 2".
+    -- get the value "WM_CLASS" via "xprop" (first value is "instance", second value is "class"):
     ---- $ <start_some_programme>
     ---- $ while read -r i; do echo -ne "${i}:\t"; xprop -id "${i}" WM_CLASS; done < <(xprop -root _NET_CLIENT_LIST | grep --extended-regexp --only-matching "0x[a-z0-9]+")
-    { rule = { class = "firefox-esr" },
+    { rule_any = { class = { "firefox-esr", "Chromium-browser-chromium" } },
       properties = { screen = 2, tag = "web", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
     -- custom - 20241106T140033+0100 - rfischer: always open "thunderbird" on "screen 2", tag "e-mail" and focus "screen 2".
