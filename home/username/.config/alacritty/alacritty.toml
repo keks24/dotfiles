@@ -929,6 +929,7 @@
   # Highlight window damage information.
   #highlight_damage: false
 
+[general]
 live_config_reload = false
 
 [env]
