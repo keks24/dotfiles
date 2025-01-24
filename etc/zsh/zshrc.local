@@ -534,13 +534,76 @@ fpid()
     if [[ "${first_process_id}" != "" ]]
     then
         echo -e "\e[01;34mWaiting for process to exit: '\e[01;33m${process_name}/${first_process_id}\e[0m\e[01;34m'.\e[0m"
-        \tail --follow "/dev/null" --pid="${first_process_id}"
+        \tail --follow="descriptor" "/dev/null" --pid="${first_process_id}"
         return 0
     else
         echo -e "\e[01;31mCould not find any process IDs for: '${process_name}'.\e[0m" >&2
         return 1
     fi
 }
+### attempt for multiple process names and ids
+#### to dos:
+#### use proper variable names
+#### check more:
+##### is it a process?
+#### how to look for processes more precisely?
+#
+#fpid()
+#{
+#    declare -a process_array
+#    process_array=("${@}")
+#    local process
+#    declare -a process_id_array
+#    local process_id
+#    local first_process_id
+#    local process_name
+#    declare -A process_name_id_array
+#    local tail_pid_parameter
+#    local current_username="${USER}"
+#
+#    if [[ "${process_array[@]}" == "" ]]
+#    then
+#        echo -e "\e[01;31mCould not find any process IDs for: '${process_array[@]}'.\e[0m" >&2
+#        return 1
+#    fi
+#
+#    for process in "${process_array[@]}"
+#    do
+#        # handle process ids
+#        if [[ "${process}" =~ "^[0-9]+$" ]]
+#        then
+#            process_id=
+#            process_id="${process}"
+#            process_name=$(\ps --pid="${process}" --format="comm=")
+#            process_name_id_array[${process_name}]+="${process_id},"
+#            tail_pid_parameter+="--pid=${process_id} "
+#        # handle process names
+#        else
+#            # get first process id from process name
+#            process_name=
+#            process_name="${process}"
+#            process_id_array=($(\pgrep --euid="${current_username}" "${process_name}"))
+#            # "zsh"'s array index starts at "1"
+#            first_process_id="${process_id_array[1]}"
+#            process_name_id_array[${process_name}]="${first_process_id}"
+#            #process_name_id_array[${process_name}]+="${first_process_id},"
+#            tail_pid_parameter+="--pid=${first_process_id} "
+#        fi
+#    done
+#
+#    echo -e "\e[01;34mWaiting for the following processes to exit:\e[0m"
+#    process_name=
+#    process_id=
+#    for process_name process_id in "${(@kv)process_name_id_array}"
+#    do
+#        # remove trailing comma here
+#        echo -e "\e[01;33m${process_name}/${process_id%,}"
+#    done
+#    # delimit the pid parameters via space character and remove the
+#    # trailing space character
+#    \tail --follow="descriptor" "/dev/null" "${(@z)tail_pid_parameter% }"
+#    return 0
+#}
 
 ## notify after a command has finished
 ## usage: notifyme <some_command>
