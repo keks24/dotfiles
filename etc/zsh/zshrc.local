@@ -522,88 +522,73 @@ pmon()
             'NR == 1; \$0 ~ search_string' < <(\ps faux)"
 }
 
-## follow a single running process
+## follow one or multiple running process
 fpid()
 {
-    local process_name="${1}"
+    declare -a process_array
+    process_array=("${@}")
+    local process
     declare -a process_id_array
-    process_id_array=($(\pgrep "${process_name}"))
-    # "zsh"'s array index starts at "1"
-    first_process_id="${process_id_array[1]}"
+    local process_id
+    local first_process_id
+    local process_name
+    local process_real_name
+    declare -A process_name_id_array
+    local tail_pid_parameter
 
-    if [[ "${first_process_id}" != "" ]]
+    if [[ "${process_array[@]}" == "" ]]
     then
-        echo -e "\e[01;34mWaiting for process to exit: '\e[01;33m${process_name}/${first_process_id}\e[0m\e[01;34m'.\e[0m"
-        \tail --follow="descriptor" "/dev/null" --pid="${first_process_id}"
-        return 0
-    else
-        echo -e "\e[01;31mCould not find any process IDs for: '${process_name}'.\e[0m" >&2
+        echo -e "\e[01;31mCould not find any process IDs for: '${process_array[@]}'.\e[0m" >&2
         return 1
     fi
+
+    for process in "${process_array[@]}"
+    do
+        # handle process ids
+        if [[ "${process}" =~ "^[0-9]+$" ]]
+        then
+            process_id="${process}"
+            if [[ ! -d "/proc/${process_id}/" ]]
+            then
+                echo -e "\e[01;33mCould not find process ID: '${process_id}'. Skipping...\e[0m\n" >&2
+                continue
+            fi
+
+            process_real_name=$(\gawk '/Name:/ { $1=""; print substr($0, 2) }' "/proc/${process_id}/status")
+            process_name_id_array[${process_real_name}]+="${process_id},"
+            tail_pid_parameter+="--pid=${process_id} "
+        # handle process names
+        else
+            process_name="${process}"
+            # get first process id from process name
+            if ! process_id_array=($(\pgrep "${process_name}"))
+            then
+                echo -e "\e[01;33mCould not find process name: '${process_name}'. Skipping...\e[0m\n" >&2
+                continue
+            fi
+            # "zsh"'s array index starts at "1"
+            first_process_id="${process_id_array[1]}"
+            # get real process name from "procfs"
+            # remove leading space via "substr()"
+            process_real_name=$(\gawk '/Name:/ { $1=""; print substr($0, 2) }' "/proc/${process_id_array[1]}/status")
+            process_name_id_array[${process_real_name}]+="${first_process_id},"
+            tail_pid_parameter+="--pid=${first_process_id} "
+        fi
+    done
+
+    echo -e "\e[01;34mWaiting for the following processes to exit:\e[0m"
+    process_name=
+    process_id=
+    for process_name process_id in "${(@kv)process_name_id_array[@]}"
+    do
+        # remove trailing comma here
+        echo -e "\e[01;35m${process_name}/\e[01;37m${process_id%,}\e[0m"
+    done
+    # delimit the pid parameters via space character and remove the
+    # trailing space character
+    \tail --follow="descriptor" "/dev/null" "${(@z)tail_pid_parameter% }"
+    return 0
 }
-### attempt for multiple process names and ids
-#### to dos:
-#### use proper variable names
-#### check more:
-##### is it a process?
-#### how to look for processes more precisely?
-#
-#fpid()
-#{
-#    declare -a process_array
-#    process_array=("${@}")
-#    local process
-#    declare -a process_id_array
-#    local process_id
-#    local first_process_id
-#    local process_name
-#    declare -A process_name_id_array
-#    local tail_pid_parameter
-#    local current_username="${USER}"
-#
-#    if [[ "${process_array[@]}" == "" ]]
-#    then
-#        echo -e "\e[01;31mCould not find any process IDs for: '${process_array[@]}'.\e[0m" >&2
-#        return 1
-#    fi
-#
-#    for process in "${process_array[@]}"
-#    do
-#        # handle process ids
-#        if [[ "${process}" =~ "^[0-9]+$" ]]
-#        then
-#            process_id=
-#            process_id="${process}"
-#            process_name=$(\ps --pid="${process}" --format="comm=")
-#            process_name_id_array[${process_name}]+="${process_id},"
-#            tail_pid_parameter+="--pid=${process_id} "
-#        # handle process names
-#        else
-#            # get first process id from process name
-#            process_name=
-#            process_name="${process}"
-#            process_id_array=($(\pgrep --euid="${current_username}" "${process_name}"))
-#            # "zsh"'s array index starts at "1"
-#            first_process_id="${process_id_array[1]}"
-#            process_name_id_array[${process_name}]="${first_process_id}"
-#            #process_name_id_array[${process_name}]+="${first_process_id},"
-#            tail_pid_parameter+="--pid=${first_process_id} "
-#        fi
-#    done
-#
-#    echo -e "\e[01;34mWaiting for the following processes to exit:\e[0m"
-#    process_name=
-#    process_id=
-#    for process_name process_id in "${(@kv)process_name_id_array}"
-#    do
-#        # remove trailing comma here
-#        echo -e "\e[01;33m${process_name}/${process_id%,}"
-#    done
-#    # delimit the pid parameters via space character and remove the
-#    # trailing space character
-#    \tail --follow="descriptor" "/dev/null" "${(@z)tail_pid_parameter% }"
-#    return 0
-#}
 
 ## notify after a command has finished
 ## usage: notifyme <some_command>
