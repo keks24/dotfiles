@@ -15,25 +15,35 @@
 #############################################################################
 
 # user-specific
-# functions
+## functions
+### firefox
+firefox_safe()
+{
+    local function_name="${0}"
+    local tmp_directory=$(\mktemp --directory "/tmp/${function_name}.XXXXXXXXXX")
 
-# prompt shell
+    \firefox --safe-mode --profile "${tmp_directory}"
 
-# source
-## include notes file
+    \rm --force --recursive "${tmp_directory}"
+}
+
+## prompt shell
+
+## source
+### include notes file
 if [[ -r "${HOME}/.config/zsh/.zshrc.notes" ]]
 then
     source "${HOME}/.config/zsh/.zshrc.notes"
 fi
 
-# aliases
+## aliases
 
-# output on each shell execution
+## output on each shell execution
 
-# executing commands on each shell execution
-## tmux
-### attach or create tmux session
-### see also "/home/ramon/.zlogin"
+## executing commands on each shell execution
+### tmux
+#### attach or create tmux session
+#### see also "/home/ramon/.zlogin"
 if [[ $(pgrep --euid "${USER}" "tmux") && "${TMUX}" == "" && "${TTY}" != "/dev/tty7" ]]
 then
     tmux attach-session 2>/dev/null
