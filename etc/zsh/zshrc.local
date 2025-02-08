@@ -593,6 +593,8 @@ fpid()
     # delimit the pid parameters via space character and remove the
     # trailing space character
     \tail --follow="descriptor" "/dev/null" "${(@z)tail_pid_parameter% }"
+    echo -e "\e[01;33mAbove processes exited...\e[0m" >&2
+
     return 0
 }
 
