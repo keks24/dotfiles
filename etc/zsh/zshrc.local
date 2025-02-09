@@ -94,7 +94,11 @@ binfmt_qemu()
     local binfmt_qemu_cpu_file="${binfmt_directory}/qemu-${cpu_arch_switch}"
     local binfmt_status_file="${binfmt_directory}/status"
 
-    if [[ ! -f "${binfmt_register_file}" ]]
+    if [[ "${EUID}" != "0" ]]
+    then
+        echo -e "\e[01;31mThis script must be executed with root privileges!\e[0m" >&2
+        return 1
+    elif [[ ! -f "${binfmt_register_file}" ]]
     then
         echo -e "\e[01;31mCould not find file: '${binfmt_register_file}'.\e[0m" >&2
         return 1
