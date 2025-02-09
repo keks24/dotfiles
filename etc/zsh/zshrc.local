@@ -135,7 +135,8 @@ binfmt_qemu()
 
 
         "help")
-            echo "Usage: ${function_name} [<aarch64 | arm> | help | status | disable-all] [<enable | disable> | help]"
+            echo "Usage: ${function_name} [aarch64 | arm | help | status | disable-all] [enable | disable | help]"
+            echo "Default parameters: aarch64 enable"
             return 0
             ;;
 
