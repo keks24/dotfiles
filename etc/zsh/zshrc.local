@@ -96,7 +96,7 @@ binfmt_qemu()
 
     if [[ "${EUID}" != "0" ]]
     then
-        echo -e "\e[01;31mThis script must be executed with root privileges!\e[0m" >&2
+        echo -e "\e[01;31mThis function must be executed with root privileges!\e[0m" >&2
         return 1
     elif [[ ! -f "${binfmt_register_file}" ]]
     then
