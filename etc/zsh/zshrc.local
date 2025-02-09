@@ -82,6 +82,113 @@ csum()
     fi
 }
 
+## set up "binfmt" for "qemu"
+### derived from: https://github.com/qemu/qemu/blob/master/scripts/qemu-binfmt-conf.sh
+binfmt_qemu()
+{
+    local function_name="${0}"
+    local cpu_arch_switch="${1:-aarch64}"
+    local enable_switch="${2:-enable}"
+    local binfmt_directory="/proc/sys/fs/binfmt_misc"
+    local binfmt_register_file="${binfmt_directory}/register"
+    local binfmt_qemu_cpu_file="${binfmt_directory}/qemu-${cpu_arch_switch}"
+    local binfmt_status_file="${binfmt_directory}/status"
+
+    if [[ ! -f "${binfmt_register_file}" ]]
+    then
+        echo -e "\e[01;31mCould not find file: '${binfmt_register_file}'\e[0m" >&2
+        return 1
+    fi
+
+    case "${cpu_arch_switch}" in
+        "aarch64")
+            # backslashes needs to be escaped!
+            local magic='\\x7fELF\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\xb7\\x00'
+            local mask='\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\x00\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xfe\\xff\\xff\\xff'
+            local cpu_arch="aarch64"
+            ;;
+
+        "arm")
+            local magic='\\x7fELF\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\x28\\x00'
+            local mask='\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\x00\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xfe\\xff\\xff\\xff'
+            local cpu_arch="arm"
+            ;;
+
+        "status")
+            echo -e "\e[01;34mContent of directory: '${binfmt_directory}':\e[0m"
+            \ls "${binfmt_directory}"
+            return 0
+            ;;
+
+        "disable-all")
+            if [[ ! -f "${binfmt_status_file}" ]]
+            then
+                echo -e "\e[01;31mFile: '${binfmt_status_file}' does not exist!\e[0m" >&2
+                return 1
+            else
+                echo "-1" > "${binfmt_status_file}"
+                "${function_name}" status
+            fi
+
+            return 0
+            ;;
+
+
+        "help")
+            echo "Usage: ${function_name} [<aarch64 | arm> | help | status | disable-all] [<enable | disable> | help]"
+            return 0
+            ;;
+
+        *)
+            echo -e "\e[01;31mWrong first parameter: '${cpu_arch_switch}'.\e[0m" >&2
+            "${function_name}" help
+            return 1
+    esac
+
+    case "${enable_switch}" in
+        "enable")
+            if [[ -f "${binfmt_qemu_cpu_file}" ]]
+            then
+                echo -e "\e[01;31mFile: '${binfmt_qemu_cpu_file}' already exists!\e[0m" >&2
+                return 1
+            else
+                local interpreter="/usr/bin/qemu-${cpu_arch}-static"
+
+                echo ":qemu-${cpu_arch}:M::${magic}:${mask}:${interpreter}:" > "${binfmt_register_file}"
+
+                if [[ ! -f "${binfmt_qemu_cpu_file}" ]]
+                then
+                    echo -e "\e[01;31mSomething went wrong creating the file: '${binfmt_qemu_cpu_file}'.\e[0m" >&2
+                    return 1
+                else
+                    \cat "${binfmt_qemu_cpu_file}"
+                    echo ""
+                    "${function_name}" status
+                fi
+            fi
+            ;;
+
+        "disable")
+            if [[ ! -f "${binfmt_qemu_cpu_file}" ]]
+            then
+                echo -e "\e[01;31mFile: '${binfmt_qemu_cpu_file}' does not exist!\e[0m" >&2
+                return 1
+            else
+                echo "-1" > "${binfmt_qemu_cpu_file}"
+                "${function_name}" status
+            fi
+            ;;
+
+        "help")
+            "${function_name}" help
+            ;;
+
+        *)
+            echo -e "\e[01;31mWrong second parameter: '${enable_switch}'.\e[0m" >&2
+            "${function_name}" help
+            return 1
+    esac
+}
 ## prepare and "unprepare" a chroot environment conveniently
 pchroot()
 {
