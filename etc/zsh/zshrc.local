@@ -231,9 +231,10 @@ pchroot()
         \mount --verbose --make-rslave "${chroot_directory_array[3]}"
 
         echo -e "\e[01;33mPrepared the chroot environment.\e[0m\n" >&2
-        echo -e "\e[01;33mExecute the following command to enter it: chroot . \"/bin/bash\"\e[0m" >&2
-        echo -e "\e[01;33mIf the CPU architectures differ, the binary \"qemu-<arch>-static\" may be used: cp \"qemu-<arch>-static\" \"usr/bin/\" && chroot . qemu-<arch>-static \"/bin/bash\"\e[0m" >&2
-        echo -e "\e[01;33mExecute the following command to prepare the environment within the chroot: source \"/etc/profile\" && export PS1=\"(chroot) \${PS1}\"\e[0m" >&2
+        echo -e "\e[01;33mExecute the following command to enter it:\e[37m chroot . \"/bin/bash\"\e[0m" >&2
+        echo -e "\e[01;33mIf the CPU architectures differ, the binary \"qemu-<arch>-static\" may be used:\e[37m cp \"qemu-<arch>-static\" \"usr/bin/\" && chroot . qemu-<arch>-static \"/bin/bash\"\e[0m" >&2
+        echo -e "\e[01;33mAlso make sure to set the magic and mask bytes for QEMU:\e[37m binfmt_qemu\e[0m" >&2
+        echo -e "\e[01;33mExecute the following command to prepare the environment within the chroot:\e[37m source \"/etc/profile\" && export PS1=\"(chroot) \${PS1}\"\e[0m" >&2
     else
         echo -e "\e[01;31mEntering a chroot environment requires root privileges!\e[0m" >&2
         return 1
