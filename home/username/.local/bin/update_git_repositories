@@ -78,7 +78,11 @@ then
     ssh_agent_pid="${SSH_AGENT_PID}"
 fi
 
-/usr/bin/ssh-add "${home_directory}/.local/etc/update_git_repositories/ssh_key"
+if ! /usr/bin/ssh-add "${home_directory}/.local/etc/update_git_repositories/ssh_private_key"
+then
+    echo -e "\e[01;31mCould not open a connection to the SSH agent.\e[0m" >&2
+    exit 1
+fi
 /usr/bin/sleep 2s
 
 # update git repositories
