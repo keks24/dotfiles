@@ -15,7 +15,12 @@
 # limitations under the License.                                           #
 ############################################################################
 
-command_list=(find git)
+command_list=(\
+                "/usr/bin/git" \
+                "/usr/bin/locate" \
+                "/usr/bin/nproc" \
+                "/usr/sbin/updatedb" \
+             )
 checkCommands()
 {
     unalias "${command_list[@]}" 2>/dev/null
@@ -33,20 +38,42 @@ checkCommands()
 checkCommands
 
 # define global variables
-declare -a repository_directory_array
-repository_directory_array=($(/usr/bin/find -L "." -type d -name ".git" -printf "%h\n"))
+current_username="${USER}"
+git_directory="/home/${current_username}/git"
+db_filename="directory_index.db"
+directory_index_file="${git_directory}/${db_filename}"
 available_processors=$(/usr/bin/nproc --all)
+declare -a prune_paths_array
+# trailing slashes for directories must be left out!
+# spaces must be escaped with backslash!
+prune_paths_array=(\
+                    "${git_directory}/external/github.com/keks24/gitea/integrations/gitea-repositories-meta" \
+                    "${git_directory}/external/github.com/fritzbox/freetz-ng/make/pkgs/git/files/root/etc" \
+                  )
 
-if [[ "${repository_directory_array[@]}" != "" ]]
-then
-    for repository_directory in "${repository_directory_array[@]}"
-    do
-        echo -e "\n\e[01;34m### ${repository_directory} ###\e[0m"
-        pushd "${repository_directory}" >/dev/null
-        /usr/bin/git pull --recurse-submodules --jobs="${available_processors}"
-        popd >/dev/null
-    done
-else
-    echo -e "\e[01;31mCould not find any '.git/' directories.\e[0m" >&2
-    exit 1
-fi
+# scan git directory and save binary index file
+## the array needs to be expanded via "echo"!
+## unfortunately, there is no way to only include ".git/" directories.
+/usr/sbin/updatedb \
+    --prune-bind-mounts="no" \
+    --prunefs="" \
+    --prunenames="" \
+    --add-prunepaths="$(echo ${prune_paths_array[@]})" \
+    --database-root="${git_directory}" \
+    --output="${directory_index_file}"
+
+# update git repositories
+# debugging this is a bit difficult, since it runs in parallel.
+# the output of the first "echo" and "git pull" are also distorted.
+/usr/bin/locate --database="${directory_index_file}" --regexp "\.git$" --null \
+    | xargs \
+        --null \
+        --no-run-if-empty \
+        --max-procs="${available_processors}" \
+        --replace="{}" \
+        /bin/sh -c 'repository_directory="{}" && \
+            echo -e "\n\e[01;34m### Updating: ${repository_directory%\.git} ###\e[0m" && \
+            pushd "${repository_directory%\.git}" >/dev/null && \
+            git pull --recurse-submodules --force && \
+            popd >/dev/null'
+
