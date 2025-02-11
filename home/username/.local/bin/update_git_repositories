@@ -19,6 +19,10 @@ command_list=(\
                 "/usr/bin/git" \
                 "/usr/bin/locate" \
                 "/usr/bin/nproc" \
+                "/usr/bin/pgrep" \
+                "/usr/bin/pkill" \
+                "/usr/bin/sleep" \
+                "/usr/bin/ssh-agent" \
                 "/usr/bin/ssh-add" \
                 "/usr/sbin/updatedb" \
              )
@@ -65,7 +69,17 @@ prune_paths_array=(\
     --output="${directory_index_file}"
 
 # cache ssh key password
+if ! /usr/bin/pgrep --euid="${current_username}" "ssh-agent" >/dev/null
+then
+    echo -e "\e[01;33mCould not find process for 'ssh-agent'. Trying to start it...\e[0m" >&2
+    # if this is started here, it is only valid for this subshell!
+    eval $(/usr/bin/ssh-agent -st 1h)
+    # get pid from the above command
+    ssh_agent_pid="${SSH_AGENT_PID}"
+fi
+
 /usr/bin/ssh-add "${home_directory}/.local/etc/update_git_repositories/ssh_key"
+/usr/bin/sleep 2s
 
 # update git repositories
 ## debugging this is a bit difficult, since it runs in parallel.
@@ -82,3 +96,6 @@ prune_paths_array=(\
             pushd "${repository_directory%\.git}" >/dev/null && \
             git pull --recurse-submodules --force && \
             popd >/dev/null'
+
+# "ssh-agent" is not needed anymore
+/usr/bin/pkill --signal="SIGTERM" "${ssh_agent_pid}"
