@@ -15,7 +15,7 @@
 # limitations under the License.                                           #
 ############################################################################
 
-command_list=( \
+command_list=(\
                 "/bin/cat" \
                 "/usr/bin/find" \
                 "/usr/bin/nproc" \
