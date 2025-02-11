@@ -19,6 +19,7 @@ command_list=(\
                 "/usr/bin/git" \
                 "/usr/bin/locate" \
                 "/usr/bin/nproc" \
+                "/usr/bin/ssh-add" \
                 "/usr/sbin/updatedb" \
              )
 checkCommands()
@@ -39,7 +40,8 @@ checkCommands
 
 # define global variables
 current_username="${USER}"
-git_directory="/home/${current_username}/git"
+home_directory="/home/${current_username}"
+git_directory="${home_directory}/git"
 db_filename="directory_index.db"
 directory_index_file="${git_directory}/${db_filename}"
 available_processors=$(/usr/bin/nproc --all)
@@ -62,18 +64,21 @@ prune_paths_array=(\
     --database-root="${git_directory}" \
     --output="${directory_index_file}"
 
+# cache ssh key password
+/usr/bin/ssh-add "${home_directory}/.local/etc/update_git_repositories/ssh_key"
+
 # update git repositories
-# debugging this is a bit difficult, since it runs in parallel.
-# the output of the first "echo" and "git pull" are also distorted.
+## debugging this is a bit difficult, since it runs in parallel.
+## the outputs of the "echo" and "git pull" are also distorted.
+## no inputs can be done in the subshell!
 /usr/bin/locate --database="${directory_index_file}" --regexp "\.git$" --null \
     | xargs \
         --null \
         --no-run-if-empty \
         --max-procs="${available_processors}" \
         --replace="{}" \
-        /bin/sh -c 'repository_directory="{}" && \
+        /bin/bash -c 'repository_directory="{}" && \
             echo -e "\n\e[01;34m### Updating: ${repository_directory%\.git} ###\e[0m" && \
             pushd "${repository_directory%\.git}" >/dev/null && \
             git pull --recurse-submodules --force && \
             popd >/dev/null'
-
