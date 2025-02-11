@@ -16,6 +16,8 @@
     lfsl = lfs ls-files
     lfss = lfs status
     rp = reset --patch
+    # submodule update remote
+    smurr = submodule update --recursive --remote
     # this also restores the staging directory
     stashai = stash apply --index
     stashp = stash pop
