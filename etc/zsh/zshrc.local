@@ -84,6 +84,7 @@ csum()
 
 ## set up "binfmt" for "qemu"
 ### derived from: https://github.com/qemu/qemu/blob/master/scripts/qemu-binfmt-conf.sh
+### see also: https://www.kernel.org/doc/Documentation/admin-guide/binfmt-misc.rst
 binfmt_qemu()
 {
     local function_name="${0}"
