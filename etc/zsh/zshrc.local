@@ -1,18 +1,18 @@
-############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
-#                                                                          #
-# Licensed under the Apache License, Version 2.0 (the "License");          #
-# you may not use this file except in compliance with the License.         #
-# You may obtain a copy of the License at                                  #
-#                                                                          #
-#     http://www.apache.org/licenses/LICENSE-2.0                           #
-#                                                                          #
-# Unless required by applicable law or agreed to in writing, software      #
-# distributed under the License is distributed on an "AS IS" BASIS,        #
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
-# See the License for the specific language governing permissions and      #
-# limitations under the License.                                           #
-############################################################################
+#############################################################################
+# Copyright 2020-2022 Ramon Fischer                                         #
+#                                                                           #
+# Licensed under the Apache License, Version 2.0 (the "License");           #
+# you may not use this file except in compliance with the License.          #
+# You may obtain a copy of the License at                                   #
+#                                                                           #
+#     http://www.apache.org/licenses/LICENSE-2.0                            #
+#                                                                           #
+# Unless required by applicable law or agreed to in writing, software       #
+# distributed under the License is distributed on an "AS IS" BASIS,         #
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  #
+# See the License for the specific language governing permissions and       #
+# limitations under the License.                                            #
+#############################################################################
 
 # functions
 ## translate words (english-german,german-english)
@@ -98,9 +98,17 @@ binfmt_qemu()
     then
         echo -e "\e[01;31mThis function must be executed with root privileges!\e[0m" >&2
         return 1
+    elif [[ ! -d "${binfmt_directory}" ]]
+    then
+        echo -e "\e[01;31mCould not find directory: '${binfmt_directory}' or is not a directory.\e[0m" >&2
+        return 1
     elif [[ ! -f "${binfmt_register_file}" ]]
     then
-        echo -e "\e[01;31mCould not find file: '${binfmt_register_file}'.\e[0m" >&2
+        echo -e "\e[01;31mCould not find file: '${binfmt_register_file}' or is not a file.\e[0m" >&2
+        return 1
+    elif [[ ! -f "${binfmt_status_file}" ]]
+    then
+        echo -e "\e[01;31mCould not find file: '${binfmt_status_file}' or is not a file.\e[0m" >&2
         return 1
     fi
 
@@ -121,18 +129,16 @@ binfmt_qemu()
         "status")
             echo -e "\e[01;34mContent of directory: '${binfmt_directory}':\e[0m"
             \ls "${binfmt_directory}"
+
+            echo -e "\n\e[01;34mStatus of '${binfmt_status_file}':\e[0m"
+            \cat "${binfmt_status_file}"
+
             return 0
             ;;
 
         "disable-all")
-            if [[ ! -f "${binfmt_status_file}" ]]
-            then
-                echo -e "\e[01;31mFile: '${binfmt_status_file}' does not exist!\e[0m" >&2
-                return 1
-            else
-                echo "-1" > "${binfmt_status_file}"
-                "${function_name}" status
-            fi
+            echo "-1" > "${binfmt_status_file}"
+            "${function_name}" status
 
             return 0
             ;;
@@ -155,6 +161,7 @@ binfmt_qemu()
             if [[ -f "${binfmt_qemu_cpu_file}" ]]
             then
                 echo -e "\e[01;31mFile: '${binfmt_qemu_cpu_file}' already exists!\e[0m" >&2
+                "${function_name}" status
                 return 1
             else
                 local interpreter="/usr/bin/qemu-${cpu_arch}-static"
@@ -164,6 +171,7 @@ binfmt_qemu()
                 if [[ ! -f "${binfmt_qemu_cpu_file}" ]]
                 then
                     echo -e "\e[01;31mSomething went wrong creating the file: '${binfmt_qemu_cpu_file}'.\e[0m" >&2
+                    "${function_name}" status
                     return 1
                 else
                     \cat "${binfmt_qemu_cpu_file}"
@@ -176,7 +184,8 @@ binfmt_qemu()
         "disable")
             if [[ ! -f "${binfmt_qemu_cpu_file}" ]]
             then
-                echo -e "\e[01;31mFile: '${binfmt_qemu_cpu_file}' does not exist!\e[0m" >&2
+                echo -e "\e[01;31mCould not find file: '${binfmt_qemu_cpu_file}' or is not a file.\e[0m" >&2
+                "${function_name}" status
                 return 1
             else
                 echo "-1" > "${binfmt_qemu_cpu_file}"
