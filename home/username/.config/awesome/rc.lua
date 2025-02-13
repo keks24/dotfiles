@@ -625,6 +625,7 @@ awful.rules.rules = {
     -- custom - 20241108T081820+0100 - rfischer: always open "libreoffice" on "screen 2", tag "office" and focus "screen 2".
     { rule_any = { class = {
                     "Soffice",
+                    "libreoffice",
                     "libreoffice-startcenter",
                     "libreoffice-base",
                     "libreoffice-calc",
