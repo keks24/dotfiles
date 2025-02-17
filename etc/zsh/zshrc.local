@@ -1116,7 +1116,7 @@ else
 fi
 alias crontab="crontab -i"
 alias curl="curl --show-error"
-alias dd="dd bs='512b' conv='fsync' status='progress'"
+alias dd="dd bs='512' conv='fsync' status='progress'"
 alias diff="diff --side-by-side --suppress-common-lines --color"
 alias dvdbackup="dvdbackup --progress"
 alias e2fsck="e2fsck -v"
