@@ -102,4 +102,7 @@ fi
             popd >/dev/null'
 
 # "ssh-agent" is not needed anymore
-/usr/bin/pkill --signal="SIGTERM" "${ssh_agent_pid}"
+if [[ "${ssh_agent_pid}" != "" ]]
+then
+    /usr/bin/pkill --signal="SIGTERM" "${ssh_agent_pid}"
+fi
