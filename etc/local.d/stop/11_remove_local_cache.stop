@@ -19,10 +19,19 @@ script_directory_path="${0%/*}"
 script_name="${0##*/}"
 declare -a cache_directory_list
 cache_directory_list=("/root/.cache" "/home/ramon/.cache")
+available_processors=$(/usr/bin/nproc --all)
+xargs_max_args="10"
 
 /usr/bin/logger --tag "remove local cache" --id --stderr "${script_directory_path}/${script_name}: executed"
 
 for cache_directory in "${cache_directory_list[@]}"
 do
-    /usr/bin/find "${cache_directory}/"* -atime +30 -exec /bin/rm --recursive --force "{}" +
+    # "-mindepth 1" will exclude the parent directory
+    /usr/bin/find "${cache_directory}" -mindepth 1 -atime +30 -print0 \
+        | /usr/bin/xargs \
+            --null \
+            --no-run-if-empty \
+            --max-procs="${available_processors}" \
+            --max-args="${xargs_max_args}" \
+            /bin/rm --recursive --force
 done
