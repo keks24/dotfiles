@@ -22,6 +22,27 @@ dic()
     \w3m -dump "https://pocket.dict.cc/?s=${input_string}" | \head --lines="-6" | \tail --lines="+6" | \tac
 }
 
+## navigate to the real path of symlinks, which point to directories or files
+cdl()
+{
+    local symlink_file="${1}"
+    local resolved_path
+    local file_resolved_path
+
+    # check, if symlink is a directory
+    resolved_path=$(\realpath "${symlink_file}")
+    if [[ -d "${resolved_path}" ]]
+    then
+        cd "${resolved_path}"
+    else
+        # if not, cut off the filename
+        file_resolved_path="${resolved_path%/*}"
+        echo "Correcting '${resolved_path}' to '${file_resolved_path}'" >&2
+        cd "${file_resolved_path}"
+    fi
+}
+
+## calculate in a convenient way
 calc()
 {
     local input="${*}"
