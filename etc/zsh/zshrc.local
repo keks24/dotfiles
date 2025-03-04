@@ -548,7 +548,7 @@ getLastPortageSync()
     if (( ${days_since_last_sync} >= 7.5 && ${days_since_last_sync} < 10 ))
     then
         printf "\e[01;33m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
-    elif (( ${days_since_last_sync} >= 10 ))
+    elif (( ${days_since_last_sync} >= 20 ))
     then
         printf "\e[01;31;5m[%.2f] days since last portage synchronisation!\e[0m \e[01;31m(execute as root: /root/bin/update.sh)\e[0m\n" "${days_since_last_sync}"
     elif [[ "${1}" == "--verbose" ]]
