@@ -540,22 +540,20 @@ getLastPortageSync()
         echo -e "\e[01;31mThe file: '${portage_timestamp_file}' could not be found or is not a file.\e[0m" >&2
         return 1
     else
-        local current_unix_time="$(\date +%s)"
-        local portage_unix_time="$(\date --date="$(< ${portage_timestamp_file})" +%s)"
-        local days_since_last_sync="$(( (${current_unix_time} - ${portage_unix_time}) / 86400.0 ))"
+        local current_unix_time=$(\date +%s)
+        local portage_unix_time=$(\date --date="$(< ${portage_timestamp_file})" +%s)
+        local days_since_last_sync=$(( (${current_unix_time} - ${portage_unix_time}) / 86400.0 ))
     fi
 
-    if (( ${days_since_last_sync} >= 3.5 && ${days_since_last_sync} < 7 ))
+    if (( ${days_since_last_sync} >= 7.5 && ${days_since_last_sync} < 10 ))
     then
         printf "\e[01;33m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
-    elif (( ${days_since_last_sync} >= 7 ))
+    elif (( ${days_since_last_sync} >= 10 ))
     then
         printf "\e[01;31;5m[%.2f] days since last portage synchronisation!\e[0m \e[01;31m(execute as root: /root/bin/update.sh)\e[0m\n" "${days_since_last_sync}"
-    elif [[ "${1}" == "-v" ]]
+    elif [[ "${1}" == "--verbose" ]]
     then
         printf "\e[01;34m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
-    else
-        printf ""
     fi
 }
 
