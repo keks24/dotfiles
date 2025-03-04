@@ -45,9 +45,12 @@ checkCommands
 # define global variables
 current_username="${USER}"
 home_directory="/home/${current_username}"
-git_directory="${home_directory}/git"
+declare -a git_directory_array
+git_directory_array=(\
+                        "${home_directory}/git" \
+                        "/usr/local/share/git" \
+                    )
 db_filename="directory_index.db"
-directory_index_file="${git_directory}/${db_filename}"
 available_processors=$(/usr/bin/nproc --all)
 declare -a prune_paths_array
 # trailing slashes for directories must be left out!
@@ -56,17 +59,6 @@ prune_paths_array=(\
                     "${git_directory}/external/github.com/keks24/gitea/integrations/gitea-repositories-meta" \
                     "${git_directory}/external/github.com/fritzbox/freetz-ng/make/pkgs/git/files/root/etc" \
                   )
-
-# scan git directory and save binary index file
-## the array needs to be expanded via "echo"!
-## unfortunately, there is no way to only include ".git/" directories.
-/usr/sbin/updatedb \
-    --prune-bind-mounts="no" \
-    --prunefs="" \
-    --prunenames="" \
-    --add-prunepaths="$(echo ${prune_paths_array[@]})" \
-    --database-root="${git_directory}" \
-    --output="${directory_index_file}"
 
 # cache ssh key password
 if ! /usr/bin/pgrep --euid="${current_username}" "ssh-agent" >/dev/null
@@ -85,21 +77,38 @@ then
 fi
 /usr/bin/sleep 2s
 
-# update git repositories
-## debugging this is a bit difficult, since it runs in parallel.
-## the outputs of the "echo" and "git pull" are also distorted.
-## no inputs can be done in the subshell!
-/usr/bin/locate --database="${directory_index_file}" --regexp "\.git$" --null \
-    | xargs \
-        --null \
-        --no-run-if-empty \
-        --max-procs="${available_processors}" \
-        --replace="{}" \
-        /bin/bash -c 'repository_directory="{}" && \
-            echo -e "\n\e[01;34m### Updating: ${repository_directory%\.git} ###\e[0m" && \
-            pushd "${repository_directory%\.git}" >/dev/null && \
-            git pull --recurse-submodules --force && \
-            popd >/dev/null'
+for git_directory in "${git_directory_array[@]}"
+do
+    directory_index_file="${git_directory}/${db_filename}"
+
+    # scan git directory and save binary index file
+    ## the array needs to be expanded via "echo"!
+    ## unfortunately, there is no way to only include ".git/" directories.
+    ## unfortunately, "updatedb" does not traverse symlinks.
+    /usr/sbin/updatedb \
+        --prune-bind-mounts="no" \
+        --prunefs="" \
+        --prunenames="" \
+        --add-prunepaths="$(echo ${prune_paths_array[@]})" \
+        --database-root="${git_directory}" \
+        --output="${directory_index_file}"
+
+    # update git repositories
+    ## debugging this is a bit difficult, since it runs in parallel.
+    ## the outputs of the "echo" and "git pull" are also distorted.
+    ## no inputs can be done in the subshell!
+    /usr/bin/locate --database="${directory_index_file}" --regexp "\.git$" --null \
+        | xargs \
+            --null \
+            --no-run-if-empty \
+            --max-procs="${available_processors}" \
+            --replace="{}" \
+            /bin/bash -c 'repository_directory="{}" && \
+                echo -e "\n\e[01;34m### Updating: ${repository_directory%\.git} ###\e[0m" && \
+                pushd "${repository_directory%\.git}" >/dev/null && \
+                git pull --recurse-submodules --force && \
+                popd >/dev/null'
+done
 
 # "ssh-agent" is not needed anymore
 if [[ "${ssh_agent_pid}" != "" ]]
