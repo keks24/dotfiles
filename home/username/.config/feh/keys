@@ -21,6 +21,7 @@ prev_img
 reload_image
 render
 
+save_filelist
 save_image
 delete
 
@@ -37,11 +38,12 @@ zoom_fill
 toggle_auto_zoom
 
 ## bind actions
-next_img C-l Right
-prev_img C-h Left
+next_img L Right
+prev_img H Left
 reload_image R
 render r
 
+save_filelist C-l
 save_image S
 delete D Delete
 
