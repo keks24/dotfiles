@@ -626,7 +626,7 @@ getLastPortageSync()
         local days_since_last_sync=$(( (${current_unix_time} - ${portage_unix_time}) / 86400.0 ))
     fi
 
-    if (( ${days_since_last_sync} >= 7.5 && ${days_since_last_sync} < 10 ))
+    if (( ${days_since_last_sync} >= 7.5 && ${days_since_last_sync} < 20 ))
     then
         printf "\e[01;33m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
     elif (( ${days_since_last_sync} >= 20 ))
