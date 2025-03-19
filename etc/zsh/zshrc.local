@@ -18,30 +18,89 @@
 ## translate words (english-german,german-english)
 dic()
 {
-    local input_string=${*// /+}
-    local curl_output=$(\curl --silent --show-error --url "https://pocket.dict.cc/?s=${input_string}")
+    local input_string="${*// /+}"
+    local curl_output=$(\curl \
+                            --silent \
+                            --show-error \
+                            --url "https://pocket.dict.cc/?s=${input_string}" \
+                       )
+
+    if [[ "${curl_output}" == *"No results!"* ]]
+    then
+        local no_results="true"
+    fi
+
     local filtered_output=$(\gawk '\
-        /<dl>/ { flag=1; next }; \
-        /<\/dl>/ { flag=0 }; \
-        flag \
+        /<dl>|<\/dl>|<dt>|<\/dt>|<dd>|<\/dd>/ \
         {
             # remove title tag
             gsub("<dt>", "");
 
-            # add new line and indent
-            gsub("<br />", "\n    ");
+            # add newline and indent
+            gsub("<br>|<br />", "\n    ");
 
             # indent sub entries
             gsub("<dd>", "\n    ");
 
+            # remove div container block
+            gsub("<div.*>(.|\n)*</div>", "");
+
+            # remove javascript block
+            gsub("<script.*>(.|\n)*</script>", "");
+
             # remove any other html tags
             gsub("<[^>]+>", "");
 
-            print $0
+            # reconstruct special characters (https://www.w3schools.com/html/html_entities.asp)
+            ## non-breaking space
+            gsub("&nbsp;", " ");
+
+            ## lower than
+            gsub("&lt;", "<");
+
+            ## greater than
+            gsub("&gt;", ">");
+
+            ## ampersand
+            gsub("&amp;", "&");
+
+            ## double quotation mark
+            gsub("&quot;", "\"");
+
+            ## single quotation mark
+            gsub("&apos;", "\u0027");
+
+            ## cent
+            gsub("&cent;", "¢");
+
+            ## pound
+            gsub("&pound;", "£");
+
+            ## yen
+            gsub("&yen;", "¥");
+
+            ## euro
+            gsub("&euro;", "€");
+
+            ## copyright
+            gsub("&copy;", "©");
+
+            ## registered trademark
+            gsub("&reg;", "®");
+
+            ## trademark
+            gsub("&trade;", "™");
+
+            print $0;
         }' <<< "${curl_output}")
 
     # reverse output
     \tac <<< "${filtered_output}"
+
+    if [[ "${no_results}" == "true" ]]
+    then
+        return 1
+    fi
 }
 
 ## navigate to the real path of symlinks, which point to directories or files
