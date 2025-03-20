@@ -18,7 +18,12 @@
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 declare -a cache_directory_list
-cache_directory_list=("/root/.cache" "/home/ramon/.cache")
+cache_directory_list=(\
+                        "/root/.cache" \
+                        "/root/.config/nvim/tmp" \
+                        "/home/ramon/.cache" \
+                        "/home/ramon/.config/nvim/tmp" \
+                     )
 available_processors=$(/usr/bin/nproc --all)
 xargs_max_args="10"
 
