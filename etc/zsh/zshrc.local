@@ -58,7 +58,7 @@ dic()
         *\}*) input_string="${input_string//\}/%7D}" ;|
 
         *\ß*) input_string="${input_string//\ß/%C3%9F}" ;|
-        *\ä*) input_string="${input_string//\ö/%C3%A4}" ;|
+        *\ä*) input_string="${input_string//\ä/%C3%A4}" ;|
         *\§*) input_string="${input_string//\§/%C2%A7}" ;|
         *\°*) input_string="${input_string//\°/%C2%B0}" ;|
         *\²*) input_string="${input_string//\²/%C2%B2}" ;|
