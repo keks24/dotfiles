@@ -18,11 +18,66 @@
 ## translate words (english-german,german-english)
 dic()
 {
-    local input_string="${*// /+}"
+    local input_string="${*}"
+
+    # rudimentary url encoding
+    # cascade through all cases via ";|"
+    case "${input_string}" in
+        *" "*) input_string="${input_string// /+}" ;|
+
+        *\!*) input_string="${input_string//\!/%21}" ;|
+        *\"*) input_string="${input_string//\"/%22}" ;|
+        *\#*) input_string="${input_string//\#/%23}" ;|
+        *\$*) input_string="${input_string//\$/%24}" ;|
+        *\&*) input_string="${input_string//\&/%26}" ;|
+        *\'*) input_string="${input_string//\'/%27}" ;|
+        *\(*) input_string="${input_string//\(/%28}" ;|
+        *\)*) input_string="${input_string//\)/%29}" ;|
+
+        *\@*) input_string="${input_string//\@/%40}" ;|
+        *\`*) input_string="${input_string//\`/%60}" ;|
+
+        *\**) input_string="${input_string//\*/%2A}" ;|
+        *\,*) input_string="${input_string//\,/%2C}" ;|
+        *\/*) input_string="${input_string//\//%2F}" ;|
+
+        *\:*) input_string="${input_string//\:/%3A}" ;|
+        *\;*) input_string="${input_string//\;/%3B}" ;|
+        *\<*) input_string="${input_string//\@/%3C}" ;|
+        *\=*) input_string="${input_string//\=/%3D}" ;|
+        *\>*) input_string="${input_string//\@/%3E}" ;|
+        *\?*) input_string="${input_string//\?/%3F}" ;|
+
+        *\[*) input_string="${input_string//\[/%5B}" ;|
+        *\\*) input_string="${input_string//\\/%5C}" ;|
+        *\]*) input_string="${input_string//\]/%5D}" ;|
+        *\^*) input_string="${input_string//\^/%5E}" ;|
+
+        *\{*) input_string="${input_string//\{/%7B}" ;|
+        *\|*) input_string="${input_string//\|/%7C}" ;|
+        *\}*) input_string="${input_string//\}/%7D}" ;|
+
+        *\ß*) input_string="${input_string//\ß/%C3%9F}" ;|
+        *\ä*) input_string="${input_string//\ö/%C3%A4}" ;|
+        *\§*) input_string="${input_string//\§/%C2%A7}" ;|
+        *\°*) input_string="${input_string//\°/%C2%B0}" ;|
+        *\²*) input_string="${input_string//\²/%C2%B2}" ;|
+        *\³*) input_string="${input_string//\³/%C2%B3}" ;|
+        *\´*) input_string="${input_string//\´/%C2%B4}" ;|
+        *\ö*) input_string="${input_string//\ö/%C3%B6}" ;|
+        *\ü*) input_string="${input_string//\ü/%C3%BC}" ;|
+
+        *\€*) input_string="${input_string//\€/%E2%82%AC}" ;;
+    esac
+
+    local dictionary_url="https://pocket.dict.cc/?s=${input_string}"
+
+    echo -e "URL: ${dictionary_url}\n"
+
     local curl_output=$(\curl \
                             --silent \
                             --show-error \
-                            --url "https://pocket.dict.cc/?s=${input_string}" \
+                            --url "${dictionary_url}" \
                        )
 
     if [[ "${curl_output}" == *"No results!"* ]]
