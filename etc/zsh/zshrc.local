@@ -154,6 +154,7 @@ dic()
 
     if [[ "${no_results}" == "true" ]]
     then
+        echo -e "\e[01;31mNo results!\e[0m" >&2
         return 1
     fi
 }
