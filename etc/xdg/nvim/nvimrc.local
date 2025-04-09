@@ -55,7 +55,6 @@
 " # limitations under the License.                                           #
 " ############################################################################
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -576,7 +575,6 @@ set whichwrap+=<,>,h,l
     Plugin 'ericpruitt/tmux.vim', {'rtp': 'vim/'}
 
     " vim-hexmode
-    " requires 'xxd' from the package 'vim-core'
     Plugin 'fidian/hexmode'
 
     " All of your Plugins must be added before the following line
@@ -681,13 +679,13 @@ endif
 let g:tex_fold_enabled=1
 
 " save and compile latex files
-autocmd FileType tex map <F1> :cd %:h \| :w \| :!pdflatex "%" && okular "%:r.pdf" <cr> <enter>
+"autocmd FileType tex map <F1> :cd %:h \| :w \| :!pdflatex "%" && okular "%:r.pdf" <cr> <enter>
 
 " save and compile c, c++ and c# programs
-autocmd FileType c map <F1> :cd %:h \| :w \| :!echo -e "\033c" && g++ "%" -o "%:r" && "./%:r" <cr>
-autocmd FileType cpp map <F1> :cd %:h \| :w \| :!echo -e "\033c" && g++ "%" -o "%:r" && "./%:r" <cr>
-autocmd FileType cs map <F1> :cd %:h \| :w \| :!echo -e "\033c" && gmcs "%" && "./%:r.exe" <cr>
-autocmd FileType python map <F1> :cd %:h \| :w \| :!echo -e "\033c" && python3.4 "%" <cr>
+"autocmd FileType c map <F1> :cd %:h \| :w \| :!echo -e "\033c" && g++ "%" -o "%:r" && "./%:r" <cr>
+"autocmd FileType cpp map <F1> :cd %:h \| :w \| :!echo -e "\033c" && g++ "%" -o "%:r" && "./%:r" <cr>
+"autocmd FileType cs map <F1> :cd %:h \| :w \| :!echo -e "\033c" && gmcs "%" && "./%:r.exe" <cr>
+"autocmd FileType python map <F1> :cd %:h \| :w \| :!echo -e "\033c" && python3.4 "%" <cr>
 
 " unbind arrow keys
 noremap  <up> <nop>
@@ -751,6 +749,9 @@ nnoremap <silent> <down> :resize +5<cr>
 " character formatting
 set list listchars=tab:»·,trail:·
 set listchars=eol:¬,precedes:«,extends:»,tab:»·,trail:·
+
+" toggle text wrapping
+nnoremap <silent> <f1> :set wrap!<cr>
 
 " toggle character formatting and row numbers
 nnoremap <silent> <f2> :set list! number! relativenumber! \| :call FoldColumnToggle()<cr>
