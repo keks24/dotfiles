@@ -23,7 +23,7 @@ Compile new kernel
 
         4.2. Compile the kernel and kernel modules:
             $ available_processors=$(nproc --all)
-            $ system_max_load=$(printf "%.2f" "$(( available_processors * 0.75 ))")
+            $ system_max_load=$(printf "%.2f" "$(( available_processors * 0.80 ))")
             $ make \
                 --jobs="${available_processors}" \
                 --load-average="${system_max_load}" && \
