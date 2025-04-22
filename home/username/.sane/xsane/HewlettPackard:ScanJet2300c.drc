@@ -11,13 +11,13 @@
 "resolution"
 150
 "tl-x"
-354284
+11098
 "tl-y"
 11098
 "br-x"
-13972080
+14128050
 "br-y"
-19242056
+19322022
 "custom-gamma"
 0
 "swdeskew"
@@ -49,7 +49,7 @@
 "expiration-time"
 -1
 "xsane-main-window-x-position"
-1050
+1046
 "xsane-main-window-y-position"
 20
 "xsane-main-window-width"
@@ -105,7 +105,7 @@
 "xsane-brightness-blue"
 0
 "xsane-contrast"
-5242880
+6553600
 "xsane-contrast-red"
 0
 "xsane-contrast-green"
