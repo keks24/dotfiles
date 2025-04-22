@@ -49,9 +49,9 @@
 "expiration-time"
 -1
 "xsane-main-window-x-position"
-1892
+1050
 "xsane-main-window-y-position"
-209
+20
 "xsane-main-window-width"
 294
 "xsane-main-window-height"
@@ -69,7 +69,7 @@
 "xsane-advanced-options-window-y-position"
 103
 "xsane-histogram-window-x-position"
-572
+1622
 "xsane-histogram-window-y-position"
 40
 "xsane-gamma-window-x-position"
@@ -81,9 +81,9 @@
 "xsane-batch-window-y-position"
 40
 "xsane-preview-window-x-position"
-1060
+0
 "xsane-preview-window-y-position"
-30
+0
 "xsane-preview-window-width"
 1896
 "xsane-preview-window-height"
@@ -131,7 +131,7 @@
 "xsane-negative"
 0
 "xsane-show-preview"
-1
+0
 "xsane-enable-color-management"
 0
 "xsane-scanner-default-color-icm-profile"
