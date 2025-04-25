@@ -23,6 +23,7 @@ cache_directory_list=(\
                         "/root/.config/nvim/tmp" \
                         "/home/ramon/.cache" \
                         "/home/ramon/.config/nvim/tmp" \
+                        "/home/ramon/.config/mpv/watch_later" \
                      )
 available_processors=$(/usr/bin/nproc --all)
 xargs_max_args="10"
