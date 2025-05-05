@@ -179,6 +179,17 @@ cdl()
     fi
 }
 
+## create directories and navigate to the last one
+cdk()
+{
+    local directory_path="${*}"
+
+    \mkdir --parents "${directory_path}"
+
+    echo "Changing directory to '${directory_path}'"
+    cd "${directory_path}"
+}
+
 ## calculate in a convenient way
 calc()
 {
