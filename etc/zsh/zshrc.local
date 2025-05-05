@@ -174,7 +174,7 @@ cdl()
     else
         # if not, cut off the filename
         file_resolved_path="${resolved_path%/*}"
-        echo "Correcting '${resolved_path}' to '${file_resolved_path}'." >&2
+        echo "Correcting '${resolved_path}' to: '${file_resolved_path}'." >&2
         cd "${file_resolved_path}"
     fi
 }
@@ -186,7 +186,7 @@ cdk()
 
     \mkdir --parents "${directory_path}"
 
-    echo "Changing directory to '${directory_path}'."
+    echo "Changing directory to: '${directory_path}'."
     cd "${directory_path}"
 }
 
