@@ -643,7 +643,7 @@ awful.rules.rules = {
       properties = { screen = 1, tag = "image", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
     -- custom - 20250212T183504+0100 - fischer: always open "xsane" on "screen 1", tag "scan" and focus "screen 1"
-    { rule_any = { class = { "xsane", "Xsane"} },
+    { rule_any = { class = { "xsane", "Xsane" } },
       properties = { screen = 1, tag = "scan", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
     -- custom - 20250509T102324+0200 - rfischer: always open "flashplayerdebugger" on "screen 1", tag "game" and focus "screen 1"
