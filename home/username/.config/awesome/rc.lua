@@ -647,7 +647,11 @@ awful.rules.rules = {
       properties = { screen = 1, tag = "scan", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
     -- custom - 20250509T102324+0200 - rfischer: always open "flashplayerdebugger" on "screen 1", tag "game" and focus "screen 1"
-    { rule_any = { class = { "flashplayerdebugger", "Flashplayerdebugger" } },
+    { rule_any = { class = {
+                    "flashplayerdebugger",
+                    "Flashplayerdebugger",
+                    "main",
+                    "rs.ruffle.Ruffle" } },
       properties = { screen = 1, tag = "game", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
 }
