@@ -264,9 +264,9 @@ awful.screen.connect_for_each_screen(function(s)
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     -- custom - 20241110T195111+0100 - rfischer: use custom tags on two seperate screens. see also: rule mapping.
     if s.index == 1 then
-        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "8", "9" }, screen[1], awful.layout.layouts[1])
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "game", "9" }, screen[1], awful.layout.layouts[1])
     elseif s.index == 2 then
-        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "8", "9" }, screen[2], awful.layout.layouts[1])
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "game", "9" }, screen[2], awful.layout.layouts[1])
     end
 
     -- Create a promptbox for each screen
@@ -645,6 +645,10 @@ awful.rules.rules = {
     -- custom - 20250212T183504+0100 - fischer: always open "xsane" on "screen 1", tag "scan" and focus "screen 1"
     { rule_any = { class = { "xsane", "Xsane"} },
       properties = { screen = 1, tag = "scan", switchtotag = true,
+      function() awful.screen.focus(screen[1]) end } },
+    -- custom - 20250509T102324+0200 - rfischer: always open "flashplayerdebugger" on "screen 1", tag "game" and focus "screen 1"
+    { rule_any = { class = { "flashplayerdebugger", "Flashplayerdebugger" } },
+      properties = { screen = 1, tag = "game", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
 }
 -- }}}
