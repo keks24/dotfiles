@@ -612,7 +612,9 @@ awful.rules.rules = {
     -- get the value "WM_CLASS" via "xprop" (first value is "instance", second value is "class"):
     ---- $ <start_some_programme>
     ---- $ while read -r i; do echo -ne "${i}:\t"; xprop -id "${i}" WM_CLASS; done < <(xprop -root _NET_CLIENT_LIST | grep --extended-regexp --only-matching "0x[a-z0-9]+")
-    { rule_any = { class = { "firefox-esr", "Chromium-browser-chromium" } },
+    { rule_any = { class = {
+                    "firefox-esr",
+                    "Chromium-browser-chromium" } },
       properties = { screen = 2, tag = "web", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
     -- custom - 20241106T140033+0100 - rfischer: always open "thunderbird" on "screen 2", tag "e-mail" and focus "screen 2".
@@ -639,24 +641,26 @@ awful.rules.rules = {
     { rule = { class = "org-jdownloader-update-launcher-JDLauncher" },
       properties = { screen = 2, tag = "download" } },
     -- custom - 20241114T131244+0100- rfischer: always open "gimp" on "screen 1", tag "image" and focus "screen 1"
-    { rule_any = { class = { "Gimp", "Gimp-2.10" } },
+    { rule_any = { class = {
+                    "Gimp",
+                    "Gimp-2.10" } },
       properties = { screen = 1, tag = "image", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
     -- custom - 20250212T183504+0100 - fischer: always open "xsane" on "screen 1", tag "scan" and focus "screen 1"
-    { rule_any = { class = { "xsane", "Xsane" } },
+    { rule = { class = "Xsane" },
       properties = { screen = 1, tag = "scan", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
     -- custom - 20250509T102324+0200 - rfischer: always open "flashplayerdebugger" on "screen 1", tag "game" and focus "screen 1"
     { rule_any = { class = {
-                    "flashplayerdebugger",
                     "Flashplayerdebugger",
-                    "main",
                     "rs.ruffle.Ruffle" } },
       properties = { screen = 1, tag = "game", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
-
     -- custom - 20250513T161345+0200 - rfischer: always open "vncviewer" on "screen 1", tag "vm" and focus "screen 1"
-    { rule_any = { class = { "vncviewer", "Vncviewer" } },
+    { rule_any = { class = {
+                    "Vncviewer",
+                    "Qemu-system-aarch64",
+                    "Qemu-system-x86_64", } },
       properties = { screen = 1, tag = "vm", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
 }
