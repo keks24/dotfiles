@@ -659,8 +659,10 @@ awful.rules.rules = {
     -- custom - 20250513T161345+0200 - rfischer: always open "vncviewer" on "screen 1", tag "vm" and focus "screen 1"
     { rule_any = { class = {
                     "Vncviewer",
+                    "qemu-system-aarch64",
                     "Qemu-system-aarch64",
-                    "Qemu-system-x86_64", } },
+                    "qemu-system-x86_64",
+                    "Qemu-system-x86_64" } },
       properties = { screen = 1, tag = "vm", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
 }
