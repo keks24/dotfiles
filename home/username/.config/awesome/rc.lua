@@ -264,9 +264,9 @@ awful.screen.connect_for_each_screen(function(s)
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     -- custom - 20241110T195111+0100 - rfischer: use custom tags on two seperate screens. see also: rule mapping.
     if s.index == 1 then
-        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "game", "vm" }, screen[1], awful.layout.layouts[1])
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "video", "vm", "game" }, screen[1], awful.layout.layouts[1])
     elseif s.index == 2 then
-        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "game", "vm" }, screen[2], awful.layout.layouts[1])
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "video", "vm", "game" }, screen[2], awful.layout.layouts[1])
     end
 
     -- Create a promptbox for each screen
@@ -500,7 +500,9 @@ clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
+-- custom - 20250516T082923+0200 - rfischer: also use key "0" (tag "10").
+--for i = 1, 9 do
+for i = 1, 10 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
@@ -665,6 +667,11 @@ awful.rules.rules = {
                     "Qemu-system-x86_64" } },
       properties = { screen = 1, tag = "vm", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
+    -- custom - 20250516T083455+0200 - rfischer: always open "mpv" on "screen 1", tag "video", focus "screen 1" and "maximise" the window
+    { rule = { class = "mpv" },
+      properties = { screen = 1, tag = "video", switchtotag = true,
+      function() awful.screen.focus(screen[1]) end,
+      function(c) c.maximized = not c.maximized c:raise() end } }
 }
 -- }}}
 
