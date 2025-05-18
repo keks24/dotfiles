@@ -1204,13 +1204,22 @@ zshaddhistory()
 }
 
 # prompt shell
-## colour
-#if [[ "${EUID}" == "0" ]]
-#then
-#    zstyle ':prompt:grml:*:items:user' pre '%F{yellow}'
-#else
-#    zstyle ':prompt:grml:*:items:user' pre '%F{magenta}'
-#fi
+## different colours via "ssh"
+if pgrep "sshd" >/dev/null
+then
+    # true
+    export SSH_CONNECTION="1"
+
+    if [[ "${EUID}" == "0" ]]
+    then
+        zstyle ':prompt:grml:*:items:user' pre '%B%F{yellow}'
+    else
+        zstyle ':prompt:grml:*:items:user' pre '%B%F{magenta}'
+    fi
+else
+    # false
+    export SSH_CONNECTION="0"
+fi
 
 # source
 ## autojump
