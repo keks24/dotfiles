@@ -1205,7 +1205,7 @@ zshaddhistory()
 
 # prompt shell
 ## different colours via "ssh"
-if pgrep "sshd" >/dev/null
+if pidof -sq "sshd"
 then
     # true
     export SSH_CONNECTION="1"
