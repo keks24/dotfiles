@@ -269,6 +269,14 @@ awful.screen.connect_for_each_screen(function(s)
         awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "video", "vm", "game" }, screen[2], awful.layout.layouts[1])
     end
 
+    -- increase number of master clients for some tags
+    local tags = awful.tag.gettags(s.index)
+    for _, tag in pairs(tags) do
+        if tag.name == "web" or tag.name == "e-mail" or tag.name == "office" then
+            awful.tag.setnmaster(2, tag)
+        end
+    end
+
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -611,22 +619,20 @@ awful.rules.rules = {
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
     -- see function "watch_xwindows" at "/home/ramon/.config/zsh/zshrc.local" to get "instance" and "class" names
-    -- always open "firefox" and "chromium" on "screen 2", tag "web", focus "screen 2" and increase "number of master clients".
+    -- always open "firefox" and "chromium" on "screen 2", tag "web" and focus "screen 2".
     { rule_any = { class = {
                     "firefox-esr",
                     "Chromium-browser-chromium" } },
       properties = { screen = 2, tag = "web", switchtotag = true,
-      function() awful.screen.focus(screen[2]) end,
-      function () awful.tag.incnmaster( 1, nil, true) end } },
-    -- always open "thunderbird" on "screen 2", tag "e-mail", focus "screen 2" and increase "number of master clients".
+      function() awful.screen.focus(screen[2]) end } },
+    -- always open "thunderbird" on "screen 2", tag "e-mail" and focus "screen 2".
     { rule_any = { instance = { "Mail", "Msgcompose" }, class = { "thunderbird" } },
       properties = { screen = 2, tag = "e-mail", switchtotag = true,
-      function() awful.screen.focus(screen[2]) end,
-      function () awful.tag.incnmaster( 1, nil, true) end } },
+      function() awful.screen.focus(screen[2]) end } },
     -- always open "calendar" windows on "screen 2"
     { rule = { instance = "Calendar", class = "thunderbird" },
       properties = { screen = 2, tag = "e-mail" } },
-    -- always open "libreoffice" on "screen 2", tag "office", focus "screen 2" and increase "number of master clients".
+    -- always open "libreoffice" on "screen 2", tag "office" and focus "screen 2".
     { rule_any = { class = {
                     "Soffice",
                     "libreoffice",
@@ -638,8 +644,7 @@ awful.rules.rules = {
                     "libreoffice-math",
                     "libreoffice-writer" } },
       properties = { screen = 2, tag = "office", switchtotag = true,
-      function() awful.screen.focus(screen[2]) end,
-      function () awful.tag.incnmaster( 1, nil, true) end } },
+      function() awful.screen.focus(screen[2]) end } },
     -- always open "jdownloader" on "screen 2", tag "download".
     { rule = { class = "org-jdownloader-update-launcher-JDLauncher" },
       properties = { screen = 2, tag = "download" } },
