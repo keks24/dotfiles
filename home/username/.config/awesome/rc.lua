@@ -262,7 +262,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-    -- custom - 20241110T195111+0100 - rfischer: use custom tags on two seperate screens. see also: rule mapping.
+    -- use custom tags on two seperate screens. see also: rule mapping.
     if s.index == 1 then
         awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "video", "vm", "game" }, screen[1], awful.layout.layouts[1])
     elseif s.index == 2 then
@@ -610,10 +610,8 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
+    -- see function "watch_xwindows" at "/home/ramon/.config/zsh/zshrc.local" to get "instance" and "class" names
     -- always open "firefox" and "chromium" on "screen 2", tag "web", focus "screen 2" and increase "number of master clients".
-    -- get the value "WM_CLASS" via "xprop" (first value is "instance", second value is "class"):
-    ---- $ <start_some_programme>
-    ---- $ while read -r i; do echo -ne "${i}:\t"; xprop -id "${i}" WM_CLASS; done < <(xprop -root _NET_CLIENT_LIST | grep --extended-regexp --only-matching "0x[a-z0-9]+")
     { rule_any = { class = {
                     "firefox-esr",
                     "Chromium-browser-chromium" } },

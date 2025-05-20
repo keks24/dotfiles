@@ -34,6 +34,28 @@ firefox_safe()
     \rm --force --recursive "${tmp_directory}"
 }
 
+### watch x windows
+watch_xwindows()
+{
+    local window_id_list=$(\xprop -root "_NET_CLIENT_LIST" | grep --extended-regexp --only-matching "0x[a-z0-9]+")
+    local window_id
+    local x
+
+    while [[ "${x}" != "0" ]]
+    do
+        \clear
+
+        echo -e "\e[01;33mFirst value is \"instance name\", second value is \"class name\":\e[0m\n" >&2
+        while read -r window_id
+        do
+            echo -ne "${window_id}:\t"
+            \xprop -id "${window_id}" "WM_CLASS"
+        done <<< "${window_id_list}"
+
+        \sleep 2s
+    done
+}
+
 ## prompt shell
 
 ## source
