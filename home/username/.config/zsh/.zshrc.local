@@ -16,6 +16,13 @@
 
 # user-specific
 ## functions
+### debug awesomewm
+debug_awesome()
+{
+    \Xephyr -resizeable ":1"
+    DISPLAY=":1" \awesome
+}
+
 ### firefox
 firefox_safe()
 {
