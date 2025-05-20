@@ -664,15 +664,14 @@ awful.rules.rules = {
                     "rs.ruffle.Ruffle" } },
       properties = { screen = 1, tag = "game", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
-    -- always open "vncviewer" on "screen 1", tag "vm" and focus "screen 1"
+    -- always open "vncviewer" on "screen 2", tag "vm"
     { rule_any = { class = {
                     "Vncviewer",
                     "qemu-system-aarch64",
                     "Qemu-system-aarch64",
                     "qemu-system-x86_64",
                     "Qemu-system-x86_64" } },
-      properties = { screen = 1, tag = "vm", switchtotag = true,
-      function() awful.screen.focus(screen[1]) end } },
+      properties = { screen = 2, tag = "vm" } },
     -- always open "mpv" on "screen 1", tag "video", focus "screen 1" and "maximise" the window
     { rule = { class = "mpv" },
       properties = { screen = 1, tag = "video", switchtotag = true,
