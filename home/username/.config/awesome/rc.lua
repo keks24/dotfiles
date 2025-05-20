@@ -672,7 +672,13 @@ awful.rules.rules = {
     { rule = { class = "mpv" },
       properties = { screen = 1, tag = "video", switchtotag = true,
       function() awful.screen.focus(screen[1]) end,
-      function(c) c.maximized = not c.maximized c:raise() end } }
+      function(c) c.maximized = not c.maximized c:raise() end } },
+    -- always open "Xephyr" on "screen 2", tag "video" and focus "screen 2"
+    { rule_any = { class = {
+                    "xephyr",
+                    "Xephyr" } },
+      properties = { screen = 2, tag = "video", switchtotag = true,
+      function() awful.screen.focus(screen[1]) end } }
 }
 -- }}}
 
