@@ -19,7 +19,7 @@
 ### debug awesomewm
 debug_awesome()
 {
-    \Xephyr -resizeable ":1"
+    \Xephyr -resizeable -screen "1050x1680" ":1"
     DISPLAY=":1" \awesome
 }
 
