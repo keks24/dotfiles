@@ -1281,6 +1281,7 @@ alias aria2c="aria2c \
     --remove-control-file='false'"
 alias badblocks="badblocks -sv"
 alias bc="bc --mathlib"
+alias cal="cal --week=$(\date +%V)"
 alias cdrecord="cdrecord -sao -speed='0' -eject -v"
 alias cdparanoia="cdparanoia --batch --force-read-speed='1' --abort-on-skip --log-summary='cdparanoia.log'"
 if [[ "${EUID}" == "0" ]]
