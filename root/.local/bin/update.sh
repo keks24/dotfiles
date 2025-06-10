@@ -1,19 +1,19 @@
 #!/bin/bash
-############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
-#                                                                          #
-# Licensed under the Apache License, Version 2.0 (the "License");          #
-# you may not use this file except in compliance with the License.         #
-# You may obtain a copy of the License at                                  #
-#                                                                          #
-#     http://www.apache.org/licenses/LICENSE-2.0                           #
-#                                                                          #
-# Unless required by applicable law or agreed to in writing, software      #
-# distributed under the License is distributed on an "AS IS" BASIS,        #
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
-# See the License for the specific language governing permissions and      #
-# limitations under the License.                                           #
-############################################################################
+#############################################################################
+# Copyright 2020-2025 Ramon Fischer                                         #
+#                                                                           #
+# Licensed under the Apache License, Version 2.0 (the "License");           #
+# you may not use this file except in compliance with the License.          #
+# You may obtain a copy of the License at                                   #
+#                                                                           #
+#     http://www.apache.org/licenses/LICENSE-2.0                            #
+#                                                                           #
+# Unless required by applicable law or agreed to in writing, software       #
+# distributed under the License is distributed on an "AS IS" BASIS,         #
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  #
+# See the License for the specific language governing permissions and       #
+# limitations under the License.                                            #
+#############################################################################
 
 command_list=(clear date eclean eix eix-sync eix-test-obsolete emerge eselect etc-update glsa-check grep logger revdep-rebuild tee unalias)
 checkCommands()
@@ -51,7 +51,7 @@ echo -e "\e[01;33mChecking for new updates...\e[0m" >&2
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip-review --auto --user --no-warn-script-location
 /usr/bin/sudo --shell --user="${SUDO_USER}" /home/${SUDO_USER}/bin/pip check
 #/usr/bin/sudo --shell --user="${SUDO_USER}" /usr/bin/flatpak update
-/bin/su - "${SUDO_USER}" --command="/usr/bin/npm update -g"
+#/bin/su - "${SUDO_USER}" --command="/usr/bin/npm update -g"
 /usr/bin/eix-sync
 /usr/bin/eselect news read
 echo -e "\n\e[01;33mPress any key to continue...\e[0m" >&2
