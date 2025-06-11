@@ -37,12 +37,12 @@ firefox_safe()
 ### watch x windows
 watch_xwindows()
 {
-    local window_id_list=$(\xprop -root "_NET_CLIENT_LIST" | grep --extended-regexp --only-matching "0x[a-z0-9]+")
     local window_id
     local x
 
     while [[ "${x}" != "0" ]]
     do
+        local window_id_list=$(\xprop -root "_NET_CLIENT_LIST" | grep --extended-regexp --only-matching "0x[a-z0-9]+")
         \clear
 
         echo -e "\e[01;33mFirst value is \"instance name\", second value is \"class name\":\e[0m\n" >&2
