@@ -18,6 +18,6 @@
 # shell ("sh") variables must be escaped with double quotes, otherwise they are not expanded before execution!
 # the substitution "${filename//\.${filename_suffix}/.aac}" is executed on the entire directory path and filename, which is very unprecise!
 # "\.${filename_suffix}$" does not work for some reason.
---format="bestvideo[height<=1080]"
+--format-sort="res:1080,vcodec:h265,acodec:aac"
 #--download-archive="/home/ramon/music/youtube-dl/archive_lists/youtube-dl_1080p_download_archive.list"
 --output="./%(uploader)s/%(playlist_title|)s/%(title)s [%(id)s][%(format_note)s].%(ext)s"
