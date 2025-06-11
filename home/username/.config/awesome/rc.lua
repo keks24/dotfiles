@@ -622,6 +622,7 @@ awful.rules.rules = {
     -- always open "firefox" and "chromium" on "screen 2", tag "web" and focus "screen 2".
     { rule_any = { class = {
                     "firefox-esr",
+                    "Tor Browser",
                     "Chromium-browser-chromium" } },
       properties = { screen = 2, tag = "web", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
