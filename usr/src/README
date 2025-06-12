@@ -14,7 +14,7 @@ Compile new kernel
 
     4. Compile the new kernel
 
-        4.1. Adapt new kernel settings and automaticall adapt their default values:
+        4.1. Adapt new kernel settings and automatically adapt their default values:
             $ cd "/usr/src/linux/"
             $ make olddefconfig
 
