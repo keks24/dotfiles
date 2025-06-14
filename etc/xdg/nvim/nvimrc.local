@@ -787,3 +787,14 @@ au BufNewFile,BufRead ssh_config,*/.ssh/config.d/* setf sshconfig
 
 " toggle hexmode plugin
 nnoremap <silent> <f5> :Hexmode<cr>
+
+" toggle diff files
+function! ToggleDiff()
+    if &diff
+        :diffoff
+    else
+        :diffthis
+    endif
+endfunction
+
+nnoremap <silent> <f6> :call ToggleDiff()<cr>
