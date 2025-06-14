@@ -969,6 +969,16 @@ ptree()
     \namei --long --mountpoints "${directory_path}"
 }
 
+## list processes in a tree structure
+pst()
+{
+    \pstree --unicode --arguments --highlight-all --show-pids --show-pgids --numeric-sort --color='age'
+
+    echo -e "\n\e[01;32mProcesses newer   than 60 seconds (<=60s) are green.\e[0m"
+    echo -e "\e[01;33mProcesses newer   than an hour    (<=1h)  are yellow.\e[0m"
+    echo -e "\e[01;31mProcesses older   than an hour    (>1h)   are red.\e[0m"
+}
+
 pss()
 {
     # can also be a process name
@@ -1302,7 +1312,7 @@ alias fatresize="fatresize --progress"
 alias flac="flac --compression-level-8"
 alias fping="fping --generate --rdns"
 alias growisofs="growisofs -speed='1'"
-alias go-mtpfs="echo -e '\e[01;31mRemember to use \"rsync --inplace\", when copying to the Android device!\e[0m' &&  go-mtpfs -usb-timeout='15000'"
+alias go-mtpfs="echo -e '\e[01;31mRemember to use \"rsync --inplace\", when copying to the Android device!\e[0m' && go-mtpfs -usb-timeout='15000'"
 alias halt="echo 'Are you sure? Please run: /sbin/halt'"
 alias htop="btop"
 alias hexdump="hexdump --canonical"
@@ -1348,7 +1358,6 @@ alias poweroff="echo 'Are you sure? Please run: /sbin/poweroff'"
 alias pigz="pigz --best"
 alias pixz="pixz -9"
 alias plzip="plzip --best"
-alias pstree="pstree --unicode --arguments --highlight-all --show-pids --show-pgids --numeric-sort --color='age'"
 alias radeontop="radeontop --color"
 alias rdesktop="rdesktop -g 1920x1080 -P -z -x -l -r sound:off -k '/usr/share/rdesktop/keymaps/de'"
 alias reboot="echo 'Are you sure? Please run: /sbin/reboot'"
