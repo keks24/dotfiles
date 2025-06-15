@@ -21,7 +21,7 @@
 fat_illegal_character_list='<>:"\?*'
 declare -a music_directory_array
 music_directory_array=("audiobooks" "normal_music" "playlists" "podcasts" "record" "unusual_music")
-available_processors=$(/usr/bin/nproc --all --ignore="1")
+available_processors=$(/usr/bin/nproc --all)
 xargs_max_args="1"
 
 /usr/bin/find "${music_directory_array[@]}" \
