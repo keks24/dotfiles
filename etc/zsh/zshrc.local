@@ -195,7 +195,8 @@ calc()
 {
     local input="${*}"
 
-    \gawk 'BEGIN{ printf("%f", '"${input}"') }'
+    # delimit output with thousand separators
+    \gawk 'BEGIN{ printf("%\047f", '"${input}"') }'
 }
 
 ## generate and check file checksums via "blake2" in parallel
