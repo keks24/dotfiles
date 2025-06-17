@@ -67,7 +67,7 @@ do
             if [[ ! $(pgrep --euid "${USER}" "${APPLICATION_NAME}") ]]
             then
                 # start "physlock" after ten minutes to lock all screens; notify 30 seconds before
-                xautolock -corners --00 -time 10 -locker "${HOME}/bin/locker" -notify 30 -notifier '${HOME}/bin/awesome_notifier 10 critical "xautolock" "Locking screen in 30 seconds..."' >/dev/null 2>&1 &!
+                \xautolock -corners --00 -time 10 -locker "${HOME}/bin/locker" -notify 30 -notifier '${HOME}/bin/awesome_notifier "10" "critical" "xautolock" "Locking screen in 30 seconds..."' >/dev/null 2>&1 &!
             fi
             ;;
 
