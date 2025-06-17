@@ -30,9 +30,9 @@ for APPLICATION_NAME in ${APPLICATION_NAME_LIST[@]}
 do
     if [[ ! -d "${LOG_DIRECTORY}/${APPLICATION_NAME}" ]]
     then
-        mkdir --parents --mode="750" "${LOG_DIRECTORY}/${APPLICATION_NAME}"
-        touch "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
-        chmod 640 "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
+        \mkdir --parents --mode="750" "${LOG_DIRECTORY}/${APPLICATION_NAME}"
+        \touch "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
+        \chmod 640 "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
     else
         continue
     fi
@@ -46,25 +46,25 @@ do
     case "${APPLICATION_NAME}" in
         # parcellite (clipboard manager)
         "${APPLICATION_NAME_LIST[1]}")
-            if [[ ! $(pgrep --euid "${USER}" "${APPLICATION_NAME}") ]]
+            if ! \pgrep --euid "${USER}" "${APPLICATION_NAME}" >/dev/null
             then
-                parcellite --no-icon >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1 &!
+                \parcellite --no-icon >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1 &!
             fi
             ;;
 
         # ssh-agent
         "${APPLICATION_NAME_LIST[2]}")
-            if [[ ! $(pgrep --euid "${USER}" "${APPLICATION_NAME}") ]]
+            if ! \pgrep --euid "${USER}" "${APPLICATION_NAME}" >/dev/null
             then
                 # start "ssh-agent" with environment variables and save passwords for one hour
                 # further configurations are located at "/etc/ssh/ssh_config"
-                eval $(ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
+                \eval $(\ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
             fi
             ;;
 
         # xautolock
         "${APPLICATION_NAME_LIST[3]}")
-            if [[ ! $(pgrep --euid "${USER}" "${APPLICATION_NAME}") ]]
+            if ! \pgrep --euid "${USER}" "${APPLICATION_NAME}" >/dev/null
             then
                 # start "physlock" after ten minutes to lock all screens; notify 30 seconds before
                 \xautolock -corners --00 -time 10 -locker "${HOME}/bin/locker" -notify 30 -notifier '${HOME}/bin/awesome_notifier "10" "critical" "xautolock" "Locking screen in 30 seconds..."' >/dev/null 2>&1 &!
