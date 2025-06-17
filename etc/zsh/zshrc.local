@@ -1118,6 +1118,7 @@ transfer()
     esac
 }
 
+## add timestamp for each input; mimics "ts" from "moreutils"
 ts()
 {
     \gawk \
