@@ -72,7 +72,7 @@ dic()
 
     local dictionary_url="https://pocket.dict.cc/?s=${input_string}"
 
-    echo -e "URL: ${dictionary_url}\n"
+    \echo -e "URL: ${dictionary_url}\n"
 
     local curl_output=$(\curl \
                             --silent \
@@ -85,77 +85,77 @@ dic()
         local no_results="true"
     fi
 
-    local filtered_output=$(\gawk '\
-        /<dl>|<\/dl>|<dt>|<\/dt>|<dd>|<\/dd>/ \
-        {
-            # remove title tag
-            gsub("<dt>", "");
+    local filtered_output=$(\gawk \
+                                '/<dl>|<\/dl>|<dt>|<\/dt>|<dd>|<\/dd>/ \
+                                {
+                                    # remove title tag
+                                    gsub("<dt>", "");
 
-            # add newline and indent
-            gsub("<br>|<br />", "\n    ");
+                                    # add newline and indent
+                                    gsub("<br>|<br />", "\n    ");
 
-            # indent sub entries
-            gsub("<dd>", "\n    ");
+                                    # indent sub entries
+                                    gsub("<dd>", "\n    ");
 
-            # remove div container block
-            gsub("<div.*>(.|\n)*</div>", "");
+                                    # remove div container block
+                                    gsub("<div.*>(.|\n)*</div>", "");
 
-            # remove javascript block
-            gsub("<script.*>(.|\n)*</script>", "");
+                                    # remove javascript block
+                                    gsub("<script.*>(.|\n)*</script>", "");
 
-            # remove any other html tags
-            gsub("<[^>]+>", "");
+                                    # remove any other html tags
+                                    gsub("<[^>]+>", "");
 
-            # reconstruct special characters (https://www.w3schools.com/html/html_entities.asp)
-            ## non-breaking space
-            gsub("&nbsp;", " ");
+                                    # reconstruct special characters (https://www.w3schools.com/html/html_entities.asp)
+                                    ## non-breaking space
+                                    gsub("&nbsp;", " ");
 
-            ## lower than
-            gsub("&lt;", "<");
+                                    ## lower than
+                                    gsub("&lt;", "<");
 
-            ## greater than
-            gsub("&gt;", ">");
+                                    ## greater than
+                                    gsub("&gt;", ">");
 
-            ## ampersand
-            gsub("&amp;", "&");
+                                    ## ampersand
+                                    gsub("&amp;", "&");
 
-            ## double quotation mark
-            gsub("&quot;", "\"");
+                                    ## double quotation mark
+                                    gsub("&quot;", "\"");
 
-            ## single quotation mark
-            gsub("&apos;", "\u0027");
+                                    ## single quotation mark
+                                    gsub("&apos;", "\u0027");
 
-            ## cent
-            gsub("&cent;", "¢");
+                                    ## cent
+                                    gsub("&cent;", "¢");
 
-            ## pound
-            gsub("&pound;", "£");
+                                    ## pound
+                                    gsub("&pound;", "£");
 
-            ## yen
-            gsub("&yen;", "¥");
+                                    ## yen
+                                    gsub("&yen;", "¥");
 
-            ## euro
-            gsub("&euro;", "€");
+                                    ## euro
+                                    gsub("&euro;", "€");
 
-            ## copyright
-            gsub("&copy;", "©");
+                                    ## copyright
+                                    gsub("&copy;", "©");
 
-            ## registered trademark
-            gsub("&reg;", "®");
+                                    ## registered trademark
+                                    gsub("&reg;", "®");
 
-            ## trademark
-            gsub("&trade;", "™");
+                                    ## trademark
+                                    gsub("&trade;", "™");
 
-            print $0;
-        }' <<< "${curl_output}")
+                                    print $0;
+                                }' <<< "${curl_output}")
 
     # reverse output
     \tac <<< "${filtered_output}"
 
     if [[ "${no_results}" == "true" ]]
     then
-        echo -e "\e[01;31mNo results!\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mNo results!\e[0m" >&2
+        \return 1
     fi
 }
 
@@ -170,12 +170,12 @@ cdl()
     resolved_path=$(\realpath "${symlink_file}")
     if [[ -d "${resolved_path}" ]]
     then
-        cd "${resolved_path}"
+        \cd "${resolved_path}"
     else
         # if not, cut off the filename
         file_resolved_path="${resolved_path%/*}"
-        echo "Correcting '${resolved_path}' to: '${file_resolved_path}'." >&2
-        cd "${file_resolved_path}"
+        \echo "Correcting '${resolved_path}' to: '${file_resolved_path}'." >&2
+        \cd "${file_resolved_path}"
     fi
 }
 
@@ -186,8 +186,8 @@ cdk()
 
     \mkdir --parents "${directory_path}"
 
-    echo "Changing directory to: '${directory_path}'."
-    cd "${directory_path}"
+    \echo "Changing directory to: '${directory_path}'."
+    \cd "${directory_path}"
 }
 
 ## calculate in a convenient way
@@ -210,10 +210,10 @@ gsum()
 
     if [[ -f "${checksum_file}" ]]
     then
-        read $'overwrite_checksum_file?\e[01;31mThe file: '"'${checksum_file}'"$' already exists. Do you really want to overwrite it? (y/N): \e[0m' >&2
+        \read $'overwrite_checksum_file?\e[01;31mThe file: '"'${checksum_file}'"$' already exists. Do you really want to overwrite it? (y/N): \e[0m' >&2
         if [[ "${overwrite_checksum_file:-n}" =~ [nN] ]]
         then
-            return 1
+            \return 1
         fi
     fi
 
@@ -227,9 +227,10 @@ gsum()
     # using "here-string" ("<<<") would add a trailing newline.
     \xargs \
         --null \
+        --no-run-if-empty \
         --max-procs="${available_processors}" \
         --max-args="${xargs_max_args}" \
-        \b2sum --zero > "${checksum_file}" < <(printf "%s" "${file_list}")
+        \b2sum --zero > "${checksum_file}" < <(\printf "%s" "${file_list}")
 }
 csum()
 {
@@ -238,12 +239,13 @@ csum()
 
     if [[ ! -f "${checksum_file}" ]]
     then
-        echo -e "\e[01;31mThe file: '${checksum_file}' could not be found or is not a file.\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mThe file: '${checksum_file}' could not be found or is not a file.\e[0m" >&2
+        \return 1
     else
         # the parameter "--replace" and a subshell ("sh") must be used here!
         \xargs \
             --null \
+            --no-run-if-empty \
             --arg-file="${checksum_file}" \
             --max-procs="${available_processors}" \
             --replace="{}" \
@@ -267,20 +269,20 @@ binfmt_qemu()
 
     if [[ "${EUID}" != "0" ]]
     then
-        echo -e "\e[01;31mThis function must be executed with root privileges!\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mThis function must be executed with root privileges!\e[0m" >&2
+        \return 1
     elif [[ ! -d "${binfmt_directory}" ]]
     then
-        echo -e "\e[01;31mCould not find directory: '${binfmt_directory}' or is not a directory.\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mCould not find directory: '${binfmt_directory}' or is not a directory.\e[0m" >&2
+        \return 1
     elif [[ ! -f "${binfmt_register_file}" ]]
     then
-        echo -e "\e[01;31mCould not find file: '${binfmt_register_file}' or is not a file.\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mCould not find file: '${binfmt_register_file}' or is not a file.\e[0m" >&2
+        \return 1
     elif [[ ! -f "${binfmt_status_file}" ]]
     then
-        echo -e "\e[01;31mCould not find file: '${binfmt_status_file}' or is not a file.\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mCould not find file: '${binfmt_status_file}' or is not a file.\e[0m" >&2
+        \return 1
     fi
 
     # backslashes need to be escaped!
@@ -298,55 +300,55 @@ binfmt_qemu()
             ;;
 
         "status")
-            echo -e "\e[01;34mContent of directory: '${binfmt_directory}':\e[0m"
+            \echo -e "\e[01;34mContent of directory: '${binfmt_directory}':\e[0m"
             \ls "${binfmt_directory}"
 
-            echo -e "\n\e[01;34mStatus of '${binfmt_status_file}':\e[0m"
+            \echo -e "\n\e[01;34mStatus of '${binfmt_status_file}':\e[0m"
             \cat "${binfmt_status_file}"
 
-            return 0
+            \return 0
             ;;
 
         "disable-all")
-            echo "-1" > "${binfmt_status_file}"
+            \echo "-1" > "${binfmt_status_file}"
             "${function_name}" status
 
-            return 0
+            \return 0
             ;;
 
 
         "help")
-            echo "Usage: ${function_name} [aarch64 | arm | help | status | disable-all] [enable | disable | help]"
-            echo "Default parameters: aarch64 enable"
-            return 0
+            \echo "Usage: ${function_name} [aarch64 | arm | help | status | disable-all] [enable | disable | help]"
+            \echo "Default parameters: aarch64 enable"
+            \return 0
             ;;
 
         *)
-            echo -e "\e[01;31mWrong first parameter: '${cpu_arch_switch}'.\e[0m" >&2
+            \echo -e "\e[01;31mWrong first parameter: '${cpu_arch_switch}'.\e[0m" >&2
             "${function_name}" help
-            return 1
+            \return 1
     esac
 
     case "${enable_switch}" in
         "enable")
             if [[ -f "${binfmt_qemu_cpu_file}" ]]
             then
-                echo -e "\e[01;31mFile: '${binfmt_qemu_cpu_file}' already exists!\e[0m" >&2
+                \echo -e "\e[01;31mFile: '${binfmt_qemu_cpu_file}' already exists!\e[0m" >&2
                 "${function_name}" status
-                return 1
+                \return 1
             else
                 local interpreter="/usr/bin/qemu-${cpu_arch}-static"
 
-                echo ":qemu-${cpu_arch}:M::${magic}:${mask}:${interpreter}:" > "${binfmt_register_file}"
+                \echo ":qemu-${cpu_arch}:M::${magic}:${mask}:${interpreter}:" > "${binfmt_register_file}"
 
                 if [[ ! -f "${binfmt_qemu_cpu_file}" ]]
                 then
-                    echo -e "\e[01;31mSomething went wrong creating the file: '${binfmt_qemu_cpu_file}'.\e[0m" >&2
+                    \echo -e "\e[01;31mSomething went wrong creating the file: '${binfmt_qemu_cpu_file}'.\e[0m" >&2
                     "${function_name}" status
-                    return 1
+                    \return 1
                 else
                     \cat "${binfmt_qemu_cpu_file}"
-                    echo ""
+                    \echo ""
                     "${function_name}" status
                 fi
             fi
@@ -355,11 +357,11 @@ binfmt_qemu()
         "disable")
             if [[ ! -f "${binfmt_qemu_cpu_file}" ]]
             then
-                echo -e "\e[01;31mCould not find file: '${binfmt_qemu_cpu_file}' or is not a file.\e[0m" >&2
+                \echo -e "\e[01;31mCould not find file: '${binfmt_qemu_cpu_file}' or is not a file.\e[0m" >&2
                 "${function_name}" status
-                return 1
+                \return 1
             else
-                echo "-1" > "${binfmt_qemu_cpu_file}"
+                \echo "-1" > "${binfmt_qemu_cpu_file}"
                 "${function_name}" status
             fi
             ;;
@@ -369,9 +371,9 @@ binfmt_qemu()
             ;;
 
         *)
-            echo -e "\e[01;31mWrong second parameter: '${enable_switch}'.\e[0m" >&2
+            \echo -e "\e[01;31mWrong second parameter: '${enable_switch}'.\e[0m" >&2
             "${function_name}" help
-            return 1
+            \return 1
     esac
 }
 ## prepare and "unprepare" a chroot environment conveniently
@@ -390,8 +392,8 @@ pchroot()
         do
             if [[ ! -d "${system_directory}" ]]
             then
-                echo -e "\e[01;31mThe system directory: '${system_directory}' could not be found or is not a directory.\e[0m" >&2
-                return 1
+                \echo -e "\e[01;31mThe system directory: '${system_directory}' could not be found or is not a directory.\e[0m" >&2
+                \return 1
             fi
         done
 
@@ -399,8 +401,8 @@ pchroot()
         do
             if [[ ! -d "${chroot_directory}" ]]
             then
-                echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
-                return 1
+                \echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
+                \return 1
             fi
         done
 
@@ -410,14 +412,14 @@ pchroot()
         \mount --verbose --rbind "${system_directory_array[3]}" "${chroot_directory_array[3]}"
         \mount --verbose --make-rslave "${chroot_directory_array[3]}"
 
-        echo -e "\e[01;33mPrepared the chroot environment.\e[0m\n" >&2
-        echo -e "\e[01;33mExecute the following command to enter it:\e[37m chroot . \"/bin/bash\"\e[0m" >&2
-        echo -e "\e[01;33mIf the CPU architectures differ, the binary \"qemu-<arch>-static\" may be used:\e[37m cp \"qemu-<arch>-static\" \"usr/bin/\" && chroot . qemu-<arch>-static \"/bin/bash\"\e[0m" >&2
-        echo -e "\e[01;33mAlso make sure to set the magic and mask bytes for QEMU:\e[37m binfmt_qemu\e[0m" >&2
-        echo -e "\e[01;33mExecute the following command to prepare the environment within the chroot:\e[37m source \"/etc/profile\" && export PS1=\"(chroot) \${PS1}\"\e[0m" >&2
+        \echo -e "\e[01;33mPrepared the chroot environment.\e[0m\n" >&2
+        \echo -e "\e[01;33mExecute the following command to enter it:\e[37m chroot . \"/bin/bash\"\e[0m" >&2
+        \echo -e "\e[01;33mIf the CPU architectures differ, the binary \"qemu-<arch>-static\" may be used:\e[37m cp \"qemu-<arch>-static\" \"usr/bin/\" && chroot . qemu-<arch>-static \"/bin/bash\"\e[0m" >&2
+        \echo -e "\e[01;33mAlso make sure to set the magic and mask bytes for QEMU:\e[37m binfmt_qemu\e[0m" >&2
+        \echo -e "\e[01;33mExecute the following command to prepare the environment within the chroot:\e[37m source \"/etc/profile\" && export PS1=\"(chroot) \${PS1}\"\e[0m" >&2
     else
-        echo -e "\e[01;31mEntering a chroot environment requires root privileges!\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mEntering a chroot environment requires root privileges!\e[0m" >&2
+        \return 1
     fi
 }
 uchroot()
@@ -432,20 +434,20 @@ uchroot()
         do
             if [[ ! -d "${chroot_directory}" ]]
             then
-                echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
-                return 1
+                \echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' could not be found or is not a directory.\e[0m" >&2
+                \return 1
             elif ! \mountpoint --quiet "${chroot_directory}"
             then
-                echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' is not mounted.\e[0m" >&2
+                \echo -e "\e[01;31mThe chroot directory: '${chroot_directory}' is not mounted.\e[0m" >&2
             fi
         done
 
         \umount --verbose --lazy --recursive ${chroot_directory_array[@]}
 
-        echo -e "\e[01;33mUnprepared the chroot environment.\e[0m" >&2
+        \echo -e "\e[01;33mUnprepared the chroot environment.\e[0m" >&2
     else
-        echo -e "\e[01;31mUnpreparing a chroot environment requires root privileges!\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mUnpreparing a chroot environment requires root privileges!\e[0m" >&2
+        \return 1
     fi
 }
 
@@ -453,15 +455,15 @@ uchroot()
 exclude_remove_on()
 {
     setopt extended_glob
-    echo -e "\e[01;31mGlob syntax has been activated.\e[0m"
-    echo "Examples:"
-    echo "Remove all files, except the file 'nom': rm -- ^\"nom\""
-    echo "Remove all files, except files with the suffix 'png' and 'jpg': rm -- ^.*(png|jpg)"
+    \echo -e "\e[01;31mGlob syntax has been activated.\e[0m"
+    \echo "Examples:"
+    \echo "Remove all files, except the file 'nom': rm -- ^\"nom\""
+    \echo "Remove all files, except files with the suffix 'png' and 'jpg': rm -- ^.*(png|jpg)"
 }
 exclude_remove_off()
 {
-    unsetopt extended_glob
-    echo -e "\e[01;31mGlob syntax has been deactivated.\e[0m"
+    \unsetopt extended_glob
+    \echo -e "\e[01;31mGlob syntax has been deactivated.\e[0m"
 }
 
 ## be able to use "gpg", when connected via "ssh"
@@ -473,25 +475,25 @@ gpg_ssh_init()
         then
             # "killall --ns" to kill multiple pids does not work.
             \killall $(\find "/usr/bin" -type f -name "pinentry*" -printf "%P ") >/dev/null 2>&1
-            export PINENTRY_USER_DATA="\pinentry-curses"
+            \export PINENTRY_USER_DATA="\pinentry-curses"
 
             # see "man 1 gpg-agent"
-            unset SSH_AGENT_PID
+            \unset SSH_AGENT_PID
             if [[ "${gnupg_SSH_AUTH_SOCK_by:-0}" != "${$}" ]]
             then
-                export SSH_AUTH_SOCK="$(\gpgconf --list-dirs agent-ssh-socket)"
+                \export SSH_AUTH_SOCK="$(\gpgconf --list-dirs agent-ssh-socket)"
             fi
 
             # exporting the environment variable "GPG_TTY" must be done manually,
             # otherwise the scroll buffer and the input of "tmux" is messed up and unusuable.
-            echo -e "\e[01;31mExport the environment variable 'GPG_TTY' with the current 'PTS' ('${SSH_TTY}') in order to use 'gpg' in a pseudo terminal: export GPG_TTY=\"\$(tty)\"\e[0m" >&2
+            \echo -e "\e[01;31mExport the environment variable 'GPG_TTY' with the current 'PTS' ('${SSH_TTY}') in order to use 'gpg' in a pseudo terminal: export GPG_TTY=\"\$(tty)\"\e[0m" >&2
         else
-            echo -e "\e[01;31mThe environment variable 'SSH_TTY' is not set: '${SSH_TTY}'.\e[0m" >&2
-            return 1
+            \echo -e "\e[01;31mThe environment variable 'SSH_TTY' is not set: '${SSH_TTY}'.\e[0m" >&2
+            \return 1
         fi
     else
-        echo -e "\e[01;31mThis function must be executed as non-privileged user!\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mThis function must be executed as non-privileged user!\e[0m" >&2
+        \return 1
     fi
 }
 
@@ -508,8 +510,8 @@ lpr_invoice()
 
     if [[ "${directory_file_list}" != "" ]]
     then
-        echo ""
-        while read -r directory_file
+        \echo ""
+        while \read -r directory_file
         do
             if [[ -f "${directory_file}" ]]
             then
@@ -517,7 +519,7 @@ lpr_invoice()
                 then
                     invoice_index_prefix="0"
                 else
-                    unset invoice_index_prefix
+                    \unset invoice_index_prefix
                 fi
 
                 invoice_page_count=$(\pdfinfo "${directory_file}" 2>&1 | \gawk '/Pages:/ { print $2 }')
@@ -533,9 +535,9 @@ lpr_invoice()
                 invoice_file_array+=("${directory_file}")
                 if (( invoice_index_number % 2 == 0 ))
                 then
-                    echo -e "   \e[01;34m${invoice_index_prefix}${invoice_index_number} (Pages: ${invoice_page_count}\e[01;34m):\t${directory_file}\e[0m"
+                    \echo -e "   \e[01;34m${invoice_index_prefix}${invoice_index_number} (Pages: ${invoice_page_count}\e[01;34m):\t${directory_file}\e[0m"
                 else
-                    echo -e "   \e[01;37m${invoice_index_prefix}${invoice_index_number} (Pages: ${invoice_page_count}\e[01;37m):\t${directory_file}\e[0m"
+                    \echo -e "   \e[01;37m${invoice_index_prefix}${invoice_index_number} (Pages: ${invoice_page_count}\e[01;37m):\t${directory_file}\e[0m"
                 fi
                 (( invoice_index_number++ ))
             fi
@@ -543,31 +545,31 @@ lpr_invoice()
 
         if [[ "${invoice_file_array[@]}" != "" ]]
         then
-            read $'print_files?\n\e[01;31mDo you really want to print the above files in chronologically descending order? (y/N): \e[0m' >&2
+            \read $'print_files?\n\e[01;31mDo you really want to print the above files in chronologically descending order? (y/N): \e[0m' >&2
 
             case "${print_files:-n}" in
                 "y"|"Y")
                     \lpr "${invoice_file_array[@]}"
-                    echo -e "\n\e[01;33mDo not forget to sort the printed files chronologically!\e[0m" >&2
-                    echo -e "\e[01;33mDo not forget to sort the printed files chronologically!\e[0m" >&2
-                    echo -e "\e[01;33mDo not forget to sort the printed files chronologically!\e[0m\n" >&2
+                    \echo -e "\n\e[01;33mDo not forget to sort the printed files chronologically!\e[0m" >&2
+                    \echo -e "\e[01;33mDo not forget to sort the printed files chronologically!\e[0m" >&2
+                    \echo -e "\e[01;33mDo not forget to sort the printed files chronologically!\e[0m\n" >&2
                     ;;
 
                 "n"|"N")
-                    return 1
+                    \return 1
                     ;;
 
                 *)
-                    echo -e "\e[01;31mWrong input: '${print_files}'.\e[0m" >&2
-                    return 1
+                    \echo -e "\e[01;31mWrong input: '${print_files}'.\e[0m" >&2
+                    \return 1
             esac
         else
-            echo -e "\e[01;31mThe invoice file array: '${invoice_file_array[@]}' is empty. Nothing to do...\e[0m" >&2
-            return 1
+            \echo -e "\e[01;31mThe invoice file array: '${invoice_file_array[@]}' is empty. Nothing to do...\e[0m" >&2
+            \return 1
         fi
     else
-        echo -e "\e[01;31mThe directory file list: '${directory_file_list}' is empty. Nothing to do...\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mThe directory file list: '${directory_file_list}' is empty. Nothing to do...\e[0m" >&2
+        \return 1
     fi
 }
 
@@ -620,25 +622,25 @@ genpw()
                 ;;
 
             "-h" | "--help")
-                echo ""
-                echo "Usage: ${0} [options]... <arguments>..."
-                echo ""
-                echo "OPTIONS:"
-                echo "  -a, --no-lowercase              exclude lowercase characters"
-                echo "  -A, --no-uppercase              excluce uppercase characters"
-                echo "  -c, --count <number>            define the amount of generated passwords"
-                echo "  -l, --length <number>           define password length"
-                echo "  -n, --no-numbers                exclude numeric characters"
-                echo "  -s, --no-special                exclude special characters"
-                echo "  -h, --help                      show this message"
-                echo ""
-                echo "EXAMPLES:"
-                echo "  generate a password with 24 characters"
-                echo "      ${0} --length 24"
-                echo ""
-                echo "  exclude special and uppercase characters"
-                echo "      ${0} --no-special --no-uppercase"
-                return 0
+                \echo ""
+                \echo "Usage: ${0} [options]... <arguments>..."
+                \echo ""
+                \echo "OPTIONS:"
+                \echo "  -a, --no-lowercase              exclude lowercase characters"
+                \echo "  -A, --no-uppercase              excluce uppercase characters"
+                \echo "  -c, --count <number>            define the amount of generated passwords"
+                \echo "  -l, --length <number>           define password length"
+                \echo "  -n, --no-numbers                exclude numeric characters"
+                \echo "  -s, --no-special                exclude special characters"
+                \echo "  -h, --help                      show this message"
+                \echo ""
+                \echo "EXAMPLES:"
+                \echo "  generate a password with 24 characters"
+                \echo "      ${0} --length 24"
+                \echo ""
+                \echo "  exclude special and uppercase characters"
+                \echo "      ${0} --no-special --no-uppercase"
+                \return 0
         esac
         shift 1 >/dev/null 2>&1 || break
     done
@@ -670,12 +672,12 @@ genpw()
         fi
 
         entropy_result=$(\gawk \
-            --assign="password_entropy=${password_entropy}" '\
-            {
-                printf "%.4f", log(password_entropy^$0)/log(2);
-            }' <<< "${password_length}")
+                            --assign="password_entropy=${password_entropy}"
+                            '{
+                                printf "%.4f", log(password_entropy^$0)/log(2);
+                             }' <<< "${password_length}")
 
-        printf "%s    %s bit (%s)\n" "${password_output}" "${entropy_result}" "${password_entropy}"
+        \printf "%s    %s bit (%s)\n" "${password_output}" "${entropy_result}" "${password_entropy}"
     done
 }
 
@@ -686,8 +688,8 @@ getLastPortageSync()
 
     if [[ ! -f "${portage_timestamp_file}" ]]
     then
-        echo -e "\e[01;31mThe file: '${portage_timestamp_file}' could not be found or is not a file.\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mThe file: '${portage_timestamp_file}' could not be found or is not a file.\e[0m" >&2
+        \return 1
     else
         local current_unix_time=$(\date +%s)
         local portage_unix_time=$(\date --date="$(< ${portage_timestamp_file})" +%s)
@@ -696,20 +698,20 @@ getLastPortageSync()
 
     if (( ${days_since_last_sync} >= 7.5 && ${days_since_last_sync} < 20 ))
     then
-        printf "\e[01;33m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
+        \printf "\e[01;33m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
     elif (( ${days_since_last_sync} >= 20 ))
     then
-        printf "\e[01;31;5m[%.2f] days since last portage synchronisation!\e[0m \e[01;31m(execute as root: /root/bin/update.sh)\e[0m\n" "${days_since_last_sync}"
+        \printf "\e[01;31;5m[%.2f] days since last portage synchronisation!\e[0m \e[01;31m(execute as root: /root/bin/update.sh)\e[0m\n" "${days_since_last_sync}"
     elif [[ "${1}" == "--verbose" ]]
     then
-        printf "\e[01;34m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
+        \printf "\e[01;34m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
     fi
 }
 
 ## list all process signals
 lsig()
 {
-    cat <<- LSIG_EOF
+    \cat <<- LSIG_EOF
 		 Signal             Standard    Action      Comment
 		 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 		 1: SIGHUP          P1990       Term        Hangup detected on controlling terminal or death of controlling process
@@ -802,6 +804,7 @@ pmon()
     local process_name="${1}"
     local watch_interval="${2:-0.1}"
     local process_name_last_character="${process_name:(-1)}"
+    # regex trick, in order to not match itself
     local search_string="${process_name/%${process_name_last_character}/[${process_name_last_character}]}"
 
     # use the command "command watch" and "command ps"
@@ -829,8 +832,8 @@ fpid()
 
     if [[ "${process_array[@]}" == "" ]]
     then
-        echo -e "\e[01;31mCould not find any process IDs for: '${process_array[@]}'.\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mCould not find any process IDs for: '${process_array[@]}'.\e[0m" >&2
+        \return 1
     fi
 
     for process in "${process_array[@]}"
@@ -841,8 +844,8 @@ fpid()
             process_id="${process}"
             if [[ ! -d "/proc/${process_id}/" ]]
             then
-                echo -e "\e[01;33mCould not find process ID: '${process_id}'. Skipping...\e[0m\n" >&2
-                continue
+                \echo -e "\e[01;33mCould not find process ID: '${process_id}'. Skipping...\e[0m\n" >&2
+                \continue
             fi
 
             process_real_name=$(\gawk '/Name:/ { $1=""; print substr($0, 2) }' "/proc/${process_id}/status")
@@ -854,8 +857,8 @@ fpid()
             # get first process id from process name
             if ! process_id_array=($(\pgrep "${process_name}"))
             then
-                echo -e "\e[01;33mCould not find process name: '${process_name}'. Skipping...\e[0m\n" >&2
-                continue
+                \echo -e "\e[01;33mCould not find process name: '${process_name}'. Skipping...\e[0m\n" >&2
+                \continue
             fi
             # "zsh"'s array index starts at "1"
             first_process_id="${process_id_array[1]}"
@@ -867,26 +870,26 @@ fpid()
         fi
     done
 
-    echo -e "\e[01;34mWaiting for the following processes to exit:\e[0m"
+    \echo -e "\e[01;34mWaiting for the following processes to exit:\e[0m"
     process_name=
     process_id=
     for process_name process_id in "${(@kv)process_name_id_array[@]}"
     do
         # remove trailing comma here
-        echo -e "\e[01;35m${process_name}: \e[01;37m${process_id%,}\e[0m"
+        \echo -e "\e[01;35m${process_name}: \e[01;37m${process_id%,}\e[0m"
     done
 
     if [[ "${(@z)tail_pid_parameter% }" == "" ]]
     then
-        echo -e "\e[01;31mTail PID parameter array is empty. Exiting...\e[0m\n" >&2
-        return 1
+        \echo -e "\e[01;31mTail PID parameter array is empty. Exiting...\e[0m\n" >&2
+        \return 1
     fi
     # delimit the pid parameters via space character and remove the
     # trailing space character
     \tail --follow="descriptor" "/dev/null" "${(@z)tail_pid_parameter% }"
-    echo -e "\e[01;33mAbove processes exited...\e[0m" >&2
+    \echo -e "\e[01;33mAbove processes exited...\e[0m" >&2
 
-    return 0
+    \return 0
 }
 
 ## notify after a command has finished
@@ -901,7 +904,7 @@ notifyme()
     local total_execution_time="$(( end_time - start_time ))"
     #if (( total_execution_time >= 15 ))
     #then
-        \notify-send --app-name="Notification" --icon="notifications" --urgency="critical" "Command finished [${total_execution_time} seconds]" "'$(echo ${@})'"
+        \notify-send --app-name="Notification" --icon="notifications" --urgency="critical" "Command finished [${total_execution_time} seconds]" "'$(\echo ${@})'"
     #fi
 }
 
@@ -922,7 +925,7 @@ listids()
 
         if [[ "${id_name_list}" == "" ]]
         then
-            continue
+            \continue
         else
             username_id_array[${username}]="${id_name_list}"
         fi
@@ -931,7 +934,7 @@ listids()
     # output associative array
     for username_id in ${(k)username_id_array}
     do
-        echo -e "\e[01;34mIDs of the user '\e[01;33m${username_id}\e[0m\e[01;34m':\e[0m"
+        \echo -e "\e[01;34mIDs of the user '\e[01;33m${username_id}\e[0m\e[01;34m':\e[0m"
         \gawk --field-separator ',' '{ gsub("[, ]", "\n    "); sub("^", "    "); print $0"\n"}' <<< ${username_id_array[${username_id}]}
     done
 }
@@ -939,7 +942,7 @@ listids()
 ## bash: execute bell when command is finished
 precmd()
 {
-    eval "${PROMPT_COMMAND}"
+    \eval "${PROMPT_COMMAND}"
 }
 PROMPT_COMMAND+='tput bel;'
 
@@ -950,15 +953,15 @@ then
     {
         # output on which level (%L) this shell is running on.
         # append the current directory (%~), substitute home directories with a tilde.
-        # "\a" bell (man 1 echo)
-        # "print" must be used here; echo cannot handle prompt expansions (%L)
-        print -Pn "\e]0;${USER}@${HOSTNAME}: zsh[%L] %~\a"
+        # "\a" bell (man 1 \echo)
+        # "print" must be used here; \echo cannot handle prompt expansions (%L)
+        \print -Pn "\e]0;${USER}@${HOSTNAME}: zsh[%L] %~\a"
     }
 
     preexec()
     {
         # output current executed command with parameters
-        echo -en "\e]0;${USER}@${HOSTNAME}: ${1}\a"
+        \echo -en "\e]0;${USER}@${HOSTNAME}: ${1}\a"
     }
 fi
 
@@ -973,11 +976,18 @@ ptree()
 ## list processes in a tree structure
 pst()
 {
-    \pstree --unicode --arguments --highlight-all --show-pids --show-pgids --numeric-sort --color='age'
+    \pstree \
+        --unicode \
+        --arguments \
+        --highlight-all \
+        --show-pids \
+        --show-pgids \
+        --numeric-sort \
+        --color='age'
 
-    echo -e "\n\e[01;32mProcesses newer   than 60 seconds (<=60s) are green.\e[0m"
-    echo -e "\e[01;33mProcesses newer   than an hour    (<=1h)  are yellow.\e[0m"
-    echo -e "\e[01;31mProcesses older   than an hour    (>1h)   are red.\e[0m"
+    \echo -e "\n\e[01;32mProcesses newer   than 60 seconds (<=60s) are green.\e[0m"
+    \echo -e "\e[01;33mProcesses newer   than an hour    (<=1h)  are yellow.\e[0m"
+    \echo -e "\e[01;31mProcesses older   than an hour    (>1h)   are red.\e[0m"
 }
 
 pss()
@@ -991,7 +1001,7 @@ pss()
         # filter by process id and show the header
         \gawk --assign="process_id=${process_id}" 'NR == 1; $0 ~ process_id' <<< "${process_list}"
     else
-        echo "${process_list}"
+        \echo "${process_list}"
     fi
 }
 
@@ -1004,49 +1014,49 @@ transfer()
 
     if [[ "${file_array[@]}" == "" || "${1}" == "--help" || "${1}" == "-h" ]]
     then
-        echo "${0} - Upload arbitrary files to \"transfer.sh\"."
-        echo ""
-        echo "Usage: ${0} [options] [<file>]..."
-        echo ""
-        echo "OPTIONS:"
-        echo "  -h, --help"
-        echo "      show this message"
-        echo ""
-        echo "EXAMPLES:"
-        echo "  Upload a single file from the current working directory:"
-        echo "      ${0} \"image1.img\""
-        echo ""
-        echo "  Upload multiple files from the current working directory:"
-        echo "      ${0} \"image1.img\" \"image2.img\""
-        echo ""
-        echo "  Upload multiple files with spaces in their filename from the current working directory:"
-        echo "      ${0} \"image 1.img\" image\ 2.img"
-        echo ""
-        echo "  Upload a file from a different directory:"
-        echo "      ${0} \"/tmp/image1.img\""
-        echo ""
-        echo "  Upload multiple files from a different directory:"
-        echo "      ${0} transfer /tmp/{image1.img,image\ 1.img,\"image 2.img\"}"
-        echo ""
-        echo "  Upload all files from the current working directory. Be aware of the webserver's rate limiting!:"
-        echo "      ${0} *"
-        echo ""
-        echo "  Upload a single file from the current working directory and filter out the delete token and download link:"
-        echo "      ${0} \"image.img\" | gawk --field-separator=\": \" '/Delete token:/ { print \$2 } /Download link:/ { print \$2 }'"
-        echo ""
-        echo "  Show help text from \"transfer.sh\":"
-        echo "      curl --request GET \"https://transfer.sh\""
-        return 0
+        \echo "${0} - Upload arbitrary files to \"transfer.sh\"."
+        \echo ""
+        \echo "Usage: ${0} [options] [<file>]..."
+        \echo ""
+        \echo "OPTIONS:"
+        \echo "  -h, --help"
+        \echo "      show this message"
+        \echo ""
+        \echo "EXAMPLES:"
+        \echo "  Upload a single file from the current working directory:"
+        \echo "      ${0} \"image1.img\""
+        \echo ""
+        \echo "  Upload multiple files from the current working directory:"
+        \echo "      ${0} \"image1.img\" \"image2.img\""
+        \echo ""
+        \echo "  Upload multiple files with spaces in their filename from the current working directory:"
+        \echo "      ${0} \"image 1.img\" image\ 2.img"
+        \echo ""
+        \echo "  Upload a file from a different directory:"
+        \echo "      ${0} \"/tmp/image1.img\""
+        \echo ""
+        \echo "  Upload multiple files from a different directory:"
+        \echo "      ${0} transfer /tmp/{image1.img,image\ 1.img,\"image 2.img\"}"
+        \echo ""
+        \echo "  Upload all files from the current working directory. Be aware of the webserver's rate limiting!:"
+        \echo "      ${0} *"
+        \echo ""
+        \echo "  Upload a single file from the current working directory and filter out the delete token and download link:"
+        \echo "      ${0} \"image.img\" | gawk --field-separator=\": \" '/Delete token:/ { print \$2 } /Download link:/ { print \$2 }'"
+        \echo ""
+        \echo "  Show help text from \"transfer.sh\":"
+        \echo "      curl --request GET --url \"https://transfer.sh\""
+        \return 0
     else
         for file in "${file_array[@]}"
         do
             if [[ ! -f "${file}" ]]
             then
-                echo -e "\e[01;31mThe file: '${file}' could not be found or is not a file.\e[0m" >&2
-                return 1
+                \echo -e "\e[01;31mThe file: '${file}' could not be found or is not a file.\e[0m" >&2
+                \return 1
             fi
         done
-        unset file
+        \unset file
     fi
 
     local upload_files
@@ -1061,10 +1071,10 @@ transfer()
     # be compatible with "bash"
     if [[ "${ZSH_NAME}" == "zsh" ]]
     then
-        read $'upload_files?\e[01;31mDo you really want to upload the above files ('"${#file_array[@]}"$') to "transfer.sh"? (y/N): \e[0m' >&2
+        \read $'upload_files?\e[01;31mDo you really want to upload the above files ('"${#file_array[@]}"$') to "transfer.sh"? (y/N): \e[0m' >&2
     elif [[ "${BASH}" == *"bash"* ]]
     then
-        read -p $'\e[01;31mDo you really want to upload the above files ('"${#file_array[@]}"$') to "transfer.sh"? (y/N): \e[0m' upload_files >&2
+        \read -p $'\e[01;31mDo you really want to upload the above files ('"${#file_array[@]}"$') to "transfer.sh"? (y/N): \e[0m' upload_files >&2
     fi
 
     case "${upload_files:-n}" in
@@ -1082,23 +1092,30 @@ transfer()
                 # if "stdout" is redirected to something; e.g. ">/dev/null", "tee /dev/null" or "| <some_command>".
                 # the response header is redirected to "stdout", so redirecting "stdout" to "/dev/null" does not make any sense.
                 # redirecting "curl's" "stderr" to "stdout" ("2>&1") will suppress the progress bar.
-                curl_output=$(\curl --request PUT --progress-bar --dump-header - --upload-file "${file}" "https://transfer.sh/${url_filename}")
+                curl_output=$(\curl \
+                                --request PUT \
+                                --progress-bar \
+                                --dump-header - \
+                                --upload-file "${file}" \
+                                --url "https://transfer.sh/${url_filename}" \
+                             )
                 gawk_output=$(\gawk \
-                    'gsub("\r", "", $0) && tolower($1) ~ /x-url-delete/ \
-                    {
-                        delete_link=$2;
-                        print "Delete command: curl --request DELETE " "\""delete_link"\"";
+                                'gsub("\r", "", $0) && tolower($1) ~ /x-url-delete/ \
+                                {
+                                    delete_link=$2;
+                                    print "Delete command: curl --request DELETE " --url "\""delete_link"\"";
 
-                        delete_token=gensub(".*/", "", "g", delete_link);
-                        print "Delete token: " delete_token;
-                    }
+                                    delete_token=gensub(".*/", "", "g", delete_link);
+                                    print "Delete token: " delete_token;
+                                }
 
-                    END{
-                        print "Download link: " $0;
-                    }' <<< "${curl_output}")
+                                END{
+                                    print "Download link: " $0;
+                                }' <<< "${curl_output}" \
+                             )
 
                 # return the results via "stdout", "gawk" does not do this for some reason.
-                echo -e "${gawk_output}\n"
+                \echo -e "${gawk_output}\n"
 
                 # avoid rate limiting as much as possible; nginx: too many requests.
                 if (( ${#file_array[@]} > 4 ))
@@ -1109,12 +1126,12 @@ transfer()
             ;;
 
         "n"|"N")
-            return 1
+            \return 1
             ;;
 
         *)
-            echo -e "\e[01;31mWrong input: '${upload_files}'.\e[0m" >&2
-            return 1
+            \echo -e "\e[01;31mWrong input: '${upload_files}'.\e[0m" >&2
+            \return 1
     esac
 }
 
@@ -1125,34 +1142,34 @@ ts()
         '{
             print strftime("[%Y-%m-%dT%H:%M:%S%z]:"), $0;
             fflush(stdout);
-        }'
+         }'
 }
 
 ## information, which seems to be volatile for my brain
 thingsIalwaysForget()
 {
-    echo -e "\e[01;34miproute2:\e[0m"
-    echo "  Configure a static IP address:"
-    echo "      ip address add <local_ip_address>/<cidr_subnet_mask> dev <inferface>"
-    echo ""
-    echo "  Configure a default gateway:"
-    echo "      ip route add default via <default_gateway> dev <interface>"
-    echo ""
-    echo -e "\e[01;34mTranslations:\e[0m"
-    echo "  None."
-    echo ""
-    echo -e "\e[01;34mPortage:\e[0m"
-    echo "  Downgrading a package:"
-    echo "      emerge --oneshot \=<package_name>-<major_version>.<minor_version>.<patch_version>"
-    echo "      emerge --oneshot \=<package_name>:<major_version>.<minor_version>.<patch_version>"
-    echo ""
-    echo -e "\e[01;34mHTML:\e[0m"
-    echo "  Collapsible details:"
-    echo "      <details><summary>Expand</summary><p>"
-    echo ""
-    echo "          ### Heading"
-    echo "          Text"
-    echo "      </details></p>"
+    \echo -e "\e[01;34miproute2:\e[0m"
+    \echo "  Configure a static IP address:"
+    \echo "      ip address add <local_ip_address>/<cidr_subnet_mask> dev <inferface>"
+    \echo ""
+    \echo "  Configure a default gateway:"
+    \echo "      ip route add default via <default_gateway> dev <interface>"
+    \echo ""
+    \echo -e "\e[01;34mTranslations:\e[0m"
+    \echo "  None."
+    \echo ""
+    \echo -e "\e[01;34mPortage:\e[0m"
+    \echo "  Downgrading a package:"
+    \echo "      emerge --oneshot \=<package_name>-<major_version>.<minor_version>.<patch_version>"
+    \echo "      emerge --oneshot \=<package_name>:<major_version>.<minor_version>.<patch_version>"
+    \echo ""
+    \echo -e "\e[01;34mHTML:\e[0m"
+    \echo "  Collapsible details:"
+    \echo "      <details><summary>Expand</summary><p>"
+    \echo ""
+    \echo "          ### Heading"
+    \echo "          Text"
+    \echo "      </details></p>"
 }
 
 ## get current wan ip address
@@ -1164,8 +1181,13 @@ wan()
 
     for ip_version in "${ip_version_array[@]}"
     do
-        echo -n "${ip_version}: "
-        \curl --request GET --silent --show-error --"${ip_version}" "https://ifconfig.co/"
+        \echo -n "${ip_version}: "
+        \curl \
+            --request GET \
+            --silent \
+            --show-error \
+            --"${ip_version}" \
+            --url "https://ifconfig.co/"
     done
 }
 
@@ -1179,7 +1201,11 @@ weather()
         input_string=":help"
     fi
 
-    \curl --request GET --silent --show-error "https://wttr.in/${input_string}"
+    \curl \
+        --request GET \
+        --silent \
+        --show-error \
+        --url "https://wttr.in/${input_string}"
 }
 
 ## output the paths to binary files from "${PATH}" and functions of the current shell
@@ -1194,243 +1220,309 @@ wherefrom()
 
     #unalias "${binary_name_array[@]}" 2>/dev/null
 
-    echo -e "\e[01;34mOutput of '\e[01;33mcommand -v\e[0m\e[01;34m':\e[0m"
+    \echo -e "\e[01;34mOutput of '\e[01;33mcommand -v\e[0m\e[01;34m':\e[0m"
     for binary_name_command in "${binary_name_array[@]}"
     do
-        echo "    $(\command -v ${binary_name_command})"
+        \echo "    $(\command -v ${binary_name_command})"
     done
 
-    echo -e "\n\e[01;34mOutput of '\e[01;33mwhich'\e[0m\e[01;34m:\e[0m"
+    \echo -e "\n\e[01;34mOutput of '\e[01;33mwhich'\e[0m\e[01;34m:\e[0m"
     for binary_name_which in "${binary_name_array[@]}"
     do
-        echo -e "\n    $(\which ${binary_name_which})"
+        \echo -e "\n    $(\which ${binary_name_which})"
     done
 
-    echo -e "\n\e[01;34mOutput of '\e[01;33mtype\e[0m\e[01;34m':\e[0m"
+    \echo -e "\n\e[01;34mOutput of '\e[01;33mtype\e[0m\e[01;34m':\e[0m"
     for binary_name_type in "${binary_name_array[@]}"
     do
-        echo "    $(\type ${binary_name_type})"
+        \echo "    $(\type ${binary_name_type})"
     done
 
-    echo -e "\n\e[01;34mOutput of '\e[01;33mwhereis\e[0m\e[01;34m':\e[0m"
+    \echo -e "\n\e[01;34mOutput of '\e[01;33mwhereis\e[0m\e[01;34m':\e[0m"
     for binary_name_whereis in "${binary_name_array[@]}"
     do
-        echo "    $(\whereis ${binary_name_whereis})"
+        \echo "    $(\whereis ${binary_name_whereis})"
     done
 }
 
 ## do not include faulty commands in history
 zshaddhistory()
 {
-    whence ${${(z)1}[1]} >| /dev/null || return 1
+    \whence ${${(z)1}[1]} >| /dev/null || \return 1
 }
 
 # prompt shell
 ## different colours via "ssh"
-if pidof -sq "sshd"
+if \pidof -sq "sshd"
 then
     # true
-    export SSH_CONNECTION="1"
+    \export SSH_CONNECTION="1"
 
     if [[ "${EUID}" == "0" ]]
     then
-        zstyle ':prompt:grml:*:items:user' pre '%B%F{yellow}'
+        \zstyle ':prompt:grml:*:items:user' pre '%B%F{yellow}'
     else
-        zstyle ':prompt:grml:*:items:user' pre '%B%F{magenta}'
+        \zstyle ':prompt:grml:*:items:user' pre '%B%F{magenta}'
     fi
 else
     # false
-    export SSH_CONNECTION="0"
+    \export SSH_CONNECTION="0"
 fi
 
 # source
 ## autojump
-source "/usr/share/autojump/autojump.zsh"
+\source "/usr/share/autojump/autojump.zsh"
 ## zsh-autosuggestions
-source "/usr/local/share/git/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+\source "/usr/local/share/git/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 ## zsh-syntax-highlighting
-source "/usr/local/share/git/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+\source "/usr/local/share/git/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # keybindings
-bindkey -r "^N" # up-line-or-history
-bindkey -r "^P" # down-line-or-history
-bindkey "^N" down-line-or-search
-bindkey "^P" up-line-or-search
+\bindkey -r "^N" # up-line-or-history
+\bindkey -r "^P" # down-line-or-history
+\bindkey "^N" down-line-or-search
+\bindkey "^P" up-line-or-search
 
 # aliases
-alias aria2c="aria2c \
-    --enable-rpc='false' \
-    --rpc-allow-origin-all='false' \
-    --rpc-listen-all='false' \
-    --force-sequential='true' \
-    --continue='true' \
-    --auto-save-interval='30' \
-    --http-accept-gzip='true' \
-    --netrc-path='${HOME}/.cache/aria2/netrc' \
-    --max-concurrent-downloads='4' \
-    --max-connection-per-server='8' \
-    --min-split-size='20M' \
-    --split='8' \
-    --save-session='${HOME}/.cache/aria2/aria2_session.gz' \
-    --save-session-interval='60' \
-    --bt-detach-seed-only='true' \
-    --bt-enable-lpd='true' \
-    --bt-stop-timeout='21600' \
-    --check-integrity='true' \
-    --seed-ratio='1.0' \
-    --seed-time='0' \
-    --enable-dht='true' \
-    --enable-dht6='true' \
-    --dht-listen-port='6881-6999' \
-    --dht-file-path='${HOME}/.cache/aria2/dht.dat' \
-    --dht-file-path6='${HOME}/.cache/aria2/dht6.dat' \
-    --bt-force-encryption='true' \
-    --bt-require-crypto='true' \
-    --bt-min-crypto-level='arc4' \
-    --bt-max-peers='60' \
-    --bt-request-peer-speed-limit='50K' \
-    --max-overall-upload-limit='400K' \
-    --disable-ipv6='false' \
-    --event-poll='epoll' \
-    --file-allocation='falloc' \
-    --max-download-limit='0' \
-    --max-overall-download-limit='0' \
-    --optimize-concurrent-downloads='true' \
-    --min-tls-version='TLSv1.2' \
-    --allow-overwrite='true' \
-    --auto-file-renaming='false' \
-    --conditional-get='true' \
-    --remove-control-file='false'"
-alias badblocks="badblocks -sv"
-alias bc="bc --mathlib"
-alias cal="cal --week=$(\date +%V)"
-alias cdrecord="cdrecord -sao -speed='0' -eject -v"
-alias cdparanoia="cdparanoia --batch --force-read-speed='1' --abort-on-skip --log-summary='cdparanoia.log'"
+\alias aria2c="aria2c \
+                --enable-rpc='false' \
+                --rpc-allow-origin-all='false' \
+                --rpc-listen-all='false' \
+                --force-sequential='true' \
+                --continue='true' \
+                --auto-save-interval='30' \
+                --http-accept-gzip='true' \
+                --netrc-path='${HOME}/.cache/aria2/netrc' \
+                --max-concurrent-downloads='4' \
+                --max-connection-per-server='8' \
+                --min-split-size='20M' \
+                --split='8' \
+                --save-session='${HOME}/.cache/aria2/aria2_session.gz' \
+                --save-session-interval='60' \
+                --bt-detach-seed-only='true' \
+                --bt-enable-lpd='true' \
+                --bt-stop-timeout='21600' \
+                --check-integrity='true' \
+                --seed-ratio='1.0' \
+                --seed-time='0' \
+                --enable-dht='true' \
+                --enable-dht6='true' \
+                --dht-listen-port='6881-6999' \
+                --dht-file-path='${HOME}/.cache/aria2/dht.dat' \
+                --dht-file-path6='${HOME}/.cache/aria2/dht6.dat' \
+                --bt-force-encryption='true' \
+                --bt-require-crypto='true' \
+                --bt-min-crypto-level='arc4' \
+                --bt-max-peers='60' \
+                --bt-request-peer-speed-limit='50K' \
+                --max-overall-upload-limit='400K' \
+                --disable-ipv6='false' \
+                --event-poll='epoll' \
+                --file-allocation='falloc' \
+                --max-download-limit='0' \
+                --max-overall-download-limit='0' \
+                --optimize-concurrent-downloads='true' \
+                --min-tls-version='TLSv1.2' \
+                --allow-overwrite='true' \
+                --auto-file-renaming='false' \
+                --conditional-get='true' \
+                --remove-control-file='false'"
+\alias badblocks="badblocks -sv"
+\alias bc="bc --mathlib"
+\alias cal="cal --week=$(\date +%V)"
+\alias cdrecord="cdrecord -sao -speed='0' -eject -v"
+\alias cdparanoia="cdparanoia --batch --force-read-speed='1' --abort-on-skip --log-summary='cdparanoia.log'"
 if [[ "${EUID}" == "0" ]]
 then
-    alias cdda2wav="cdda2wav -verbose-level='all' -cddb='0' -speed='1' -paranoia -paraopts='proof' -bulk -device='/dev/sr0'"
+    \alias cdda2wav="cdda2wav \
+                        -verbose-level='all' \
+                        -cddb='0' \
+                        -speed='1' \
+                        -paranoia \
+                        -paraopts='proof' \
+                        -bulk \
+                        -device='/dev/sr0'"
 else
     # the package "app-cdr/cdrtools" is broken, even with correct read-write permissions for "/dev/sr0"!
-    alias cdda2wav="sudo cdda2wav -verbose-level='all' -cddb='0' -speed='1' -paranoia -paraopts='proof' -bulk -device='/dev/sr0'"
+    \alias cdda2wav="sudo cdda2wav \
+                        -verbose-level='all' \
+                        -cddb='0'  \
+                        -speed='1'  \
+                        -paranoia  \
+                        -paraopts='proof'  \
+                        -bulk  \
+                        -device='/dev/sr0'"
 fi
-alias crontab="crontab -i"
-alias curl="curl --show-error"
-alias dd="dd bs='1M' conv='fsync' status='progress'"
-alias diff="diff --side-by-side --suppress-common-lines --color"
-alias dvdbackup="dvdbackup --progress"
-alias e2fsck="e2fsck -v"
-alias fallocate="fallocate --verbose"
-alias fatresize="fatresize --progress"
-alias flac="flac --compression-level-8"
-alias fping="fping --generate --rdns"
-alias growisofs="growisofs -speed='1'"
-alias go-mtpfs="echo -e '\e[01;31mRemember to use \"rsync --inplace\", when copying to the Android device!\e[0m' && go-mtpfs -usb-timeout='15000'"
-alias halt="echo 'Are you sure? Please run: /sbin/halt'"
-alias htop="btop"
-alias hexdump="hexdump --canonical"
-alias history="history -i"
-alias iotop="iotop --only --processes --accumulated --delay='2'"
-alias ip="ip --color"
-alias l="ls -vC --classify"
-alias la="ls -v --all"
-alias lbzip2"lbzp2 --best"
-alias listaliases="echo '${(k)aliases// /\n}'"
-alias listcm="echo -e '\e[01;34mContents of \"\e[01;37m${HOME}/.ssh/cm\e[0m\e[01;34m\":\e[0m' && ls -ltr '${HOME}/.ssh/cm'"
-alias listfunctions="echo '${(k)functions// /\n}'"
-alias listgroups="gawk --field-separator ':' '{ printf \"Group name: %-20s GID: %-10s Members: %-10s\n\", \$1, \$3, \$4 }' '/etc/group' | sort --numeric-sort --key='5'"
-alias listusers="gawk --field-separator ':' '{ printf \"Username: %-20s UID: %-10s GID: %-10s Shell: %-10s\n\", \$1, \$3, \$4, \$7 }' '/etc/passwd' | sort --numeric-sort --key='4'"
-alias listvariables="echo '${(k)parameters// /\n}'"
-alias ll="ls -vl"
-alias ln="ln --verbose"
-alias locate="locate --ignore-case"
-alias lsblk="lsblk --discard --fs --merge --perms --zoned"
-alias mkdir="mkdir --parents"
-alias mktorrent="mktorrent --verbose \
-    --announce='http://tracker.openbittorrent.com:80/announce' \
-    --announce='udp://tracker.internetwarriors.net:1337/announce' \
-    --announce='udp://tracker.opentrackr.org:1337/announce' \
-    --announce='udp://exodus.desync.com:6969/announce' \
-    --announce='udp://tracker.tiny-vps.com:6969/announce' \
-    --announce='udp://retracker.lanta-net.ru:2710/announce' \
-    --announce='udp://tracker.torrent.eu.org:451/announce' \
-    --announce='udp://tracker.moeking.me:6969/announce' \
-    --announce='udp://vibe.community:6969/announce' \
-    --announce='udp://valakas.rollo.dnsabr.com:2710/announce' \
-    --announce='udp://tracker0.ufibox.com:6969/announce' \
-    --announce='udp://tracker.zerobytes.xyz:1337/announce' \
-    --announce='udp://tracker.v6speed.org:6969/announce' \
-    --announce='udp://tracker.uw0.xyz:6969/announce' \
-    --announce='udp://tracker.shkinev.me:6969/announce' \
-    --announce='udp://tracker.nighthawk.pw:2052/announce' \
-    --announce='udp://tracker.lelux.fi:6969/announce'"
-alias ncdu="ncdu --color='dark' --confirm-quit --exclude-kernfs"
-alias nload="nload -u K"
-alias path="echo ${PATH//:/'\n'}"
-alias poweroff="echo 'Are you sure? Please run: /sbin/poweroff'"
-alias pigz="pigz --best"
-alias pixz="pixz -9"
-alias plzip="plzip --best"
-alias radeontop="radeontop --color"
-alias rdesktop="rdesktop -g 1920x1080 -P -z -x -l -r sound:off -k '/usr/share/rdesktop/keymaps/de'"
-alias reboot="echo 'Are you sure? Please run: /sbin/reboot'"
-alias rsync="rsync --archive --hard-links --acls --xattrs --one-file-system --numeric-ids --info='progress2' --rsh='ssh -T -c chacha20-poly1305@openssh.com,aes256-gcm@openssh.com -o Compression=no -x'"
-alias ruffle="ruffle --gamemode='on' --cache-directory='/var/cache/ruffle' --tcp-connections='deny' --upgrade-to-https --open-url-mode='deny'"
-alias screen_record="ffmpeg -n -f x11grab -video_size 1920x1080 -framerate 25 -i '${DISPLAY}.0' -f alsa -ac 2 -i default -codec:a aac '$(\date +%Y%m%dT%H%M%S%z)_screen_record.mkv'"
-alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
-alias shred="shred --verbose"
-alias tree="LS_COLORS='' tree -FC"
-alias updatedb="updatedb --require-visibility='yes'"
-alias vmstat="vmstat --unit='M' --timestamp --wide 2"
-alias watch="watch --differences"
-alias webcam_live_capture="mpv --demuxer-lavf-format='video4linux2' --profile='low-latency' --demuxer-lavf-o-set=input_format='mjpeg' --untimed 'av://v4l2:/dev/video0'"
-alias webcam_record="ffmpeg -f v4l2 -framerate 30 -video_size 1920x1080 -input_format mjpeg -i '/dev/video0' -f alsa -ac 2 -i default -codec:a aac '$(\date +%Y%m%dT%H%M%S%z)_webcam_record.mkv'"
-alias wget="wget --hsts-file='/dev/null'"
-alias xargs="xargs --max-procs='$(\nproc --all --ignore="1")' --max-args='1'"
-alias xstow="xstow -verbose"
-alias zerofree="zerofree -v"
-alias zip="zip -9"
-alias zstd="zstd --ultra -22 --rm --verbose"
-alias zstdmt="zstdmt --ultra -22 --rm --verbose"
+\alias crontab="crontab -i"
+\alias curl="curl --show-error"
+\alias dd="dd bs='1M' conv='fsync' status='progress'"
+\alias diff="diff --side-by-side --suppress-common-lines --color"
+\alias dvdbackup="dvdbackup --progress"
+\alias e2fsck="e2fsck -v"
+\alias fallocate="fallocate --verbose"
+\alias fatresize="fatresize --progress"
+\alias flac="flac --compression-level-8"
+\alias fping="fping --generate --rdns"
+\alias growisofs="growisofs -speed='1'"
+\alias go-mtpfs="echo -e '\e[01;31mRemember to use \"rsync --inplace\", when copying to the Android device!\e[0m' && go-mtpfs -usb-timeout='15000'"
+\alias halt="echo 'Are you sure? Please run: /sbin/halt'"
+\alias htop="btop"
+\alias hexdump="hexdump --canonical"
+\alias history="history -i"
+\alias iotop="iotop --only --processes --accumulated --delay='2'"
+\alias ip="ip --color"
+\alias l="ls -vC --classify"
+\alias la="ls -v --all"
+\alias lbzip2"lbzp2 --best"
+\alias listaliases="echo '${(k)aliases// /\n}'"
+\alias listcm="echo -e '\e[01;34mContents of \"\e[01;37m${HOME}/.ssh/cm\e[0m\e[01;34m\":\e[0m' && ls -ltr '${HOME}/.ssh/cm'"
+\alias listfunctions="echo '${(k)functions// /\n}'"
+\alias listgroups="gawk \
+                    --field-separator ':' \
+                    '{ \
+                        printf \"Group name: %-20s GID: %-10s Members: %-10s\n\", \$1, \$3, \$4 \
+                     }' '/etc/group' \
+                        | sort --numeric-sort --key='5'"
+\alias listusers="gawk \
+                    --field-separator ':' \
+                    '{
+                        printf \"Username: %-20s UID: %-10s GID: %-10s Shell: %-10s\n\", \$1, \$3, \$4, \$7 \
+                     }' '/etc/passwd'
+                        | sort --numeric-sort --key='4'"
+\alias listvariables="echo '${(k)parameters// /\n}'"
+\alias ll="ls -vl"
+\alias ln="ln --verbose"
+\alias locate="locate --ignore-case"
+\alias lsblk="lsblk --discard --fs --merge --perms --zoned"
+\alias mkdir="mkdir --parents"
+\alias mktorrent="mktorrent --verbose \
+                    --announce='http://tracker.openbittorrent.com:80/announce' \
+                    --announce='udp://tracker.internetwarriors.net:1337/announce' \
+                    --announce='udp://tracker.opentrackr.org:1337/announce' \
+                    --announce='udp://exodus.desync.com:6969/announce' \
+                    --announce='udp://tracker.tiny-vps.com:6969/announce' \
+                    --announce='udp://retracker.lanta-net.ru:2710/announce' \
+                    --announce='udp://tracker.torrent.eu.org:451/announce' \
+                    --announce='udp://tracker.moeking.me:6969/announce' \
+                    --announce='udp://vibe.community:6969/announce' \
+                    --announce='udp://valakas.rollo.dnsabr.com:2710/announce' \
+                    --announce='udp://tracker0.ufibox.com:6969/announce' \
+                    --announce='udp://tracker.zerobytes.xyz:1337/announce' \
+                    --announce='udp://tracker.v6speed.org:6969/announce' \
+                    --announce='udp://tracker.uw0.xyz:6969/announce' \
+                    --announce='udp://tracker.shkinev.me:6969/announce' \
+                    --announce='udp://tracker.nighthawk.pw:2052/announce' \
+                    --announce='udp://tracker.lelux.fi:6969/announce'"
+\alias ncdu="ncdu --color='dark' --confirm-quit --exclude-kernfs"
+\alias nload="nload -u K"
+\alias path="echo ${PATH//:/'\n'}"
+\alias poweroff="echo 'Are you sure? Please run: /sbin/poweroff'"
+\alias pigz="pigz --best"
+\alias pixz="pixz -9"
+\alias plzip="plzip --best"
+\alias radeontop="radeontop --color"
+\alias rdesktop="rdesktop \
+                    -g 1920x1080 \
+                    -P \
+                    -z \
+                    -x \
+                    -l \
+                    -r sound:off \
+                    -k '/usr/share/rdesktop/keymaps/de'"
+\alias reboot="echo 'Are you sure? Please run: /sbin/reboot'"
+\alias rsync="rsync \
+                --archive \
+                --hard-links \
+                --acls \
+                --xattrs \
+                --one-file-system \
+                --numeric-ids \
+                --info='progress2' \
+                --rsh='ssh -T -c chacha20-poly1305@openssh.com,aes256-gcm@openssh.com -o Compression=no -x'"
+\alias ruffle="ruffle \
+                --gamemode='on' \
+                --cache-directory='/var/cache/ruffle' \
+                --tcp-connections='deny' \
+                --upgrade-to-https \
+                --open-url-mode='deny'"
+\alias screen_record="ffmpeg \
+                        -n \
+                        -f x11grab \
+                        -video_size 1920x1080 \
+                        -framerate 25 \
+                        -i '${DISPLAY}.0' \
+                        -f alsa \
+                        -ac 2 \
+                        -i default \
+                        -codec:a aac '$(\date +%Y%m%dT%H%M%S%z)_screen_record.mkv'"
+\alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
+\alias shred="shred --verbose"
+\alias tree="LS_COLORS='' tree -FC"
+\alias updatedb="updatedb --require-visibility='yes'"
+\alias vmstat="vmstat --unit='M' --timestamp --wide 2"
+\alias watch="watch --differences"
+\alias webcam_live_capture="mpv \
+                                --demuxer-lavf-format='video4linux2' \
+                                --profile='low-latency' \
+                                --demuxer-lavf-o-set=input_format='mjpeg' \
+                                --untimed 'av://v4l2:/dev/video0'"
+\alias webcam_record="ffmpeg \
+                        -f v4l2 \
+                        -framerate 30 \
+                        -video_size 1920x1080 \
+                        -input_format mjpeg \
+                        -i '/dev/video0' \
+                        -f alsa \
+                        -ac 2 \
+                        -i default \
+                        -codec:a aac '$(\date +%Y%m%dT%H%M%S%z)_webcam_record.mkv'"
+\alias wget="wget --hsts-file='/dev/null'"
+\alias xargs="xargs --max-procs=$(\nproc --all --ignore='1') --max-args='1'"
+\alias xstow="xstow -verbose"
+\alias zerofree="zerofree -v"
+\alias zip="zip -9"
+\alias zstd="zstd --ultra -22 --rm --verbose"
+\alias zstdmt="zstdmt --ultra -22 --rm --verbose"
 if [[ "${EUID}" == "0" ]]
 then
-    alias joplin="echo -e \"\e[01;31m'joplin' should not be executed with root privileges!\e[0m\""
-    alias pip="echo -e \"\e[01;31m'pip' should not be executed with root privileges!\e[0m\""
+    \alias joplin="echo -e \"\e[01;31m'joplin' should not be executed with root privileges!\e[0m\""
+    \alias pip="echo -e \"\e[01;31m'pip' should not be executed with root privileges!\e[0m\""
 fi
 
 # export
 ## set default text editor
-export EDITOR="nvim"
-export VISUAL="nvim"
+\export EDITOR="nvim"
+\export VISUAL="nvim"
 ## location for x cache
-export XDG_CACHE_HOME="${HOME}/.cache"
+\export XDG_CACHE_HOME="${HOME}/.cache"
 ## set colours for hard and orphaned symlinks
-export LS_COLORS="mh=44;37:or=40;31;01"
+\export LS_COLORS="mh=44;37:or=40;31;01"
 ## less
 ### general settings
-export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --shift 5 --ignore-case"
+\export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --shift 5 --ignore-case"
 ### enable syntax highlighting
-export LESSOPEN="| lesspipe.sh %s"
+\export LESSOPEN="| lesspipe.sh %s"
 ### do not save search entries at "~/.lesshst"
-export LESSHISTFILE="/dev/null"
+\export LESSHISTFILE="/dev/null"
 ## do not include certain commands in history
-export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+\export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
 ## do not include critical or annoying commands in history
-export HISTORY_IGNORE="(*:*|*--force*|*cd*|*chmod*|*chown*|*clear*|*dd*|*delete*|*exit*|*find*|*for*|*halt*|*kill*|*mkfs*|*ll*|*lpr*|*ls*|*mv*|*perl-rename*|*poweroff*|*pwd*|*reboot*|*rename*|*remove*|*rm*|*sed*|*shred*|*shutdown*|*sudo*|*suspend*|*touch*|*while*)"
+\export HISTORY_IGNORE="(*:*|*--force*|*cd*|*chmod*|*chown*|*clear*|*dd*|*delete*|*exit*|*find*|*for*|*halt*|*kill*|*mkfs*|*ll*|*lpr*|*ls*|*mv*|*perl-rename*|*poweroff*|*pwd*|*reboot*|*rename*|*remove*|*rm*|*sed*|*shred*|*shutdown*|*sudo*|*suspend*|*touch*|*while*)"
 ## use "ccache" via "distcc". see also "/etc/conf.d/distccd", "/etc/distcc/hosts", "/etc/env.d/03distcc_ccache" and "/etc/portage/make.conf"
-export PATH="/usr/lib/ccache/bin:${PATH}"
-export CCACHE_DIR="/home/ramon/.var/tmp/ccache"
-export DISTCC_DIR="/home/ramon/.var/tmp/distcc"
+\export PATH="/usr/lib/ccache/bin:${PATH}"
+\export CCACHE_DIR="/home/ramon/.var/tmp/ccache"
+\export DISTCC_DIR="/home/ramon/.var/tmp/distcc"
 ## mimic bash's cursor movement for paths
 ### original string: *?_-.[]~=/&;!#$%^(){}<>
-export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
+\export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 ## always use the best compression method of "xz"
-export XZ_OPT="-9"
+\export XZ_OPT="-9"
 ## workaround for "tmux" to create proper conditionals
-export EUID="${EUID}"
+\export EUID="${EUID}"
 ## set default parameters for "progress"
-export PROGRESS_ARGS="--wait-delay='2.0' --monitor-continuously"
+\export PROGRESS_ARGS="--wait-delay='2.0' --monitor-continuously"
 ## always activate anti-aliasing for "java" apps
-export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings='lcd'"
+\export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings='lcd'"
 
 # output when opening shell
 ## list who is logged in
