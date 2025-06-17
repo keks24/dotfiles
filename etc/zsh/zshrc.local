@@ -642,7 +642,7 @@ genpw()
                 \echo "      ${0} --no-special --no-uppercase"
                 \return 0
         esac
-        shift 1 >/dev/null 2>&1 || break
+        \shift 1 >/dev/null 2>&1 || \break
     done
 
     for password_counter in {1..${password_count}}
