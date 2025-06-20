@@ -243,17 +243,19 @@ csum()
     then
         \echo -e "\e[01;31mThe file: '${checksum_file}' could not be found or is not a file.\e[0m" >&2
         \return 1
-    else
-        # the parameter "--replace" and a subshell ("sh") must be used here!
-        \xargs \
-            --null \
-            --no-run-if-empty \
-            --arg-file="${checksum_file}" \
-            --max-procs="${available_processors}" \
-            --replace="{}" \
-            \sh -c \
-                "\b2sum --check --quiet <<< '{}'"
     fi
+
+    # the parameter "--replace" and a subshell ("sh") must be used here, in
+    # order to check files in parallel!
+    # example command:
+    # $ b2sum --check --quiet <<< "<some_checksum>  <some_filename>"
+    \xargs \
+        --no-run-if-empty \
+        --arg-file="${checksum_file}" \
+        --max-procs="${available_processors}" \
+        --replace="{}" \
+        \sh -c \
+            "\b2sum --check --quiet <<< '{}'"
 }
 
 ## set up "binfmt" for "qemu"
