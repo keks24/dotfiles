@@ -206,7 +206,7 @@ gsum()
     local available_processors=$(\nproc --all --ignore="1")
     local xargs_max_args="1"
     local overwrite_checksum_file
-    local file_list
+    declare -a file_array
 
     if [[ -f "${checksum_file}" ]]
     then
@@ -217,20 +217,22 @@ gsum()
         fi
     fi
 
-    file_list=$(\find "." \
+    file_array=($(\find \
+                    "." \
                     -type f \
                     -not \
                     -name "${checksum_file/\.\//}" \
-                    -print0)
+                 ) \
+               )
 
-    # the command "printf" is important here to keep a null-character-separated string.
-    # using "here-string" ("<<<") would add a trailing newline.
-    \xargs \
-        --null \
-        --no-run-if-empty \
-        --max-procs="${available_processors}" \
-        --max-args="${xargs_max_args}" \
-        \b2sum --zero > "${checksum_file}" < <(\printf "%s" "${file_list}")
+    # terminate each element of the array with a null-byte character
+    \printf "%s\0" "${file_array[@]}" \
+        | \xargs \
+            --null \
+            --no-run-if-empty \
+            --max-procs="${available_processors}" \
+            --max-args="${xargs_max_args}" \
+            \b2sum > "${checksum_file}"
 }
 csum()
 {
