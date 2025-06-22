@@ -19,6 +19,7 @@
 # the substitution "${filename//\.${filename_suffix}/.aac}" is executed on the entire directory path and filename, which is very unprecise!
 # "\.${filename_suffix}$" does not work for some reason.
 --format-sort="res:720,vcodec:h265,acodec:aac"
+--sponsorblock-remove="all"
 #--download-archive="/home/ramon/music/youtube-dl/archive_lists/youtube-dl_720p_download_archive.list"
 #--output="./%(autonumber)02d_%(title)s [%(id)s][%(format_note)s].%(ext)s"
 --output="./%(uploader)s/%(playlist_title|)s/%(title)s [%(id)s][%(format_note)s].%(ext)s"

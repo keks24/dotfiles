@@ -24,6 +24,7 @@
 --audio-quality="0"
 --download-archive="/home/ramon/music/youtube-dl/archive_lists/domian_live_2021_fanclub.list"
 --no-post-overwrites
+--sponsorblock-remove="all"
 --exec="filename={} \
     && filename_suffix=\"${filename##*\.}\" \
     && /usr/bin/ffmpeg \
