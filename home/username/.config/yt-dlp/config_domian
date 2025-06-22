@@ -19,12 +19,13 @@
 # the substitution "${filename//\.${filename_suffix}/.aac}" is executed on the entire directory path and filename, which is very unprecise!
 # "\.${filename_suffix}$" does not work for some reason.
 --ignore-errors
+--sponsorblock-remove="all"
+--concurrent-fragments="4"
 --extract-audio
 --audio-format="best"
 --audio-quality="0"
 --download-archive="/home/ramon/music/youtube-dl/archive_lists/domian_live_2021_fanclub.list"
 --no-post-overwrites
---sponsorblock-remove="all"
 --exec="filename={} \
     && filename_suffix=\"${filename##*\.}\" \
     && /usr/bin/ffmpeg \
