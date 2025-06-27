@@ -1369,6 +1369,7 @@ fi
 \alias flac="flac --compression-level-8"
 \alias fping="fping --generate --rdns"
 \alias growisofs="growisofs -speed='1'"
+\alias grep="grep --color='auto' --line-number"
 \alias go-mtpfs="echo -e '\e[01;31mRemember to use \"rsync --inplace\", when copying to the Android device!\e[0m' && go-mtpfs -usb-timeout='15000'"
 \alias halt="echo 'Are you sure? Please run: /sbin/halt'"
 \alias htop="btop"
