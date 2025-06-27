@@ -580,6 +580,7 @@ lpr_invoice()
 ## generate strong passwords with ~130 bit entropy
 genpw()
 {
+    local function_name="${0}"
     local -i password_length=24
     local remove_characters="[:space:]"
     local -i password_counter
@@ -627,7 +628,7 @@ genpw()
 
             "-h" | "--help")
                 \echo ""
-                \echo "Usage: ${0} [options]... <arguments>..."
+                \echo "Usage: ${function_name} [options]... <arguments>..."
                 \echo ""
                 \echo "OPTIONS:"
                 \echo "  -a, --no-lowercase              exclude lowercase characters"
@@ -640,10 +641,10 @@ genpw()
                 \echo ""
                 \echo "EXAMPLES:"
                 \echo "  generate a password with 24 characters"
-                \echo "      ${0} --length 24"
+                \echo "      ${function_name} --length 24"
                 \echo ""
                 \echo "  exclude special and uppercase characters"
-                \echo "      ${0} --no-special --no-uppercase"
+                \echo "      ${function_name} --no-special --no-uppercase"
                 \return 0
         esac
         \shift 1 >/dev/null 2>&1 || \break
