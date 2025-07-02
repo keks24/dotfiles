@@ -455,19 +455,19 @@ uchroot()
     fi
 }
 
-## toggle exclude remove feature via "globbing"
-exclude_remove_on()
+## toggle extended globbing
+extended_glob_on()
 {
     setopt extended_glob
-    \echo -e "\e[01;31mGlob syntax has been activated.\e[0m"
+    \echo -e "\e[01;33mExtended globbing syntax has been activated!\e[0m"
     \echo "Examples:"
     \echo "Remove all files, except the file 'nom': rm -- ^\"nom\""
     \echo "Remove all files, except files with the suffix 'png' and 'jpg': rm -- ^.*(png|jpg)"
 }
-exclude_remove_off()
+extended_glob_off()
 {
     \unsetopt extended_glob
-    \echo -e "\e[01;31mGlob syntax has been deactivated.\e[0m"
+    \echo -e "\e[01;33mExtended globbing has been deactivated!\e[0m"
 }
 
 ## be able to use "gpg", when connected via "ssh"
