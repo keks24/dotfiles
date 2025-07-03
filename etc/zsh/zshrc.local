@@ -217,11 +217,13 @@ gsum()
         fi
     fi
 
-    file_array=($(\find \
-                    "." \
-                    -type f \
-                    -not \
-                    -name "${checksum_file/\.\//}" \
+    file_array=(\
+                $(\
+                    \find \
+                        "." \
+                        -type f \
+                        -not \
+                        -name "${checksum_file##*/}" \
                  ) \
                )
 
