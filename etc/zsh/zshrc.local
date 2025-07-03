@@ -224,7 +224,7 @@ gsum()
                         -type f \
                         -not \
                         -name "${checksum_file##*/}" \
-                 ) \
+                 )
                )
 
     # terminate each array element by a null-byte character
