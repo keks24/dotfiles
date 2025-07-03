@@ -217,18 +217,12 @@ gsum()
         fi
     fi
 
-    file_array=(
-                $(
-                    \find \
-                        "." \
-                        -type f \
-                        -not \
-                        -name "${checksum_file##*/}"
-                 )
-               )
-
-    # terminate each array element by a null-byte character
-    \printf "%s\0" "${file_array[@]}" \
+    \find \
+        "." \
+        -type f \
+        -not \
+        -name "${checksum_file##*/}" \
+        -print0 \
         | \xargs \
             --null \
             --no-run-if-empty \
@@ -248,7 +242,8 @@ csum()
     fi
 
     # the parameter "--replace" and a subshell ("sh") must be used here, in
-    # order to check files in parallel!
+    # order to check files in parallel and to be compatible with "b2sum --check",
+    # since the parameter "--zero" cannot be used with the parameter "--check".
     # example command:
     # $ b2sum --check --quiet <<< "<some_checksum>  <some_filename>"
     \xargs \
