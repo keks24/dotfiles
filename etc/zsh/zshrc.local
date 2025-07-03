@@ -217,13 +217,13 @@ gsum()
         fi
     fi
 
-    file_array=(\
-                $(\
+    file_array=(
+                $(
                     \find \
                         "." \
                         -type f \
                         -not \
-                        -name "${checksum_file##*/}" \
+                        -name "${checksum_file##*/}"
                  )
                )
 
