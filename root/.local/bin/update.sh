@@ -16,7 +16,22 @@
 #############################################################################
 
 declare -a command_array
-command_array=(clear date eclean eix eix-sync eix-test-obsolete emerge eselect etc-update glsa-check grep logger revdep-rebuild tee unalias)
+command_array=(
+                "/bin/date"
+                "/bin/grep"
+                "/usr/bin/clear"
+                "/usr/bin/eclean"
+                "/usr/bin/eix"
+                "/usr/bin/eix-sync"
+                "/usr/bin/eix-test-obsolete"
+                "/usr/bin/emerge"
+                "/usr/bin/eselect"
+                "/usr/bin/glsa-check"
+                "/usr/bin/logger"
+                "/usr/bin/revdep-rebuild"
+                "/usr/bin/tee"
+                "/usr/sbin/etc-update"
+              )
 checkCommands()
 {
     unalias ${command_array[@]##*/} 2>/dev/null
