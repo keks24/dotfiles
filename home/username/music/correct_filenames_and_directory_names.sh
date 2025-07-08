@@ -20,7 +20,14 @@
 # adding the character anyways, will match everything.
 fat_illegal_character_list='<>:"\?*'
 declare -a music_directory_array
-music_directory_array=("audiobooks" "normal_music" "playlists" "podcasts" "record" "unusual_music")
+music_directory_array=(
+                        "audiobooks"
+                        "normal_music"
+                        "playlists"
+                        "podcasts"
+                        "record"
+                        "unusual_music"
+                      )
 available_processors=$(/usr/bin/nproc --all)
 xargs_max_args="1"
 
