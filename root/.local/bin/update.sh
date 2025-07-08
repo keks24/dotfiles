@@ -15,12 +15,14 @@
 # limitations under the License.                                            #
 #############################################################################
 
-command_list=(clear date eclean eix eix-sync eix-test-obsolete emerge eselect etc-update glsa-check grep logger revdep-rebuild tee unalias)
+declare -a command_array
+command_array=(clear date eclean eix eix-sync eix-test-obsolete emerge eselect etc-update glsa-check grep logger revdep-rebuild tee unalias)
 checkCommands()
 {
-    for current_command in "${command_list[@]}"
+    unalias ${command_array[@]##*/} 2>/dev/null
+
+    for current_command in "${command_array[@]}"
     do
-        unalias ${current_command} 2>/dev/null
         if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
         then
             echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m" >&2

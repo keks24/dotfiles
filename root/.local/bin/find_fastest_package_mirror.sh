@@ -15,12 +15,14 @@
 # limitations under the License.                                           #
 ############################################################################
 
-command_list=(dirname echo mirrorselect unalias)
+declare -a command_array
+command_array=(dirname echo mirrorselect unalias)
 checkCommands()
 {
-    for current_command in "${command_list[@]}"
+    unalias ${command_array[@]##*/} 2>/dev/null
+
+    for current_command in "${command_array[@]}"
     do
-        unalias ${current_command} 2>/dev/null
         if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
         then
             /bin/echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
