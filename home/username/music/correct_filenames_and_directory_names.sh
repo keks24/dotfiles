@@ -39,8 +39,9 @@ xargs_max_args="1"
         -type d -iregex ".*[${fat_illegal_character_list}].*" \
     \) \
     -print0 \
-        | /usr/bin/xargs \
-            --null \
-            --max-procs="${available_processors}" \
-            --max-args="${xargs_max_args}" \
-            /usr/bin/perl-rename --verbose "s/[${fat_illegal_character_list}]/_/g"
+    | /usr/bin/xargs \
+        --null \
+        --no-run-if-empty \
+        --max-procs="${available_processors}" \
+        --max-args="${xargs_max_args}" \
+        /usr/bin/perl-rename --verbose "s/[${fat_illegal_character_list}]/_/g"
