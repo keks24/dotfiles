@@ -1020,7 +1020,7 @@ checkCommands()
 {
     local current_command
 
-    beQuiet "" "unalias ${COMMAND_ARRAY[*]##*/}"
+    beQuiet "" "unalias ${COMMAND_ARRAY[@]##*/}"
 
     for current_command in "${COMMAND_ARRAY[@]}"
     do
