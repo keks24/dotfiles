@@ -22,8 +22,8 @@ command_list=(
                 "/usr/bin/pgrep"
                 "/usr/bin/pkill"
                 "/usr/bin/sleep"
-                "/usr/bin/ssh-agent"
                 "/usr/bin/ssh-add"
+                "/usr/bin/ssh-agent"
                 "/usr/sbin/updatedb"
              )
 checkCommands()
