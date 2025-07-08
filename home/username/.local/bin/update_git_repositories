@@ -15,16 +15,16 @@
 # limitations under the License.                                           #
 ############################################################################
 
-command_list=(\
-                "/usr/bin/git" \
-                "/usr/bin/locate" \
-                "/usr/bin/nproc" \
-                "/usr/bin/pgrep" \
-                "/usr/bin/pkill" \
-                "/usr/bin/sleep" \
-                "/usr/bin/ssh-agent" \
-                "/usr/bin/ssh-add" \
-                "/usr/sbin/updatedb" \
+command_list=(
+                "/usr/bin/git"
+                "/usr/bin/locate"
+                "/usr/bin/nproc"
+                "/usr/bin/pgrep"
+                "/usr/bin/pkill"
+                "/usr/bin/sleep"
+                "/usr/bin/ssh-agent"
+                "/usr/bin/ssh-add"
+                "/usr/sbin/updatedb"
              )
 checkCommands()
 {
@@ -46,18 +46,18 @@ checkCommands
 current_username="${USER}"
 home_directory="/home/${current_username}"
 declare -a git_directory_array
-git_directory_array=(\
-                        "${home_directory}/git" \
-                        "/usr/local/share/git" \
+git_directory_array=(
+                        "${home_directory}/git"
+                        "/usr/local/share/git"
                     )
 db_filename="directory_index.db"
 available_processors=$(/usr/bin/nproc --all)
 declare -a prune_paths_array
 # trailing slashes for directories must be left out!
 # spaces must be escaped with backslash!
-prune_paths_array=(\
-                    "${git_directory}/external/github.com/keks24/gitea/integrations/gitea-repositories-meta" \
-                    "${git_directory}/external/github.com/fritzbox/freetz-ng/make/pkgs/git/files/root/etc" \
+prune_paths_array=(
+                    "${git_directory}/external/github.com/keks24/gitea/integrations/gitea-repositories-meta"
+                    "${git_directory}/external/github.com/fritzbox/freetz-ng/make/pkgs/git/files/root/etc"
                   )
 
 # cache ssh key password
@@ -97,7 +97,10 @@ do
     ## debugging this is a bit difficult, since it runs in parallel.
     ## the outputs of the "echo" and "git pull" are also distorted.
     ## no inputs can be done in the subshell!
-    /usr/bin/locate --database="${directory_index_file}" --regexp "\.git$" --null \
+    /usr/bin/locate \
+        --database="${directory_index_file}" \
+        --regexp "\.git$" \
+        --null \
         | xargs \
             --null \
             --no-run-if-empty \
