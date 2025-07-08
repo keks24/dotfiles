@@ -1480,7 +1480,7 @@ fi
                         -i default \
                         -codec:a aac '$(\date +%Y%m%dT%H%M%S%z)_webcam_record.mkv'"
 \alias wget="wget --hsts-file='/dev/null'"
-\alias xargs="xargs --max-procs=$(\nproc --all --ignore='1') --max-args='1'"
+\alias xargs="xargs --no-run-if-empty --max-procs=$(\nproc --all --ignore='1') --max-args='1'"
 \alias xstow="xstow -verbose"
 \alias zerofree="zerofree -v"
 \alias zip="zip -9"
