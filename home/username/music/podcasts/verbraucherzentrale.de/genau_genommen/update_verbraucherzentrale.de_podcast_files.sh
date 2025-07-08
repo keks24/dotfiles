@@ -21,11 +21,13 @@ aria2c_netrc_path="${home_directory}/.cache/aria2/netrc"
 aria2c_save_session="${home_directory}/.cache/aria2/aria2_session.gz"
 podcast_audio_format="opus"
 podcast_rss_url="https://verbraucherpod.podigee.io/feed/${podcast_audio_format}"
-podcast_url_list=$(/usr/bin/curl --silent --show-error "${podcast_rss_url}" \
-                    | /usr/bin/gawk \
-                        --field-separator='"' \
-                        --assign="podcast_audio_format=.${podcast_audio_format}.*feed" \
-                        '$0 ~ podcast_audio_format { print $2 }')
+podcast_url_list=$(
+                    /usr/bin/curl --silent --show-error "${podcast_rss_url}" \
+                        | /usr/bin/gawk \
+                            --field-separator='"' \
+                            --assign="podcast_audio_format=.${podcast_audio_format}.*feed" \
+                            '$0 ~ podcast_audio_format { print $2 }'
+                  )
 declare -a podcast_url_array
 declare -a podcast_audio_file_array
 ffmpeg_output_audio_format="aac"
