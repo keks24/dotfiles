@@ -107,9 +107,18 @@ generatePlaylistFiles()
 
         echo -e "\e[01;33mGenerating playlist file: '${playlist_file}'.\e[0m" >&2
 
-        /usr/bin/find "${music_directory}" -type f -name "*.${music_filename_suffix}" -print0 \
-            | /usr/bin/xargs --null --max-procs="${available_processors}" --max-args="${xargs_max_args}" echo \
-            | /usr/bin/sort --ignore-case > "${playlist_file}"
+        /usr/bin/find \
+            "${music_directory}" \
+            -type f \
+            -name "*.${music_filename_suffix}" \
+            -print0 \
+            | /usr/bin/xargs \
+            --null \
+            --no-run-if-empty \
+            --max-procs="${available_processors}" \
+            --max-args="${xargs_max_args}" \
+            echo \
+                | /usr/bin/sort --ignore-case > "${playlist_file}"
     done
 }
 
