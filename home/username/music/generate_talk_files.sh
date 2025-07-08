@@ -16,7 +16,12 @@
 ############################################################################
 
 declare -a command_array
-command_array=("/usr/bin/espeak" "/usr/bin/find" "/home/ramon/git/external/github.com/rockbox/tools/rbspeexenc" "/bin/rm")
+command_array=(
+                "/usr/bin/espeak"
+                "/usr/bin/find"
+                "/home/ramon/git/external/github.com/rockbox/tools/rbspeexenc"
+                "/bin/rm"
+              )
 checkCommands()
 {
     unalias "${command_array[@]##*/}" >/dev/null 2>&1
@@ -37,7 +42,14 @@ checkCommands
 
 # define global variables
 declare -a music_directory_array
-music_directory_array=("./audiobooks" "./normal_music" "./playlists" "./podcasts" "./record" "./unusual_music")
+music_directory_array=(
+                        "./audiobooks"
+                        "./normal_music"
+                        "./playlists"
+                        "./podcasts"
+                        "./record"
+                        "./unusual_music"
+                      )
 music_filename_suffix="aac"
 rockbox_directory_filename="_dirname"
 rockbox_filename_suffix="talk"
@@ -72,7 +84,14 @@ main()
         pushd "${directory_path}" >/dev/null
 
         local directory_name="${directory_path##*/}"
-        local music_file_list=$(/usr/bin/find "." -maxdepth 1 -type f -name "*.${music_filename_suffix}" -printf "%f\n")
+        local music_file_list=$(
+                                /usr/bin/find \
+                                    "." \
+                                    -maxdepth 1 \
+                                    -type f \
+                                    -name "*.${music_filename_suffix}" \
+                                    -printf "%f\n"
+                               )
 
         # create ".wav" files for rockbox's "rbspeexenc" program and encode them to ".talk" files
         if [[ ! -f "${rockbox_directory_voice_file}" ]]
