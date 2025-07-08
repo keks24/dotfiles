@@ -28,7 +28,7 @@ command_list=(
              )
 checkCommands()
 {
-    unalias "${command_list[@]}" 2>/dev/null
+    unalias "${command_list[@]##*/}" 2>/dev/null
 
     for current_command in "${command_list[@]}"
     do
