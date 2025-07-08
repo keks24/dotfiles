@@ -46,6 +46,9 @@ do
         --force-download-archive \
         --get-id \
         "${youtube_channel_array[${youtube_channel}]}" \
-            | /usr/bin/xargs --replace="{}" echo "${youtube_url}/watch?v={}" \
-            | /usr/bin/tee --append "${youtube_playlist_file}"
+            | /usr/bin/xargs \
+                --replace="{}" \
+                echo "${youtube_url}/watch?v={}" \
+                | /usr/bin/tee \
+                    --append "${youtube_playlist_file}"
 done
