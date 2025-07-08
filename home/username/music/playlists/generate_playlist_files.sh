@@ -43,18 +43,20 @@ checkCommands
 # define global directories
 declare -a music_directory_array
 declare -a playlist_file_array
-music_directory_array=("../audiobooks" \
-                       "../normal_music" \
-                       "../unusual_music"\
+music_directory_array=(
+                        "../audiobooks"
+                        "../normal_music"
+                        "../unusual_music"
                       )
 music_filename_suffix="aac"
 playlist_filename_suffix="m3u8"
 playlist_all_filename="all.${playlist_filename_suffix}"
 playlist_all_file="./${playlist_all_filename}"
-playlist_file_array=("${playlist_all_file}" \
-                     "./audiobooks.${playlist_filename_suffix}" \
-                     "./normal_music.${playlist_filename_suffix}" \
-                     "./unusual_music.${playlist_filename_suffix}" \
+playlist_file_array=(
+                        "${playlist_all_file}"
+                        "./audiobooks.${playlist_filename_suffix}"
+                        "./normal_music.${playlist_filename_suffix}"
+                        "./unusual_music.${playlist_filename_suffix}"
                     )
 available_processors=$(/usr/bin/nproc --all --ignore="1")
 xargs_max_args="1"
