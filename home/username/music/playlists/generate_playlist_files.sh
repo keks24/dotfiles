@@ -15,13 +15,14 @@
 # limitations under the License.                                           #
 ############################################################################
 
-command_list=(\
-                "/bin/cat" \
-                "/usr/bin/find" \
-                "/usr/bin/nproc" \
-                "/bin/rm" \
-                "/usr/bin/sort" \
-                "/usr/bin/xargs" \
+declare -a command_array
+command_array=(
+                "/bin/cat"
+                "/usr/bin/find"
+                "/usr/bin/nproc"
+                "/bin/rm"
+                "/usr/bin/sort"
+                "/usr/bin/xargs"
              )
 checkCommands()
 {
