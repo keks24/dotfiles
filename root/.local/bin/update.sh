@@ -76,18 +76,18 @@ echo -e "\e[01;33mChecking for new updates...\e[0m" >&2
 #    --user="${sudo_user}" \
 #    CCACHE_DISABLE="1" \
 #    /home/${sudo_user}/bin/gem update
-/usr/bin/sudo \
-    --shell \
-    --user="${sudo_user}" \
-    /home/${sudo_user}/bin/pip-review \
-        --auto \
-        --user \
-        --no-warn-script-location
-/usr/bin/sudo \
-    --shell \
-    --user="${sudo_user}" \
-    /home/${sudo_user}/bin/pip \
-        check
+#/usr/bin/sudo \
+#    --shell \
+#    --user="${sudo_user}" \
+#    /home/${sudo_user}/bin/pip-review \
+#        --auto \
+#        --user \
+#        --no-warn-script-location
+#/usr/bin/sudo \
+#    --shell \
+#    --user="${sudo_user}" \
+#    /home/${sudo_user}/bin/pip \
+#        check
 #/usr/bin/sudo \
 #    --shell \
 #    --user="${sudo_user}" \
