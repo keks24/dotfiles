@@ -11,13 +11,13 @@
 "resolution"
 150
 "tl-x"
-154999
+221511
 "tl-y"
 154999
 "br-x"
 13861366
 "br-y"
-19219914
+19175628
 "custom-gamma"
 0
 "swdeskew"
@@ -25,7 +25,7 @@
 "swcrop"
 0
 "swdespeck"
-0
+1
 "despeck"
 1
 "swskip"
