@@ -1363,7 +1363,7 @@ fi
 \alias e2fsck="e2fsck -v"
 \alias fallocate="fallocate --verbose"
 \alias fatresize="fatresize --progress"
-\alias fd="fd --hidden --no-ignore --follow"
+\alias fd="fd --hidden --no-ignore"
 \alias flac="flac --compression-level-8"
 \alias fping="fping --generate --rdns"
 \alias growisofs="growisofs -speed='1'"
