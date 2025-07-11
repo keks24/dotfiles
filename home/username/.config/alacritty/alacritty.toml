@@ -988,7 +988,7 @@ white = "#ffffff"
 yellow = "#e7c547"
 
 [selection]
-semantic_escape_chars = ",│`|\"' ()[]{}<>\t¬»·║═"
+semantic_escape_chars = ",│`|\"' ()[]{}<>\t¬»·║═→"
 
 [[hints.enabled]]
 command = "xdg-open"
