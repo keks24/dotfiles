@@ -243,7 +243,7 @@ csum()
 
     # the parameter "--replace" and a subshell ("sh") must be used here, in
     # order to check files in parallel and to be compatible with "b2sum --check",
-    # since the parameter "--zero" cannot be used with the parameter "--check".
+    # since the parameter "--zero" and "--check" are mutually exclusive.
     # example command:
     # $ b2sum --check --quiet <<< "<some_checksum>  <some_filename>"
     \xargs \
