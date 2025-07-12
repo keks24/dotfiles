@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and      #
 # limitations under the License.                                           #
 ############################################################################
-
 --]]
 
 --[[
@@ -272,7 +271,11 @@ awful.screen.connect_for_each_screen(function(s)
     -- increase number of master clients for some tags
     local tags = awful.tag.gettags(s.index)
     for _, tag in pairs(tags) do
-        if tag.name == "web" or tag.name == "e-mail" or tag.name == "office" or tag.name == "download" then
+        if tag.name == "terminal"
+            or tag.name == "web"
+            or tag.name == "e-mail"
+            or tag.name == "office"
+            or tag.name == "download" then
             awful.tag.setnmaster(2, tag)
         end
     end
