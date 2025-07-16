@@ -39,5 +39,5 @@ do
             --no-run-if-empty \
             --max-procs="${available_processors}" \
             --max-args="${xargs_max_args}" \
-            /bin/rm --recursive --force
+            /bin/rm --recursive --force &
 done
