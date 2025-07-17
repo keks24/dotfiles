@@ -99,7 +99,7 @@ echo -e "\e[01;33mChecking for new updates...\e[0m" >&2
 #    --command="/usr/bin/npm update -g"
 /usr/bin/eix-sync
 /usr/bin/eselect news read
-echo -e "\n\e[01;33mPress any key to continue...\e[0m" >&2
+echo -e "\n\e[01;33mPress 'enter' key to continue...\e[0m" >&2
 read
 if /usr/bin/eix --upgrade sys-apps/portage >/dev/null
 then
