@@ -110,7 +110,7 @@ fi
     --ask \
     --update \
     --deep \
-    --changed-use \
+    --newuse \
     --tree \
     --verbose \
     --exclude="${large_package_list//$'\n'/ }" \
@@ -119,7 +119,7 @@ fi
 /usr/bin/emerge \
     --update \
     --deep \
-    --changed-use \
+    --newuse \
     --tree \
     --verbose \
     @world
