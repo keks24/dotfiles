@@ -53,6 +53,7 @@ script_directory_path="${0%/*}"
 script_name="${0##*/}"
 sudo_user="${SUDO_USER}"
 no_tmpfs_file="/etc/portage/package.env/no_tmpfs.conf"
+no_tmpfs_content=$(< "${no_tmpfs_file}")
 if [[ ! -f "${no_tmpfs_file}" ]]
 then
     echo -e "\e[01;31mCould not find file '${no_tmpfs_file}' or is not a file.\e[0m" >&2
@@ -63,7 +64,7 @@ else
                                 --extended-regexp \
                                 --only-matching \
                                 "[0-9a-zA-Z]+-[0-9a-zA-Z]+/[-0-9a-zA-Z]+" \
-                                "${no_tmpfs_file}"
+                                <<< "${no_tmpfs_content}"
                         )
 fi
 
