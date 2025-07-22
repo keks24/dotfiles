@@ -941,6 +941,15 @@ listids()
     done
 }
 
+## list loop devices and their modification timestamps
+lost()
+{
+    \losetup --list
+    \echo -e "\n\e[01;34mModification timestamps (chronologically descending order):\e[0m"
+    \stat --format="%n: %y" $(\losetup --raw | \gawk 'NR >= 2 { print $1 }') \
+        | \sort --reverse --numeric-sort --key="3"
+}
+
 ## bash: execute bell when command is finished
 precmd()
 {
