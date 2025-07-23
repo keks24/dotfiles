@@ -38,7 +38,7 @@ do
         \touch "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
         \chmod 640 "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log"
     else
-        continue
+        \continue
     fi
 done
 unset APPLICATON_NAME
@@ -76,7 +76,7 @@ do
             ;;
 
         *)
-            continue
+            \continue
     esac
 done
 unset APPLICATION_NAME
@@ -87,5 +87,5 @@ unset APPLICATION_NAME
 ## see also "${HOME}/.zshrc.local"
 if [[ "${DISPLAY}" == "" && "${UID}" != "0" && -o login && "${TTY}" == "/dev/tty7" ]]
 then
-    startx >> "${LOG_DIRECTORY}/startx/startx.log" 2>&1 &!
+    \startx >> "${LOG_DIRECTORY}/startx/startx.log" 2>&1 &!
 fi

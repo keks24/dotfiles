@@ -73,7 +73,7 @@ watch_xwindows()
 ### include notes file
 if [[ -r "${HOME}/.config/zsh/.zshrc.notes" ]]
 then
-    source "${HOME}/.config/zsh/.zshrc.notes"
+    \source "${HOME}/.config/zsh/.zshrc.notes"
 fi
 
 ## aliases
