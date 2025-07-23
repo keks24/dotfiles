@@ -27,7 +27,11 @@ debug_awesome()
 firefox_safe()
 {
     local function_name="${0}"
-    local tmp_directory=$(\mktemp --directory "/tmp/${function_name}.XXXXXXXXXX")
+    local tmp_directory=$(
+                            \mktemp \
+                                --directory \
+                                "/tmp/${function_name}.XXXXXXXXXX"
+                         )
 
     \firefox --safe-mode --profile "${tmp_directory}"
 
@@ -42,9 +46,16 @@ watch_xwindows()
 
     while [[ "${x}" != "0" ]]
     do
-        local window_id_list=$(\xprop -root "_NET_CLIENT_LIST" | grep --extended-regexp --only-matching "0x[a-z0-9]+")
+        local window_id_list=$(
+                                \xprop \
+                                    -root \
+                                    "_NET_CLIENT_LIST" \
+                                    | \grep \
+                                        --extended-regexp \
+                                        --only-matching \
+                                        "0x[a-z0-9]+"
+                              )
         \clear
-
         echo -e "\e[01;33mFirst value is \"instance name\", second value is \"class name\":\e[0m\n" >&2
         while read -r window_id
         do

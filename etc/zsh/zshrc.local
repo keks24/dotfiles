@@ -74,10 +74,11 @@ dic()
 
     \echo -e "URL: ${dictionary_url}\n"
 
-    local curl_output=$(\curl \
+    local curl_output=$(
+                        \curl \
                             --silent \
                             --show-error \
-                            --url "${dictionary_url}" \
+                            --url "${dictionary_url}"
                        )
 
     if [[ "${curl_output}" == *"No results!"* ]]
@@ -85,8 +86,9 @@ dic()
         local no_results="true"
     fi
 
-    local filtered_output=$(\gawk \
-                                '/<dl>|<\/dl>|<dt>|<\/dt>|<dd>|<\/dd>/ \
+    local filtered_output=$(
+                            \gawk \
+                                '/<dl>|<\/dl>|<dt>|<\/dt>|<dd>|<\/dd>/
                                 {
                                     # remove title tag
                                     gsub("<dt>", "");
@@ -650,7 +652,16 @@ genpw()
     for password_counter in {1..${password_count}}
     do
         password_entropy="0"
-        password_output=$(\strings --bytes="1" "/dev/urandom" | \tr --delete "${remove_characters}" | \head --bytes="${password_length}")
+        password_output=$(
+                            \strings \
+                                --bytes="1" \
+                                "/dev/urandom" \
+                                | \tr \
+                                    --delete \
+                                    "${remove_characters}" \
+                                    | \head \
+                                        --bytes="${password_length}"
+                         )
 
         if [[ "${password_output}" =~ "${lowercase_letter_regex}" ]]
         then
@@ -673,11 +684,12 @@ genpw()
             (( password_entropy+=ascii_character_amount ))
         fi
 
-        entropy_result=$(\gawk \
-                            --assign="password_entropy=${password_entropy}" \
-                            '{
-                                printf "%.4f", log(password_entropy^$0)/log(2);
-                             }' <<< "${password_length}")
+        entropy_result=$(
+                            \gawk \
+                                --assign="password_entropy=${password_entropy}"
+                                '{
+                                    printf "%.4f", log(password_entropy^$0)/log(2);
+                                 }' <<< "${password_length}")
 
         \printf "%s    %s bit (%s)\n" "${password_output}" "${entropy_result}" "${password_entropy}"
     done
@@ -850,7 +862,11 @@ fpid()
                 \continue
             fi
 
-            process_real_name=$(\gawk '/Name:/ { $1=""; print substr($0, 2) }' "/proc/${process_id}/status")
+            process_real_name=$(
+                                \gawk \
+                                    '/Name:/ { $1=""; print substr($0, 2) }' \
+                                    "/proc/${process_id}/status"
+                               )
             process_name_id_array[${process_real_name}]+="${process_id},"
             tail_pid_parameter+="--pid=${process_id} "
         # handle process names
@@ -866,7 +882,11 @@ fpid()
             first_process_id="${process_id_array[1]}"
             # get real process name from "procfs"
             # remove leading space via "substr()"
-            process_real_name=$(\gawk '/Name:/ { $1=""; print substr($0, 2) }' "/proc/${process_id_array[1]}/status")
+            process_real_name=$(
+                                \gawk \
+                                    '/Name:/ { $1=""; print substr($0, 2) }' \
+                                    "/proc/${process_id_array[1]}/status"
+                               )
             process_name_id_array[${process_real_name}]+="${first_process_id},"
             tail_pid_parameter+="--pid=${first_process_id} "
         fi
@@ -1103,26 +1123,28 @@ transfer()
                 # if "stdout" is redirected to something; e.g. ">/dev/null", "tee /dev/null" or "| <some_command>".
                 # the response header is redirected to "stdout", so redirecting "stdout" to "/dev/null" does not make any sense.
                 # redirecting "curl's" "stderr" to "stdout" ("2>&1") will suppress the progress bar.
-                curl_output=$(\curl \
-                                --request PUT \
-                                --progress-bar \
-                                --dump-header - \
-                                --upload-file "${file}" \
-                                --url "https://transfer.sh/${url_filename}" \
+                curl_output=$(
+                                \curl \
+                                    --request PUT \
+                                    --progress-bar \
+                                    --dump-header - \
+                                    --upload-file "${file}" \
+                                    --url "https://transfer.sh/${url_filename}"
                              )
-                gawk_output=$(\gawk \
-                                'gsub("\r", "", $0) && tolower($1) ~ /x-url-delete/ \
-                                {
-                                    delete_link=$2;
-                                    print "Delete command: curl --request DELETE " --url "\""delete_link"\"";
+                gawk_output=$(
+                                \gawk \
+                                    'gsub("\r", "", $0) && tolower($1) ~ /x-url-delete/
+                                    {
+                                        delete_link=$2;
+                                        print "Delete command: curl --request DELETE " --url "\""delete_link"\"";
 
-                                    delete_token=gensub(".*/", "", "g", delete_link);
-                                    print "Delete token: " delete_token;
-                                }
+                                        delete_token=gensub(".*/", "", "g", delete_link);
+                                        print "Delete token: " delete_token;
+                                    }
 
-                                END{
-                                    print "Download link: " $0;
-                                }' <<< "${curl_output}" \
+                                    END{
+                                        print "Download link: " $0;
+                                    }' <<< "${curl_output}" \
                              )
 
                 # return the results via "stdout", "gawk" does not do this for some reason.
@@ -1456,7 +1478,10 @@ fi
                 --one-file-system \
                 --numeric-ids \
                 --info='progress2' \
-                --rsh='ssh -T -c chacha20-poly1305@openssh.com,aes256-gcm@openssh.com -o Compression=no -x'"
+                --rsh='ssh \
+                        -T \
+                        -c chacha20-poly1305@openssh.com,aes256-gcm@openssh.com \
+                        -o Compression=no -x'"
 \alias ruffle="ruffle \
                 --gamemode='on' \
                 --cache-directory='/var/cache/ruffle' \
