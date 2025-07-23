@@ -28,5 +28,5 @@ export PATH="${PATH}:/usr/share/docker/contrib"
 ### ruby
 alias ruby-install="ruby-install --jobs='4' --cleanup --src-dir '/tmp/ruby' --install-dir '${HOME}/.local'"
 ### youtube-dl
-alias youtube-dl_720p="\youtube-dl --ignore-config --config-location='${HOME}/.config/youtube-dl/config_720p'"
-alias youtube-dl_1080p="\youtube-dl --ignore-config --config-location='${HOME}/.config/youtube-dl/config_1080p'"
+alias youtube-dl_720p="youtube-dl --ignore-config --config-location='${HOME}/.config/youtube-dl/config_720p'"
+alias youtube-dl_1080p="youtube-dl --ignore-config --config-location='${HOME}/.config/youtube-dl/config_1080p'"
