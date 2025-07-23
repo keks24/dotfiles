@@ -1549,7 +1549,7 @@ fi
 ## list who is logged in
 \who --users
 ## list tmux sessions
-if [[ $(\pgrep "tmux") ]]
+if pgrep --euid "${USER}" "tmux" >/dev/null
 then
     \tmux ls
 fi
