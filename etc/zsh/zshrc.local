@@ -165,19 +165,27 @@ dic()
 cdl()
 {
     local symlink_file="${1}"
+    local argument_count="${#argv}"
     local resolved_path
     local file_resolved_path
 
-    # check, if symlink is a directory
-    resolved_path=$(\realpath "${symlink_file}")
-    if [[ -d "${resolved_path}" ]]
+    if [[ "${argument_count}" == "1" ]]
     then
-        \cd "${resolved_path}"
+        # check, if symlink is a directory
+        resolved_path=$(\realpath "${symlink_file}")
+
+        if [[ -d "${resolved_path}" ]]
+        then
+            \cd "${resolved_path}"
+        else
+            # if not, cut off the filename
+            file_resolved_path="${resolved_path%/*}"
+            \echo "Correcting '${resolved_path}' to: '${file_resolved_path}'." >&2
+            \cd "${file_resolved_path}"
+        fi
     else
-        # if not, cut off the filename
-        file_resolved_path="${resolved_path%/*}"
-        \echo "Correcting '${resolved_path}' to: '${file_resolved_path}'." >&2
-        \cd "${file_resolved_path}"
+        echo -e "\e[01;31mOne argument required!\e[0m" >&2
+        return 1
     fi
 }
 
