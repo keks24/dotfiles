@@ -3,7 +3,9 @@
     name = Ramon Fischer
     signingkey = 598398DA5F4DA46438FDCF87155BE26413E699BF
 [include]
-    path = ~/.gitconfig.d/gitalias.txt
+    path = ~/.config/git/gitalias.txt
+[core]
+    excludesfile = ~/.config/git/ignore
 [alias]
     callm = commit --all --message
     cv = commit --verbose
