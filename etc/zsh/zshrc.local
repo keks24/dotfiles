@@ -989,7 +989,7 @@ listids()
 lost()
 {
     \losetup --list
-    \echo -e "\n\e[01;34mModification timestamps (chronologically descending order):\e[0m"
+    \echo -e "\n\e[01;34mModification timestamps (chronological descending order):\e[0m"
     \stat --format="%n: %y" $(\losetup --raw | \gawk 'NR >= 2 { print $1 }') \
         | \sort --reverse --numeric-sort --key="3"
 }
