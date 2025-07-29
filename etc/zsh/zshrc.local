@@ -88,7 +88,7 @@ dic()
 
     local filtered_output=$(
                             \gawk \
-                                '/<dl>|<\/dl>|<dt>|<\/dt>|<dd>|<\/dd>/
+                                '/<dl>|<\/dl>|<dt>|<\/dt>|<dd>|<\/dd>/ \
                                 {
                                     # remove title tag
                                     gsub("<dt>", "");
@@ -149,7 +149,8 @@ dic()
                                     gsub("&trade;", "™");
 
                                     print $0;
-                                }' <<< "${curl_output}")
+                                }' <<< "${curl_output}"
+                           )
 
     # reverse output
     \tac <<< "${filtered_output}"
@@ -533,7 +534,10 @@ lpr_invoice()
                     \unset invoice_index_prefix
                 fi
 
-                invoice_page_count=$(\pdfinfo "${directory_file}" 2>&1 | \gawk '/Pages:/ { print $2 }')
+                invoice_page_count=$(
+                                        \pdfinfo "${directory_file}" 2>&1 \
+                                            | \gawk '/Pages:/ { print $2 }'
+                                    )
 
                 if (( invoice_page_count > 9 ))
                 then
@@ -694,10 +698,11 @@ genpw()
 
         entropy_result=$(
                             \gawk \
-                                --assign="password_entropy=${password_entropy}"
+                                --assign="password_entropy=${password_entropy}" \
                                 '{
                                     printf "%.4f", log(password_entropy^$0)/log(2);
-                                 }' <<< "${password_length}")
+                                 }' <<< "${password_length}"
+                        )
 
         \printf "%s    %s bit (%s)\n" "${password_output}" "${entropy_result}" "${password_entropy}"
     done
@@ -934,7 +939,12 @@ notifyme()
     local total_execution_time="$(( end_time - start_time ))"
     #if (( total_execution_time >= 15 ))
     #then
-        \notify-send --app-name="Notification" --icon="notifications" --urgency="critical" "Command finished [${total_execution_time} seconds]" "'$(\echo ${@})'"
+        \notify-send \
+            --app-name="Notification" \
+            --icon="notifications" \
+            --urgency="critical" \
+            "Command finished [${total_execution_time} seconds]" \
+            "'$(\echo ${@})'"
     #fi
 }
 
@@ -965,7 +975,13 @@ listids()
     for username_id in ${(k)username_id_array}
     do
         \echo -e "\e[01;34mIDs of the user '\e[01;33m${username_id}\e[0m\e[01;34m':\e[0m"
-        \gawk --field-separator ',' '{ gsub("[, ]", "\n    "); sub("^", "    "); print $0"\n"}' <<< ${username_id_array[${username_id}]}
+        \gawk \
+            --field-separator ',' \
+            '{
+                gsub("[, ]", "\n    ");
+                sub("^", "    ");
+                print $0"\n"
+             }' <<< ${username_id_array[${username_id}]}
     done
 }
 
@@ -1038,7 +1054,10 @@ pss()
     if [[ "${process_id}" != "" ]]
     then
         # filter by process id and show the header
-        \gawk --assign="process_id=${process_id}" 'NR == 1; $0 ~ process_id' <<< "${process_list}"
+        \gawk \
+            --assign="process_id=${process_id}" \
+            'NR == 1;
+             $0 ~ process_id' <<< "${process_list}"
     else
         \echo "${process_list}"
     fi
