@@ -28,6 +28,7 @@ script_name="${0##*/}"
     open \
     --batch-mode \
     --type="plain" \
+    --cipher="aes-xts-plain64" \
     --key-size="512" \
     --key-file="/dev/urandom" \
     --sector-size="4096" \
