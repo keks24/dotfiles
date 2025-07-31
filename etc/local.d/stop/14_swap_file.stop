@@ -19,7 +19,7 @@ script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
 /usr/bin/logger \
-    --tag="unmount and close encrypted swap file" \
+    --tag="unmount_and_close_encrypted_swap_file" \
     --id \
     --stderr \
     "${script_directory_path}/${script_name}: executed"

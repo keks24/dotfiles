@@ -29,7 +29,7 @@ available_processors=$(/usr/bin/nproc --all)
 xargs_max_args="10"
 
 /usr/bin/logger \
-    --tag="remove local cache" \
+    --tag="remove_local_cache" \
     --id \
     --stderr \
     "${script_directory_path}/${script_name}: executed"

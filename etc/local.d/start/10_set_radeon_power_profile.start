@@ -19,7 +19,7 @@ script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
 /usr/bin/logger \
-    --tag="set radeon power profile" \
+    --tag "set_radeon_power_profile" \
     --id \
     --stderr \
     "${script_directory_path}/${script_name}: executed"

@@ -19,7 +19,7 @@ script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
 /usr/bin/logger \
-    --tag="spin down bay hard drive" \
+    --tag="spin_down_bay_hard_drive" \
     --id \
     --stderr \
     "${script_directory_path}/${script_name}: executed"

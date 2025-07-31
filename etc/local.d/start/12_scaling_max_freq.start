@@ -19,7 +19,7 @@ script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
 /usr/bin/logger \
-    --tag="adjust scaling_max_freq" \
+    --tag="adjust_scaling_max_freq" \
     --id \
     --stderr \
     "${script_directory_path}/${script_name}: executed"

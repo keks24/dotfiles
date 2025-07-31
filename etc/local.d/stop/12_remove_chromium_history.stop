@@ -80,7 +80,7 @@ removeRegularFiles()
 writeSystemLogEntry()
 {
     /usr/bin/logger \
-        --tag="remove chromium history" \
+        --tag="remove_chromium_history" \
         --id \
         --stderr \
         "${script_directory_path}/${script_name}: executed"
