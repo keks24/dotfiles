@@ -25,4 +25,8 @@ script_name="${0##*/}"
     "${script_directory_path}/${script_name}: executed"
 
 # "stdout" has to be redirected to "/dev/null" in order to detach the process
-/usr/bin/nice --adjustment="19" /usr/bin/ionice --class="3" /usr/bin/eix-update >/dev/null 2>&1 &
+/usr/bin/nice \
+    --adjustment="19" \
+    /usr/bin/ionice \
+        --class="3" \
+        /usr/bin/eix-update >/dev/null 2>&1 &

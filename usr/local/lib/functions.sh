@@ -888,7 +888,11 @@ createSystemLogEntry()
 {
     local log_message="${1:-executed}"
 
-    /usr/bin/logger --tag "${SCRIPT_NAME}" --id="${SCRIPT_PID}" --stderr "${SCRIPT_DIRECTORY_PATH}/${SCRIPT_NAME}: ${log_message}"
+    /usr/bin/logger \
+        --tag="${SCRIPT_NAME}" \
+        --id="${SCRIPT_PID}" \
+        --stderr \
+        "${SCRIPT_DIRECTORY_PATH}/${SCRIPT_NAME}: ${log_message}"
 }
 
 # function: set graphics card power method or profile
