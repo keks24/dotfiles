@@ -19,7 +19,7 @@ script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
 /usr/bin/logger \
-    --tag "unmount and close encrypted swap file" \
+    --tag="unmount and close encrypted swap file" \
     --id \
     --stderr \
     "${script_directory_path}/${script_name}: executed"
@@ -27,6 +27,7 @@ script_name="${0##*/}"
 /sbin/swapoff "/dev/mapper/cryptswap"
 # for enhanced security, the file "/dev/mapper/cryptswap" could be overwritten
 # with random characters here.
+
 # wait 100ms for "swapoff" to complete, otherwise "cryptsetup" will return:
 # "failed: Device or resource busy", but still succeeds in closing the luks device.
 /bin/sleep 0.1s

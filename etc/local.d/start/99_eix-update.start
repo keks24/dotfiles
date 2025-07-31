@@ -18,6 +18,11 @@
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
-/usr/bin/logger --tag "eix-update" --id --stderr "${script_directory_path}/${script_name}: executed"
+/usr/bin/logger \
+    --tag="eix-update" \
+    --id \
+    --stderr \
+    "${script_directory_path}/${script_name}: executed"
+
 # "stdout" has to be redirected to "/dev/null" in order to detach the process
 /usr/bin/nice --adjustment="19" /usr/bin/ionice --class="3" /usr/bin/eix-update >/dev/null 2>&1 &

@@ -18,5 +18,10 @@
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
-/usr/bin/logger --tag "enable dell monitor" --id --stderr "${script_directory_path}/${script_name}: executed"
+/usr/bin/logger \
+    --tag="enable dell monitor" \
+    --id \
+    --stderr \
+    "${script_directory_path}/${script_name}: executed"
+
 echo "detect" > "/sys/class/drm/card0-VGA-1/status"

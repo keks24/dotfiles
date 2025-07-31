@@ -18,7 +18,11 @@
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
-/usr/bin/logger --tag "spin down bay hard drive" --id --stderr "${script_directory_path}/${script_name}: executed"
+/usr/bin/logger \
+    --tag="spin down bay hard drive" \
+    --id \
+    --stderr \
+    "${script_directory_path}/${script_name}: executed"
 
 # spin down the bay hard drive after 30 minutes
 /sbin/hdparm -S 241 "/dev/disk/by-id/ata-ST96812AS_5PJAHG7F"

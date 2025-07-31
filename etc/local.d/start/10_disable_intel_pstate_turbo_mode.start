@@ -18,6 +18,10 @@
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
-/usr/bin/logger --tag "disable intel pstate turbo mode" --id --stderr "${script_directory_path}/${script_name}: executed"
+/usr/bin/logger \
+    --tag="disable intel pstate turbo mode" \
+    --id \
+    --stderr \
+    "${script_directory_path}/${script_name}: executed"
 
 echo "1" > "/sys/devices/system/cpu/intel_pstate/no_turbo"

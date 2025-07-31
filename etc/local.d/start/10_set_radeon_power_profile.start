@@ -18,6 +18,11 @@
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
-/usr/bin/logger --tag "set radeon power profile" --id --stderr "${script_directory_path}/${script_name}: executed"
+/usr/bin/logger \
+    --tag="set radeon power profile" \
+    --id \
+    --stderr \
+    "${script_directory_path}/${script_name}: executed"
+
 echo "profile" > "/sys/class/drm/card0/device/power_method"
 echo "low" > "/sys/class/drm/card0/device/power_profile"

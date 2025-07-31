@@ -19,7 +19,7 @@ script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
 /usr/bin/logger \
-    --tag "create and mount encrypted swap file" \
+    --tag="create and mount encrypted swap file" \
     --id \
     --stderr \
     "${script_directory_path}/${script_name}: executed"

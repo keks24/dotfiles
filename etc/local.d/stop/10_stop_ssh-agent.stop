@@ -18,7 +18,11 @@
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
-/usr/bin/logger --tag "stop ssh-agent" --id --stderr "${script_directory_path}/${script_name}: executed"
+/usr/bin/logger \
+    --tag="stop ssh-agent" \
+    --id \
+    --stderr \
+    "${script_directory_path}/${script_name}: executed"
 
 if [[ $(/usr/bin/pgrep --euid "ramon" "ssh-agent") ]]
 then

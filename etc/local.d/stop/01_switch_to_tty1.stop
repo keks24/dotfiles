@@ -18,7 +18,12 @@
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 
-/usr/bin/logger --tag "switch to tty1" --id --stderr "${script_directory_path}/${script_name}: executed"
+/usr/bin/logger \
+    --tag="switch to tty1" \
+    --id \
+    --stderr \
+    "${script_directory_path}/${script_name}: executed"
 
 /usr/bin/chvt 1
+
 echo -e "\e[01;34mSwitched to '/dev/tty1'.\e[0m"

@@ -79,7 +79,11 @@ removeRegularFiles()
 
 writeSystemLogEntry()
 {
-    /usr/bin/logger --tag "remove chromium history" --id --stderr "${script_directory_path}/${script_name}: executed"
+    /usr/bin/logger \
+        --tag="remove chromium history" \
+        --id \
+        --stderr \
+        "${script_directory_path}/${script_name}: executed"
 }
 
 main()

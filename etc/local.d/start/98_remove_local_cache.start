@@ -28,12 +28,19 @@ cache_directory_list=(
 available_processors=$(/usr/bin/nproc --all)
 xargs_max_args="10"
 
-/usr/bin/logger --tag "remove local cache" --id --stderr "${script_directory_path}/${script_name}: executed"
+/usr/bin/logger \
+    --tag="remove local cache" \
+    --id \
+    --stderr \
+    "${script_directory_path}/${script_name}: executed"
 
 for cache_directory in "${cache_directory_list[@]}"
 do
     # "-mindepth 1" will exclude the parent directory
-    /usr/bin/find "${cache_directory}" -mindepth 1 -atime +30 -print0 \
+    /usr/bin/find "${cache_directory}" \
+        -mindepth 1 \
+        -atime +30 \
+        -print0 \
         | /usr/bin/xargs \
             --null \
             --no-run-if-empty \
