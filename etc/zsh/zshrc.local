@@ -214,7 +214,7 @@ calc()
 gsum()
 {
     local checksum_file="./checksums.b2"
-    local available_processors=$(\nproc --all --ignore="1")
+    local available_processors=$(\nproc --all)
     local xargs_max_args="1"
     local overwrite_checksum_file
     declare -a file_array
@@ -244,7 +244,7 @@ gsum()
 csum()
 {
     local checksum_file="./checksums.b2"
-    local available_processors=$(\nproc --all --ignore="1")
+    local available_processors=$(\nproc --all)
 
     if [[ ! -f "${checksum_file}" ]]
     then
@@ -1547,7 +1547,7 @@ fi
                         -i default \
                         -codec:a aac '$(\date +%Y%m%dT%H%M%S%z)_webcam_record.mkv'"
 \alias wget="wget --hsts-file='/dev/null'"
-\alias xargs="xargs --no-run-if-empty --max-procs=$(\nproc --all --ignore='1') --max-args='1'"
+\alias xargs="xargs --no-run-if-empty --max-procs=$(\nproc --all) --max-args='1'"
 \alias xzgrep="xzgrep --color='auto' --line-number"
 \alias xstow="xstow -verbose"
 \alias zerofree="zerofree -v"
