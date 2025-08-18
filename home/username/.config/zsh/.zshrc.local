@@ -86,8 +86,8 @@ fi
 #### see also "/home/ramon/.zlogin"
 if \pgrep --euid="${USER}" "tmux" >/dev/null && [[ "${TMUX}" == "" && "${TTY}" != "/dev/tty7" ]]
 then
-    \tmux attach-session
+    \tmux attach-session 2>/dev/null
 elif ! \pgrep --euid="${USER}" "script" >/dev/null && [[ "${TTY}" != "/dev/tty7" ]]
 then
-    \tmux new-session
+    \tmux new-session 2>/dev/null
 fi
