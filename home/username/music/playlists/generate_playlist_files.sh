@@ -58,7 +58,7 @@ playlist_file_array=(
                         "./normal_music.${playlist_filename_suffix}"
                         "./unusual_music.${playlist_filename_suffix}"
                     )
-available_processors=$(/usr/bin/nproc --all --ignore="1")
+available_processors=$(/usr/bin/nproc --all)
 xargs_max_args="1"
 
 checkAndPromptExistingPlaylists()
