@@ -113,12 +113,12 @@ generatePlaylistFiles()
             -name "*.${music_filename_suffix}" \
             -print0 \
             | /usr/bin/xargs \
-            --null \
-            --no-run-if-empty \
-            --max-procs="${available_processors}" \
-            --max-args="${xargs_max_args}" \
-            echo \
-                | /usr/bin/sort --ignore-case > "${playlist_file}"
+                --null \
+                --no-run-if-empty \
+                --max-procs="${available_processors}" \
+                --max-args="${xargs_max_args}" \
+                echo \
+                    | /usr/bin/sort --ignore-case > "${playlist_file}"
     done
 }
 
