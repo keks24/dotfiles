@@ -63,11 +63,11 @@ Compile new kernel
     9. Use the new kernel
         $ reboot
 
-   10. clean up "/lib/modules/"
+   10. Clean up "/lib/modules/"
 
-   11. clean up "/usr/src/"
+   11. Clean up "/usr/src/"
 
-   12. clean up "/boot/"
+   12. Clean up "/boot/"
 
 Legend:
 - "Clean up" - Keep last three versions
