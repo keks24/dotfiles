@@ -263,7 +263,7 @@ csum()
         --max-procs="${available_processors}" \
         --replace="{}" \
         \sh -c \
-            "\b2sum --check --quiet <<< '{}'"
+            "\b2sum --check --quiet <<< '{}'" _
 }
 
 ## set up "binfmt" for "qemu"
