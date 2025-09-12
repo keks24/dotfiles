@@ -1387,7 +1387,7 @@ fi
                 --auto-file-renaming='false' \
                 --conditional-get='true' \
                 --remove-control-file='false'"
-\alias badblocks="badblocks -sv"
+\alias badblocks="badblocks -sv -o '/tmp/badblocks.log'"
 \alias bc="bc --mathlib"
 \alias bzgrep="bzgrep --color='auto' --line-number"
 \alias cal="cal --color='auto' --week --months='3'"
