@@ -1423,7 +1423,7 @@ fi
 \alias egrep="egrep --color='auto' --line-number"
 \alias fallocate="fallocate --verbose"
 \alias fatresize="fatresize --progress"
-\alias fd="fd --hidden --no-ignore"
+\alias fd="fd --hidden --no-ignore --show-errors"
 \alias fgrep="fgrep --color='auto' --line-number"
 \alias flac="flac --compression-level-8"
 \alias fping="fping --generate --rdns"
