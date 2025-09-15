@@ -49,9 +49,9 @@
 "expiration-time"
 60
 "xsane-main-window-x-position"
-1794
+1863
 "xsane-main-window-y-position"
-269
+325
 "xsane-main-window-width"
 294
 "xsane-main-window-height"
@@ -97,7 +97,7 @@
 "xsane-gamma-blue"
 65536
 "xsane-brightness"
-655360
+-6553600
 "xsane-brightness-red"
 0
 "xsane-brightness-green"
