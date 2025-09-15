@@ -45,47 +45,51 @@ unset APPLICATON_NAME
 
 # start applicatons
 ## application names must be hardcoded, in order to display the names in "jobs -l"
-for APPLICATION_NAME in ${APPLICATION_NAME_LIST[@]}
-do
-    case "${APPLICATION_NAME}" in
-        # parcellite (clipboard manager)
-        "${APPLICATION_NAME_LIST[1]}")
-            if ! \pgrep --euid "${USER}" "${APPLICATION_NAME}" >/dev/null
-            then
-                \parcellite --no-icon >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1 &!
-            fi
-            ;;
-
-        # ssh-agent
-        "${APPLICATION_NAME_LIST[2]}")
-            if ! \pgrep --euid "${USER}" "${APPLICATION_NAME}" >/dev/null
-            then
-                # start "ssh-agent" with environment variables and save passwords for one hour
-                # further configurations are located at "/etc/ssh/ssh_config"
-                \eval $(\ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
-            fi
-            ;;
-
-        # xautolock
-        "${APPLICATION_NAME_LIST[3]}")
-            if ! \pgrep --euid "${USER}" "${APPLICATION_NAME}" >/dev/null
-            then
-                # start "physlock" after ten minutes to lock all screens; notify 30 seconds before
-                \xautolock -corners --00 -time 10 -locker "${HOME}/bin/locker" -notify 30 -notifier '${HOME}/bin/awesome_notifier "10" "critical" "xautolock" "Locking screen in 30 seconds..."' >/dev/null 2>&1 &!
-            fi
-            ;;
-
-        *)
-            \continue
-    esac
-done
-unset APPLICATION_NAME
-
-# startx (awesomewm)
-## this part must be started at the very end!
-## after autologin on "tty7", start "awesome" on "tty7"
-## see also "${HOME}/.zshrc.local"
-if [[ "${DISPLAY}" == "" && "${UID}" != "0" && -o login && "${TTY}" == "/dev/tty7" ]]
+## align to openrc user services
+if [[ -t 0 ]]
 then
-    \startx >> "${LOG_DIRECTORY}/startx/startx.log" 2>&1 &!
+    for APPLICATION_NAME in ${APPLICATION_NAME_LIST[@]}
+    do
+        case "${APPLICATION_NAME}" in
+            # parcellite (clipboard manager)
+            "${APPLICATION_NAME_LIST[1]}")
+                if ! \pgrep --euid "${USER}" "${APPLICATION_NAME}" >/dev/null
+                then
+                    \parcellite --no-icon >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1 &!
+                fi
+                ;;
+
+            # ssh-agent
+            "${APPLICATION_NAME_LIST[2]}")
+                if ! \pgrep --euid "${USER}" "${APPLICATION_NAME}" >/dev/null
+                then
+                    # start "ssh-agent" with environment variables and save passwords for one hour
+                    # further configurations are located at "/etc/ssh/ssh_config"
+                    \eval $(\ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
+                fi
+                ;;
+
+            # xautolock
+            "${APPLICATION_NAME_LIST[3]}")
+                if ! \pgrep --euid "${USER}" "${APPLICATION_NAME}" >/dev/null
+                then
+                    # start "physlock" after ten minutes to lock all screens; notify 30 seconds before
+                    \xautolock -corners --00 -time 10 -locker "${HOME}/bin/locker" -notify 30 -notifier '${HOME}/bin/awesome_notifier "10" "critical" "xautolock" "Locking screen in 30 seconds..."' >/dev/null 2>&1 &!
+                fi
+                ;;
+
+            *)
+                \continue
+        esac
+    done
+    unset APPLICATION_NAME
+
+    # startx (awesomewm)
+    ## this part must be started at the very end!
+    ## after autologin on "tty7", start "awesome" on "tty7"
+    ## see also "${HOME}/.zshrc.local"
+    if [[ "${DISPLAY}" == "" && "${UID}" != "0" && -o login && "${TTY}" == "/dev/tty7" ]]
+    then
+        \startx >> "${LOG_DIRECTORY}/startx/startx.log" 2>&1 &!
+    fi
 fi
