@@ -34,13 +34,15 @@ command_array=(
               )
 checkCommands()
 {
-    unalias ${command_array[@]##*/} 2>/dev/null
+    local current_command
+
+    unalias "${command_array[@]##*/}" 2>/dev/null
 
     for current_command in "${command_array[@]}"
     do
-        if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
+        if ! command -v "${current_command}" >/dev/null 2>&1
         then
-            echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m" >&2
+            echo -e "\e[01;31mCould not find command: '${current_command}'.\e[0m" >&2
             exit 1
         fi
     done
