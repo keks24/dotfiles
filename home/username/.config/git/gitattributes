@@ -1,0 +1,4 @@
+# use external programs for binary files
+*.ods diff=ods
+*.odt diff=odt
+*.pdf diff=pdf

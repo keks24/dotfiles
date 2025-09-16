@@ -33,3 +33,16 @@
     required = true
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
+[diff "ods"]
+    binary = true
+    textconv = odt2txt
+    cachetextconv = true
+[diff "odt"]
+    binary = true
+    textconv = odt2txt
+    cachetextconv = true
+[diff "pdf"]
+    binary = true
+    #textconv = pdfinfo
+    textconv = sh -c 'pdftotext -layout -enc UTF-8 -nopgbrk \"${0}\" -'
+    cachetextconv = true
