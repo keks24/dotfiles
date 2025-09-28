@@ -834,11 +834,11 @@ pmon()
     # regex trick, in order to not match itself
     local search_string="${process_name/%${process_name_last_character}/[${process_name_last_character}]}"
 
-    # use the command "command watch" and "command ps"
+    # use the command "\watch" and "\ps",
     # in order to use them as unaliased commands.
     # the command "unalias" could be used here, but once executed,
     # this would affect the current shell.
-    \watch --differences --interval "${watch_interval}" \
+    \watch --differences --precise --interval="${watch_interval}" \
         "\gawk --assign=search_string="${search_string}" \
             'NR == 1; \$0 ~ search_string' < <(\ps faux)"
 }
