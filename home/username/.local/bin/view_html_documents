@@ -1,0 +1,62 @@
+#!/bin/bash
+############################################################################
+# Copyright 2025 Ramon Fischer                                             #
+#                                                                          #
+# Licensed under the Apache License, Version 2.0 (the "License");          #
+# you may not use this file except in compliance with the License.         #
+# You may obtain a copy of the License at                                  #
+#                                                                          #
+#     http://www.apache.org/licenses/LICENSE-2.0                           #
+#                                                                          #
+# Unless required by applicable law or agreed to in writing, software      #
+# distributed under the License is distributed on an "AS IS" BASIS,        #
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+# See the License for the specific language governing permissions and      #
+# limitations under the License.                                           #
+############################################################################
+
+script_name="${0##*/}"
+tmp_directory=$(/usr/bin/mktemp --directory "/tmp/${script_name}.XXXXXXXXXX")
+declare -a xz_file_array
+xz_file_array=("${@}")
+declare -a html_file_array
+
+if [[ "${xz_file_array[@]}" == "" ]]
+then
+    echo -e "\e[01;31mUsage: ${script_name} [<xz_file>]...\e[0m" >&2
+    exit 1
+else
+    # TODO: convert this to a "while" loop, in order to work with special
+    #       characters, like spaces or newlines in the filename
+    for xz_file in "${xz_file_array[@]}"
+    do
+        # check, if the file is an xz file
+        file_output=$(/usr/bin/file --dereference "${xz_file}")
+
+        if [[ ! "${file_output}" == *"XZ"* ]]
+        then
+            echo -e "\e[01;33mThe file: '${xz_file}' is not an XZ archive. Skipping..." >&2
+            continue
+        else
+            # cut off ".xz" file suffix
+            html_file="${xz_file%\.xz}"
+            # cut off path to file
+            html_filename="${html_file##*/}"
+
+            /usr/bin/xz \
+                --decompress \
+                --stdout \
+                "${xz_file}" > "${tmp_directory}/${html_filename}"
+
+            html_file_array+=("${tmp_directory}/${html_filename}")
+        fi
+    done
+fi
+
+/usr/bin/firefox "${html_file_array[@]}"
+
+# need to wait here, since "firefox" cannot open the html files fast enough.
+# wait one second for each file.
+/usr/bin/sleep "${#html_file_array[@]}"s
+
+/bin/rm --recursive --force "${tmp_directory}"
