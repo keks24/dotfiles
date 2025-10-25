@@ -1598,7 +1598,9 @@ fi
 ## always activate anti-aliasing for "java" apps
 \export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings='lcd'"
 ## always run "fsck" in parllel. it just needs to be set, no values required.
-export FSCK_FORCE_ALL_PARALLEL=""
+\export FSCK_FORCE_ALL_PARALLEL=""
+## set menu background colour for linux kernel
+\export MENUCONFIG_COLOR="blackbg"
 
 # output when opening shell
 ## list who is logged in
