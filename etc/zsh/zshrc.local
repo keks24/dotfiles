@@ -1516,7 +1516,8 @@ fi
                 --tcp-connections='deny' \
                 --upgrade-to-https \
                 --open-url-mode='deny'"
-\alias screen_record="ffmpeg \
+\alias record_microphone="arecord --interactive"
+\alias record_screen="ffmpeg \
                         -n \
                         -f x11grab \
                         -video_size 1920x1080 \
@@ -1526,19 +1527,12 @@ fi
                         -ac 2 \
                         -i default \
                         -codec:a aac '$(\date +%Y%m%dT%H%M%S%z)_screen_record.mkv'"
-\alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
-\alias shred="shred --verbose"
-\alias sort="sort --parallel='$(\nproc --all)'"
-\alias tree="LS_COLORS='' tree -FC"
-\alias updatedb="updatedb --require-visibility='yes'"
-\alias vmstat="vmstat --unit='M' --timestamp --wide 2"
-\alias watch="watch --differences"
-\alias webcam_live_capture="mpv \
-                                --demuxer-lavf-format='video4linux2' \
-                                --profile='low-latency' \
-                                --demuxer-lavf-o-set=input_format='mjpeg' \
-                                --untimed 'av://v4l2:/dev/video0'"
-\alias webcam_record="ffmpeg \
+\alias record_webcam_live="mpv \
+                            --demuxer-lavf-format='video4linux2' \
+                            --profile='low-latency' \
+                            --demuxer-lavf-o-set=input_format='mjpeg' \
+                            --untimed 'av://v4l2:/dev/video0'"
+\alias record_webcam="ffmpeg \
                         -f v4l2 \
                         -framerate 30 \
                         -video_size 1920x1080 \
@@ -1548,6 +1542,13 @@ fi
                         -ac 2 \
                         -i default \
                         -codec:a aac '$(\date +%Y%m%dT%H%M%S%z)_webcam_record.mkv'"
+\alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
+\alias shred="shred --verbose"
+\alias sort="sort --parallel='$(\nproc --all)'"
+\alias tree="LS_COLORS='' tree -FC"
+\alias updatedb="updatedb --require-visibility='yes'"
+\alias vmstat="vmstat --unit='M' --timestamp --wide 2"
+\alias watch="watch --differences"
 \alias wget="wget --hsts-file='/dev/null'"
 \alias xargs="xargs --no-run-if-empty --max-procs=$(\nproc --all) --max-args='1'"
 \alias xzgrep="xzgrep --color='auto'"
