@@ -1233,6 +1233,30 @@ thingsIalwaysForget()
     \echo "      </details></p>"
 }
 
+## debug devices
+udevadm_debug()
+{
+    # default path is "/dev/null", since it should be generally available.
+    local device_path="${1:-/dev/null}"
+    local absolute_device_path=$(
+                                    \udevadm info \
+                                        --query="path" \
+                                        --name="${device_path}"
+                                )
+
+    echo -e "\e[01;34mSimulated udev event run:\e[0m"
+    \udevadm test "${absolute_device_path}"
+
+    echo -e "\n\e[01;34mAll SYSFS properties to device (bottom-top):\e[0m"
+    \udevadm info --attribute-walk --no-pager --name="${device_path}"
+
+    echo -e "\e[01;34mAll SYSFS properties to device as tree (top-bottom):\e[0m"
+    \udevadm info --tree --no-pager --name="${device_path}"
+
+    echo -e "\n\e[01;34mDevice properties:\e[0m"
+    \udevadm info --query="property" --no-pager --name="${device_path}"
+}
+
 ## get current wan ip address
 wan()
 {
