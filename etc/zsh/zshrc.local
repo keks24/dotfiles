@@ -1546,7 +1546,7 @@ fi
 \alias shred="shred --verbose"
 \alias sort="sort --parallel='$(\nproc --all)'"
 \alias tree="LS_COLORS='' tree -FC"
-\alias udev_reload="udevadm control --reload-rules && udevadm trigger"
+\alias udevadm_reload="udevadm control --reload-rules && udevadm trigger"
 \alias updatedb="updatedb --require-visibility='yes'"
 \alias vmstat="vmstat --unit='M' --timestamp --wide 2"
 \alias watch="watch --differences"
