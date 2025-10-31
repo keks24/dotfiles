@@ -1250,7 +1250,7 @@ udevadm_debug()
     echo -e "\n\e[01;34mAll SYSFS properties to device (bottom-top):\e[0m"
     \udevadm info --attribute-walk --no-pager --name="${device_path}"
 
-    echo -e "\e[01;34mAll SYSFS properties to device as tree (top-bottom):\e[0m"
+    echo -e "\n\e[01;34mAll SYSFS properties to device as tree (top-bottom):\e[0m"
     \udevadm info --tree --no-pager --name="${device_path}"
 
     echo -e "\n\e[01;34mDevice properties:\e[0m"
