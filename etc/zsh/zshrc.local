@@ -1247,10 +1247,10 @@ udevadm_debug()
     echo -e "\e[01;34mSimulated udev event run:\e[0m"
     \udevadm test "${absolute_device_path}"
 
-    echo -e "\n\e[01;34mAll SYSFS properties to device (bottom-top):\e[0m"
+    echo -e "\n\e[01;34mAll sysfs properties to device (bottom-top):\e[0m"
     \udevadm info --attribute-walk --no-pager --name="${device_path}"
 
-    echo -e "\n\e[01;34mAll SYSFS properties to device as tree (top-bottom):\e[0m"
+    echo -e "\n\e[01;34mAll sysfs properties to device as tree (top-bottom):\e[0m"
     \udevadm info --tree --no-pager --name="${device_path}"
     echo -e "\e[01;34mLegend:\e[0m"
     echo -e "┌────────┬─────────────────────────────────────────┐"
