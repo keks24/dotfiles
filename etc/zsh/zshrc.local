@@ -1238,11 +1238,21 @@ udevadm_debug()
 {
     # default path is "/dev/null", since it should be generally available.
     local device_path="${1:-/dev/null}"
-    local absolute_device_path=$(
-                                    \udevadm info \
-                                        --query="path" \
-                                        --name="${device_path}"
-                                )
+    if [[ ! -e "${device_path}" ]]
+    then
+        echo -e "\e[01;31mThe device: '${device_path}' does not exist!\e[0m" >&2
+        return 1
+    elif [[ -L "${device_path}" || -c "${device_path}" ]]
+    then
+        local absolute_device_path=$(
+                                        \udevadm info \
+                                            --query="path" \
+                                            --name="${device_path}"
+                                    )
+    else
+        echo -e "\e[01;31mThe device '${device_path}' either does not exist or is not a symbolic link or character device!\e[0m" >&2
+        return 1
+    fi
 
     echo -e "\e[01;34mSimulated udev event run:\e[0m"
     \udevadm test "${absolute_device_path}"
