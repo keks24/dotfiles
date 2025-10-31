@@ -1252,6 +1252,39 @@ udevadm_debug()
 
     echo -e "\n\e[01;34mAll SYSFS properties to device as tree (top-bottom):\e[0m"
     \udevadm info --tree --no-pager --name="${device_path}"
+    echo -e "\e[01;34mLegend:\e[0m"
+    echo -e "┌────────┬─────────────────────────────────────────┐"
+    echo -e "│ \e[01;31mPrefix\e[0m │ \e[01;31mMeaning\e[0m                                 │"
+    echo -e "├────────┼─────────────────────────────────────────┤"
+    echo -e '│ "P:"   │ Device path in /sys/                    │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "M:"   │ Device name in /sys/ (i.e. the last     │'
+    echo -e '│        │ component of "P:")                      │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "R:"   │ Device number in /sys/ (i.e. the        │'
+    echo -e '│        │ numeric suffix of the last component of │'
+    echo -e '│        │ "P:")                                   │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "U:"   │ Kernel subsystem                        │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "T:"   │ Kernel device type within subsystem     │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "D:"   │ Kernel device node major/minor          │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "I:"   │ Network interface index                 │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "N:"   │ Kernel device node name                 │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "L:"   │ Device node symlink priority            │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "S:"   │ Device node symlink                     │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "Q:"   │ Block device sequence number (DISKSEQ)  │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "V:"   │ Attached driver                         │'
+    echo -e '├────────┼─────────────────────────────────────────┤'
+    echo -e '│ "E:"   │ Device property                         │'
+    echo -e '└────────┴─────────────────────────────────────────┘'
 
     echo -e "\n\e[01;34mDevice properties:\e[0m"
     \udevadm info --query="property" --no-pager --name="${device_path}"
