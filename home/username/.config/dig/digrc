@@ -17,7 +17,7 @@
 # the expression "ANY" needs to be quoted, otherwise it will be interpreted by "dig"!
 
 # clear all display flags
-+noall
+#+noall
 
 # display the answer section
 +answer
