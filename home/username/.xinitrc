@@ -26,7 +26,7 @@ then
     then
         . "${xprofile_file}"
     else
-        echo "(WW) Could not source file '${xprofile_file}'." >&2
+        echo "(WW) Could not source file: '${xprofile_file}' or is not a file." >&2
     fi
 
     # the following part somehow gets expanded to "0xc00005". using "eval" here will cause the error "command not found", but "x" will be started anyways.
