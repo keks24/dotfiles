@@ -18,8 +18,8 @@
 home_directory="/home/$(id --user --name)"
 xprofile_file="${home_directory}/.xprofile"
 log_directory="${home_directory}/.log/awesome"
-log_stdout="${log_directory}/awesome.log"
-log_stderr="${log_directory}/awesome-err.log"
+log_stdout_file="${log_directory}/awesome.log"
+log_stderr_file="${log_directory}/awesome-err.log"
 
 if [[ "${DBUS_SESSION_BUS_ADDRESS}" == "" ]]
 then
@@ -31,5 +31,5 @@ then
     fi
 
     # the following part somehow gets expanded to "0xc00005". using "eval" here will cause the error "command not found", but "x" will be started anyways.
-    exec dbus-launch --sh-syntax --exit-with-session awesome >> "${log_stdout}" 2>> "${log_stderr}"
+    exec dbus-launch --sh-syntax --exit-with-session awesome >> "${log_stdout_file}" 2>> "${log_stderr_file}"
 fi
