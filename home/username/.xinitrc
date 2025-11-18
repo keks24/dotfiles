@@ -31,6 +31,8 @@ then
     fi
 
     export XDG_CURRENT_DESKTOP="awesome"
+    export XDG_SESSION_TYPE="x11"
+
     # the following part somehow gets expanded to "0xc00005". using "eval" here will cause the error "command not found", but "x" will be started anyways.
     exec dbus-launch --sh-syntax --exit-with-session awesome >> "${log_stdout_file}" 2>> "${log_stderr_file}"
 fi
