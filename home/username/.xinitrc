@@ -19,7 +19,7 @@ home_directory="/home/$(id --user --name)"
 xprofile_file="${home_directory}/.xprofile"
 log_directory="${home_directory}/.log/awesome"
 log_stdout_file="${log_directory}/awesome.log"
-log_stderr_file="${log_directory}/awesome-err.log"
+log_stderr_file="${log_directory}/awesome.err"
 
 if [[ "${DBUS_SESSION_BUS_ADDRESS}" == "" ]]
 then
