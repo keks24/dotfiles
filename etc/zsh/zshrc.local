@@ -1064,6 +1064,25 @@ pss()
     fi
 }
 
+## establish a passwordless, ssh-tunneled vnc connection.
+## ssh option "X11Forwarding" needs to be set to "yes" on the client and server!
+ssh_vnc()
+{
+    local remote_host="${1}"
+
+    \echo -e "\n\e[01;34mConnect via: 'vncviewer 127.0.0.1:5900'\e[0m"
+
+    # this runs in the foreground!
+    \ssh \
+        -t \
+        -L 127.0.0.1:5900:127.0.0.1:5900 \
+        "${remote_host}" \
+        "\x11vnc \
+            -localhost \
+            -display \":0\" \
+            -xdamage"
+}
+
 ## upload files to "transfer.sh"
 transfer()
 {
