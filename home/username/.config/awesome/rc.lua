@@ -263,9 +263,9 @@ awful.screen.connect_for_each_screen(function(s)
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     -- use custom tags on two seperate screens. see also: rule mapping.
     if s.index == 1 then
-        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "video", "vm", "game" }, screen[1], awful.layout.layouts[1])
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "video", "rdp", "game" }, screen[1], awful.layout.layouts[1])
     elseif s.index == 2 then
-        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "video", "vm", "game" }, screen[2], awful.layout.layouts[1])
+        awful.tag({ "terminal", "web", "e-mail", "office", "download", "image", "scan", "video", "rdp", "game" }, screen[2], awful.layout.layouts[1])
     end
 
     -- increase number of master clients for some tags
@@ -668,14 +668,14 @@ awful.rules.rules = {
                     "rs.ruffle.Ruffle" } },
       properties = { screen = 1, tag = "game", switchtotag = true,
       function() awful.screen.focus(screen[1]) end } },
-    -- always open "vncviewer" on "screen 2", tag "vm" and focus "screen 2"
+    -- always open "vncviewer" on "screen 2", tag "rdp" and focus "screen 2"
     { rule_any = { class = {
                     "Vncviewer",
                     "qemu-system-aarch64",
                     "Qemu-system-aarch64",
                     "qemu-system-x86_64",
                     "Qemu-system-x86_64" } },
-      properties = { screen = 2, tag = "vm", switchtotag = true,
+      properties = { screen = 2, tag = "rdp", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
     -- always open "mpv" on "screen 1", tag "video", focus "screen 1" and "maximise" the window
     { rule = { class = "mpv" },
