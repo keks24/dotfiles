@@ -86,6 +86,13 @@ then
     done
     unset APPLICATION_NAME
 
+    # special case, if "gpg-agent" has been already started.
+    if \pgrep --euid="${USER}" "gpg-agent" >/dev/null
+    then
+        # reload "gpg-agent" with its loaded configuration files.
+        \pkill --signal="SIGHUP" "gpg-agent"
+    fi
+
     # startx (awesomewm)
     ## this part must be started at the very end!
     ## after autologin on "tty7", start "awesome" on "tty7"
