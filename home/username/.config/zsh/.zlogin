@@ -1,6 +1,6 @@
-# to do
-# - put everthing in functions, so the variables do not get exposed
-# - intercept missing commands
+# TODO:
+#   - put everthing in functions, so the variables do not get exposed
+#   - intercept missing commands
 #
 ############################################################################
 # Copyright 2020-2025 Ramon Fischer                                        #
