@@ -71,6 +71,9 @@
 #    echo -e "${underline}\e[0m"
 #}
 #
+# example to only show notes, if a desktop environment has been started:
+#if [[ "${SHOW_NOTES}" == "true" && -o login && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
+#
 #if [[ "${SHOW_NOTES}" == "true" ]]
 #then
 #    outputNotes
