@@ -61,12 +61,14 @@ then
 
             # ssh-agent
             "${APPLICATION_NAME_LIST[2]}")
-                if ! \pgrep --euid "${USER}" "${APPLICATION_NAME}" >/dev/null
+                if \pgrep --euid="${USER}" "${APPLICATION_NAME}" >/dev/null
                 then
-                    # start "ssh-agent" with environment variables and save passwords for one hour
-                    # further configurations are located at "/etc/ssh/ssh_config"
-                    \eval $(\ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
+                    \pkill --signal="SIGTERM" "${APPLICATION_NAME}"
                 fi
+
+                # start "ssh-agent" with environment variables and save passwords for one hour
+                # further configurations are located at "/etc/ssh/ssh_config"
+                \eval $(\ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
                 ;;
 
             # xautolock
