@@ -23,7 +23,7 @@ debug_awesome()
     DISPLAY=":1" \awesome
 }
 
-### firefox
+### firefox troubleshooting mode without extensions and new profile
 firefox_safe()
 {
     local function_name="${0}"
