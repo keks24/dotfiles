@@ -24,3 +24,5 @@ export GRML_COMP_CACHE_DIR="${HOME}/.cache"
 export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:003"
 ### use local man pages
 export MANPATH="${HOME}/.local/share/man:${MANPATH}"
+### set "umask" to "0077" (directories: 0700, files: 0600)
+umask 0077
