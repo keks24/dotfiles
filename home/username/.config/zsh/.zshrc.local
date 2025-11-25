@@ -49,7 +49,7 @@ firefox_shopping()
     then
         shift
     else
-        article_type="--only-new"
+        article_type="--new"
     fi
 
     local article_name="${*}"
@@ -57,90 +57,98 @@ firefox_shopping()
     then
         echo -e "\e[01;31mAn article name is mandatory!\e[0m" >&2
 
-        echo "Usage: ${function_name} [--only-new] [--only-used] [--only-broken] <article_name>"
-        echo "Default: '--only-new'"
+        echo "Usage: ${function_name} [--new | --used | --broken] <article_name>"
+        echo "Default: '--new'"
         return 1
     fi
 
-
     declare -a article_array
-    local link_idealo_new
-    local link_geizhals_new
-    local link_ebay_new
-    local link_amazon_new
-    local link_aliexpress_new
-    local link_kleinanzeigen_new
-    local link_ebay_used
-    local link_kleinanzeigen_like_new
-    local link_kleinanzeigen_ok
-    local link_kleinanzeigen_alright
-    local link_mydealz_used
-    local link_ebay_broken
-    local link_kleinanzeigen_broken
+    # new
+    local link_new_idealo
+    local link_new_geizhals
+    local link_new_ebay
+    local link_new_amazon
+    local link_new_aliexpress
+    local link_new_commercial_kleinanzeigen
+    local link_new_private_kleinanzeigen
+    # used
+    local link_used_ebay
+    local link_used_commercial_kleinanzeigen
+    local link_used_private_kleinanzeigen
+    local link_used_mydealz
+    # broken
+    local link_broken_ebay
+    local link_broken_kleinanzeigen
 
     # "ebay" links are not reliable. "broken" may be changed to "used" or "used"
     # may be changed to "all conditions".
     case "${article_type}" in
         # new articles (default)
-        "--only-new")
-            link_idealo_new="https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=${article_name}"
-            link_geizhals_new="https://geizhals.de/?hloc=at&hloc=de&in=&fs=${article_name}"
-            link_ebay_new="https://www.ebay.de/sch/i.html?LH_ItemCondition=1000&_nkw=${article_name}"
-            link_amazon_new="https://www.amazon.de/s?k=${article_name}"
-            link_aliexpress_new="https://de.aliexpress.com/w/wholesale-${article_name}.html"
-            link_kleinanzeigen_new="https://www.kleinanzeigen.de/s-anbieter:gewerblich/${article_name}/k0+global.zustand:new"
-            link_kleinanzeigen_new="https://www.kleinanzeigen.de/s-anbieter:privat/${article_name}/k0+global.zustand:new"
+        "--new")
+            link_new_idealo="https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=${article_name}"
+            link_new_geizhals="https://geizhals.de/?hloc=at&hloc=de&in=&fs=${article_name}"
+            # | item condition  | number |
+            # | --------------- | ------ |
+            # | new             |   1000 |
+            link_new_ebay="https://www.ebay.de/sch/i.html?LH_ItemCondition=1000&_nkw=${article_name}"
+            link_new_amazon="https://www.amazon.de/s?k=${article_name}"
+            link_new_aliexpress="https://de.aliexpress.com/w/wholesale-${article_name}.html"
+            link_new_commercial_kleinanzeigen="https://www.kleinanzeigen.de/s-anbieter:gewerblich/${article_name}/k0+global.zustand:new"
+            link_new_private_kleinanzeigen="https://www.kleinanzeigen.de/s-anbieter:privat/${article_name}/k0+global.zustand:new"
 
             article_array+=(
-                            "${link_idealo_new}"
-                            "${link_geizhals_new}"
-                            "${link_ebay_new}"
-                            "${link_amazon_new}"
-                            "${link_aliexpress_new}"
-                            "${link_kleinanzeigen_new}"
+                            "${link_new_idealo}"
+                            "${link_new_geizhals}"
+                            "${link_new_ebay}"
+                            "${link_new_amazon}"
+                            "${link_new_aliexpress}"
+                            "${link_new_commercial_kleinanzeigen}"
+                            "${link_new_private_kleinanzeigen}"
                            )
             ;;
 
         # used and refurbished articles
-        "--only-used")
-            # | item condition        | number |
-            # | --------------------- | ------ |
-            # | new (miscellaneous)   |   1500 |
-            # | refurbished certified |   2000 |
-            # | refurbished excellent |   2010 |
-            # | refurbished very good |   2020 |
-            # | refurbished good      |   2030 |
-            link_ebay_used="https://www.ebay.de/sch/i.html?LH_ItemCondition=1500|2000|2010|2020|2030|3000&_nkw=${article_name}"
-            link_kleinanzeigen_like_new="https://www.kleinanzeigen.de/s-${article_name}/k0+global.zustand:like_new"
-            link_kleinanzeigen_ok="https://www.kleinanzeigen.de/s-${article_name}/k0+global.zustand:ok"
-            link_kleinanzeigen_alright="https://www.kleinanzeigen.de/s-${article_name}/k0+global.zustand:alright"
-            link_mydealz_used="https://www.mydealz.de/search?hide_expired=true&hide_local=true&q=${article_name}"
+        "--used")
+            # | item condition                  | number |
+            # | ------------------------------- | ------ |
+            # | new (miscellaneous)             |   1500 |
+            # | new with defects                |   1750 |
+            # | completely overhauled by seller |   2500 |
+            # | refurbished certified           |   2000 |
+            # | refurbished excellent           |   2010 |
+            # | refurbished very good           |   2020 |
+            # | refurbished good                |   2030 |
+            link_used_ebay="https://www.ebay.de/sch/i.html?LH_ItemCondition=1500|1750|2000|2010|2020|2030|2500|3000&_nkw=${article_name}"
+            # "like new", "ok", "alright"
+            link_used_commercial_kleinanzeigen="https://www.kleinanzeigen.de/s-anbieter:gewerblich/${article_name}/k0+global.zustand:like_new,ok,alright"
+            link_used_private_kleinanzeigen="https://www.kleinanzeigen.de/s-anbieter:privat/${article_name}/k0+global.zustand:like_new,ok,alright"
+            link_used_mydealz="https://www.mydealz.de/search?hide_expired=true&hide_local=true&q=${article_name}"
 
             article_array+=(
-                            "${link_ebay_used}"
-                            "${link_kleinanzeigen_like_new}"
-                            "${link_kleinanzeigen_ok}"
-                            "${link_kleinanzeigen_alright}"
-                            "${link_mydealz_used}"
+                            "${link_used_ebay}"
+                            "${link_used_commercial_kleinanzeigen}"
+                            "${link_used_private_kleinanzeigen}"
+                            "${link_used_mydealz}"
                            )
             ;;
 
         # broken articles
-        "--only-broken")
+        "--broken")
             # | item condition | number |
             # | -------------- | ------ |
             # | broken         |   7000 |
-            local link_ebay_broken="https://www.ebay.de/sch/i.html?LH_ItemCondition=7000&_nkw=${article_name}"
-            local link_kleinanzeigen_broken="https://www.kleinanzeigen.de/s-${article_name}/k0+global.zustand:defect"
+            # | not specified  |     10 |
+            local link_broken_ebay="https://www.ebay.de/sch/i.html?LH_ItemCondition=7000|10&_nkw=${article_name}"
+            local link_broken_kleinanzeigen="https://www.kleinanzeigen.de/s-${article_name}/k0+global.zustand:defect"
 
             article_array+=(
-                            "${link_ebay_broken}"
-                            "${link_kleinanzeigen_broken}"
+                            "${link_broken_ebay}"
+                            "${link_broken_kleinanzeigen}"
                            )
             ;;
 
         *)
-            echo -e "\e[01;31mWrong parameter. Must be either: '--only-new', '--only-used' or '--only-broken'!\e[0m"
+            echo -e "\e[01;31mWrong parameter. Must be either: '--new', '--used' or '--broken'!\e[0m"
             return 1
     esac
 
