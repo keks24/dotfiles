@@ -100,7 +100,7 @@ then
     # startx (awesomewm)
     ## this part must be started at the very end!
     ## after autologin on "tty7", start "awesome" on "tty7"
-    ## see also "${HOME}/.zshrc.local"
+    ## see also "${HOME}/.config/zsh/zshrc.local"
     if [[ "${DISPLAY}" == "" && "${UID}" != "0" && -o login && "${TTY}" == "/dev/tty7" ]]
     then
         \startx >> "${LOG_DIRECTORY}/startx/startx.log" 2>&1 &!
