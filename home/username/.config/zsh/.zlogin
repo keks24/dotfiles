@@ -61,14 +61,18 @@ then
 
             # ssh-agent
             "${APPLICATION_NAME_LIST[2]}")
-                if \pgrep --euid="${USER}" "${APPLICATION_NAME}" >/dev/null
+                if \pgrep --euid="${USER}" "${APPLICATION_NAME}" >/dev/null && [[ "${DISPLAY}" != "" && "${UID}" != "0" && -o login && "${TTY}" == "/dev/tty7" ]]
                 then
                     \pkill --signal="SIGTERM" "${APPLICATION_NAME}"
+
+                    # start "ssh-agent" with environment variables and save credentials for one hour
+                    # further configurations are located at "/etc/ssh/ssh_config"
+                    \eval $(\ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
+                elif [[ "${DISPLAY}" == "" && "${UID}" != "0" && -o login && "${TTY}" == "/dev/tty7" ]]
+                then
+                    \eval $(\ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
                 fi
 
-                # start "ssh-agent" with environment variables and save passwords for one hour
-                # further configurations are located at "/etc/ssh/ssh_config"
-                \eval $(\ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
                 ;;
 
             # xautolock
@@ -87,7 +91,7 @@ then
     unset APPLICATION_NAME
 
     # special case, if "gpg-agent" has been already started.
-    if \pgrep --euid="${USER}" "gpg-agent" >/dev/null
+    if \pgrep --euid="${USER}" "gpg-agent" >/dev/null && [[ "${DISPLAY}" != "" && "${UID}" != "0" && -o login && "${TTY}" == "/dev/tty7" ]]
     then
         # reload "gpg-agent" with its loaded configuration files.
         \pkill --signal="SIGHUP" "gpg-agent"
