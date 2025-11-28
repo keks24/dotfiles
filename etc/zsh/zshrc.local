@@ -1477,6 +1477,7 @@ fi
 \alias badblocks="badblocks -sv -o '/tmp/badblocks.log'"
 \alias bc="bc --mathlib"
 \alias bzgrep="bzgrep --color='auto'"
+\alias bzip2="bzip2 --best"
 \alias cal="cal --color='auto' --week --months='3'"
 \alias cdrecord="cdrecord -sao -speed='0' -eject -v"
 \alias cdparanoia="cdparanoia --batch --force-read-speed='1' --abort-on-skip --log-summary='cdparanoia.log'"
@@ -1546,6 +1547,9 @@ fi
 \alias ln="ln --verbose"
 \alias locate="locate --ignore-case"
 \alias lsblk="lsblk --discard --fs --merge --perms --zoned"
+\alias lz4="lz4 --best"
+\alias lzip="lzip --best"
+\alias lzma="lzma --best"
 \alias mkdir="mkdir --parents"
 \alias mktorrent="mktorrent --verbose \
                     --announce='http://tracker.openbittorrent.com:80/announce' \
@@ -1639,6 +1643,7 @@ fi
 \alias watch_emerge="watch 'qlop --running --time --verbose'"
 \alias wget="wget --hsts-file='/dev/null'"
 \alias xargs="xargs --no-run-if-empty --max-procs=$(\nproc --all) --max-args='1'"
+\alias xz="xz --best"
 \alias xzgrep="xzgrep --color='auto'"
 \alias xstow="xstow -verbose"
 \alias zerofree="zerofree -v"
