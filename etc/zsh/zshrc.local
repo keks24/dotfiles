@@ -1636,6 +1636,7 @@ fi
 \alias updatedb="updatedb --require-visibility='yes'"
 \alias vmstat="vmstat --unit='M' --timestamp --wide 2"
 \alias watch="watch --differences"
+\alias watch_emerge="watch 'qlop --running --time --verbose'"
 \alias wget="wget --hsts-file='/dev/null'"
 \alias xargs="xargs --no-run-if-empty --max-procs=$(\nproc --all) --max-args='1'"
 \alias xzgrep="xzgrep --color='auto'"
