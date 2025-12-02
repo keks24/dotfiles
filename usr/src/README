@@ -48,7 +48,7 @@ Compile new kernel
         6.1. Check the current microcode revision and date:
             $ dmesg | grep "microcode"
 
-        6.2. Reload the microcode manually at runtime:
+        6.2. Reload the microcode manually at runtime (dangerous!):
             $ echo "1" > "/sys/devices/system/cpu/microcode/reload"
 
         6.3. Check, if the microcode was updated:
