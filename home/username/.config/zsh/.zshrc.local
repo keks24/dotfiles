@@ -155,6 +155,25 @@ firefox_shopping()
     \firefox "${article_array[@]}"
 }
 
+## firefox comparison portals
+firefox_comparison_portal()
+{
+    local function_name="${0}"
+    local input_string="${*}"
+
+    if [[ "${input_string}" == "" ]]
+    then
+        echo -e "\e[01;31mAn input string is mandatory!\e[0m" >&2
+
+        echo "Usage: ${function_name} <input_string>"
+        return 1
+    fi
+
+    \firefox \
+        "https://www.verivox.de/suche/?q=${input_string}" \
+        "https://www.check24.de/suche/?q=${input_string}"
+}
+
 ### watch x windows
 watch_xwindows()
 {
