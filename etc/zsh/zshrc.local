@@ -1573,7 +1573,6 @@ fi
 \alias nload="nload -u K"
 \alias path="echo ${PATH//:/'\n'}"
 \alias pcregrep="pcregrep --color='auto'"
-\alias pdfgrep="pdfgrep --page-number='index'"
 \alias pigz="pigz --best"
 \alias pixz="pixz -9"
 \alias plzip="plzip --best"
