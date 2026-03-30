@@ -31,6 +31,7 @@ map [normal] r reload
 map [normal] R rotate
 map [normal] z zoom in
 map [normal] Z zoom out
+map [normal] t toggle_index
 
 # fullscreen mode
 map [fullscreen] b adjust_window "best-fit"
@@ -42,3 +43,7 @@ map [fullscreen] r reload
 map [fullscreen] R rotate
 map [fullscreen] z zoom in
 map [fullscreen] Z zoom out
+map [fullscreen] t toggle_index
+
+# index mode
+map [index] t toggle_index
