@@ -45,5 +45,8 @@ map [fullscreen] z zoom in
 map [fullscreen] Z zoom out
 map [fullscreen] t toggle_index
 
+# presentation mode
+#map [presentation] ...
+
 # index mode
 map [index] t toggle_index
