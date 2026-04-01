@@ -1,6 +1,6 @@
 #!/bin/bash
 ############################################################################
-# Copyright 2021-2025 Ramon Fischer                                        #
+# Copyright 2021-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -26,6 +26,6 @@ script_name="${0##*/}"
 
 for policy in "/sys/devices/system/cpu/cpufreq/policy"*
 do
-    # downclock all cpu cores to 2.4ghz (default)
-    echo "2400000" > "${policy}/scaling_max_freq"
+    # downclock all cpu cores to 2.9 ghz (default + 500 mhz) to prevent overheating.
+    echo "2900000" > "${policy}/scaling_max_freq"
 done
