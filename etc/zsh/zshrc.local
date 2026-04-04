@@ -711,28 +711,44 @@ genpw()
 ## determine last portage synchronisation
 getLastPortageSync()
 {
-    local portage_timestamp_file="/var/db/repos/gentoo/metadata/timestamp.chk"
+    local function_name="${0}"
+    local verbose_parameter="${1}"
+    local lock_directory="/run/lock"
+    local lock_filename="${function_name}.once.lock"
+    local lock_file="${lock_directory}/${lock_filename}"
 
-    if [[ ! -f "${portage_timestamp_file}" ]]
+    if [[ -e "${lock_file}" ]]
     then
-        \echo -e "\e[01;31mThe file: '${portage_timestamp_file}' could not be found or is not a file.\e[0m" >&2
-        \return 1
-    else
-        local current_unix_time=$(\date +%s)
-        local portage_unix_time=$(\date --date="$(< ${portage_timestamp_file})" +%s)
-        local days_since_last_sync=$(( (${current_unix_time} - ${portage_unix_time}) / 86400.0 ))
+        \return
     fi
 
-    if (( ${days_since_last_sync} >= 7.5 && ${days_since_last_sync} < 20 ))
+    local portage_timestamp_file="/var/db/repos/gentoo/metadata/timestamp.chk"
+
+    # check, if file exists and has some content
+    if [[ -s "${portage_timestamp_file}" ]]
+    then
+        local portage_timestamp_value=$(< "${portage_timestamp_file}")
+
+        local current_unix_time=$(\date +%s)
+        local portage_unix_time=$(\date --date="${portage_timestamp_value}" +%s)
+        local days_since_last_sync=$(( ("${current_unix_time}" - "${portage_unix_time}") / 86400.0 ))
+    else
+        \echo -e "\e[01;31mThe file: '${portage_timestamp_file}' could not be found or is not a file or has no contents.\e[0m" >&2
+        \return 1
+    fi
+
+    if (( "${days_since_last_sync}" >= 7.5 && "${days_since_last_sync}" < 20 ))
     then
         \printf "\e[01;33m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
-    elif (( ${days_since_last_sync} >= 20 ))
+    elif (( "${days_since_last_sync}" >= 20 ))
     then
-        \printf "\e[01;31;5m[%.2f] days since last portage synchronisation!\e[0m \e[01;31m(execute as root: /root/bin/update.sh)\e[0m\n" "${days_since_last_sync}"
-    elif [[ "${1}" == "--verbose" ]]
+        \printf "\e[01;31;5m[%.2f] days since last portage synchronisation!\e[0m \e[01;31m(execute as root: '/root/bin/update.sh')\e[0m\n" "${days_since_last_sync}"
+    elif [[ "${verbose_parameter}" == "--verbose" ]]
     then
         \printf "\e[01;34m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
     fi
+
+    \touch "${lock_file}"
 }
 
 ## list all process signals
