@@ -43,7 +43,13 @@ Compile new kernel
 
     6. Update the Intel CPU microcode, if necessary:
         $ emerge --oneshot sys-firmware/intel-microcode
-        $ iucode_tool --scan-system --write-earlyfw="/boot/early_ucode.cpio" "/lib/firmware/intel-ucode/"* --overwrite
+        $ iucode_tool \
+            --verbose \
+            --scan-system="exact" \
+            --overwrite \
+            --normal-earlyfw \
+            --write-earlyfw="/boot/early_ucode.cpio" \
+            "/lib/firmware/intel-ucode/"
 
         6.1. Check the current microcode revision and date:
             $ dmesg | grep "microcode"
