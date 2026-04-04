@@ -26,18 +26,24 @@
 # 	ZSH_NOTES_EOF
 #
 ## sophisticated
-#SHOW_NOTES="true"
 #ZSH_NOTES_FILE="${0}"
 #
 #outputNotes()
 #{
-#    # do not show notes:
-#    ## * if the environment variable is set to "false" or
-#    ## * if the current shell is not a "login shell" or
-#    ## * if a desktop environment has not been started, yet.
-#    if [[ "${SHOW_NOTES}" == "false" && ! -o login && "${XDG_CURRENT_DESKTOP}" != "awesome" ]]
+#    local function_name="${0}"
+#    local lock_directory="/var/lock"
+#    local lock_filename="zsh_${function_name}.lock"
+#    local lock_file="${lock_directory}/${lock_filename}"
+#
+#    # do not show notes, if the lock file is present.
+#    if [[ -e "${lock_file}" ]]
 #    then
 #        \return
+#    # show notes in the terminal only once.
+#    elif [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
+#    then
+#        \touch "${lock_file}"
+#        \chmod 644 "${lock_file}"
 #    fi
 #
 #    local headline="From '${ZSH_NOTES_FILE}':"
