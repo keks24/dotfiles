@@ -713,7 +713,7 @@ getLastPortageSync()
 {
     local function_name="${0}"
     local verbose_parameter="${1}"
-    local lock_directory="/run/lock"
+    local lock_directory="/var/lock"
     local lock_filename="${function_name}.once.lock"
     local lock_file="${lock_directory}/${lock_filename}"
 
