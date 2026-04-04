@@ -751,6 +751,7 @@ getLastPortageSync()
     if [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
     then
         \touch "${lock_file}"
+        \chmod 644 "${lock_file}"
     fi
 }
 
