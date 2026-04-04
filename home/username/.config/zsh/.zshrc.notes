@@ -17,7 +17,7 @@
 # this file is for notes only!
 # examples
 ## simple single line
-# echo "<some_note>"
+# \echo "<some_note>"
 #
 ## simple multiline
 # \cat --number <<- ZSH_NOTES_EOF
@@ -31,6 +31,15 @@
 #
 #outputNotes()
 #{
+#    # do not show notes:
+#    ## * if the environment variable is set to "false" or
+#    ## * if the current shell is not a "login shell" or
+#    ## * if a desktop environment has not been started, yet.
+#    if [[ "${SHOW_NOTES}" == "false" && ! -o login && "${XDG_CURRENT_DESKTOP}" != "awesome" ]]
+#    then
+#        \return
+#    fi
+#
 #    local headline="From '${ZSH_NOTES_FILE}':"
 #    local underline="${headline//[a-zA-Z0-9\/\.:\' ]/-}"
 #
@@ -39,8 +48,8 @@
 #        local subheadline="${1}"
 #        # 80 characters
 #        local subheadline_border="################################################################################"
-#        # get the first and last character from the string
-#        local subheadline_front="${subheadline_border: -1} "
+#        # get the first and last character from the string, plus one space character via "substring expansion".
+#        local subheadline_front="${subheadline_border:0:1} "
 #        local subheadline_back=" ${subheadline_border: -1}"
 #        # determine the spacing length in order to close the border.
 #        # 80 - (<starting_character> + <space_character> + <subheadline_characters> + <space_character> + <end_character>)
@@ -57,24 +66,18 @@
 #        spacing_characters="${subheadline_border//\#/ }"
 #        spacing_characters="${spacing_characters:0:${spacing_length}}"
 #
-#        echo "${subheadline_border}"
-#        echo "${subheadline_front}${subheadline}${spacing_characters}${subheadline_back}"
-#        echo "${subheadline_border}"
+#        \echo "${subheadline_border}"
+#        \echo "${subheadline_front}${subheadline}${spacing_characters}${subheadline_back}"
+#        \echo "${subheadline_border}"
 #    }
 #
-#    echo -e "\e[33m${headline}\n${underline}"
+#    \echo -e "\e[33m${headline}\n${underline}"
 #    \cat --number <<- ZSH_NOTES_EOF
 #		$(outputSubheadline '<some_subheadline>')
 #		<some_note>
 #		[31m<some_coloured_note>[0m
 #	ZSH_NOTES_EOF
-#    echo -e "${underline}\e[0m"
+#    \echo -e "${underline}\e[0m"
 #}
 #
-# example to only show notes, if a desktop environment has been started:
-#if [[ "${SHOW_NOTES}" == "true" && -o login && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
-#
-#if [[ "${SHOW_NOTES}" == "true" ]]
-#then
-#    outputNotes
-#fi
+#outputNotes
