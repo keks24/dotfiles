@@ -720,6 +720,10 @@ getLastPortageSync()
     if [[ -e "${lock_file}" ]]
     then
         \return
+    elif [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
+    then
+        \touch "${lock_file}"
+        \chmod 644 "${lock_file}"
     fi
 
     local portage_timestamp_file="/var/db/repos/gentoo/metadata/timestamp.chk"
@@ -746,12 +750,6 @@ getLastPortageSync()
     elif [[ "${verbose_parameter}" == "--verbose" ]]
     then
         \printf "\e[01;34m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
-    fi
-
-    if [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
-    then
-        \touch "${lock_file}"
-        \chmod 644 "${lock_file}"
     fi
 }
 
