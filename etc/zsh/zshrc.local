@@ -714,7 +714,7 @@ getLastPortageSync()
     local function_name="${0}"
     local verbose_parameter="${1}"
     local lock_directory="/var/lock"
-    local lock_filename="${function_name}.once.lock"
+    local lock_filename="zsh_${function_name}.lock"
     local lock_file="${lock_directory}/${lock_filename}"
 
     if [[ -e "${lock_file}" ]]
