@@ -717,9 +717,11 @@ getLastPortageSync()
     local lock_filename="zsh_${function_name}.lock"
     local lock_file="${lock_directory}/${lock_filename}"
 
+    # do not show last portage sync days, if lock file is present.
     if [[ -e "${lock_file}" ]]
     then
         \return
+    # show last portage sync days in the terminal only once.
     elif [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
     then
         \touch "${lock_file}"
