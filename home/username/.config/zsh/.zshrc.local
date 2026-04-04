@@ -1,5 +1,5 @@
 ############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
+# Copyright 2020-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -211,6 +211,9 @@ if [[ -r "${HOME}/.config/zsh/.zshrc.notes" ]]
 then
     \source "${HOME}/.config/zsh/.zshrc.notes"
 fi
+### prioritise zsh's "git" tab completion
+\unset -f _git
+\source /usr/share/zsh/?.?/functions/Completion/Unix/_git
 
 ## aliases
 
