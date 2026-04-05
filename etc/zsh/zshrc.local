@@ -713,6 +713,7 @@ getLastPortageSync()
 {
     local function_name="${0}"
     local verbose_parameter="${1}"
+    local current_pid="${$}"
     local lock_directory="/var/lock"
     local lock_filename="zsh_${function_name}.lock"
     local lock_file="${lock_directory}/${lock_filename}"
@@ -724,7 +725,8 @@ getLastPortageSync()
     # show last portage sync days in the terminal only once.
     elif [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
     then
-        \touch "${lock_file}"
+        # the pid may disappear at any time
+        \printf "%10d\n" "${current_pid}" > "${lock_file}"
         \chmod 644 "${lock_file}"
     fi
 
