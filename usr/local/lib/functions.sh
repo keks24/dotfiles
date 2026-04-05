@@ -62,7 +62,7 @@ COMMAND_ARRAY=(
                 "/bin/touch"
               )
 declare -r LOCK_FILE_DIRECTORY_PATH="/var/lock"
-declare -r LOCK_FILENAME="LCK..${SCRIPT_NAME}"
+declare -r LOCK_FILENAME="${SCRIPT_NAME}.lock"
 declare -r LOCK_FILE="${LOCK_FILE_DIRECTORY_PATH}/${LOCK_FILENAME}"
 declare -r NUMERIC_REGEX_STRING="^[+-]?[0-9]+(\.[0-9]+)?$"
 declare -r STRING_REGEX_STRING="^[a-zA-Z]+$"
