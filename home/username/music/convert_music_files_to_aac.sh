@@ -62,7 +62,7 @@ findAndConvertFiles()
         "${music_directory_array[@]}"
 }
 
-CleanUp
+cleanUp()
 {
     echo "TODO: Cleanup files here."
 }
@@ -72,7 +72,7 @@ main()
     findAndConvertFiles
 
     # TODO: Clean up files
-    CleanUp
+    cleanUp
 }
 
 main
