@@ -50,14 +50,16 @@ findAndConvertFiles()
         --extension="xm" \
         --print0 \
         --exec \
-            ffmpeg \
+        # TODO: this is not working properly
+        #       wrong files in "." are found for some reason
+            /usr/bin/ffmpeg \
                 -i "{}" \
                 -n \
                 -c:a aac \
                 -b:a 128k \
                 -ar:a 44100 \
                 -filter:a "volume=1.2" \
-                "{//}/{/.}.aac" \
+                "{.}.aac" \
         "." \
         "${music_directory_array[@]}"
 }
