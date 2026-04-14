@@ -626,7 +626,7 @@ awful.rules.rules = {
     { rule_any = { class = {
                     "firefox-esr",
                     "Tor Browser",
-                    "Chromium-browser-chromium" } },
+                    "Chromium-browser-bin-ungoogled-chromium-bin" } },
       properties = { screen = 2, tag = "web", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
     -- always open "thunderbird" on "screen 2", tag "e-mail" and focus "screen 2".
