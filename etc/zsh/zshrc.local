@@ -1086,6 +1086,50 @@ pss()
     fi
 }
 
+# record selected window
+record_screen_select()
+{
+    local WINDOW
+    local X
+    local Y
+    local WIDTH
+    local HEIGHT
+    local SCREEN
+
+    # get window geometry information
+    ## example output:
+    ### WINDOW=12522615
+    ### X=1062
+    ### Y=52
+    ### WIDTH=1896
+    ### HEIGHT=1016
+    ### SCREEN=0
+    \eval $(
+            \xdotool \
+                getactivewindow \
+                getwindowgeometry \
+                --shell $(
+                            \xdotool \
+                                selectwindow
+                         )
+           )
+
+    \ffmpeg \
+        -n \
+        -f x11grab \
+        -video_size "${WIDTH}x${HEIGHT}" \
+        -framerate 25 \
+        -i "${DISPLAY}.0+${X},${Y}" \
+        -f alsa \
+        -ac 2 \
+        -i default \
+        -codec:a aac \
+        -codec:v libx265 \
+        -crf 28 \
+        -preset slow \
+        "$(\date +%Y%m%dT%H%M%S%z)_screen_record.mkv"
+}
+
 ## establish a passwordless, ssh-tunneled vnc connection.
 ## ssh option "X11Forwarding" needs to be set to "yes" on the client and server!
 ssh_vnc()
@@ -1636,7 +1680,13 @@ fi
                         -f alsa \
                         -ac 2 \
                         -i default \
-                        -codec:a aac '$(\date +%Y%m%dT%H%M%S%z)_screen_record.mkv'"
+                        -codec:a aac \
+                        -codec:v libx265 \
+                        -crf 28 \
+                        -preset slow \
+                        '$(\date +%Y%m%dT%H%M%S%z)_screen_record.mkv'"
+# see "functions" above
+#\alias record_screen_select=""
 \alias record_webcam_live="mpv \
                             --demuxer-lavf-format='video4linux2' \
                             --profile='low-latency' \
@@ -1651,7 +1701,11 @@ fi
                         -f alsa \
                         -ac 2 \
                         -i default \
-                        -codec:a aac '$(\date +%Y%m%dT%H%M%S%z)_webcam_record.mkv'"
+                        -codec:a aac \
+                        -codec:v libx265 \
+                        -crf 28 \
+                        -preset slow \
+                        '$(\date +%Y%m%dT%H%M%S%z)_webcam_record.mkv'"
 \alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
 \alias shred="shred --verbose"
 \alias sort="sort --parallel='$(\nproc --all)'"
