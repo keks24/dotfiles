@@ -1124,9 +1124,6 @@ record_screen_select()
         -ac 2 \
         -i default \
         -codec:a aac \
-        -codec:v libx265 \
-        -crf 28 \
-        -preset slow \
         "$(\date +%Y%m%dT%H%M%S%z)_screen_record.mkv"
 }
 
@@ -1681,9 +1678,6 @@ fi
                         -ac 2 \
                         -i default \
                         -codec:a aac \
-                        -codec:v libx265 \
-                        -crf 28 \
-                        -preset slow \
                         '$(\date +%Y%m%dT%H%M%S%z)_screen_record.mkv'"
 # see "functions" above
 #\alias record_screen_select=""
@@ -1702,9 +1696,6 @@ fi
                         -ac 2 \
                         -i default \
                         -codec:a aac \
-                        -codec:v libx265 \
-                        -crf 28 \
-                        -preset slow \
                         '$(\date +%Y%m%dT%H%M%S%z)_webcam_record.mkv'"
 \alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
 \alias shred="shred --verbose"
