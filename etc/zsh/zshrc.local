@@ -204,7 +204,7 @@ cdk()
 ## calculate in a convenient way
 calc()
 {
-    local input="${*}"
+    local input="${*:0.0}"
 
     # delimit output with thousand separators
     \gawk 'BEGIN{ printf("%\047f", '"${input}"') }'
