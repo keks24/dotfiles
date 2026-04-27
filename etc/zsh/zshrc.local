@@ -1639,6 +1639,7 @@ fi
 \alias pixz="pixz -9"
 \alias plzip="plzip --best"
 \alias poweroff="echo 'Are you sure? Please run: /sbin/poweroff'"
+\alias progress="progress --quiet --wait-delay='2'"
 \alias radeontop="radeontop --color"
 \alias rdesktop="rdesktop \
                     -g 1920x1080 \
