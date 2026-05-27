@@ -670,11 +670,12 @@ awful.rules.rules = {
       function() awful.screen.focus(screen[1]) end } },
     -- always open "vncviewer" on "screen 2", tag "rdp" and focus "screen 2"
     { rule_any = { class = {
-                    "Vncviewer",
                     "qemu-system-aarch64",
                     "Qemu-system-aarch64",
                     "qemu-system-x86_64",
-                    "Qemu-system-x86_64" } },
+                    "Qemu-system-x86_64",
+                    "VBoxSDL",
+                    "Vncviewer" } },
       properties = { screen = 2, tag = "rdp", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
     -- always open "mpv" on "screen 1", tag "video", focus "screen 1" and "maximise" the window
