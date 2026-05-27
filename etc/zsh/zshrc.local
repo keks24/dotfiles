@@ -1090,7 +1090,7 @@ pss()
 }
 
 # record selected window
-record_screen_select()
+record_window_select()
 {
     local WINDOW
     local X
@@ -1127,7 +1127,7 @@ record_screen_select()
         -ac 2 \
         -i default \
         -codec:a aac \
-        "$(\date +%Y%m%dT%H%M%S%z)_screen_record.mkv"
+        "$(\date +%Y%m%dT%H%M%S%z)_window_record.mkv"
 }
 
 ## establish a passwordless, ssh-tunneled vnc connection.
