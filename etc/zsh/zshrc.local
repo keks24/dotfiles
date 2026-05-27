@@ -717,20 +717,22 @@ getLastPortageSync()
     local lock_directory="/var/lock"
     local lock_filename="zsh_${function_name}.lock"
     local lock_file="${lock_directory}/${lock_filename}"
-
-    # do not show last portage sync days, if lock file is present.
-    if [[ -e "${lock_file}" ]]
-    then
-        \return
-    # show last portage sync days in the terminal only once.
-    elif [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
-    then
-        # the pid may disappear at any time
-        \printf "%10d\n" "${current_pid}" > "${lock_file}"
-        \chmod 644 "${lock_file}"
-    fi
-
     local portage_timestamp_file="/var/db/repos/gentoo/metadata/timestamp.chk"
+
+    if [[ "${verbose_parameter}" == "" ]]
+    then
+        # do not show last portage sync days, if lock file is present.
+        if [[ -e "${lock_file}" ]]
+        then
+            \return
+        # show last portage sync days in the terminal only once.
+        elif [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
+        then
+            # the pid may disappear at any time
+            \printf "%10d\n" "${current_pid}" > "${lock_file}"
+            \chmod 644 "${lock_file}"
+        fi
+    fi
 
     # check, if file exists and has some content
     if [[ -s "${portage_timestamp_file}" ]]
@@ -739,9 +741,10 @@ getLastPortageSync()
 
         local current_unix_time=$(\date +%s)
         local portage_unix_time=$(\date --date="${portage_timestamp_value}" +%s)
+        # convert seconds to days as floating point number
         local days_since_last_sync=$(( ("${current_unix_time}" - "${portage_unix_time}") / 86400.0 ))
     else
-        \echo -e "\e[01;31mThe file: '${portage_timestamp_file}' could not be found or is not a file or has no contents.\e[0m" >&2
+        \echo -e "\e[01;31mThe file: '${portage_timestamp_file}' could not be found or is not a file or has no content.\e[0m" >&2
         \return 1
     fi
 
