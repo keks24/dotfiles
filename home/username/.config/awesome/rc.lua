@@ -675,7 +675,8 @@ awful.rules.rules = {
                     "qemu-system-x86_64",
                     "Qemu-system-x86_64",
                     "VBoxSDL",
-                    "Vncviewer" } },
+                    "Vncviewer",
+                    "xfreerdp" } },
       properties = { screen = 2, tag = "rdp", switchtotag = true,
       function() awful.screen.focus(screen[2]) end } },
     -- always open "mpv" on "screen 1", tag "video", focus "screen 1" and "maximise" the window
