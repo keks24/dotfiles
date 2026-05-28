@@ -1712,6 +1712,16 @@ fi
 \alias watch_emerge="watch 'qlop --running --time --verbose'"
 \alias wget="wget --hsts-file='/dev/null'"
 \alias xargs="xargs --no-run-if-empty --max-procs=$(\nproc --all) --max-args='1'"
+\alias xfreerdp="xfreerdp \
+                    /u: \
+                    /p: \
+                    /network:auto \
+                    /compression \
+                    /size:1920x1080 \
+                    +dynamic-resolution \
+                    /kbd:0x407 \
+                    +clipboard \
+                    /clipboard:use-selection:PRIMARY,direction-to:all,files-to:all"
 \alias xz="xz --best"
 \alias xzgrep="xzgrep --color='auto'"
 \alias xstow="xstow -verbose"
