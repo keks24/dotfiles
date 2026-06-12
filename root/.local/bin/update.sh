@@ -54,8 +54,22 @@ checkCommands
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
 sudo_user="${SUDO_USER}"
-no_tmpfs_file="/etc/portage/package.env/no_tmpfs.conf"
+timestamp_directory="/usr/local/etc/zsh_getLastUpdate"
+timestamp_file="${timestamp_directory}/update.sh_timestamp.chk"
+no_tmpfs_directory="/etc/portage/package.env"
+no_tmpfs_file="${no_tmpfs_directory}/no_tmpfs.conf"
 no_tmpfs_content=$(< "${no_tmpfs_file}")
+
+if [[ -d "${timestamp_directory}" ]]
+then
+    /bin/touch "${timestamp_file}"
+    /bin/chmod 600 "${timestamp_file}"
+else
+    /bin/mkdir --parents --mode="700" "${timestamp_directory}"
+    /bin/touch "${timestamp_file}"
+    /bin/chmod 600 "${timestamp_file}"
+fi
+
 if [[ ! -s "${no_tmpfs_file}" ]]
 then
     echo -e "\e[01;31mThe file: '${no_tmpfs_file}' could not be found, is not a file or has no content.\e[0m" >&2
@@ -143,3 +157,5 @@ fi
 /usr/bin/eclean --deep --time-limit="1m" packages
 /usr/bin/eix-test-obsolete
 /usr/bin/elogv
+# write timestamp file for zsh function: "getLastUpdate" in "/etc/zsh/zshrc.local"
+/bin/date --rfc-email > "${timestamp_file}"
