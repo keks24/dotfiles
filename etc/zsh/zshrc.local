@@ -709,7 +709,7 @@ genpw()
 }
 
 ## determine last portage synchronisation
-getLastPortageSync()
+getLastUpdate()
 {
     local function_name="${0}"
     local verbose_parameter="${1}"
@@ -717,15 +717,16 @@ getLastPortageSync()
     local lock_directory="/var/lock"
     local lock_filename="zsh_${function_name}.lock"
     local lock_file="${lock_directory}/${lock_filename}"
-    local portage_timestamp_file="/var/db/repos/gentoo/metadata/timestamp.chk"
+    local gentoo_ebuild_timestamp_file="/var/db/repos/gentoo/metadata/timestamp.chk"
+    local update_sh_timestamp_file="/usr/local/etc/zsh_getLastUpdate/update.sh_timestamp.chk"
 
     if [[ "${verbose_parameter}" == "" ]]
     then
-        # do not show last portage sync days, if lock file is present.
+        # do not show last update, if lock file is present.
         if [[ -e "${lock_file}" ]]
         then
             \return
-        # show last portage sync days in the terminal only once.
+        # show last update in the terminal only once.
         elif [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
         then
             # the pid may disappear at any time
@@ -734,30 +735,45 @@ getLastPortageSync()
         fi
     fi
 
-    # check, if file exists and has some content
-    if [[ -s "${portage_timestamp_file}" ]]
+    # check, if files exist and have some content
+    if [[ -s "${gentoo_ebuild_timestamp_file}" && -s "${update_sh_timestamp_file}" ]]
     then
-        local portage_timestamp_value=$(< "${portage_timestamp_file}")
+        local gentoo_ebuild_timestamp_value=$(< "${gentoo_ebuild_timestamp_file}")
+        local update_sh_timestamp_value=$(< "${update_sh_timestamp_file}")
 
         local current_unix_time=$(\date +%s)
-        local portage_unix_time=$(\date --date="${portage_timestamp_value}" +%s)
+        local gentoo_ebuild_unix_time=$(\date --date="${gentoo_ebuild_timestamp_value}" +%s)
+        local update_sh_unix_time=$(\date --date="${update_sh_timestamp_value}" +%s)
         # convert seconds to days as floating point number
-        local days_since_last_sync=$(( ("${current_unix_time}" - "${portage_unix_time}") / 86400.0 ))
+        local gentoo_ebuild_last_sync_days=$(( ("${current_unix_time}" - "${gentoo_ebuild_unix_time}") / 86400.0 ))
+        local update_sh_last_sync_days=$(( ("${current_unix_time}" - "${update_sh_unix_time}") / 86400.0 ))
     else
-        \echo -e "\e[01;31mThe file: '${portage_timestamp_file}' could not be found or is not a file or has no content.\e[0m" >&2
+        \echo -e "\e[01;31mThe file: '${gentoo_ebuild_timestamp_file}' or '${update_sh_timestamp_file}' could not be found or is not a file or has no content.\e[0m" >&2
         \return 1
     fi
 
-    if (( "${days_since_last_sync}" >= 7.5 && "${days_since_last_sync}" < 20 ))
-    then
-        \printf "\e[01;33m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
-    elif (( "${days_since_last_sync}" >= 20 ))
-    then
-        \printf "\e[01;31;5m[%.2f] days since last portage synchronisation!\e[0m \e[01;31m(execute as root: '/root/bin/update.sh')\e[0m\n" "${days_since_last_sync}"
-    elif [[ "${verbose_parameter}" == "--verbose" ]]
-    then
-        \printf "\e[01;34m[%.2f] days since last portage synchronisation.\e[0m\n" "${days_since_last_sync}"
-    fi
+    declare -A last_sync_days_array
+    last_sync_days_array['gentoo ebuild synchronisation']="${gentoo_ebuild_last_sync_days}"
+    last_sync_days_array['update.sh execution']="${update_sh_last_sync_days}"
+
+    local last_sync_type
+    local last_sync_days
+    for last_sync_type last_sync_days in "${(kv)last_sync_days_array[@]}"
+    do
+        if (( "${last_sync_days}" >= 7.5 && "${last_sync_days}" < 20 ))
+        then
+            # yellow (warning)
+            \printf "\e[01;33m[%.2f] days since last ${last_sync_type}.\e[0m\n" "${last_sync_days}"
+        elif (( "${last_sync_days}" >= 20 ))
+        then
+            # red (critical)
+            \printf "\e[01;31;5m[%.2f] days since last ${last_sync_type}!\e[0m \e[01;31m(execute as root: '/root/bin/update.sh')\e[0m\n" "${last_sync_days}"
+        elif [[ "${verbose_parameter}" == "--verbose" ]]
+        then
+            # blue (neutral)
+            \printf "\e[01;34m[%.2f] days since last ${last_sync_type}.\e[0m\n" "${last_sync_days}"
+        fi
+    done
 }
 
 ## list all process signals
@@ -1792,4 +1808,4 @@ then
 fi
 ## portage
 ### last synchronisation in days
-getLastPortageSync
+getLastUpdate
