@@ -56,9 +56,9 @@ script_name="${0##*/}"
 sudo_user="${SUDO_USER}"
 no_tmpfs_file="/etc/portage/package.env/no_tmpfs.conf"
 no_tmpfs_content=$(< "${no_tmpfs_file}")
-if [[ ! -f "${no_tmpfs_file}" ]]
+if [[ ! -s "${no_tmpfs_file}" ]]
 then
-    echo -e "\e[01;31mCould not find file '${no_tmpfs_file}' or is not a file.\e[0m" >&2
+    echo -e "\e[01;31m'${no_tmpfs_file}' could not be found, is not a file or has no content.\e[0m" >&2
     exit 1
 else
     large_package_list=$(
