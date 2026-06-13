@@ -47,6 +47,7 @@ music_directory_array=(
                         "../audiobooks"
                         "../normal_music"
                         "../unusual_music"
+                        "../record"
                       )
 music_filename_suffix="aac"
 playlist_filename_suffix="m3u8"
