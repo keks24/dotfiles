@@ -1733,6 +1733,7 @@ fi
 \alias vmstat="vmstat --unit='M' --timestamp --wide 2"
 \alias watch="watch --differences"
 \alias watch_emerge="watch 'qlop --running --time --verbose'"
+\alias wdiff="wdiff --start-delete=$'\e[31m' --end-delete=$'\e[0m' --start-insert=$'\e[32m' --end-insert=$'\e[0m'"
 \alias wget="wget --hsts-file='/dev/null'"
 \alias xargs="xargs --no-run-if-empty --max-procs=$(\nproc --all) --max-args='1'"
 \alias xfreerdp="xfreerdp \
