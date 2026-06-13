@@ -1351,30 +1351,30 @@ udevadm_debug()
 {
     # default path is "/dev/null", since it should be generally available.
     local device_path="${1:-/dev/null}"
+
+    # sanity check
     if [[ ! -e "${device_path}" ]]
     then
         echo -e "\e[01;31mThe device: '${device_path}' does not exist!\e[0m" >&2
         return 1
-    elif [[ -L "${device_path}" || -c "${device_path}" ]]
+    elif [[ "${device_path}" != "/dev/"* && "${device_path}" != "/sys/"* ]]
     then
-        local absolute_device_path=$(
-                                        \udevadm info \
-                                            --query="path" \
-                                            --name="${device_path}"
-                                    )
-    else
-        echo -e "\e[01;31mThe device '${device_path}' either does not exist or is not a symbolic link or character device!\e[0m" >&2
+        echo -e "\e[01;31mThe device's origin: '${device_path}' is not from 'devtmpfs' ('/dev/') or 'sysfs' ('/sys/').\e[0m" >&2
         return 1
     fi
 
     echo -e "\e[01;34mSimulated udev event run:\e[0m"
-    \udevadm test "${absolute_device_path}"
+    \udevadm test "${device_path}"
 
     echo -e "\n\e[01;34mAll sysfs properties to device (bottom-top):\e[0m"
     \udevadm info --attribute-walk --no-pager --name="${device_path}"
 
     echo -e "\n\e[01;34mAll sysfs properties to device as tree (top-bottom):\e[0m"
     \udevadm info --tree --no-pager --name="${device_path}"
+
+    echo -e "\n\e[01;34mDevice short information:\e[0m"
+    \udevadm info --query="all" --no-pager --name="${device_path}"
+
     echo -e "\e[01;34mLegend:\e[0m"
     echo -e "┌────────┬─────────────────────────────────────────┐"
     echo -e "│ \e[01;31mPrefix\e[0m │ \e[01;31mMeaning\e[0m                                 │"
@@ -1408,9 +1408,6 @@ udevadm_debug()
     echo -e '├────────┼─────────────────────────────────────────┤'
     echo -e '│ "E:"   │ Device property                         │'
     echo -e '└────────┴─────────────────────────────────────────┘'
-
-    echo -e "\n\e[01;34mDevice properties:\e[0m"
-    \udevadm info --query="property" --no-pager --name="${device_path}"
 }
 
 ## get current wan ip address
