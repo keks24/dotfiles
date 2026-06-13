@@ -1593,7 +1593,7 @@ fi
 \alias crontab="crontab -i"
 \alias curl="curl --show-error"
 \alias dd="dd bs='1M' conv='fsync' status='progress'"
-\alias diff="diff --side-by-side --suppress-common-lines --color"
+\alias diff="diff --side-by-side --suppress-common-lines --color='auto' --palette='rs=0:hd=1:ad=0;32:de=0;31:ln=0;36'"
 \alias dvdbackup="dvdbackup --progress"
 \alias e2fsck="e2fsck -v"
 \alias egrep="egrep --color='auto'"
