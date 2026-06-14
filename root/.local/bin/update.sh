@@ -19,6 +19,8 @@ declare -a command_array
 command_array=(
                 "/bin/date"
                 "/bin/grep"
+                "/bin/ln"
+                "/bin/touch"
                 "/usr/bin/clear"
                 "/usr/bin/eclean"
                 "/usr/bin/eix"
@@ -53,21 +55,29 @@ checkCommands
 # define global variables
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
-sudo_user="${SUDO_USER}"
-timestamp_directory="/usr/local/etc/zsh_getLastUpdate"
-timestamp_file="${timestamp_directory}/update.sh_timestamp.chk"
+#sudo_user="${SUDO_USER}"
+## no tmpfs
 no_tmpfs_directory="/etc/portage/package.env"
 no_tmpfs_file="${no_tmpfs_directory}/no_tmpfs.conf"
 no_tmpfs_content=$(< "${no_tmpfs_file}")
+## timestamps
+script_timestamp_directory="/usr/local/etc/${script_name}"
+script_timestamp_file="${script_timestamp_directory}/${script_name}_timestamp.chk"
+gentoo_ebuild_timestamp_directory="/var/db/repos/gentoo/metadata"
+gentoo_ebuild_timestamp_file="${gentoo_ebuild_timestamp_directory}/timestamp.chk"
+gentoo_ebuild_timestamp_symlink="${script_timestamp_directory}/gentoo_timestamp.chk"
 
-if [[ -d "${timestamp_directory}" ]]
+if [[ ! -d "${script_timestamp_directory}" ]]
 then
-    /bin/touch "${timestamp_file}"
-    /bin/chmod 644 "${timestamp_file}"
-else
-    /bin/mkdir --parents --mode="755" "${timestamp_directory}"
-    /bin/touch "${timestamp_file}"
-    /bin/chmod 644 "${timestamp_file}"
+    # script
+    /bin/mkdir --parents --mode="755" "${script_timestamp_directory}"
+    /bin/touch "${script_timestamp_file}"
+    /bin/chmod 644 "${script_timestamp_file}"
+    /bin/date --rfc-email > "${script_timestamp_file}"
+
+    # gentoo ebuild repository
+    /bin/ln --symbolic "${gentoo_ebuild_timestamp_file}" "${gentoo_ebuild_timestamp_symlink}"
+    /bin/chmod 644 "${gentoo_ebuild_timestamp_symlink}"
 fi
 
 if [[ ! -s "${no_tmpfs_file}" ]]
@@ -158,4 +168,4 @@ fi
 /usr/bin/eix-test-obsolete
 /usr/bin/elogv
 # write timestamp file for zsh function: "getLastUpdate" in "/etc/zsh/zshrc.local"
-/bin/date --rfc-email > "${timestamp_file}"
+/bin/date --rfc-email > "${script_timestamp_file}"

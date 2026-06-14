@@ -717,8 +717,9 @@ getLastUpdate()
     local lock_directory="/var/lock"
     local lock_filename="zsh_${function_name}.lock"
     local lock_file="${lock_directory}/${lock_filename}"
-    local gentoo_ebuild_timestamp_file="/var/db/repos/gentoo/metadata/timestamp.chk"
-    local update_sh_timestamp_file="/usr/local/etc/zsh_getLastUpdate/update.sh_timestamp.chk"
+    local timestamp_directory="/usr/local/etc/update.sh"
+    local gentoo_ebuild_timestamp_file="${timestamp_directory}/gentoo_timestamp.chk"
+    local update_sh_timestamp_file="${timestamp_directory}/update.sh_timestamp.chk"
 
     if [[ "${verbose_parameter}" == "" ]]
     then
