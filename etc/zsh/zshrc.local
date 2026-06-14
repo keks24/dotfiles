@@ -748,7 +748,7 @@ getLastUpdate()
         local gentoo_ebuild_last_sync_days=$(( ("${current_unix_time}" - "${gentoo_ebuild_unix_time}") / 86400.0 ))
         local update_sh_last_sync_days=$(( ("${current_unix_time}" - "${update_sh_unix_time}") / 86400.0 ))
     else
-        \echo -e "\e[01;31mThe file: '${gentoo_ebuild_timestamp_file}' or '${update_sh_timestamp_file}' could not be found or is not a file or has no content.\e[0m" >&2
+        \echo -e "\e[01;31mThe file: '${gentoo_ebuild_timestamp_file}' or '${update_sh_timestamp_file}' could not be found, is not a file or has no content.\e[0m" >&2
         \return 1
     fi
 
