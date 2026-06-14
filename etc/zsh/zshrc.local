@@ -1728,7 +1728,7 @@ fi
                         -codec:a aac \
                         '$(\date +%Y%m%dT%H%M%S%z)_webcam_record.mkv'"
 \alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
-\alias shred="shred --verbose --random-source='/dev/urandom'"
+\alias shred="shred --verbose --random-source='/dev/urandom' --zero"
 \alias sort="sort --parallel='$(\nproc --all)'"
 \alias tree="LS_COLORS='' tree -FC"
 \alias udevadm_reload="udevadm control --reload && udevadm trigger"
