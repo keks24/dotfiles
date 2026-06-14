@@ -63,11 +63,11 @@ no_tmpfs_content=$(< "${no_tmpfs_file}")
 if [[ -d "${timestamp_directory}" ]]
 then
     /bin/touch "${timestamp_file}"
-    /bin/chmod 600 "${timestamp_file}"
+    /bin/chmod 644 "${timestamp_file}"
 else
-    /bin/mkdir --parents --mode="700" "${timestamp_directory}"
+    /bin/mkdir --parents --mode="755" "${timestamp_directory}"
     /bin/touch "${timestamp_file}"
-    /bin/chmod 600 "${timestamp_file}"
+    /bin/chmod 644 "${timestamp_file}"
 fi
 
 if [[ ! -s "${no_tmpfs_file}" ]]
