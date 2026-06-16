@@ -1,0 +1,26 @@
+Subdirectories within the package name directory are actually not supported;
+symlinks are not supported.
+
+In order to make subdirectories kind of work, use hardlinks to the package name
+directory.
+
+Example:
+
+    $ LS_COLORS="" tree -FCaugp --inodes x11-misc
+    [1310186 drwx------ portage  portage ]  x11-misc/
+    └── [1324471 drwx------ portage  portage ]  parcellite-1.2.1/
+        ├── [1328255 drwx------ portage  portage ]  fix_too_many_arguments/
+        │   └── [1324472 drwx------ portage     portage    ]  src/
+        │       └── [1308367 -rw------- portage  portage ]  main.c.patch
+        └── [1308367 -rw------- portage  portage ]  main.c.patch
+
+    Both "main.c.patch" files have the same inode number.
+
+Every file and directory must have the following permissions, in order to apply
+patches successfully:
+
+    * Owner: portage
+    * Group: portage
+    * Umask: 0077
+        * files: 0600
+        * directories: 0700
