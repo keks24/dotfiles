@@ -226,6 +226,11 @@ fi
 ## output on each shell execution
 
 ## executing commands on each shell execution
+### zsh
+#### set colour for unprivileged users as "cyan"
+#zstyle ':prompt:grml:*:items:user' pre '%F{cyan}'
+#### tab completion for the command "vboxmanage"
+compdef vboxmanage="VBoxManage"
 ### tmux
 #### attach or create tmux session
 #### see also "/home/ramon/.zlogin", "/etc/rc.conf"
