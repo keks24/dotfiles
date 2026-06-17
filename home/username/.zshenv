@@ -1,5 +1,5 @@
 ############################################################################
-# Copyright 2022-2025 Ramon Fischer                                        #
+# Copyright 2022-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -19,16 +19,3 @@
 ### zsh
 #### set a different configuration directory
 export ZDOTDIR="${HOME}/.config/zsh"
-#### use the cache directory in "/home/<some_username>/"
-export GRML_COMP_CACHE_DIR="${HOME}/.cache"
-### set "umask" to "0077" (directories: 0700, files: 0600)
-umask 0077
-### xsane
-#### set default scanner device
-export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:003"
-### man
-#### use local man pages
-export MANPATH="${HOME}/.local/share/man:${MANPATH}"
-### gnupg
-#### use custom directory
-export GNUPGHOME="${HOME}/.config/gnupg"

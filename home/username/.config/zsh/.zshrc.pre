@@ -1,5 +1,5 @@
 ############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
+# Copyright 2020-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -14,13 +14,25 @@
 # limitations under the License.                                           #
 ############################################################################
 
-# global
-# do not start any programs here. use "${HOME}/.zshrc.local" for this!
+# DO NOT START ANY PROGRAMMES HERE. USE "${HOME}/.zshrc.local" FOR THIS!
 
+# global
 ## exports
-### man pages
+### zsh
+#### set "umask" to "0077" (directories: 0700, files: 0600)
+umask 0077
+#### use the cache directory in "/home/<some_username>/"
+export GRML_COMP_CACHE_DIR="${HOME}/.cache"
+### xsane
+#### set default scanner device
+export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:003"
+### man
 export MANPATH="${MANPATH}:${HOME}/.local/share/man"
-### unprivileged docker setup
+### gnupg
+#### use custom directory
+export GNUPGHOME="${HOME}/.config/gnupg"
+### docker
+#### unprivileged docker setup
 #export DOCKER_HOST="unix:///run/user/1000/docker.sock"
 export PATH="${PATH}:/usr/share/docker/contrib"
 
