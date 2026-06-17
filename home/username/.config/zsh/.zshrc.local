@@ -195,10 +195,11 @@ watch_xwindows()
                                         "0x[a-z0-9]+"
                               )
         \clear
-        echo -e "\e[01;33mFirst value is \"instance name\", second value is \"class name\":\e[0m\n" >&2
-        while read -r window_id
+
+        \echo -e "\e[01;33mFirst value is \"instance name\", second value is \"class name\":\e[0m\n" >&2
+        while \read -r window_id
         do
-            echo -ne "${window_id}:\t"
+            \echo -ne "${window_id}:\t"
             \xprop -id "${window_id}" "WM_CLASS"
         done <<< "${window_id_list}"
 
