@@ -16,13 +16,19 @@
 
 # global
 ## exports
-### set a different configuration directory
+### zsh
+#### set a different configuration directory
 export ZDOTDIR="${HOME}/.config/zsh"
-### use the cache directory in "/home/<some_username>/"
+#### use the cache directory in "/home/<some_username>/"
 export GRML_COMP_CACHE_DIR="${HOME}/.cache"
-### set default scanner device
-export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:003"
-### use local man pages
-export MANPATH="${HOME}/.local/share/man:${MANPATH}"
 ### set "umask" to "0077" (directories: 0700, files: 0600)
 umask 0077
+### xsane
+#### set default scanner device
+export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:003"
+### man
+#### use local man pages
+export MANPATH="${HOME}/.local/share/man:${MANPATH}"
+### gnupg
+#### use custom directory
+export GNUPGHOME="${HOME}/.config/gnupg"
