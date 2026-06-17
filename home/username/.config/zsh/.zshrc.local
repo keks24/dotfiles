@@ -210,6 +210,8 @@ watch_xwindows()
 ## prompt shell
 
 ## source
+### include "flatpak" directory paths
+#source "/etc/profile.d/flatpak.sh"
 ### include notes file
 if [[ -r "${HOME}/.config/zsh/.zshrc.notes" ]]
 then
