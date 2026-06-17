@@ -6,15 +6,16 @@ directory.
 
 Example:
 
-    $ LS_COLORS="" tree -FCaugp --inodes "x11-misc/"
-    [1310186 drwx------ portage  portage ]  x11-misc/
-    └── [1324471 drwx------ portage  portage ]  parcellite-1.2.1/
-        ├── [1328255 drwx------ portage  portage ]  fix_too_many_arguments/
-        │   └── [1324472 drwx------ portage     portage    ]  src/
-        │       └── [1308367 -rw------- portage  portage ]  main.c.patch
-        └── [1308367 -rw------- portage  portage ]  main.c.patch
+    $ LS_COLORS="" tree -FCaugp --inodes "/etc/portage/patches/"
+    [1308360 drwx------ portage  portage ]  /etc/portage/patches//
+    └── [1310186 drwx------ portage  portage ]  x11-misc/
+        └── [1324471 drwx------ portage  portage ]  parcellite-1.2.1/
+            ├── [1328255 drwx------ portage  portage ]  fix_too_many_arguments/
+            │   └── [1324472 drwx------ portage  portage ]  src/
+            │       └── [1308367 -rw------- portage  portage ]  main.c.patch
+            └── [1308367 -rw------- portage  portage ]  main.c.patch
 
-    Both "main.c.patch" files have the same inode number.
+    The patch files "main.c.patch" have the same inode number (hardlink).
 
 Every file and directory must have the following permissions, in order to apply
 patches successfully:
