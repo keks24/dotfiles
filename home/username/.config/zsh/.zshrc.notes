@@ -28,7 +28,7 @@
 ## sophisticated
 #ZSH_NOTES_FILE="${0}"
 #
-#outputNotes()
+#getNotes()
 #{
 #    local function_name="${0}"
 #    local verbose_parameter="${1}"
@@ -99,4 +99,4 @@
 #    \echo -e "${underline}\e[0m"
 #}
 #
-#outputNotes
+#getNotes
