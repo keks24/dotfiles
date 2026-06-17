@@ -723,14 +723,21 @@ getLastUpdate()
 
     if [[ "${verbose_parameter}" == "" ]]
     then
-        # do not show last update, if lock file is present.
+        # do not show last updates, if lock file is present.
         if [[ -e "${lock_file}" ]]
         then
             \return
-        # show last update in the terminal only once.
+        # do not show last updates on "/dev/tty7".
+        elif [[ "${TTY}" == "/dev/tty7" ]]
+        then
+            \return
+        # only show last updates, if the following conditions are met:
+        ## * the current shell is a login shell
+        ## * the current tty is not "/dev/tty7"
+        ## * the desktop environment has been started; see "${HOME}/.xinitrc"
         elif [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
         then
-            # the pid may disappear at any time
+            # create lock file; the pid may disappear at any time
             \printf "%10d\n" "${current_pid}" > "${lock_file}"
             \chmod 644 "${lock_file}"
         fi
