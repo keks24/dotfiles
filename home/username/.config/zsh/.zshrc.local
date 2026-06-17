@@ -69,6 +69,7 @@ firefox_shopping()
     local link_new_ebay
     local link_new_amazon
     local link_new_aliexpress
+    local link_new_temu
     local link_new_commercial_kleinanzeigen
     local link_new_private_kleinanzeigen
     # used
@@ -93,6 +94,7 @@ firefox_shopping()
             link_new_ebay="https://www.ebay.de/sch/i.html?LH_ItemCondition=1000&_nkw=${article_name}"
             link_new_amazon="https://www.amazon.de/s?k=${article_name}"
             link_new_aliexpress="https://de.aliexpress.com/w/wholesale-${article_name}.html"
+            link_new_temu="https://www.temu.com/search_result.html?search_key=${article_name}"
             link_new_commercial_kleinanzeigen="https://www.kleinanzeigen.de/s-anbieter:gewerblich/${article_name}/k0+global.zustand:new"
             link_new_private_kleinanzeigen="https://www.kleinanzeigen.de/s-anbieter:privat/${article_name}/k0+global.zustand:new"
 
@@ -102,6 +104,7 @@ firefox_shopping()
                             "${link_new_ebay}"
                             "${link_new_amazon}"
                             "${link_new_aliexpress}"
+                            "${link_new_temu}"
                             "${link_new_commercial_kleinanzeigen}"
                             "${link_new_private_kleinanzeigen}"
                            )
