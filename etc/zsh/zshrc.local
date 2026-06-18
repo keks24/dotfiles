@@ -1768,6 +1768,7 @@ if [[ "${EUID}" == "0" ]]
 then
     \alias joplin="echo -e \"\e[01;31m'joplin' should not be executed with root privileges!\e[0m\""
     \alias pip="echo -e \"\e[01;31m'pip' should not be executed with root privileges!\e[0m\""
+    \alias zathura="echo -e \"\e[01;31m'zathura' should not be executed with root privileges!\e[0m\""
 fi
 
 # export
