@@ -16,6 +16,6 @@
 ############################################################################
 */
 
-// custom - 20200721 - rfischer: set a custom cursor theme from "/usr/share/cursors/xorg-x11/"
+// set a custom cursor theme from "/usr/share/cursors/xorg-x11/"
 Xcursor.theme: gentoo
 Xcursor.size: 16
