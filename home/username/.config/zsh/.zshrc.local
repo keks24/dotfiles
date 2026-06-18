@@ -227,8 +227,8 @@ fi
 
 ## executing commands on each shell execution
 ### zsh
-#### set colour for unprivileged users as "cyan"
-#zstyle ':prompt:grml:*:items:user' pre '%F{cyan}'
+#### set bold, magenta colour for unprivileged users
+#zstyle ':prompt:grml:*:items:user' pre '%B%F{magenta}'
 #### tab completion for the command "vboxmanage"
 compdef vboxmanage="VBoxManage"
 ### tmux
