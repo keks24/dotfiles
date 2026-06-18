@@ -14,7 +14,7 @@
 # limitations under the License.                                           #
 ############################################################################
 
-# DO NOT START ANY PROGRAMMES HERE. USE "${HOME}/.zshrc.local" FOR THIS!
+# DO NOT START ANY PROGRAMMES HERE. USE "${HOME}/.config/zsh/.zshrc.local" FOR THIS!
 
 # global
 ## exports

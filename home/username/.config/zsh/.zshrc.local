@@ -233,7 +233,7 @@ fi
 compdef vboxmanage="VBoxManage"
 ### tmux
 #### attach or create tmux session
-#### see also "/home/ramon/.zlogin", "/etc/rc.conf"
+#### see also "${HOME}/.zlogin", "/etc/rc.conf"
 if [[ -t 0 ]]
 then
     if \pgrep --euid="${USER}" "tmux" >/dev/null && [[ "${TMUX}" == "" && "${TTY}" != "/dev/tty7" ]]
