@@ -29,10 +29,14 @@ export MANPATH="${MANPATH}:${HOME}/.local/share/man"
 ### gnupg
 #### use custom directory
 export GNUPGHOME="${HOME}/.config/gnupg"
-### docker
+### docker cli
 #### unprivileged docker setup
 #export DOCKER_HOST="unix:///run/user/1000/docker.sock"
 export PATH="${PATH}:/usr/share/docker/contrib"
+export DOCKER_CONFIG="${HOME}/.config/docker-cli"
+### dvdbackup ("libdvdcss")
+#### use custom directory
+export DVDCSS_CACHE="${HOME}/.config/dvdcss"
 
 ## aliases
 ### ruby
