@@ -36,7 +36,7 @@ fi
 
 ## executing commands on each shell execution
 ### zsh
-#### set bold, yellow colour for super-users
+#### set bold, yellow colour for privileged users
 #zstyle ':prompt:grml:*:items:user' pre '%B%F{yellow}'
 ### tmux
 #### attach or create tmux session
