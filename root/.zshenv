@@ -1,5 +1,5 @@
 ############################################################################
-# Copyright 2022-2025 Ramon Fischer                                        #
+# Copyright 2022-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -16,11 +16,6 @@
 
 # global
 ## exports
-### set a different configuration directory
+### zsh
+#### set a different configuration directory
 export ZDOTDIR="${HOME}/.config/zsh"
-### use the cache directory in "/root/"
-export GRML_COMP_CACHE_DIR="${HOME}/.cache"
-### set default scanner device
-export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:003"
-### use local man pages
-export MANPATH="${HOME}/.local/share/man:${MANPATH}"

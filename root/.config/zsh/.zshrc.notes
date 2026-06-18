@@ -1,5 +1,5 @@
 ############################################################################
-# Copyright 2023-2025 Ramon Fischer                                        #
+# Copyright 2023-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -17,21 +17,86 @@
 # this file is for notes only!
 # examples
 ## simple single line
-# echo "<some_note>"
+# \echo "<some_note>"
 #
 ## simple multiline
-# \cat --number << ZSH_NOTES_EOF
-# <some_note>
-# [33m<some_coloured_note>[0m
-# ZSH_NOTES_EOF
+# \cat --number <<- ZSH_NOTES_EOF
+# 	<some_note>
+# 	[33m<some_coloured_note>[0m
+# 	ZSH_NOTES_EOF
 #
 ## sophisticated
-# headline="From '${0}':"
-# underline="${headline//[a-zA-Z0-9\/\.:\' ]/-}"
+#ZSH_NOTES_FILE="${0}"
 #
-# echo -e "\e[33m${headline}\n${underline}"
-# \cat --number << ZSH_NOTES_EOF
-#  <some_note>
-#  [33m<some_coloured_note>[0m
-# ZSH_NOTES_EOF
-# echo -e "${underline}\e[0m"
+#getNotes()
+#{
+#    local function_name="${0}"
+#    local verbose_parameter="${1}"
+#    local current_pid="${$}"
+#    local lock_directory="/var/lock"
+#    local lock_filename="zsh_${function_name}.lock"
+#    local lock_file="${lock_directory}/${lock_filename}"
+#
+#    if [[ "${verbose_parameter}" != "--verbose" ]]
+#    then
+#       # do not show notes, if the lock file is present.
+#       if [[ -e "${lock_file}" ]]
+#       then
+#           \return
+#       # do not show notes on "/dev/tty7"
+#       elif [[ "${TTY}" == "/dev/tty7" ]]
+#       then
+#           \return
+        # only show notes, if the following conditions are met:
+        ## * the current shell is a login shell
+        ## * the current tty is not "/dev/tty7"
+        ## * the desktop environment has been started; see "${HOME}/.xinitrc"
+#       elif [[ -o login && "${TTY}" != "/dev/tty7" && "${XDG_CURRENT_DESKTOP}" == "awesome" ]]
+#       then
+#           # create lock file; the pid may disappear at any time
+#           \printf "%10d\n" "${current_pid}" > "${lock_file}"
+#           \chmod 644 "${lock_file}"
+#       fi
+#    fi
+#
+#    local headline="From '${ZSH_NOTES_FILE}':"
+#    local underline="${headline//[a-zA-Z0-9\/\.:\' ]/-}"
+#
+#    outputSubheadline()
+#    {
+#        local subheadline="${1}"
+#        # 80 characters
+#        local subheadline_border="################################################################################"
+#        # get the first and last character from the string, plus one space character via "substring expansion".
+#        local subheadline_front="${subheadline_border:0:1} "
+#        local subheadline_back=" ${subheadline_border: -1}"
+#        # determine the spacing length in order to close the border.
+#        # 80 - (<starting_character> + <space_character> + <subheadline_characters> + <space_character> + <end_character>)
+#        local spacing_length=$(( "${#subheadline_border}" - ("${#subheadline_front}" + "${#subheadline}" + "${#subheadline_back}") ))
+#
+#        # for loop solution
+#        #local spacing_counter
+#        #for spacing_counter in {1..${spacing_length}}
+#        #do
+#        #    spacing_characters+=" "
+#        #done
+#
+#        # shell solution
+#        spacing_characters="${subheadline_border//\#/ }"
+#        spacing_characters="${spacing_characters:0:${spacing_length}}"
+#
+#        \echo "${subheadline_border}"
+#        \echo "${subheadline_front}${subheadline}${spacing_characters}${subheadline_back}"
+#        \echo "${subheadline_border}"
+#    }
+#
+#    \echo -e "\e[33m${headline}\n${underline}"
+#    \cat --number <<- ZSH_NOTES_EOF
+#		$(outputSubheadline '<some_subheadline>')
+#		<some_note>
+#		[31m<some_coloured_note>[0m
+#	ZSH_NOTES_EOF
+#    \echo -e "${underline}\e[0m"
+#}
+#
+#getNotes

@@ -1,5 +1,5 @@
 ############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
+# Copyright 2020-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -14,11 +14,14 @@
 # limitations under the License.                                           #
 ############################################################################
 
-# global
-# do not start any programs here. use "~/.zshrc.local" for this!
+# DO NOT START ANY PROGRAMS HERE. USE "${HOME}/.config/zsh/.zshrc.local" FOR THIS!
 
+# global
 ## exports
-### man pages
+### zsh
+#### use the cache directory in "/root/"
+export GRML_COMP_CACHE_DIR="${HOME}/.cache"
+### man
 export MANPATH="${MANPATH}:${HOME}/.local/share/man"
 
 ## aliases

@@ -1,5 +1,5 @@
 ############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
+# Copyright 2020-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -15,29 +15,38 @@
 ############################################################################
 
 # user-specific
-# functions
+## functions
 
-# prompt shell
+## prompt shell
 
-# source
-## include notes file
+## source
+### include notes file
 if [[ -r "${HOME}/.config/zsh/.zshrc.notes" ]]
 then
     source "${HOME}/.config/zsh/.zshrc.notes"
 fi
+### prioritise zsh's "git" tab completion
+\unset -f _git
+\source /usr/share/zsh/?.?/functions/Completion/Unix/_git
 
-# aliases
+## aliases
 
-# output on each shell execution
+## output on each shell execution
 
-# executing commands on each shell execution
-## tmux
-### attach or create tmux session
-### see also "/home/ramon/.zlogin"
-if [[ $(pgrep --euid "${USER}" "tmux") && "${TMUX}" == "" && "${TTY}" != "/dev/tty7" ]]
+## executing commands on each shell execution
+### zsh
+#### set bold, yellow colour for super-users
+#zstyle ':prompt:grml:*:items:user' pre '%B%F{yellow}'
+### tmux
+#### attach or create tmux session
+#### see also "${HOME}/.config/zsh/.zlogin" and "/etc/rc.conf"
+if [[ -t 0 ]]
 then
-    tmux attach-session 2>/dev/null
-elif [[ ! $(pgrep --euid "${USER}" "script") && "${TTY}" != "/dev/tty7" ]]
-then
-    tmux new-session 2>/dev/null
+    if \pgrep --euid="${USER}" "tmux" >/dev/null && [[ "${TMUX}" == "" && "${TTY}" != "/dev/tty7" ]]
+    then
+        \tmux attach-session 2>/dev/null
+    elif ! \pgrep --euid="${USER}" "script" >/dev/null && [[ "${TTY}" != "/dev/tty7" ]]
+    then
+        \tmux new-session 2>/dev/null
+    fi
 fi
