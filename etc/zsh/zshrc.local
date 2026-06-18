@@ -19,7 +19,7 @@
 umask 0077
 
 # functions
-## translate words (english-german,german-english)
+## translate words (english-german, german-english)
 dic()
 {
     local input_string="${*}"
