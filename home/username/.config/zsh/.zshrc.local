@@ -210,14 +210,16 @@ watch_xwindows()
 ## prompt shell
 
 ## source
-### include "flatpak" directory paths
+### flatpak
+#### include "flatpak" directory paths
 #source "/etc/profile.d/flatpak.sh"
-### include notes file
+### zsh
+#### include notes file
 if [[ -r "${HOME}/.config/zsh/.zshrc.notes" ]]
 then
     \source "${HOME}/.config/zsh/.zshrc.notes"
 fi
-### prioritise zsh's "git" tab completion
+#### prioritise zsh's "git" tab completion
 \unset -f _git
 \source /usr/share/zsh/?.?/functions/Completion/Unix/_git
 
