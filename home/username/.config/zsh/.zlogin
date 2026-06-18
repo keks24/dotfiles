@@ -72,7 +72,6 @@ then
                 then
                     \eval $(\ssh-agent -st 1h) >> "${LOG_DIRECTORY}/${APPLICATION_NAME}/${APPLICATION_NAME}.log" 2>&1
                 fi
-
                 ;;
 
             # xautolock
