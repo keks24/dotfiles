@@ -1,5 +1,5 @@
 ############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
+# Copyright 2020-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -16,9 +16,26 @@
 
 [include]
     path = ~/.gitconfig.d/gitalias.txt
+[core]
+    excludesfile = ~/.config/git/ignore
 [alias]
-    call = commit --all
-    d = diff --word-diff="color"
+    callm = commit --all --message
+    cv = commit --verbose
+    d = diff --color-words
+    dp = checkout --patch
+    # git config lfs.https://<some_fqdn>/keks24/<some_repository_name>/info/lfs.locksverify true
+    lfst = lfs track
+    lfsmin = lfs migrate info --everything --fixup
+    lfsmim = lfs migrate import --fixup --verbose
+    lfsl = lfs ls-files
+    lfss = lfs status
+    rp = reset --patch
+    # submodule update remote
+    smurr = submodule update --recursive --remote
+    # this also restores the staging directory
+    stashai = stash apply --index
+    stashp = stash pop
+    stashs = stash show
 #[pull]
 #    rebase = true
 [filter "lfs"]
