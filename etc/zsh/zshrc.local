@@ -14,6 +14,10 @@
 # limitations under the License.                                            #
 #############################################################################
 
+# umask
+## set "umask" to "0077" (directories: 0700, files: 0600)
+umask 0077
+
 # functions
 ## translate words (english-german,german-english)
 dic()
