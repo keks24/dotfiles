@@ -1,6 +1,6 @@
 #!/bin/sh
 ############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
+# Copyright 2020-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -16,7 +16,7 @@
 ############################################################################
 
 home_directory="/home/$(id --user --name)"
-xprofile_file="${home_directory}/.xprofile"
+xprofile_file="${home_directory}/.config/xorg/xprofile"
 log_directory="${home_directory}/.log/awesome"
 log_stdout_file="${log_directory}/awesome.log"
 log_stderr_file="${log_directory}/awesome.err"
