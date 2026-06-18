@@ -26,7 +26,7 @@ APPLICATION_NAME_LIST=(
                         "ssh-agent"
                         "xautolock"
                       )
-LOG_DIRECTORY="${HOME}/.log"
+LOG_DIRECTORY="${HOME}/.local/var/log"
 
 # log directory
 ## prepare log directories and files

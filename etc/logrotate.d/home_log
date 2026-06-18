@@ -14,7 +14,7 @@
 # limitations under the License.                                           #
 ############################################################################
 
-/home/<some_username>/.log/*/*.log
+/home/<some_username>/.local/var/log/*/*.log
 {
     weekly
     rotate 12

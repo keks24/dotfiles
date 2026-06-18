@@ -17,7 +17,7 @@
 
 home_directory="/home/$(id --user --name)"
 xprofile_file="${home_directory}/.config/xorg/xprofile"
-log_directory="${home_directory}/.log/awesome"
+log_directory="${home_directory}/.local/var/log/awesome"
 log_stdout_file="${log_directory}/awesome.log"
 log_stderr_file="${log_directory}/awesome.err"
 
