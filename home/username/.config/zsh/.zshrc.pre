@@ -19,8 +19,6 @@
 # global
 ## exports
 ### zsh
-#### set "umask" to "0077" (directories: 0700, files: 0600)
-umask 0077
 #### use the cache directory in "/home/<some_username>/"
 export GRML_COMP_CACHE_DIR="${HOME}/.cache"
 ### xsane
