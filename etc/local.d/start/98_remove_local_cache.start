@@ -37,7 +37,8 @@ xargs_max_args="10"
 for cache_directory in "${cache_directory_list[@]}"
 do
     # "-mindepth 1" will exclude the parent directory
-    /usr/bin/find "${cache_directory}" \
+    /usr/bin/find \
+        "${cache_directory}" \
         -mindepth 1 \
         -atime +30 \
         -print0 \
