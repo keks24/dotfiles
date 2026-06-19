@@ -17,12 +17,23 @@
 
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
+swapfile_size="10gib"
+swapfile_directory="/var/tmp/work"
+swapfile_filename="swapfile_${swapfile_size}.img"
+swapfile_file="${swapfile_directory}/${swapfile_filename}"
 
 /usr/bin/logger \
     --tag="create_and_mount_encrypted_swap_file" \
     --id \
     --stderr \
     "${script_directory_path}/${script_name}: executed"
+
+if [[ ! -s "${swapfile_file}" ]]
+then
+    /usr/bin/fallocate --length="${swapfile_size}" "${swapfile_file}"
+    /bin/chown root:root "${swapfile_file}"
+    /bin/chmod 600 "${swapfile_file}"
+fi
 
 /sbin/cryptsetup \
     open \
@@ -32,7 +43,7 @@ script_name="${0##*/}"
     --key-size="512" \
     --key-file="/dev/urandom" \
     --sector-size="4096" \
-    "/var/tmp/work/swapfile_10gib.img" \
+    "${swapfile_file}" \
     cryptswap
 
 /sbin/mkswap "/dev/mapper/cryptswap"
