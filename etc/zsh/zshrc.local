@@ -1796,8 +1796,8 @@ fi
 \export HISTORY_IGNORE="(*:*|*--force*|*cd*|*chmod*|*chown*|*clear*|*dd*|*delete*|*exit*|*fd*|*find*|*for*|*fscopy*|*halt*|*hdparm*|*kill*|*mkfs*|*ll*|*lpr*|*ls*|*mv*|*perl-rename*|*poweroff*|*pwd*|*reboot*|*rename*|*remove*|*rm*|*sed*|*shred*|*shutdown*|*sudo*|*suspend*|*touch*|*while*)"
 ## use "ccache" via "distcc". see also "/etc/conf.d/distccd", "/etc/distcc/hosts", "/etc/env.d/03distcc_ccache" and "/etc/portage/make.conf"
 \export PATH="/usr/lib/ccache/bin:${PATH}"
-\export CCACHE_DIR="/var/tmp/ccache"
-\export DISTCC_DIR="/home/ramon/.var/tmp/distcc"
+\export CCACHE_DIR="/var/tmp/work/ccache"
+\export DISTCC_DIR="/var/tmp/work/distcc"
 ## mimic bash's cursor movement for paths
 ### original string: *?_-.[]~=/&;!#$%^(){}<>
 \export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
