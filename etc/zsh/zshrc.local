@@ -1,5 +1,5 @@
 #############################################################################
-# Copyright 2020-2025 Ramon Fischer                                         #
+# Copyright 2020-2026 Ramon Fischer                                         #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -16,7 +16,7 @@
 
 # umask
 ## set "umask" to "0077" (directories: 0700, files: 0600)
-umask 0077
+\umask 0077
 
 # functions
 ## translate words (english-german, german-english)
