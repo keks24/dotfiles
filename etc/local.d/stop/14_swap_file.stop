@@ -26,7 +26,13 @@ script_name="${0##*/}"
 
 /sbin/swapoff "/dev/mapper/cryptswap"
 # for enhanced security, the file "/dev/mapper/cryptswap" could be overwritten
-# with random characters here.
+# with random characters here. uncomment the following command:
+#/bin/dd \
+#    if="/dev/urandom" \
+#    of="/dev/mapper/cryptswap" \
+#    bs="1M" \
+#    conv="fsync" \
+#    status="progress"
 
 # wait 100ms for "swapoff" to complete, otherwise "cryptsetup" will return:
 # "failed: Device or resource busy", but still succeeds in closing the luks device.
