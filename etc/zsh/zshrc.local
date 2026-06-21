@@ -1610,6 +1610,7 @@ fi
 \alias diff="diff --side-by-side --suppress-common-lines --color='auto' --palette='rs=0:hd=1:ad=0;32:de=0;31:ln=0;36'"
 \alias dvdbackup="dvdbackup --progress"
 \alias e2fsck="e2fsck -v"
+\alias e4defrag="e4defrag -v"
 \alias egrep="egrep --color='auto'"
 \alias fallocate="fallocate --verbose"
 \alias fatresize="fatresize --progress"
