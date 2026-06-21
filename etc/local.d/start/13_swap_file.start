@@ -19,7 +19,7 @@ script_directory_path="${0%/*}"
 script_name="${0##*/}"
 swapfile_size="10gib"
 swapfile_directory="/var/tmp/work"
-swapfile_filename="swapfile_${swapfile_size}.img"
+swapfile_filename="swap_file_${swapfile_size}.img"
 swapfile_file="${swapfile_directory}/${swapfile_filename}"
 
 /usr/bin/logger \
