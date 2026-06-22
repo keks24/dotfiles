@@ -5,7 +5,7 @@
 " License:       This file is licensed under the GPL v2.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ############################################################################
-" # Copyright 2023-2025 Ramon Fischer                                        #
+" # Copyright 2023-2026 Ramon Fischer                                        #
 " #                                                                          #
 " # Licensed under the Apache License, Version 2.0 (the "License");          #
 " # you may not use this file except in compliance with the License.         #
@@ -50,7 +50,7 @@
   set textwidth=0       " Don't wrap lines by default
   " custom
   "set nobackup         " Don't keep a backup file
-  set viminfo='20,\"50  " read/write a .viminfo file, don't store more than
+  "set viminfo='20,\"50  " read/write a .viminfo file, don't store more than
                         " 50 lines of registers
   " custom
   "set history=50       " keep 50 lines of command line history
@@ -128,7 +128,7 @@
 " set comments=b:",:%,fb:-,n:>,n:)
 " set list listchars=tab:»·,trail:·
 " set listchars=eol:¬,precedes:«,extends:»,tab:»·,trail:·
-  set viminfo=%,'50,\"100,:100,n~/.viminfo
+  "set viminfo=%,'50,\"100,:100,n~/.viminfo
   set tags=./tags,./TAGS,tags,TAGS,../tags,../../tags,../../../tags,../../../../tags
 
 " autocommands:
