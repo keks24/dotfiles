@@ -799,5 +799,4 @@ function! ToggleDiff()
         :diffthis
     endif
 endfunction
-
 nnoremap <silent> <f6> :call ToggleDiff()<cr>
