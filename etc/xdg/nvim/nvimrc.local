@@ -170,7 +170,9 @@ set whichwrap+=<,>,h,l
     endif
 
     try
-        colorscheme desert
+        "colorscheme desert
+        " custom
+        colorscheme sorbet
     catch
     endtry
 
