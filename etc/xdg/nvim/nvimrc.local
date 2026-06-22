@@ -207,7 +207,12 @@ set whichwrap+=<,>,h,l
     set backupdir=~/.config/nvim/tmp/backup//
     set directory=~/.config/nvim/tmp/swp//
 
-    " save .viminfo in a different directory
+    " save ".viminfo" in a different directory
+    "" save/restore global variables ("%")
+    "" save marks for last 50 files ("'50")
+    "" save registers for last 100 lines ("\"100")
+    "" save last 100 command line history entries (":100")
+    "" save above information at "~/.config/viminfo" ("n~/.config/viminfo")
     set viminfo=%,'50,\"100,:100,n~/.config/viminfo
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
