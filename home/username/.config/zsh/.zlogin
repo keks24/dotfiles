@@ -3,7 +3,7 @@
 #   - intercept missing commands
 #
 ############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
+# Copyright 2020-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -79,7 +79,7 @@ then
                 if ! \pgrep --euid="${USER}" "${APPLICATION_NAME}" >/dev/null
                 then
                     # start "physlock" after ten minutes to lock all screens; notify 30 seconds before
-                    \xautolock -corners --00 -time 10 -locker "${HOME}/bin/locker" -notify 30 -notifier '${HOME}/bin/awesome_notifier "10" "critical" "xautolock" "Locking screen in 30 seconds..."' >/dev/null 2>&1 &!
+                    \xautolock -corners 0-00 -time 10 -locker "${HOME}/bin/locker" -notify 30 -notifier '${HOME}/bin/awesome_notifier "10" "critical" "xautolock" "Locking screen in 30 seconds..."' >/dev/null 2>&1 &!
                 fi
                 ;;
 
