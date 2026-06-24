@@ -1,6 +1,6 @@
 #!/bin/bash
 ############################################################################
-# Copyright 2022-2025 Ramon Fischer                                        #
+# Copyright 2022-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -15,19 +15,27 @@
 # limitations under the License.                                           #
 ############################################################################
 
+# define global variables
 portage_lib_directory_path="/var/lib/portage"
 portage_world_file="${portage_lib_directory_path}/world"
 deselect_list_file="/var/tmp/deselect.list"
 
-command_list=(emerge qdepends touch)
+command_list=(
+                "/usr/bin/emerge"
+                "/usr/bin/qdepends"
+                "/bin/touch"
+             )
 checkCommands()
 {
-    for current_command in "${command_list[@]}"
+    local current_command
+
+    unalias "${command_array[@]##*/}" 2>/dev/null
+
+    for current_command in "${command_array[@]}"
     do
-        unalias ${current_command} 2>/dev/null
-        if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
+        if ! command -v "${current_command}" >/dev/null 2>&1
         then
-            /bin/echo -e "\e[01;31mCould not find command '${current_command}'.\e[0m"
+            echo -e "\e[01;31mCould not find command: '${current_command}'.\e[0m" >&2
             exit 1
         fi
     done
@@ -35,7 +43,7 @@ checkCommands()
 
 checkCommands
 
-/usr/bin/touch "${deselect_list_file}"
+/bin/touch "${deselect_list_file}"
 : > "${deselect_list_file}"
 
 if [[ ! -f "${portage_world_file}" ]]
