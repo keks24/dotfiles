@@ -1709,7 +1709,7 @@ fi
                 --tcp-connections='deny' \
                 --upgrade-to-https \
                 --open-url-mode='deny'"
-\alias record_microphone="arecord --interactive"
+\alias record_microphone="arecord --interactive --file-type='raw' --vumeter='mono' >/dev/null"
 \alias record_screen="ffmpeg \
                         -n \
                         -f x11grab \
