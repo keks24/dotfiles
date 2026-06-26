@@ -65,7 +65,7 @@ script_timestamp_directory="/usr/local/etc/${script_name}"
 script_timestamp_file="${script_timestamp_directory}/${script_name}_timestamp.chk"
 gentoo_ebuild_timestamp_directory="/var/db/repos/gentoo/metadata"
 gentoo_ebuild_timestamp_file="${gentoo_ebuild_timestamp_directory}/timestamp.chk"
-gentoo_ebuild_timestamp_symlink="${script_timestamp_directory}/gentoo_timestamp.chk"
+gentoo_ebuild_timestamp_symlink="${script_timestamp_directory}/gentoo_ebuild_timestamp.chk"
 
 if [[ ! -d "${script_timestamp_directory}" ]]
 then
@@ -76,7 +76,10 @@ then
     /bin/date --rfc-email > "${script_timestamp_file}"
 
     # gentoo ebuild repository
-    /bin/ln --symbolic "${gentoo_ebuild_timestamp_file}" "${gentoo_ebuild_timestamp_symlink}"
+    /bin/ln \
+        --symbolic \
+        "${gentoo_ebuild_timestamp_file}" \
+        "${gentoo_ebuild_timestamp_symlink}"
     /bin/chmod 644 "${gentoo_ebuild_timestamp_symlink}"
 fi
 
