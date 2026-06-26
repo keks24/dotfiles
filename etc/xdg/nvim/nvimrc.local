@@ -214,8 +214,8 @@ set whichwrap+=<,>,h,l
     "" save marks for last 50 files ("'50")
     "" save registers for last 100 lines ("\"100")
     "" save last 100 command line history entries (":100")
-    "" save above information at "~/.config/viminfo" ("n~/.config/viminfo")
-    set viminfo=%,'50,\"100,:100,n~/.config/viminfo
+    "" save above information at "~/.config/nvim/viminfo" ("n~/.config/viminfo")
+    set viminfo=%,'50,\"100,:100,n~/.config/nvim/viminfo
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => Text, tab and indent related
