@@ -1,5 +1,5 @@
 # mpv: ignore "watch_later" files
-/home/username/.config/mpv/watch_later/*
+/home/username/.local/state/mpv/watch_later/*
 
 # music: ignore "m3u8" playlist files
 /home/username/music/playlists/*.m3u8
