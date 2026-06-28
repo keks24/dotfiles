@@ -37,6 +37,11 @@ export DOCKER_CONFIG="${HOME}/.config/docker-cli"
 ### vagrant
 #### use custom directory
 export VAGRANT_HOME="${HOME}/.local/share/vagrant.d"
+### virtualbox
+#### use custom global configuration directory; see also "/home/ramon/.config/VirtualBox/VirtualBox.xml"
+#### also create a symlink in the home directory for "vagrant"!:
+##### $ ln -s "/home/ramon/.local/share/VirtualBox/" "/home/ramon/.VirtualBox"
+export VBOX_USER_HOME="${HOME}/.local/share/VirtualBox"
 ### dvdbackup ("libdvdcss")
 #### use custom directory
 export DVDCSS_CACHE="${HOME}/.config/dvdcss"
