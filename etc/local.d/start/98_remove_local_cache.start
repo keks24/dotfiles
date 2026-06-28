@@ -20,9 +20,9 @@ script_name="${0##*/}"
 declare -a cache_directory_list
 cache_directory_list=(
                         "/root/.cache"
-                        "/root/.config/nvim/tmp"
+                        "/root/.local/state/nvim"
                         "/home/ramon/.cache"
-                        "/home/ramon/.config/nvim/tmp"
+                        "/home/ramon/.local/state/nvim"
                         "/home/ramon/.local/state/mpv/watch_later"
                      )
 available_processors=$(/usr/bin/nproc --all)
