@@ -798,6 +798,42 @@ getLastUpdate()
     done
 }
 
+## inspect actual files or directories of a symlink
+lll()
+{
+    local symlink_file="${1}"
+    local argument_count="${#argv}"
+    local resolved_path
+    local resolved_path_file
+    local ls_output
+
+    if [[ "${argument_count}" == "1" ]]
+    then
+        # check, if symlink is not broken.
+        if [[ -e "${symlink_file}" ]]
+        then
+            resolved_path=$(\realpath "${symlink_file}")
+
+            # check, if symlink is a file.
+            if [[ -f "${resolved_path}" ]]
+            then
+                ls_output=$(\ls -l -- "${resolved_path}")
+            else
+                # if it is something else, assume it is a directory.
+                ls_output=$(\ls -ld -- "${resolved_path}")
+            fi
+
+            echo -e "${ls_output} <- ${symlink_file}"
+        else
+            echo -e "\e[01;31mSymlink is broken!\e[0m" >&2
+            return 1
+        fi
+    else
+        echo -e "\e[01;31mOnly one argument is required/allowed!\e[0m" >&2
+        return 1
+    fi
+}
+
 ## list all process signals
 lsig()
 {
