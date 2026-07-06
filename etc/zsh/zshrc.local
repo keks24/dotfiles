@@ -184,14 +184,14 @@ cdl()
             # check, if symlink is a directory.
             if [[ -d "${resolved_path}" ]]
             then
-                \cd "${resolved_path}"
+                \cd -- "${resolved_path}"
             else
                 # if it is a file, cut off the filename.
                 resolved_path_file="${resolved_path%/*}"
 
                 \echo "Correcting '${resolved_path}' to: '${resolved_path_file}'." >&2
 
-                \cd "${resolved_path_file}"
+                \cd -- "${resolved_path_file}"
             fi
         else
             echo -e "\e[01;31mSymlink is broken!\e[0m" >&2
