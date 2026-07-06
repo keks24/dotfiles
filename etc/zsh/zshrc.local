@@ -172,24 +172,33 @@ cdl()
     local symlink_file="${1}"
     local argument_count="${#argv}"
     local resolved_path
-    local file_resolved_path
+    local resolved_path_file
 
     if [[ "${argument_count}" == "1" ]]
     then
-        # check, if symlink is a directory
-        resolved_path=$(\realpath "${symlink_file}")
-
-        if [[ -d "${resolved_path}" ]]
+        # check, if symlink is not broken.
+        if [[ -e "${symlink_file}" ]]
         then
-            \cd "${resolved_path}"
+            resolved_path=$(\realpath "${symlink_file}")
+
+            # check, if symlink is a directory.
+            if [[ -d "${resolved_path}" ]]
+            then
+                \cd "${resolved_path}"
+            else
+                # if it is a file, cut off the filename.
+                resolved_path_file="${resolved_path%/*}"
+
+                \echo "Correcting '${resolved_path}' to: '${resolved_path_file}'." >&2
+
+                \cd "${resolved_path_file}"
+            fi
         else
-            # if not, cut off the filename
-            file_resolved_path="${resolved_path%/*}"
-            \echo "Correcting '${resolved_path}' to: '${file_resolved_path}'." >&2
-            \cd "${file_resolved_path}"
+            echo -e "\e[01;31mSymlink is broken!\e[0m" >&2
+            return 1
         fi
     else
-        echo -e "\e[01;31mOne argument required!\e[0m" >&2
+        echo -e "\e[01;31mOnly one argument is required/allowed!\e[0m" >&2
         return 1
     fi
 }
