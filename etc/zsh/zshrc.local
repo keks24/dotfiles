@@ -211,6 +211,7 @@ cdk()
     \mkdir --parents "${directory_path}"
 
     \echo "Changing directory to: '${directory_path}'."
+
     \cd "${directory_path}"
 }
 
