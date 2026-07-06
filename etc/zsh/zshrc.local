@@ -823,7 +823,7 @@ lll()
                 ls_output=$(\ls -ld -- "${resolved_path}")
             fi
 
-            echo -e "${ls_output} <- ${symlink_file}"
+            echo "${ls_output} <- ${symlink_file}"
         else
             echo -e "\e[01;31mSymlink is broken!\e[0m" >&2
             return 1
