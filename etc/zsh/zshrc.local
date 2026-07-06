@@ -194,7 +194,7 @@ cdl()
                 \cd -- "${resolved_path_file}"
             fi
         else
-            echo -e "\e[01;31mSymlink is broken!\e[0m" >&2
+            echo -e "\e[01;31mThe file: '${symlink_file}' does not exist or the symlink is broken.\e[0m" >&2
             return 1
         fi
     else
@@ -798,7 +798,7 @@ getLastUpdate()
     done
 }
 
-## inspect actual files or directories of a symlink
+## inspect the actual file or directory of a symlink
 lll()
 {
     local symlink_file="${1}"
@@ -825,7 +825,7 @@ lll()
 
             echo "${ls_output} <- ${symlink_file}"
         else
-            echo -e "\e[01;31mSymlink is broken!\e[0m" >&2
+            echo -e "\e[01;31mThe file: '${symlink_file}' does not exist or the symlink is broken.\e[0m" >&2
             return 1
         fi
     else
