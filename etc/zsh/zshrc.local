@@ -1516,25 +1516,25 @@ wherefrom()
 
     #unalias "${binary_name_array[@]}" 2>/dev/null
 
-    \echo -e "\e[01;34mOutput of '\e[01;33mcommand -v\e[0m\e[01;34m':\e[0m"
+    \echo -e "\e[01;34mOutput of '\e[01;37mcommand -v\e[0m\e[01;34m':\e[0m"
     for binary_name_command in "${binary_name_array[@]}"
     do
         \echo "    $(\command -v ${binary_name_command})"
     done
 
-    \echo -e "\n\e[01;34mOutput of '\e[01;33mwhich'\e[0m\e[01;34m:\e[0m"
+    \echo -e "\n\e[01;34mOutput of '\e[01;37mwhich'\e[0m\e[01;34m:\e[0m"
     for binary_name_which in "${binary_name_array[@]}"
     do
         \echo -e "\n    $(\which ${binary_name_which})"
     done
 
-    \echo -e "\n\e[01;34mOutput of '\e[01;33mtype\e[0m\e[01;34m':\e[0m"
+    \echo -e "\n\e[01;34mOutput of '\e[01;37mtype\e[0m\e[01;34m':\e[0m"
     for binary_name_type in "${binary_name_array[@]}"
     do
         \echo "    $(\type ${binary_name_type})"
     done
 
-    \echo -e "\n\e[01;34mOutput of '\e[01;33mwhereis\e[0m\e[01;34m':\e[0m"
+    \echo -e "\n\e[01;34mOutput of '\e[01;37mwhereis\e[0m\e[01;34m':\e[0m"
     for binary_name_whereis in "${binary_name_array[@]}"
     do
         \echo "    $(\whereis ${binary_name_whereis})"
