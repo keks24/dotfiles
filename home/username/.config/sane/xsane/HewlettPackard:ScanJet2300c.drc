@@ -11,13 +11,13 @@
 "resolution"
 150
 "tl-x"
-398458
+22196
 "tl-y"
-154999
+22196
 "br-x"
-13861366
+13792143
 "br-y"
-19175628
+19125998
 "custom-gamma"
 0
 "swdeskew"
@@ -55,7 +55,7 @@
 "xsane-main-window-width"
 294
 "xsane-main-window-height"
-441
+535
 "xsane-project-window-x-position"
 1060
 "xsane-project-window-y-position"
