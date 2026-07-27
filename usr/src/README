@@ -76,4 +76,4 @@ Compile new kernel
    12. Clean up "/boot/"
 
 Legend:
-- "Clean up" - Keep last three versions
+- "Clean up" - Keep last three versions ('eclean-kernel --ask --num="3"')
