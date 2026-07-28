@@ -1579,6 +1579,51 @@ fi
 \bindkey "^N" down-line-or-search
 \bindkey "^P" up-line-or-search
 
+# export
+## set default text editor
+\export EDITOR="nvim"
+\export VISUAL="nvim"
+## location for x config directory
+\export XDG_CONFIG_HOME="${HOME}/.config"
+## location for x cache directory
+\export XDG_CACHE_HOME="${HOME}/.cache"
+## location for x state directory
+\export XDG_STATE_HOME="${HOME}/.local/state"
+## set colours for hard and orphaned symlinks
+\export LS_COLORS="mh=44;37:or=40;31;01"
+## less
+### general settings
+\export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --shift 5 --ignore-case"
+### enable syntax highlighting
+\export LESSOPEN="| lesspipe.sh %s"
+### do not save search entries at "~/.lesshst"
+\export LESSHISTFILE="/dev/null"
+## do not include certain commands in history
+\export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+## do not include critical or annoying commands in history
+\export HISTORY_IGNORE="(*:*|*--force*|*cd*|*chmod*|*chown*|*clear*|*dd*|*delete*|*exit*|*fd*|*find*|*for*|*fscopy*|*halt*|*hdparm*|*kill*|*mkfs*|*ll*|*lpr*|*ls*|*mv*|*perl-rename*|*poweroff*|*pwd*|*reboot*|*rename*|*remove*|*rm*|*sed*|*shred*|*shutdown*|*sudo*|*suspend*|*touch*|*while*)"
+## use "ccache" via "distcc". see also "/etc/conf.d/distccd", "/etc/distcc/hosts", "/etc/env.d/03distcc_ccache" and "/etc/portage/make.conf"
+\export PATH="/usr/lib/ccache/bin:${PATH}"
+\export CCACHE_DIR="/var/tmp/work/ccache"
+\export DISTCC_DIR="/var/tmp/work/distcc"
+## mimic bash's cursor movement for paths
+### original string: *?_-.[]~=/&;!#$%^(){}<>
+\export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
+## always use the best compression method of "xz"
+\export XZ_OPT="-9"
+## workaround for "tmux" to create proper conditionals
+\export EUID="${EUID}"
+## set default parameters for "progress"
+\export PROGRESS_ARGS="--wait-delay='2.0' --monitor-continuously"
+## always activate anti-aliasing for "java" apps
+\export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings='lcd'"
+## always run "fsck" in parllel. it just needs to be set, no values required.
+\export FSCK_FORCE_ALL_PARALLEL=""
+## set menu background colour for linux kernel
+\export MENUCONFIG_COLOR="blackbg"
+## set userconfig for "npm"
+\export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
+
 # aliases
 \alias aria2c="aria2c \
                 --enable-rpc='false' \
@@ -1605,7 +1650,7 @@ fi
                 --enable-dht6='true' \
                 --dht-listen-port='6881-6999' \
                 --dht-file-path='${XDG_CACHE_HOME}/aria2/dht.dat' \
-                --dht-file-path6='"${XDG_CACHE_HOME}/aria2/dht6.dat' \
+                --dht-file-path6='${XDG_CACHE_HOME}/aria2/dht6.dat' \
                 --bt-force-encryption='true' \
                 --bt-require-crypto='true' \
                 --bt-min-crypto-level='arc4' \
@@ -1821,51 +1866,6 @@ then
     \alias pip="echo -e \"\e[01;31m'pip' should not be executed with root privileges!\e[0m\""
     \alias zathura="echo -e \"\e[01;31m'zathura' should not be executed with root privileges!\e[0m\""
 fi
-
-# export
-## set default text editor
-\export EDITOR="nvim"
-\export VISUAL="nvim"
-## location for x config directory
-\export XDG_CONFIG_HOME="${HOME}/.config"
-## location for x cache directory
-\export XDG_CACHE_HOME="${HOME}/.cache"
-## location for x state directory
-\export XDG_STATE_HOME="${HOME}/.local/state"
-## set colours for hard and orphaned symlinks
-\export LS_COLORS="mh=44;37:or=40;31;01"
-## less
-### general settings
-\export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --shift 5 --ignore-case"
-### enable syntax highlighting
-\export LESSOPEN="| lesspipe.sh %s"
-### do not save search entries at "~/.lesshst"
-\export LESSHISTFILE="/dev/null"
-## do not include certain commands in history
-\export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
-## do not include critical or annoying commands in history
-\export HISTORY_IGNORE="(*:*|*--force*|*cd*|*chmod*|*chown*|*clear*|*dd*|*delete*|*exit*|*fd*|*find*|*for*|*fscopy*|*halt*|*hdparm*|*kill*|*mkfs*|*ll*|*lpr*|*ls*|*mv*|*perl-rename*|*poweroff*|*pwd*|*reboot*|*rename*|*remove*|*rm*|*sed*|*shred*|*shutdown*|*sudo*|*suspend*|*touch*|*while*)"
-## use "ccache" via "distcc". see also "/etc/conf.d/distccd", "/etc/distcc/hosts", "/etc/env.d/03distcc_ccache" and "/etc/portage/make.conf"
-\export PATH="/usr/lib/ccache/bin:${PATH}"
-\export CCACHE_DIR="/var/tmp/work/ccache"
-\export DISTCC_DIR="/var/tmp/work/distcc"
-## mimic bash's cursor movement for paths
-### original string: *?_-.[]~=/&;!#$%^(){}<>
-\export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
-## always use the best compression method of "xz"
-\export XZ_OPT="-9"
-## workaround for "tmux" to create proper conditionals
-\export EUID="${EUID}"
-## set default parameters for "progress"
-\export PROGRESS_ARGS="--wait-delay='2.0' --monitor-continuously"
-## always activate anti-aliasing for "java" apps
-\export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings='lcd'"
-## always run "fsck" in parllel. it just needs to be set, no values required.
-\export FSCK_FORCE_ALL_PARALLEL=""
-## set menu background colour for linux kernel
-\export MENUCONFIG_COLOR="blackbg"
-## set userconfig for "npm"
-\export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
 
 # output when opening shell
 ## list who is logged in
