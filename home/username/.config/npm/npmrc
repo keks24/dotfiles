@@ -16,5 +16,6 @@
 
 package-lock="false"
 prefix="${HOME}/.local"
-cache="${HOME}/.cache/npm"
-userconfig="${HOME}/.config/npm/npmrc"
+cache="${XDG_CACHE_HOME}/npm"
+logs-dir="${XDG_STATE_HOME}/npm/_logs"
+userconfig="${XDG_CONFIG_HOME}/npm/npmrc"

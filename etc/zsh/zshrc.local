@@ -1864,6 +1864,8 @@ fi
 \export FSCK_FORCE_ALL_PARALLEL=""
 ## set menu background colour for linux kernel
 \export MENUCONFIG_COLOR="blackbg"
+## set userconfig for "npm"
+\export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
 
 # output when opening shell
 ## list who is logged in
