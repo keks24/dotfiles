@@ -1580,16 +1580,29 @@ fi
 \bindkey "^P" up-line-or-search
 
 # export
-## set default text editor
+## xdg directories
+### location for x config directory
+\export XDG_CONFIG_HOME="${HOME}/.config"
+### location for x cache directory
+\export XDG_CACHE_HOME="${HOME}/.cache"
+### location for x state directory
+\export XDG_STATE_HOME="${HOME}/.local/state"
+## zsh
+### do not include certain commands in history
+\export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+### do not include critical or annoying commands in history
+\export HISTORY_IGNORE="(*:*|*--force*|*cd*|*chmod*|*chown*|*clear*|*dd*|*delete*|*exit*|*fd*|*find*|*for*|*fscopy*|*halt*|*hdparm*|*kill*|*mkfs*|*ll*|*lpr*|*ls*|*mv*|*perl-rename*|*poweroff*|*pwd*|*reboot*|*rename*|*remove*|*rm*|*sed*|*shred*|*shutdown*|*sudo*|*suspend*|*touch*|*while*)"
+### mimic bash's cursor movement for paths
+#### original string: *?_-.[]~=/&;!#$%^(){}<>
+\export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
+### workaround for "tmux" to create proper conditionals
+\export EUID="${EUID}"
+## nvim
+### set default text editor
 \export EDITOR="nvim"
 \export VISUAL="nvim"
-## location for x config directory
-\export XDG_CONFIG_HOME="${HOME}/.config"
-## location for x cache directory
-\export XDG_CACHE_HOME="${HOME}/.cache"
-## location for x state directory
-\export XDG_STATE_HOME="${HOME}/.local/state"
-## set colours for hard and orphaned symlinks
+## ls
+### set colours for hard and orphaned symlinks
 \export LS_COLORS="mh=44;37:or=40;31;01"
 ## less
 ### general settings
@@ -1598,30 +1611,28 @@ fi
 \export LESSOPEN="| lesspipe.sh %s"
 ### do not save search entries at "~/.lesshst"
 \export LESSHISTFILE="/dev/null"
-## do not include certain commands in history
-\export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
-## do not include critical or annoying commands in history
-\export HISTORY_IGNORE="(*:*|*--force*|*cd*|*chmod*|*chown*|*clear*|*dd*|*delete*|*exit*|*fd*|*find*|*for*|*fscopy*|*halt*|*hdparm*|*kill*|*mkfs*|*ll*|*lpr*|*ls*|*mv*|*perl-rename*|*poweroff*|*pwd*|*reboot*|*rename*|*remove*|*rm*|*sed*|*shred*|*shutdown*|*sudo*|*suspend*|*touch*|*while*)"
+## ccache, distcc
 ## use "ccache" via "distcc". see also "/etc/conf.d/distccd", "/etc/distcc/hosts", "/etc/env.d/03distcc_ccache" and "/etc/portage/make.conf"
 \export PATH="/usr/lib/ccache/bin:${PATH}"
 \export CCACHE_DIR="/var/tmp/work/ccache"
 \export DISTCC_DIR="/var/tmp/work/distcc"
-## mimic bash's cursor movement for paths
-### original string: *?_-.[]~=/&;!#$%^(){}<>
-\export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
-## always use the best compression method of "xz"
+## xz, pixz
+### always use the best compression method of "xz"
 \export XZ_OPT="-9"
-## workaround for "tmux" to create proper conditionals
-\export EUID="${EUID}"
-## set default parameters for "progress"
+## progress
+### set default parameters for "progress"
 \export PROGRESS_ARGS="--wait-delay='2.0' --monitor-continuously"
-## always activate anti-aliasing for "java" apps
+## openjdk
+### always activate anti-aliasing for "java" apps
 \export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings='lcd'"
-## always run "fsck" in parllel. it just needs to be set, no values required.
+## fsck
+### always run "fsck" in parllel. it just needs to be set, no values required.
 \export FSCK_FORCE_ALL_PARALLEL=""
-## set menu background colour for linux kernel
+## linux kernel (make)
+### set menu background colour for linux kernel
 \export MENUCONFIG_COLOR="blackbg"
-## set userconfig for "npm"
+## npm
+### set userconfig for "npm"
 \export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
 
 # aliases
