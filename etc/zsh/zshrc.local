@@ -1826,8 +1826,12 @@ fi
 ## set default text editor
 \export EDITOR="nvim"
 \export VISUAL="nvim"
-## location for x cache
+## location for x config directory
+\export XDG_CONFIG_HOME="${HOME}/.config"
+## location for x cache directory
 \export XDG_CACHE_HOME="${HOME}/.cache"
+## location for x state directory
+\export XDG_STATE_HOME="${HOME}/.local/state"
 ## set colours for hard and orphaned symlinks
 \export LS_COLORS="mh=44;37:or=40;31;01"
 ## less
