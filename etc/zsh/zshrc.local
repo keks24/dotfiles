@@ -1399,8 +1399,8 @@ thingsIalwaysForget()
     \echo "  Collapsible details:"
     \echo "      <details><summary>Expand</summary><p>"
     \echo ""
-    \echo "          ### Heading"
-    \echo "          Text"
+    \echo "      ### Heading"
+    \echo "      Text"
     \echo "      </details></p>"
 }
 
