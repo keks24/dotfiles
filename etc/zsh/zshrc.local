@@ -735,7 +735,7 @@ getLastUpdate()
     local gentoo_ebuild_timestamp_file="${timestamp_directory}/gentoo_ebuild_timestamp.chk"
     local update_sh_timestamp_file="${timestamp_directory}/update.sh_timestamp.chk"
 
-    if [[ "${verbose_parameter}" == "" ]]
+    if [[ "${verbose_parameter}" != "--verbose" ]]
     then
         # do not show last updates, if lock file is present.
         if [[ -e "${lock_file}" ]]
