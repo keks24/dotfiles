@@ -843,12 +843,13 @@ lsig()
 		 1: SIGHUP          P1990       Term        Hangup detected on controlling terminal or death of controlling process
 		 2: SIGINT          P1990       Term        Interrupt from keyboard
 		 3: SIGQUIT         P1990       Core        Quit from keyboard
-		 4: SIGKILL         P1990       Term        Kill signal
+		 4: SIGILL          P1990       Core        Illegal Instruction
 		 5: SIGTRAP         P2001       Core        Trace/breakpoint trap
 		 6: SIGABRT         P1990       Core        Abort signal from abort(3)
+		 6: SIGIOT            -         Core        IOT trap. A synonym for SIGABRT
 		 7: SIGBUS          P2001       Core        Bus error (bad memory access)
-		 8: SIGFPE          P1990       Core        Floating-point exception
-		 9: SIGKILL         P1990       Core        Illegal Instruction
+		 8: SIGFPE          P1990       Core        Erroneous arithmetic operation
+		 9: SIGKILL         P1990       Term        Kill signal (cannot be caught, blocked or ignored)
 		10: SIGUSR1         P1990       Term        User-defined signal 1
 		11: SIGSEGV         P1990       Core        Invalid memory reference
 		12: SIGUSR2         P1990       Term        User-defined signal 2
@@ -856,54 +857,60 @@ lsig()
 		14: SIGALRM         P1990       Term        Timer signal from alarm(2)
 		15: SIGTERM         P1990       Term        Termination signal
 		16: SIGSTKFLT         -         Term        Stack fault on coprocessor (unused)
-		17: SIGCHLD         P1990       Ign         Child stopped or terminated
+		17: SIGCHLD         P2001       Ign         Child stopped, terminated or continued
+		17: SIGCLD            -         Ign         A synonym for SIGCHLD
 		18: SIGCONT         P1990       Cont        Continue if stopped
-		19: SIGSTOP         P1990       Stop        Stop process
+		19: SIGSTOP         P1990       Stop        Stop process (cannot be caught, blocked or ignored)
 		20: SIGTSTP         P1990       Stop        Stop typed at terminal
 		21: SIGTTIN         P1990       Stop        Terminal input for background process
 		22: SIGTTOU         P1990       Stop        Terminal output for background process
 		23: SIGURG          P2001       Ign         Urgent condition on socket (4.2BSD)
-		24: SIGXCPU         P2001       Core        CPU time limit exceeded (4.2BSD); see strlimit(2)
-		25: SIGXFSZ         P2001       Core        File size limit exceeded (4.2BSD); see strlimit(2)
+		24: SIGXCPU         P2001       Core        CPU time limit exceeded (4.2BSD); see setrlimit(2)
+		25: SIGXFSZ         P2001       Core        File size limit exceeded (4.2BSD); see setrlimit(2)
 		26: SIGVTALRM       P2001       Term        Virtual alarm clock (4.2BSD)
 		27: SIGPROF         P2001       Term        Profiling timer expired
-		28: SIGWINCH          -         Ign         Window resize signal (4.3BSD, Sun)
+		28: SIGWINCH        P2024       Ign         Window resize signal (4.3BSD, Sun)
 		29: SIGIO             -         Term        I/O now possible (4.2BSD)
+		29: SIGPOLL         P2001       Term        Pollable event (Sys V); synonym for SIGIO
 		30: SIGPWR            -         Term        Power failure (System V)
+		30: SIGINFO           -                     A synonym for SIGPWR
 		31: SIGSYS          P2001       Core        Bad system call (SVr4); see also seccomp(2)
-		32: Not defined       -          -          -
-		33: Not defined       -          -          -
-		34: SIGRTMIN        P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		35: SIGRTMIN+1      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		36: SIGRTMIN+2      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		37: SIGRTMIN+3      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		38: SIGRTMIN+4      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		39: SIGRTMIN+5      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		40: SIGRTMIN+6      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		41: SIGRTMIN+7      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		42: SIGRTMIN+8      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		43: SIGRTMIN+9      P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		44: SIGRTMIN+10     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		45: SIGRTMIN+11     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		46: SIGRTMIN+12     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		47: SIGRTMIN+13     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		48: SIGRTMIN+14     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		49: SIGRTMIN+15     P2001       (Term)      Real-time signal min; should not exceet SIGRTMAX
-		50: SIGRTMAX-14     P2001       (Term)      Real-time signal max
-		51: SIGRTMAX-13     P2001       (Term)      Real-time signal max
-		52: SIGRTMAX-12     P2001       (Term)      Real-time signal max
-		53: SIGRTMAX-11     P2001       (Term)      Real-time signal max
-		54: SIGRTMAX-10     P2001       (Term)      Real-time signal max
-		55: SIGRTMAX-9      P2001       (Term)      Real-time signal max
-		56: SIGRTMAX-8      P2001       (Term)      Real-time signal max
-		57: SIGRTMAX-7      P2001       (Term)      Real-time signal max
-		58: SIGRTMAX-6      P2001       (Term)      Real-time signal max
-		59: SIGRTMAX-5      P2001       (Term)      Real-time signal max
-		60: SIGRTMAX-4      P2001       (Term)      Real-time signal max
-		61: SIGRTMAX-3      P2001       (Term)      Real-time signal max
-		62: SIGRTMAX-2      P2001       (Term)      Real-time signal max
-		63: SIGRTMAX-1      P2001       (Term)      Real-time signal max
+		31: SIGUNUSED         -         Core        Synonymous with SIGSYS
+		32: Reserved          -           -         Reserved for "glibc" (threading implementation "NPTL")
+		33: Reserved          -           -         Reserved for "glibc" (threading implementation "NPTL")
+		34: SIGRTMIN        P2001       (Term)      Real-time signal min; should not exceed SIGRTMAX
+		35: SIGRTMIN+1      P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		36: SIGRTMIN+2      P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		37: SIGRTMIN+3      P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		38: SIGRTMIN+4      P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		39: SIGRTMIN+5      P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		40: SIGRTMIN+6      P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		41: SIGRTMIN+7      P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		42: SIGRTMIN+8      P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		43: SIGRTMIN+9      P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		44: SIGRTMIN+10     P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		45: SIGRTMIN+11     P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		46: SIGRTMIN+12     P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		47: SIGRTMIN+13     P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		48: SIGRTMIN+14     P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		49: SIGRTMIN+15     P2001       (Term)      Real-time signal; should not exceed SIGRTMAX
+		50: SIGRTMAX-14     P2001       (Term)      Real-time signal
+		51: SIGRTMAX-13     P2001       (Term)      Real-time signal
+		52: SIGRTMAX-12     P2001       (Term)      Real-time signal
+		53: SIGRTMAX-11     P2001       (Term)      Real-time signal
+		54: SIGRTMAX-10     P2001       (Term)      Real-time signal
+		55: SIGRTMAX-9      P2001       (Term)      Real-time signal
+		56: SIGRTMAX-8      P2001       (Term)      Real-time signal
+		57: SIGRTMAX-7      P2001       (Term)      Real-time signal
+		58: SIGRTMAX-6      P2001       (Term)      Real-time signal
+		59: SIGRTMAX-5      P2001       (Term)      Real-time signal
+		60: SIGRTMAX-4      P2001       (Term)      Real-time signal
+		61: SIGRTMAX-3      P2001       (Term)      Real-time signal
+		62: SIGRTMAX-2      P2001       (Term)      Real-time signal
+		63: SIGRTMAX-1      P2001       (Term)      Real-time signal
 		64: SIGRTMAX        P2001       (Term)      Real-time signal max
+		 -: SIGEMT            -         Term        Emulator trap (unused)
+		 -: SIGLOST           -         Term        File lock lost (unused)
 		
 		The signals SIGKILL and SIGSTOP cannot be caught, blocked, or ignored.
 		
