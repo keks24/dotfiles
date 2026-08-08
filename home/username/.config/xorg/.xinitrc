@@ -1,5 +1,6 @@
+#!/bin/sh
 ############################################################################
-# Copyright 2026 Ramon Fischer                                             #
+# Copyright 2020-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -14,32 +15,24 @@
 # limitations under the License.                                           #
 ############################################################################
 
-# /etc/skel/.bashrc
+home_directory="/home/$(id --user --name)"
+xprofile_file="${home_directory}/.config/xorg/.xprofile"
+log_directory="${home_directory}/.local/var/log/awesome"
+log_stdout_file="${log_directory}/awesome.log"
+log_stderr_file="${log_directory}/awesome.err"
 
-# This file is sourced by all *interactive* bash shells on startup,
-# including some apparently interactive shells such as scp and rcp
-# that can't tolerate any output.  So make sure this doesn't display
-# anything or bad things will happen !
+if [[ "${DBUS_SESSION_BUS_ADDRESS}" == "" ]]
+then
+    if [[ -f "${xprofile_file}" ]]
+    then
+        . "${xprofile_file}"
+    else
+        echo "(WW) Could not source file: '${xprofile_file}' or is not a file." >&2
+    fi
 
-## exports
-### bash
-export HISTFILE="${HOME}/.config/bash/.bash_history"
+    export XDG_CURRENT_DESKTOP="awesome"
+    export XDG_SESSION_TYPE="x11"
 
-## aliases
-alias vi="nvim"
-alias la="ls -a"
-alias ll="ls -l"
-
-## source
-### autojump
-source "/usr/share/autojump/autojump.bash"
-
-# Test for an interactive shell.  There is no need to set anything
-# past this point for scp and rcp, and it's important to refrain from
-# outputting anything in those cases.
-if [[ $- != *i* ]] ; then
-    # Shell is non-interactive. Be done now!
-    return
+    # the following part somehow gets expanded to "0xc00005". using "eval" here will cause the error "command not found", but "x" will be started anyways.
+    exec dbus-launch --sh-syntax --exit-with-session awesome >> "${log_stdout_file}" 2>> "${log_stderr_file}"
 fi
-
-# Put your fun stuff here.

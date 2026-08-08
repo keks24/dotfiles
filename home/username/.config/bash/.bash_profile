@@ -14,32 +14,11 @@
 # limitations under the License.                                           #
 ############################################################################
 
-# /etc/skel/.bashrc
+# /etc/skel/.bash_profile
 
-# This file is sourced by all *interactive* bash shells on startup,
-# including some apparently interactive shells such as scp and rcp
-# that can't tolerate any output.  So make sure this doesn't display
-# anything or bad things will happen !
-
-## exports
-### bash
-export HISTFILE="${HOME}/.config/bash/.bash_history"
-
-## aliases
-alias vi="nvim"
-alias la="ls -a"
-alias ll="ls -l"
-
-## source
-### autojump
-source "/usr/share/autojump/autojump.bash"
-
-# Test for an interactive shell.  There is no need to set anything
-# past this point for scp and rcp, and it's important to refrain from
-# outputting anything in those cases.
-if [[ $- != *i* ]] ; then
-    # Shell is non-interactive. Be done now!
-    return
+# This file is sourced by bash for login shells.  The following line
+# runs your .bashrc and is recommended by the bash info pages.
+if [[ -f ~/.bashrc ]]
+then
+    . "${XDG_CONFIG_HOME}/bash/.bashrc"
 fi
-
-# Put your fun stuff here.
