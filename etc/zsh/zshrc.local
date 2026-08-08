@@ -194,12 +194,12 @@ cdl()
                 \cd -- "${resolved_path_file}"
             fi
         else
-            echo -e "\e[01;31mThe file: '${symlink_file}' does not exist or the symlink is broken.\e[0m" >&2
-            return 1
+            \echo -e "\e[01;31mThe file: '${symlink_file}' does not exist or the symlink is broken.\e[0m" >&2
+            \return 1
         fi
     else
-        echo -e "\e[01;31mOnly one argument is required/allowed!\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mOnly one argument is required/allowed!\e[0m" >&2
+        \return 1
     fi
 }
 
@@ -823,14 +823,14 @@ lll()
                 ls_output=$(\ls -ld -- "${resolved_path}")
             fi
 
-            echo "${ls_output} <- ${symlink_file}"
+            \echo "${ls_output} <- ${symlink_file}"
         else
-            echo -e "\e[01;31mThe file: '${symlink_file}' does not exist or the symlink is broken.\e[0m" >&2
-            return 1
+            \echo -e "\e[01;31mThe file: '${symlink_file}' does not exist or the symlink is broken.\e[0m" >&2
+            \return 1
         fi
     else
-        echo -e "\e[01;31mOnly one argument is required/allowed!\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mOnly one argument is required/allowed!\e[0m" >&2
+        \return 1
     fi
 }
 
@@ -978,7 +978,7 @@ fpid()
             process_id="${process}"
             if [[ ! -d "/proc/${process_id}/" ]]
             then
-                print -P "\e[01;33m${date_time_format}: Could not find process ID: '${process_id}'. Skipping...\e[0m\n" >&2
+                \print -P "\e[01;33m${date_time_format}: Could not find process ID: '${process_id}'. Skipping...\e[0m\n" >&2
                 \continue
             fi
 
@@ -995,7 +995,7 @@ fpid()
             # get first process id from process name
             if ! process_id_array=($(\pgrep "${process_name}"))
             then
-                print -P "\e[01;33m${date_time_format}: Could not find process name: '${process_name}'. Skipping...\e[0m\n" >&2
+                \print -P "\e[01;33m${date_time_format}: Could not find process name: '${process_name}'. Skipping...\e[0m\n" >&2
                 \continue
             fi
             # "zsh"'s array index starts at "1"
@@ -1012,24 +1012,24 @@ fpid()
         fi
     done
 
-    print -P "\e[01;34m${date_time_format}: Waiting for the following processes to exit:\e[0m"
+    \print -P "\e[01;34m${date_time_format}: Waiting for the following processes to exit:\e[0m"
     process_name=
     process_id=
     for process_name process_id in "${(@kv)process_name_id_array[@]}"
     do
         # remove trailing comma here
-        print -P "\e[01;35m${date_time_format}: ${process_name}: \e[01;37m${process_id%,}\e[0m"
+        \print -P "\e[01;35m${date_time_format}: ${process_name}: \e[01;37m${process_id%,}\e[0m"
     done
 
     if [[ "${(@z)tail_pid_parameter% }" == "" ]]
     then
-        print -P "\e[01;31m${date_time_format}: Tail PID parameter array is empty. Exiting...\e[0m\n" >&2
+        \print -P "\e[01;31m${date_time_format}: Tail PID parameter array is empty. Exiting...\e[0m\n" >&2
         \return 1
     fi
     # delimit the pid parameters via space character and remove the
     # trailing space character
     \tail --follow="descriptor" "/dev/null" "${(@z)tail_pid_parameter% }"
-    print -P "\e[01;33m${date_time_format}: Above processes exited...\e[0m" >&2
+    \print -P "\e[01;33m${date_time_format}: Above processes exited...\e[0m" >&2
 
     \return 0
 }
@@ -1420,59 +1420,59 @@ udevadm_debug()
     # sanity check
     if [[ ! -e "${device_path}" ]]
     then
-        echo -e "\e[01;31mThe device: '${device_path}' does not exist!\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mThe device: '${device_path}' does not exist!\e[0m" >&2
+        \return 1
     elif [[ "${device_path}" != "/dev/"* && "${device_path}" != "/sys/"* ]]
     then
-        echo -e "\e[01;31mThe device's origin: '${device_path}' is not from 'devtmpfs' ('/dev/') or 'sysfs' ('/sys/').\e[0m" >&2
-        return 1
+        \echo -e "\e[01;31mThe device's origin: '${device_path}' is not from 'devtmpfs' ('/dev/') or 'sysfs' ('/sys/').\e[0m" >&2
+        \return 1
     fi
 
-    echo -e "\e[01;34mSimulated udev event run:\e[0m"
+    \echo -e "\e[01;34mSimulated udev event run:\e[0m"
     \udevadm test "${device_path}"
 
-    echo -e "\n\e[01;34mAll sysfs properties to device (bottom-top):\e[0m"
+    \echo -e "\n\e[01;34mAll sysfs properties to device (bottom-top):\e[0m"
     \udevadm info --attribute-walk --no-pager --name="${device_path}"
 
-    echo -e "\n\e[01;34mAll sysfs properties to device as tree (top-bottom):\e[0m"
+    \echo -e "\n\e[01;34mAll sysfs properties to device as tree (top-bottom):\e[0m"
     \udevadm info --tree --no-pager --name="${device_path}"
 
-    echo -e "\n\e[01;34mDevice short information:\e[0m"
+    \echo -e "\n\e[01;34mDevice short information:\e[0m"
     \udevadm info --query="all" --no-pager --name="${device_path}"
 
-    echo -e "\e[01;34mLegend:\e[0m"
-    echo -e "┌────────┬─────────────────────────────────────────┐"
-    echo -e "│ \e[01;31mPrefix\e[0m │ \e[01;31mMeaning\e[0m                                 │"
-    echo -e "├────────┼─────────────────────────────────────────┤"
-    echo -e '│ "P:"   │ Device path in /sys/                    │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "M:"   │ Device name in /sys/ (i.e. the last     │'
-    echo -e '│        │ component of "P:")                      │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "R:"   │ Device number in /sys/ (i.e. the        │'
-    echo -e '│        │ numeric suffix of the last component of │'
-    echo -e '│        │ "P:")                                   │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "U:"   │ Kernel subsystem                        │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "T:"   │ Kernel device type within subsystem     │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "D:"   │ Kernel device node major/minor          │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "I:"   │ Network interface index                 │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "N:"   │ Kernel device node name                 │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "L:"   │ Device node symlink priority            │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "S:"   │ Device node symlink                     │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "Q:"   │ Block device sequence number (DISKSEQ)  │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "V:"   │ Attached driver                         │'
-    echo -e '├────────┼─────────────────────────────────────────┤'
-    echo -e '│ "E:"   │ Device property                         │'
-    echo -e '└────────┴─────────────────────────────────────────┘'
+    \echo -e "\e[01;34mLegend:\e[0m"
+    \echo -e "┌────────┬─────────────────────────────────────────┐"
+    \echo -e "│ \e[01;31mPrefix\e[0m │ \e[01;31mMeaning\e[0m                                 │"
+    \echo -e "├────────┼─────────────────────────────────────────┤"
+    \echo -e '│ "P:"   │ Device path in /sys/                    │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "M:"   │ Device name in /sys/ (i.e. the last     │'
+    \echo -e '│        │ component of "P:")                      │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "R:"   │ Device number in /sys/ (i.e. the        │'
+    \echo -e '│        │ numeric suffix of the last component of │'
+    \echo -e '│        │ "P:")                                   │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "U:"   │ Kernel subsystem                        │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "T:"   │ Kernel device type within subsystem     │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "D:"   │ Kernel device node major/minor          │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "I:"   │ Network interface index                 │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "N:"   │ Kernel device node name                 │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "L:"   │ Device node symlink priority            │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "S:"   │ Device node symlink                     │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "Q:"   │ Block device sequence number (DISKSEQ)  │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "V:"   │ Attached driver                         │'
+    \echo -e '├────────┼─────────────────────────────────────────┤'
+    \echo -e '│ "E:"   │ Device property                         │'
+    \echo -e '└────────┴─────────────────────────────────────────┘'
 }
 
 ## get current wan ip address
@@ -1704,7 +1704,7 @@ then
                         -device='/dev/sr0'"
 else
     # the package "app-cdr/cdrtools" is broken, even with correct read-write permissions for "/dev/sr0"!
-    \alias cdda2wav="sudo cdda2wav \
+    \alias cdda2wav="\sudo cdda2wav \
                         -verbose-level='all' \
                         -cddb='0'  \
                         -speed='1'  \
@@ -1729,8 +1729,8 @@ fi
 \alias fping="fping --generate --rdns"
 \alias growisofs="growisofs -speed='1'"
 \alias grep="grep --color='auto'"
-\alias go-mtpfs="echo -e '\e[01;31mRemember to use \"rsync --inplace\", when copying to the Android device!\e[0m' && go-mtpfs -usb-timeout='15000'"
-\alias halt="echo 'Are you sure? Please run: /sbin/halt'"
+\alias go-mtpfs="\echo -e '\e[01;31mRemember to use \"rsync --inplace\", when copying to the Android device!\e[0m' && go-mtpfs -usb-timeout='15000'"
+\alias halt="\echo 'Are you sure? Please run: /sbin/halt'"
 \alias htop="btop"
 \alias hexdump="hexdump --canonical"
 \alias history="history -i"
@@ -1739,22 +1739,22 @@ fi
 \alias l="ls -vC --classify"
 \alias la="ls -v --all"
 \alias lbzip2"lbzp2 --best"
-\alias listaliases="echo '${(k)aliases// /\n}'"
-\alias listcm="echo -e '\e[01;34mContents of \"\e[01;37m${HOME}/.ssh/cm\e[0m\e[01;34m\":\e[0m' && ls -ltr '${HOME}/.ssh/cm'"
-\alias listfunctions="echo '${(k)functions// /\n}'"
-\alias listgroups="gawk \
+\alias listaliases="\echo '${(k)aliases// /\n}'"
+\alias listcm="\echo -e '\e[01;34mContents of \"\e[01;37m${HOME}/.ssh/cm\e[0m\e[01;34m\":\e[0m' && ls -ltr '${HOME}/.ssh/cm'"
+\alias listfunctions="\echo '${(k)functions// /\n}'"
+\alias listgroups="\gawk \
                     --field-separator ':' \
                     '{
                         printf \"Group name: %-20s GID: %-10s Members: %-10s\n\", \$1, \$3, \$4;
                      }' '/etc/group' \
-                        | sort --numeric-sort --key='5'"
-\alias listusers="gawk \
+                        | \sort --numeric-sort --key='5'"
+\alias listusers="\gawk \
                     --field-separator ':' \
                     '{
                         printf \"Username: %-23s UID: %-10s GID: %-10s Shell: %-36s GECOS: %s\n\", \$1, \$3, \$4, \$7, \$5;
                      }' '/etc/passwd' \
-                        | sort --numeric-sort --key='4'"
-\alias listvariables="echo '${(k)parameters// /\n}'"
+                        | \sort --numeric-sort --key='4'"
+\alias listvariables="\echo '${(k)parameters// /\n}'"
 \alias ll="ls -vl"
 \alias ln="ln --verbose"
 \alias locate="locate --ignore-case"
@@ -1783,12 +1783,12 @@ fi
                     --announce='udp://tracker.lelux.fi:6969/announce'"
 \alias ncdu="ncdu --color='dark' --confirm-quit --exclude-kernfs"
 \alias nload="nload -u K"
-\alias path="echo ${PATH//:/'\n'}"
+\alias path="\echo ${PATH//:/'\n'}"
 \alias pcregrep="pcregrep --color='auto'"
 \alias pigz="pigz --best"
 \alias pixz="pixz -9"
 \alias plzip="plzip --best"
-\alias poweroff="echo 'Are you sure? Please run: /sbin/poweroff'"
+\alias poweroff="\echo 'Are you sure? Please run: /sbin/poweroff'"
 \alias progress="progress --quiet --wait-delay='2'"
 \alias radeontop="radeontop --color"
 \alias rdesktop="rdesktop \
@@ -1799,7 +1799,7 @@ fi
                     -l \
                     -r sound:off \
                     -k '/usr/share/rdesktop/keymaps/de'"
-\alias reboot="echo 'Are you sure? Please run: /sbin/reboot'"
+\alias reboot="\echo 'Are you sure? Please run: /sbin/reboot'"
 \alias rsync="rsync \
                 --archive \
                 --hard-links \
@@ -1848,7 +1848,7 @@ fi
                         -i default \
                         -codec:a aac \
                         '$(\date +%Y%m%dT%H%M%S%z)_webcam_record.mkv'"
-\alias shutdown="echo 'Are you sure? Please run: /sbin/shutdown'"
+\alias shutdown="\echo 'Are you sure? Please run: /sbin/shutdown'"
 \alias shred="shred --verbose --random-source='/dev/urandom' --zero"
 \alias sort="sort --parallel='$(\nproc --all)'"
 \alias tree="LS_COLORS='' tree -FC"
@@ -1859,7 +1859,7 @@ fi
 \alias watch_emerge="watch 'qlop --running --time --verbose'"
 \alias wdiff="wdiff --start-delete=$'\e[31m' --end-delete=$'\e[0m' --start-insert=$'\e[32m' --end-insert=$'\e[0m'"
 \alias wget="wget --hsts-file='/dev/null'"
-\alias xargs="xargs --no-run-if-empty --max-procs=$(\nproc --all) --max-args='1'"
+\alias xargs="xargs --no-run-if-empty --max-procs='$(\nproc --all)' --max-args='1'"
 \alias xfreerdp="xfreerdp \
                     /u: \
                     /p: \
@@ -1880,16 +1880,16 @@ fi
 \alias zstdmt="zstdmt --ultra -22 --rm --verbose"
 if [[ "${EUID}" == "0" ]]
 then
-    \alias joplin="echo -e \"\e[01;31m'joplin' should not be executed with root privileges!\e[0m\""
-    \alias pip="echo -e \"\e[01;31m'pip' should not be executed with root privileges!\e[0m\""
-    \alias zathura="echo -e \"\e[01;31m'zathura' should not be executed with root privileges!\e[0m\""
+    \alias joplin="\echo -e \"\e[01;31m'joplin' should not be executed with root privileges!\e[0m\""
+    \alias pip="\echo -e \"\e[01;31m'pip' should not be executed with root privileges!\e[0m\""
+    \alias zathura="\echo -e \"\e[01;31m'zathura' should not be executed with root privileges!\e[0m\""
 fi
 
 # output when opening shell
 ## list who is logged in
 \who --users
 ## list tmux sessions
-if pgrep --euid "${USER}" "tmux" >/dev/null
+if \pgrep --euid "${USER}" "tmux" >/dev/null
 then
     \tmux ls
 fi
