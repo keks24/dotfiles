@@ -1,6 +1,6 @@
 #!/bin/bash
 ############################################################################
-# Copyright 2022-2025 Ramon Fischer                                        #
+# Copyright 2022-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -61,7 +61,7 @@ do
         -b:a 128k \
         -ar:a 44100 \
         -filter:a "volume=1.2" \
-        "${podcast_audio_file//\.${podcast_audio_format}/.${ffmpeg_output_audio_format}}"
+        "${podcast_audio_file//.${podcast_audio_format}/.${ffmpeg_output_audio_format}}"
 
     /bin/rm --force --verbose "${podcast_audio_file}"
 done

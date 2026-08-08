@@ -60,7 +60,7 @@
 #    fi
 #
 #    local headline="From '${ZSH_NOTES_FILE}':"
-#    local underline="${headline//[a-zA-Z0-9\/\.:\' ]/-}"
+#    local underline="${headline//[a-zA-Z0-9\/.:' ]/-}"
 #
 #    outputSubheadline()
 #    {

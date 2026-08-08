@@ -1,5 +1,5 @@
 ############################################################################
-# Copyright 2022-2025 Ramon Fischer                                        #
+# Copyright 2022-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -16,9 +16,9 @@
 
 # curly braces are already escaped with single quotes!
 # shell ("sh") variables must be escaped with double quotes, otherwise they are not expanded before execution!
-# the substitution "${original_file//\.${filename_suffix}/.aac}" is executed on the entire directory path and filename, which is very unprecise!
-# "\.${filename_suffix}$" does not work for some reason.
-# cutting off the suffix via "${original_file%%%%\.*}" does not work as well.
+# the substitution "${original_file//.${filename_suffix}/.aac}" is executed on the entire directory path and filename, which is very unprecise!
+# ".${filename_suffix}$" does not work for some reason.
+# cutting off the suffix via "${original_file%%%%.*}" does not work as well.
 --ignore-errors
 --sponsorblock-remove="all"
 --concurrent-fragments="4"
@@ -28,7 +28,7 @@
 --download-archive="/home/ramon/music/yt-dlp/archive_lists/domian_live_2021_fanclub.list"
 --no-post-overwrites
 --exec="original_file={} && \
-        filename_suffix=\"${original_file##*\.}\" && \
+        filename_suffix=\"${original_file##*.}\" && \
         /usr/bin/ffmpeg \
             -i {} \
             -n \
@@ -36,7 +36,7 @@
             -b:a 128k \
             -ar:a 44100 \
             -filter:a 'volume=1.2,silenceremove=stop_periods=-1:stop_duration=1:stop_threshold=-40dB' \
-            \"${original_file//\.${filename_suffix}/.aac}\"; \
+            \"${original_file//.${filename_suffix}/.aac}\"; \
         /bin/rm --force --verbose \"${original_file}\""
 --output="./%(uploader)s/%(playlist_title|)s/%(title)s [%(id)s][%(format_note)s].%(ext)s"
 "https://www.youtube.com/user/danielskate14"

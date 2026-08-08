@@ -1,6 +1,6 @@
 #!/bin/bash
 ############################################################################
-# Copyright 2021-2025 Ramon Fischer                                        #
+# Copyright 2021-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -122,7 +122,7 @@ main()
                     local espeak_voice_file="${music_file}.${espeak_filename_suffix}"
 
                     echo -e "\n    \e[01;37mGenerating:\tespeak voice file: '${espeak_voice_file}'.\e[0m" >&2
-                    /usr/bin/espeak -s "${espeak_reading_speed}" -b 1 -z -w "${espeak_voice_file}" -- "${music_file/\.${music_filename_suffix}/}"
+                    /usr/bin/espeak -s "${espeak_reading_speed}" -b 1 -z -w "${espeak_voice_file}" -- "${music_file/.${music_filename_suffix}/}"
 
                     echo -e "    \e[01;35mEncoding:\tespeak voice file: '${espeak_voice_file}'\n\t\tto rockbox voice file: '${rockbox_voice_file}'.\e[0m" >&2
                     "/home/ramon/git/external/github.com/rockbox/tools/rbspeexenc" \

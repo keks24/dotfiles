@@ -1,6 +1,6 @@
 #!/bin/bash
 ############################################################################
-# Copyright 2025 Ramon Fischer                                             #
+# Copyright 2025-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -39,7 +39,7 @@ else
             continue
         else
             # cut off ".xz" file suffix
-            pdf_file="${xz_file%\.xz}"
+            pdf_file="${xz_file%.xz}"
             # cut off path to file
             pdf_filename="${pdf_file##*/}"
 

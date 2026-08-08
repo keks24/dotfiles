@@ -1,6 +1,6 @@
 #!/bin/bash
 ############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
+# Copyright 2020-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -107,8 +107,8 @@ do
             --max-procs="${available_processors}" \
             --replace="{}" \
             /bin/bash -c 'repository_directory="{}" && \
-                echo -e "\n\e[01;34m### Updating: ${repository_directory%\.git} ###\e[0m" && \
-                pushd "${repository_directory%\.git}" >/dev/null && \
+                echo -e "\n\e[01;34m### Updating: ${repository_directory%.git} ###\e[0m" && \
+                pushd "${repository_directory%.git}" >/dev/null && \
                 git pull --recurse-submodules --force && \
                 popd >/dev/null'
 done

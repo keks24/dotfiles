@@ -1,6 +1,6 @@
 #!/bin/bash
 ############################################################################
-# Copyright 2022-2025 Ramon Fischer                                        #
+# Copyright 2022-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -57,10 +57,10 @@ calculateChecksums()
     file_list=$(/usr/bin/find "." \
                     -type f \
                     -not \
-                    -name "${checksum_file/\.\//}" \
+                    -name "${checksum_file/.\//}" \
                     -print0)
 
-    xargs \
+    /usr/bin/xargs \
         --null \
         --max-procs="${available_processors}" \
         --max-args="${max_arguments}" \
