@@ -69,11 +69,13 @@ Compile new kernel
     9. Use the new kernel
         $ reboot
 
-   10. Clean up "/lib/modules/"
-
-   11. Clean up "/usr/src/"
-
-   12. Clean up "/boot/"
-
+   10. Clean up "/boot/", "/lib/modules/" and "/usr/src/"
+        $ eclean-kernel \
+            --ask \
+            --num="3" \
+            --sort-order="version" \
+            --bootloader="grub2" \
+            --no-bootloader-update \
+            --no-kernel-install
 Legend:
-- "Clean up" - Keep last three versions ('eclean-kernel --ask --num="3"')
+- "Clean up" - Keep last three versions.
