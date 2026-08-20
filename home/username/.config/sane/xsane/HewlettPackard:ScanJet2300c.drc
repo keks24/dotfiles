@@ -47,7 +47,7 @@
 "calibration-file"
 "/var/lib/saned/.sane/Hewlett_Packard_Scanjet_2300c.cal"
 "expiration-time"
-60
+-1
 "xsane-main-window-x-position"
 1863
 "xsane-main-window-y-position"
