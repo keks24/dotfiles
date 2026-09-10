@@ -1,27 +1,56 @@
 Compile new kernel
     1. Mount "boot" partition:
+
         $ mount "/boot/"
 
-    2. Create a new symlink to the newest kernel source directory; not necessary, if use flag "symlink" is set:
+    2. Clean up old Kernel files in directories "/boot/", "/lib/modules/" and "/usr/src/":
+
+        2.1. List removable Kernel files:
+
+            $ eclean-kernel \
+                --pretend \
+                --num="2" \
+                --sort-order="version" \
+                --bootloader="grub2" \
+                --no-bootloader-update \
+                --no-kernel-install
+
+        2.2. Clean up Kernel files:
+
+            $ eclean-kernel \
+                --ask \
+                --num="2" \
+                --sort-order="version" \
+                --bootloader="grub2" \
+                --no-bootloader-update \
+                --no-kernel-install
+
+    3. Create a new symlink to the newest kernel source directory; not necessary, if use flag "symlink" is set:
+
         $ cd "/usr/src/"
         $ ln --symbolic --force "linux-<new_kernel_version>-gentoo/" "linux"
 
-    3. Copy the configuration file ".config" from the old kernel source directory to the newer one:
+    4. Copy the configuration file ".config" from the old kernel source directory to the newer one:
+
         $ cp "linux-<old_kernel_version>/.config" "linux/.config"
 
-        3.1. Alternative method: Copy the configuration file at runtime:
+        4.1. Alternative method: Copy the configuration file at runtime:
+
             $ zcat "/proc/config.gz" > "linux/.config"
 
-    4. Compile the new kernel
+    5. Compile the new kernel
 
-        4.1. Adapt new kernel settings and automatically adapt their default values:
+        5.1. Adapt new kernel settings and automatically adapt their default values:
+
             $ cd "/usr/src/linux/"
             $ make olddefconfig
 
-            4.1.1. Alternative method: Adapt new kernel settings manually step-by-step:
+            5.1.1. Alternative method: Adapt new kernel settings manually step-by-step:
+
                 $ make oldconfig
 
-        4.2. Compile the kernel and kernel modules:
+        5.2. Compile the kernel and kernel modules:
+
             $ available_processors=$(nproc --all)
             $ system_max_load=$(printf "%.2f" "$(( available_processors * 0.80 ))")
             $ make \
@@ -32,16 +61,20 @@ Compile new kernel
                 --load-average="${system_max_load}" \
                 modules_install
 
-        4.3. Install the kernel and copy it to "/boot/":
+        5.3. Install the kernel and copy it to "/boot/":
+
             $ make install
 
-    5. Update the initramfs for the new kernel:
+    6. Update the initramfs for the new kernel:
+
         $ update_initramfs
 
-        5.1. Copy the initramfs file to "/boot/":
+        6.1. Copy the initramfs file to "/boot/":
+
             $ cp "/usr/src/custom-initramfs-<new_kernel_version>.cpio.gz" "/boot/"
 
-    6. Update the Intel CPU microcode, if necessary:
+    7. Update the Intel CPU microcode, if necessary:
+
         $ emerge --oneshot sys-firmware/intel-microcode
         $ iucode_tool \
             --verbose \
@@ -51,41 +84,29 @@ Compile new kernel
             --write-earlyfw="/boot/early_ucode.cpio" \
             "/lib/firmware/intel-ucode/"
 
-        6.1. Check the current microcode revision and date:
+        7.1. Check the current microcode revision and date:
+
             $ dmesg | grep "microcode"
 
-        6.2. Reload the microcode manually at runtime (dangerous!):
+        7.2. Reload the microcode manually at runtime (dangerous!):
+
             $ echo "1" > "/sys/devices/system/cpu/microcode/reload"
 
-        6.3. Check, if the microcode was updated:
+        7.3. Check, if the microcode was updated:
+
             $ dmesg | grep "microcode"
 
-    7. Update the GRUB configuration:
+    8. Update the GRUB configuration:
+
         $ grub-mkconfig --output="/boot/grub/grub.cfg"
 
-    8. Compile all modules for the new kernel:
+    9. Compile all modules for the new kernel:
+
         $ emerge @module-rebuild
 
-    9. Use the new kernel
+   10. Use the new kernel
+
         $ reboot
 
-   10. List removable Kernel files:
-        $ eclean-kernel \
-            --pretend \
-            --num="3" \
-            --sort-order="version" \
-            --bootloader="grub2" \
-            --no-bootloader-update \
-            --no-kernel-install
-
-   11. Clean up "/boot/", "/lib/modules/" and "/usr/src/":
-        $ eclean-kernel \
-            --ask \
-            --num="3" \
-            --sort-order="version" \
-            --bootloader="grub2" \
-            --no-bootloader-update \
-            --no-kernel-install
-
 Legend:
-- "Clean up" - Keep last three versions.
+- "Clean up" - Keep last three versions. Third version is newest.
