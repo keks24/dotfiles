@@ -24,6 +24,8 @@ Compile new kernel
                 --bootloader="grub2" \
                 --no-bootloader-update \
                 --no-kernel-install
+            $ rm "/boot/custom-initramfs-<old_kernel_version>-gentoo.cpio.gz"
+            $ rm "/usr/src/custom-initramfs-<old_kernel_version>-gentoo.cpio.gz"
 
     3. Create a new symlink to the newest kernel source directory; not necessary, if use flag "symlink" is set:
 
