@@ -48,6 +48,10 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- for custom notfication colours
+local ruled = require("ruled")
+
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -78,6 +82,56 @@ end
 --beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- custom - 20240902T102247+0200 - rfischer: set "beautiful.init(gears.filesystem.get_configuration_dir() " to "themes/zenburn/theme.lua"
 beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/zenburn/theme.lua")
+
+ruled.notification.connect_signal("request::rules", function()
+    ruled.notification.append_rule {
+        rule = { urgency = "low" },
+        properties = {
+            bg = "#9da8cd",
+            fg = "#ffffff"
+        }
+    }
+
+    ruled.notification.append_rule {
+        rule = { urgency = "normal" },
+        properties = {
+            bg = "#3f3f3f",
+            fg = "#ffffff"
+        }
+    }
+
+    ruled.notification.append_rule {
+        rule = { urgency = "ok" },
+        properties = {
+            bg = "#9ab58c",
+            fg = "#ffffff"
+        }
+    }
+
+    ruled.notification.append_rule {
+        rule = { urgency = "critical" },
+        properties = {
+            bg = "#ec8074",
+            fg = "#ffffff"
+        }
+    }
+
+    ruled.notification.append_rule {
+        rule = { urgency = "info" },
+        properties = {
+            bg = "#b7b1ed",
+            fg = "#ffffff"
+        }
+    }
+
+    ruled.notification.append_rule {
+        rule = { urgency = "warn" },
+        properties = {
+            bg = "#e5c384",
+            fg = "#000000"
+        }
+    }
+end)
 
 -- This is used later as the default terminal and editor to run.
 --terminal = "xterm"
