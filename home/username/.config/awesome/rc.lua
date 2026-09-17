@@ -83,11 +83,12 @@ end
 -- custom - 20240902T102247+0200 - rfischer: set "beautiful.init(gears.filesystem.get_configuration_dir() " to "themes/zenburn/theme.lua"
 beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/zenburn/theme.lua")
 
+-- custom notification colours
 ruled.notification.connect_signal("request::rules", function()
     ruled.notification.append_rule {
         rule = { urgency = "low" },
         properties = {
-            bg = "#9da8cd",
+            bg = "#3f3f3f",
             fg = "#ffffff"
         }
     }
@@ -95,7 +96,7 @@ ruled.notification.connect_signal("request::rules", function()
     ruled.notification.append_rule {
         rule = { urgency = "normal" },
         properties = {
-            bg = "#3f3f3f",
+            bg = "#9da8cd",
             fg = "#ffffff"
         }
     }
