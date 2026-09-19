@@ -60,36 +60,26 @@
 #    fi
 #
 #    local headline="From '${ZSH_NOTES_FILE}':"
-#    #[:alnum:]  alphanumeric:                           letters ("a-z", "A-Z") and digits ("0-9")
-#    #[:alpha:]  alphabetic:                             letters ("a-z", "A-Z")
-#    #[:blank:]  horizontal whitespace:                  space, tab
-#    #[:cntrl:]  control characters:                     nul, alert/bell, backspace, tab, newline/line feed,
-#    #                                                   vertical tab, form feed, carriage return, escape
-#    #                                                   and other non-printing control characters
-#    #                                                   NUL   \0     U+0000   null
-#    #                                                   BEL   \a     U+0007   alert / bell
-#    #                                                   BS    \b     U+0008   backspace
-#    #                                                   TAB   \t     U+0009   horizontal tab
-#    #                                                   LF    \n     U+000A   newline / line feed
-#    #                                                   VT    \v     U+000B   vertical tab
-#    #                                                   FF    \f     U+000C   form feed
-#    #                                                   CR    \r     U+000D   carriage return
-#    #                                                   ESC   \e     U+001B   escape
-#    #[:digit:]  decimal digits:                         0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-#    #[:graph:]  visible/printing non-space characters:  letters, digits, punctuation, symbols
-#    #                                                   (printable characters, except space)
-#    #[:lower:]  lowercase letters:                      a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q,
-#    #                                                   r, s, t, u, v, w, x, y, z
-#    #[:print:]  printable characters:                   letters, digits, punctuation, symbols, and space
-#    #                                                   (printable characters, including whitespace space)
-#    #[:punct:]  punctuation characters:                 ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ]
-#    #                                                   ^ _ ` { | } ~
-#    #[:space:]  whitespace characters:                  space, tab, vertical tab, newline/line feed,
-#    #                                                   form feed, carriage return
-#    #[:upper:]  uppercase letters:                      A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q,
-#    #                                                   R, S, T, U, V, W, X, Y, Z
-#    #[:xdigit:] hexadecimal digits:                     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f,
-#    #                                                   A, B, C, D, E, F
+#    # | POSIX      | Description                                                         | ASCII                                     | Shorthand |
+#    # | :--------- | :------------------------------------------------------------------ | :---------------------------------------- | :-------- |
+#    # | [:alnum:]  | alphanumeric characters                                             | [a-zA-Z0-9]                               |           |
+#    # | [:alpha:]  | alphabetic characters                                               | [a-zA-Z]                                  |           |
+#    # | [:ascii:]  | ascii characters                                                    | [\x00-\x7F]                               |           |
+#    # | [:blank:]  | space and tab characters                                            | [ \t]                                     | \h        |
+#    # | [:cntrl:]  | control characters                                                  | [\x00-\x1F\x7F]                           |           |
+#    # | [:digit:]  | digits                                                              | [0-9]                                     | \d        |
+#    # | [:graph:]  | visible characters (anything, except spaces and control characters) | [\x21-\x7E]                               |           |
+#    # | [:lower:]  | lowercase letters                                                   | [a-z]                                     | \l        |
+#    # | [:print:]  | visible characters and spaces (anything, except control characters) | [\x20-\x7E]                               |           |
+#    # | [:punct:]  | punctuation (and symbols)                                           | [!"\#$%&'()*+, \-./:;<=>?@\[ \\\]^_`{|}~] |           |
+#    # | [:space:]  | all whitespace characters, including line breaks                    | [ \t\r\n\v\f]                             | \s        |
+#    # | [:upper:]  | uppercase letters                                                   | [A-Z]                                     | \u        |
+#    # | [:word:]   | word characters (letters, numbers and underscores)                  | [A-Za-z0-9_]                              | \w        |
+#    # | [:xdigit:] | hexadecimal digits                                                  | [A-Fa-f0-9]                               |           |
+#    # sources:
+#    ## https://zsh.sourceforge.io/Doc/Release/Expansion.html#Filename-Generation
+#    ## https://www.regular-expressions.info/posixbrackets.html
+#    ## https://www.ascii-code.com/
 #    local underline="${headline//[[:alnum:][:punct:][:space:]]/-}"
 #
 #    outputSubheadline()
