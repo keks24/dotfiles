@@ -60,7 +60,28 @@
 #    fi
 #
 #    local headline="From '${ZSH_NOTES_FILE}':"
-#    local underline="${headline//[a-zA-Z0-9\/.:' ]/-}"
+#    #[:alnum:] alphanumeric:                            letters ("a-z", "A-Z") and digits ("0-9")
+#    #[:alpha:] alphabetic:                              letters ("a-z", "A-Z")
+#    #[:blank:] horizontal whitespace:                   space, tab
+#    #[:cntrl:] control characters:                      nul, alert/bell, backspace, tab, newline/line feed,
+#    #                                                   vertical tab, form feed, carriage return, escape
+#    #                                                   and other non-printing control characters
+#    #[:digit:] decimal digits:                          0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+#    #[:graph:] visible/printing non-space characters:   letters, digits, punctuation, symbols
+#    #                                                   (printable characters, except space)
+#    #[:lower:] lowercase letters:                       a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q,
+#    #                                                   r, s, t, u, v, w, x, y, z
+#    #[:print:] printable characters:                    letters, digits, punctuation, symbols, and space
+#    #                                                   (printable characters, including whitespace space)
+#    #[:punct:] punctuation characters:                  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ]
+#    #                                                   ^ _ ` { | } ~
+#    #[:space:] whitespace characters:                   space, tab, vertical tab, newline/line feed,
+#    #                                                   form feed, carriage return
+#    #[:upper:]  uppercase letters:                      A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q,
+#    #                                                   R, S, T, U, V, W, X, Y, Z
+#    #[:xdigit:] hexadecimal digits:                     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f,
+#    #                                                   A, B, C, D, E, F
+#    local underline="${headline//[[:alnum:][:punct:][:space:]]/-}"
 #
 #    outputSubheadline()
 #    {
