@@ -66,6 +66,15 @@
 #    #[:cntrl:]  control characters:                     nul, alert/bell, backspace, tab, newline/line feed,
 #    #                                                   vertical tab, form feed, carriage return, escape
 #    #                                                   and other non-printing control characters
+#    #                                                   NUL   \0     U+0000   null
+#    #                                                   BEL   \a     U+0007   alert / bell
+#    #                                                   BS    \b     U+0008   backspace
+#    #                                                   TAB   \t     U+0009   horizontal tab
+#    #                                                   LF    \n     U+000A   newline / line feed
+#    #                                                   VT    \v     U+000B   vertical tab
+#    #                                                   FF    \f     U+000C   form feed
+#    #                                                   CR    \r     U+000D   carriage return
+#    #                                                   ESC   \e     U+001B   escape
 #    #[:digit:]  decimal digits:                         0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 #    #[:graph:]  visible/printing non-space characters:  letters, digits, punctuation, symbols
 #    #                                                   (printable characters, except space)
