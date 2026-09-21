@@ -71,7 +71,7 @@
 #    # | [:graph:]  | visible characters (anything, except spaces and control characters) | [\x21-\x7E]                               |           |
 #    # | [:lower:]  | lowercase letters                                                   | [a-z]                                     | \l        |
 #    # | [:print:]  | visible characters and spaces (anything, except control characters) | [\x20-\x7E]                               |           |
-#    # | [:punct:]  | punctuation (and symbols)                                           | [!"\#$%&'()*+, \-./:;<=>?@\[ \\\]^_`{|}~] |           |
+#    # | [:punct:]  | punctuation (and symbols)                                           | [!"\#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~]   |           |
 #    # | [:space:]  | all whitespace characters, including line breaks                    | [ \t\r\n\v\f]                             | \s        |
 #    # | [:upper:]  | uppercase letters                                                   | [A-Z]                                     | \u        |
 #    # | [:word:]   | word characters (letters, numbers and underscores)                  | [A-Za-z0-9_]                              | \w        |
