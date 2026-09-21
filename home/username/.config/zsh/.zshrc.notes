@@ -66,7 +66,7 @@
 #    # | [:alpha:]  | alphabetic characters                                               | [a-zA-Z]                                  |           |
 #    # | [:ascii:]  | ascii characters                                                    | [\x00-\x7F]                               |           |
 #    # | [:blank:]  | space and tab characters                                            | [ \t]                                     | \h        |
-#    # | [:cntrl:]  | control characters                                                  | [\x00-\x1F\x7F]                           |           |
+#    # | [:cntrl:]  | control characters                                                  | [\x00-\x1F\x7F], e.g. \0, \t, \n, \r, ... |           |
 #    # | [:digit:]  | digits                                                              | [0-9]                                     | \d        |
 #    # | [:graph:]  | visible characters (anything, except spaces and control characters) | [\x21-\x7E]                               |           |
 #    # | [:lower:]  | lowercase letters                                                   | [a-z]                                     | \l        |
