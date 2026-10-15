@@ -15,10 +15,10 @@
 # limitations under the License.                                           #
 ############################################################################
 
-command_list=(find logger rm)
+command_array=(find logger rm)
 checkCommands()
 {
-    for current_command in "${command_list[@]}"
+    for current_command in "${command_array[@]}"
     do
         unalias ${current_command} 2>/dev/null
         if [[ ! $(command -v ${current_command} 2>/dev/null) ]]
@@ -43,8 +43,8 @@ script_directory_path="${0%/*}"
 script_name="${0##*/}"
 IFS=$'\n'
 ## chromium
-declare -a chromium_history_filename_list
-chromium_history_filename_list=("History Provider Cache" "History-journal" "History")
+declare -a chromium_history_filename_array
+chromium_history_filename_array=("History Provider Cache" "History-journal" "History")
 chromium_log_filename_regex="[0-9][0-9][0-9][0-9][0-9][0-9]"
 chromium_log_filename_suffix="log"
 chromium_ldb_filename_regex="[0-9][0-9][0-9][0-9][0-9][0-9]"
@@ -66,9 +66,9 @@ removeRegexFiles()
 removeRegularFiles()
 {
     local path="${1}"
-    local filename_list=("${!2}")
+    local filename_array=("${!2}")
 
-    for filename in ${filename_list[@]}
+    for filename in ${filename_array[@]}
     do
         if [[ -f "${path}/${filename}" ]]
         then
@@ -90,7 +90,7 @@ main()
 {
     writeSystemLogEntry
 
-    removeRegularFiles "${chromium_profile_path}" chromium_history_filename_list[@]
+    removeRegularFiles "${chromium_profile_path}" chromium_history_filename_array[@]
 
     removeRegexFiles "${chromium_profile_path}" "${chromium_log_filename_regex}" "${chromium_log_filename_suffix}"
 

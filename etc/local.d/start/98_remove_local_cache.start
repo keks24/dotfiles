@@ -17,8 +17,8 @@
 
 script_directory_path="${0%/*}"
 script_name="${0##*/}"
-declare -a cache_directory_list
-cache_directory_list=(
+declare -a cache_directory_array
+cache_directory_array=(
                         "/root/.cache"
                         "/root/.local/state/nvim"
                         "/home/ramon/.cache"
@@ -34,7 +34,7 @@ xargs_max_args="10"
     --stderr \
     "${script_directory_path}/${script_name}: executed"
 
-for cache_directory in "${cache_directory_list[@]}"
+for cache_directory in "${cache_directory_array[@]}"
 do
     # "-mindepth 1" will exclude the parent directory
     /usr/bin/find \
