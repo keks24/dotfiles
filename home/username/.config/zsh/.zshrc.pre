@@ -23,7 +23,7 @@
 export GRML_COMP_CACHE_DIR="${HOME}/.cache"
 ### xsane
 #### set default scanner device
-export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:003"
+export SANE_DEFAULT_DEVICE="net:sane.local:genesys:libusb:001:021"
 ### man
 export MANPATH="${MANPATH}:${HOME}/.local/share/man"
 ### gnupg
