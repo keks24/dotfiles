@@ -1783,6 +1783,7 @@ fi
                     --announce='udp://tracker.lelux.fi:6969/announce'"
 \alias ncdu="ncdu --color='dark' --confirm-quit --exclude-kernfs"
 \alias nload="nload -u K"
+\alias patch="patch --verbose"
 \alias path="\echo ${PATH//:/'\n'}"
 \alias pcregrep="pcregrep --color='auto'"
 \alias pigz="pigz --best"
