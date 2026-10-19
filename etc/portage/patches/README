@@ -1,8 +1,8 @@
 Subdirectories within the package name directory are actually not supported;
-symlinks are not supported.
+symbolic links are also not supported.
 
-In order to make subdirectories kind of work, use hardlinks to the package name
-directory.
+In order to make subdirectories kind of work, use hard links to the file in the
+package name directory.
 
 Example:
 
@@ -15,7 +15,7 @@ Example:
             │       └── [1308367 -rw------- portage  portage ]  main.c.patch
             └── [1308367 -rw------- portage  portage ]  main.c.patch
 
-    The patch files "main.c.patch" have the same inode number (hardlink).
+    The patch files "main.c.patch" have the same inode number (hard link).
 
 Every file and directory must have the following permissions, in order to apply
 patches successfully:
