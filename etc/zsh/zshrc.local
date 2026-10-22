@@ -1762,6 +1762,15 @@ fi
 \alias lz4="lz4 --best"
 \alias lzip="lzip --best"
 \alias lzma="lzma --best"
+\alias mirrorselect="mirrorselect \
+                        --https \
+                        --ipv4 \
+                        --region='Europe' \
+                        --servers='10' \
+                        --blocksize='10' \
+                        --deep \
+                        --output \
+                        > './fastest_gentoo_package_mirrors'"
 \alias mkdir="mkdir --parents"
 \alias mktorrent="mktorrent --verbose \
                     --announce='http://tracker.openbittorrent.com:80/announce' \
