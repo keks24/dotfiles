@@ -1691,7 +1691,11 @@ fi
 \alias bzip2="bzip2 --best"
 \alias cal="cal --color='auto' --week --months='3'"
 \alias cdrecord="cdrecord -sao -speed='0' -eject -v"
-\alias cdparanoia="cdparanoia --batch --force-read-speed='1' --abort-on-skip --log-summary='cdparanoia.log'"
+\alias cdparanoia="cdparanoia \
+                    --batch \
+                    --force-read-speed='1' \
+                    --abort-on-skip \
+                    --log-summary='cdparanoia.log'"
 if [[ "${EUID}" == "0" ]]
 then
     \alias cdda2wav="cdda2wav \
@@ -1716,7 +1720,11 @@ fi
 \alias crontab="crontab -i"
 \alias curl="curl --show-error"
 \alias dd="dd bs='1M' conv='fsync' status='progress'"
-\alias diff="diff --side-by-side --suppress-common-lines --color='auto' --palette='rs=0:hd=1:ad=0;32:de=0;31:ln=0;36'"
+\alias diff="diff \
+                --side-by-side \
+                --suppress-common-lines \
+                --color='auto' \
+                --palette='rs=0:hd=1:ad=0;32:de=0;31:ln=0;36'"
 \alias dvdbackup="dvdbackup --progress"
 \alias e2fsck="e2fsck -v"
 \alias e4defrag="e4defrag -v"
@@ -1772,7 +1780,8 @@ fi
                         --output \
                         > './fastest_gentoo_package_mirrors'"
 \alias mkdir="mkdir --parents"
-\alias mktorrent="mktorrent --verbose \
+\alias mktorrent="mktorrent \
+                    --verbose \
                     --announce='http://tracker.openbittorrent.com:80/announce' \
                     --announce='udp://tracker.internetwarriors.net:1337/announce' \
                     --announce='udp://tracker.opentrackr.org:1337/announce' \
@@ -1828,7 +1837,11 @@ fi
                 --tcp-connections='deny' \
                 --upgrade-to-https \
                 --open-url-mode='deny'"
-\alias record_microphone="arecord --interactive --file-type='raw' --vumeter='mono' >/dev/null"
+\alias record_microphone="arecord \
+                            --interactive \
+                            --file-type='raw' \
+                            --vumeter='mono' \
+                            >/dev/null"
 \alias record_screen="ffmpeg \
                         -n \
                         -f x11grab \
@@ -1867,9 +1880,16 @@ fi
 \alias vmstat="vmstat --unit='M' --timestamp --wide 2"
 \alias watch="watch --differences"
 \alias watch_emerge="watch 'qlop --running --time --verbose'"
-\alias wdiff="wdiff --start-delete=$'\e[31m' --end-delete=$'\e[0m' --start-insert=$'\e[32m' --end-insert=$'\e[0m'"
+\alias wdiff="wdiff \
+                --start-delete=$'\e[31m' \
+                --end-delete=$'\e[0m' \
+                --start-insert=$'\e[32m' \
+                --end-insert=$'\e[0m'"
 \alias wget="wget --hsts-file='/dev/null'"
-\alias xargs="xargs --no-run-if-empty --max-procs='$(\nproc --all)' --max-args='1'"
+\alias xargs="xargs \
+                --no-run-if-empty \
+                --max-procs='$(\nproc --all)' \
+                --max-args='1'"
 \alias xfreerdp="xfreerdp \
                     /u: \
                     /p: \
