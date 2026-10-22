@@ -8,6 +8,7 @@
     excludesfile = ~/.config/git/ignore
 [alias]
     callm = commit --all --message
+    cha = check-attr filter --
     cv = commit --verbose
     d = diff --color-words
     dp = checkout --patch
