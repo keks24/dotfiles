@@ -18,12 +18,6 @@
 
 # global
 ## exports
-### graphics card
-export DRI_PRIME="1"
-#### older radeon graphics cards ("radeon", "r600")
-export VDPAU_DRIVER="r600"
-#### newer amd grahics cards ("amdgpu")
-#export VDPAU_DRIVER="radeonsi"
 ### zsh
 #### use the cache directory in "/home/<some_username>/"
 export GRML_COMP_CACHE_DIR="${HOME}/.cache"
