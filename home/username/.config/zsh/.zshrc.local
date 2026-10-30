@@ -33,7 +33,7 @@ firefox_safe()
                                 "${XDG_RUNTIME_DIR:-/tmp}/${function_name}.XXXXXXXXXX"
                          )
 
-    \firefox --safe-mode --profile "${tmp_directory}"
+    \firefox --safe-mode --new-instance --profile "${tmp_directory}"
 
     \rm --force --recursive "${tmp_directory}"
 }
