@@ -30,7 +30,7 @@ firefox_safe()
     local tmp_directory=$(
                             \mktemp \
                                 --directory \
-                                "/tmp/${function_name}.XXXXXXXXXX"
+                                "${XDG_RUNTIME_DIR:-/tmp}/${function_name}.XXXXXXXXXX"
                          )
 
     \firefox --safe-mode --profile "${tmp_directory}"
