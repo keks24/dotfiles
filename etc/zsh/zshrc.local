@@ -1809,6 +1809,11 @@ fi
 \alias plzip="plzip --best"
 \alias poweroff="\echo 'Are you sure? Please run: /sbin/poweroff'"
 \alias progress="progress --quiet --wait-delay='2'"
+\alias qdepends="qdepends --query --quiet --resolve --color"
+\alias qfile="qfile --verbose --color"
+\alias qlist="qlist --verbose"
+\alias qsearch="qsearch --repo --color"
+\alias qsize="qsize --filesystem --sum --color"
 \alias radeontop="radeontop --color"
 \alias rdesktop="rdesktop \
                     -g 1920x1080 \
