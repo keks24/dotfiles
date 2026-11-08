@@ -86,18 +86,6 @@ Compile new kernel
             --write-earlyfw="/boot/early_ucode.cpio" \
             "/lib/firmware/intel-ucode/"
 
-        7.1. Check the current microcode revision and date:
-
-            $ dmesg | grep "microcode"
-
-        7.2. Reload the microcode manually at runtime (dangerous!):
-
-            $ echo "1" > "/sys/devices/system/cpu/microcode/reload"
-
-        7.3. Check, if the microcode was updated:
-
-            $ dmesg | grep "microcode"
-
     8. Update the GRUB configuration:
 
         $ grub-mkconfig --output="/boot/grub/grub.cfg"
