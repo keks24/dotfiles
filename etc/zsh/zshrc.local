@@ -1814,7 +1814,7 @@ fi
 \alias plzip="plzip --best"
 \alias poweroff="\echo 'Are you sure? Please run: /sbin/poweroff'"
 \alias progress="progress --quiet --wait-delay='2'"
-\alias qdepends="qdepends --query --quiet --resolve --color"
+\alias qdepends="qdepends --quiet --query --resolve --color"
 \alias qfile="qfile --verbose --color"
 \alias qlist="qlist --verbose"
 \alias qsearch="qsearch --repo --color"
