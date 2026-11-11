@@ -1732,6 +1732,8 @@ fi
 \alias fallocate="fallocate --verbose"
 \alias fatresize="fatresize --progress"
 \alias fd="fd --hidden --no-ignore --show-errors"
+\alias ffmpeg="ffmpeg -hide_banner"
+\alias ffprobe="ffprobe -hide_banner"
 \alias fgrep="fgrep --color='auto'"
 \alias flac="flac --compression-level-8"
 \alias fping="fping --generate --rdns"
