@@ -1641,6 +1641,9 @@ fi
 ## npm
 ### set userconfig for "npm"
 \export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
+## mtr
+### always show country code ("--ipinfo=2")
+\export MTR_OPTIONS="--ipinfo=2"
 
 # aliases
 \alias aria2c="aria2c \
