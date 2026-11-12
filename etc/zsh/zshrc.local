@@ -1866,10 +1866,11 @@ fi
 # see "functions" above
 #\alias record_screen_select=""
 \alias record_webcam_live="mpv \
+                            --profile='fast' \
+                            --untimed \
                             --demuxer-lavf-format='video4linux2' \
-                            --profile='low-latency' \
-                            --demuxer-lavf-o-set=input_format='mjpeg' \
-                            --untimed 'av://v4l2:/dev/video0'"
+                            --demuxer-lavf-o-set='input_format=mjpeg' \
+                            'av://v4l2:/dev/video0'"
 \alias record_webcam="ffmpeg \
                         -f v4l2 \
                         -framerate 30 \
