@@ -506,12 +506,12 @@ globalkeys = gears.table.join(
     awful.key({ }, "Print", function () awful.util.spawn_with_shell("\
                                             screenshot_file=\"/home/ramon/pictures/screenshots/$(date +%Y%m%dT%H%M%S%z)_screenshot.png\" && \
                                             import -frame -colorspace YPbPr -depth 16 -quality 80 \"${screenshot_file}\" && \
-                                            feh --geometry 800x600 --scale-down \"${screenshot_file}\"") end),
+                                            feh --geometry=\"800x600=\" --scale-down \"${screenshot_file}\"") end),
     --- all displays
     awful.key({ "Shift" }, "Print", function () awful.util.spawn_with_shell("\
                                             screenshot_file=\"/home/ramon/pictures/screenshots/$(date +%Y%m%dT%H%M%S%z)_screenshot.png\" && \
                                             import -frame -window root -colorspace YPbPr -depth 16 -quality 80 \"${screenshot_file}\" && \
-                                            feh --geometry 800x600 --scale-down \"${screenshot_file}\"") end),
+                                            feh --geometry=\"800x600\" --scale-down \"${screenshot_file}\"") end),
     -- custom - 20200630 - rfischer: lock tty and lock screens via "physlock" (ctrl+alt+l)
     awful.key({ "Control", "Mod1" }, "l", function () awful.util.spawn_with_shell("/home/ramon/bin/locker") end)
 
