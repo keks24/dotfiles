@@ -807,3 +807,9 @@ function! ToggleDiff()
     endif
 endfunction
 nnoremap <silent> <f6> :call ToggleDiff()<cr>
+
+" jslint (automatically lint before saving)
+augroup jslint
+    autocmd!
+    autocmd BufWritePost *.js Jslint
+augroup END

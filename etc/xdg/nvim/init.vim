@@ -287,6 +287,9 @@ endif
   if filereadable(expand("~/.config/nvim/nvimrc.local"))
     source ~/.config/nvim/nvimrc.local
   endif
+  if filereadable(expand("~/.config/nvim/jslint/jslint_wrapper_vim.vim"))
+    source ~/.config/nvim/jslint/jslint_wrapper_vim.vim
+  endif
 
 " source user-specific local configuration file
   if filereadable(expand("${HOME}/.vimrc.local"))
