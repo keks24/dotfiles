@@ -204,18 +204,25 @@ set whichwrap+=<,>,h,l
     if version >= 703
         " enable persistent-undo
         set undofile
-        set undodir=~/.config/nvim/tmp/undo//
+        set undolevels=1000
+        set undoreload=10000
+        set undodir=${HOME}/.local/state/nvim/undo//
+        " disable undofiles for certain directories
+        augroup DisableUndoFile
+            autocmd!
+            autocmd BufEnter /dev/shm setlocal noundofile
+        augroup END
     endif
-    set backupdir=~/.config/nvim/tmp/backup//
-    set directory=~/.config/nvim/tmp/swp//
+    set backupdir=${HOME}/.local/state/nvim/backup//
+    set directory=${HOME}/.local/state/nvim/swp//
 
-    " save ".viminfo" in a different directory
+    " save '.viminfo' in a different directory
     "" save/restore global variables ("%")
     "" save marks for last 50 files ("'50")
     "" save registers for last 100 lines ("\"100")
     "" save last 100 command line history entries (":100")
-    "" save above information at "~/.config/nvim/viminfo" ("n~/.config/viminfo")
-    set viminfo=%,'50,\"100,:100,n~/.config/nvim/viminfo
+    "" save above information at '~/.config/nvim/viminfo' ("n~/.config/viminfo")
+    set viminfo=%,'50,\"100,:100,n${HOME}/.config/nvim/viminfo
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => Text, tab and indent related
