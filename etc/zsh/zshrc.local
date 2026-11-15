@@ -834,6 +834,107 @@ lll()
     fi
 }
 
+## list colour palettes (read from bottom to top)
+lcolours()
+{
+    local ansi_256_loop_counter
+    local ansi_256_grid_id
+    local ansi_16_loop_counter
+    local ansi_16_grid_id
+    local ansi_16_grid_id_counter
+
+    # 256-colour palette as grid
+    for ansi_256_loop_counter in {1..3}
+    do
+        for ansi_256_grid_id in {255..0}
+        do
+            if [[ "${ansi_256_loop_counter}" == "1" ]]
+            then
+                # background
+                \printf "\e[48;5;%sm \e[30m%3d \e[0m" "${ansi_256_grid_id}" "${ansi_256_grid_id}"
+            elif [[ "${ansi_256_loop_counter}" == "2" ]]
+            then
+                # foreground, bold
+                \printf "\e[01;38;5;%sm %3d \e[0m" "${ansi_256_grid_id}" "${ansi_256_grid_id}"
+            elif [[ "${ansi_256_loop_counter}" == "3" ]]
+            then
+                # foreground, normal
+                \printf "\e[38;5;%sm %3d \e[0m" "${ansi_256_grid_id}" "${ansi_256_grid_id}"
+            fi
+
+            if (( "${ansi_256_grid_id}" % 16 == 0 ))
+            then
+                \echo ""
+            fi
+        done
+
+        if [[ "${ansi_256_loop_counter}" == "1" ]]
+        then
+            \echo -e '\e[01;34m$ printf "\\e[48;5;%sm %3d \\e[0m" "${ansi_256_grid_id}" "${ansi_256_grid_id}"'
+            \echo -e "\e[01;34mANSI 256-colour palette (Background):\e[0m\n"
+        elif [[ "${ansi_256_loop_counter}" == "2" ]]
+        then
+            \echo -e '\e[01;34m$ printf "\\e[01;38;5;%sm %3d \\e[0m" "${ansi_256_grid_id}" "${ansi_256_grid_id}"'
+            \echo -e "\e[01;34mANSI 256-colour palette (Foreground, bold):\e[0m\n"
+        elif [[ "${ansi_256_loop_counter}" == "3" ]]
+        then
+            \echo -e '\e[01;34m$ printf "\\e[38;5;%sm %3d \\e[0m" "${ansi_256_grid_id}" "${ansi_256_grid_id}"'
+            \echo -e "\e[01;34mANSI 256-colour palette (Foreground, normal):\e[0m\n"
+        fi
+    done
+
+    # 16-colour palette as grid
+    for ansi_16_loop_counter in {1..2}
+    do
+        ansi_16_grid_id_counter="0"
+
+        for ansi_16_grid_id in "97" "96" "95" "94" "93" "92" "91" "90" "39" {37..30}
+        do
+            if [[ "${ansi_16_grid_id}" == "97" ]]
+            then
+                if [[ "${ansi_16_loop_counter}" == "1" ]]
+                then
+                    # foreground, bold
+                    # dirty alignment
+                    \printf "\e[01;%sm %75s%3d \e[0m" "${ansi_16_grid_id}" "" "${ansi_16_grid_id}"
+                elif [[ "${ansi_16_loop_counter}" == "2" ]]
+                then
+                    # foreground, normal
+                    # dirty alignment
+                    \printf "\e[%sm %75s%3d \e[0m" "${ansi_16_grid_id}" "" "${ansi_16_grid_id}"
+                fi
+            else
+                if [[ "${ansi_16_loop_counter}" == "1" ]]
+                then
+                    # foreground, bold
+                    \printf "\e[01;%sm %3d \e[0m" "${ansi_16_grid_id}" "${ansi_16_grid_id}"
+                elif [[ "${ansi_16_loop_counter}" == "2" ]]
+                then
+                    # foreground, normal
+                    \printf "\e[%sm %3d \e[0m" "${ansi_16_grid_id}" "${ansi_16_grid_id}"
+                fi
+            fi
+
+            if (( "${ansi_16_grid_id_counter}" % 16 == 0 ))
+            then
+                \echo ""
+            fi
+
+            (( ansi_16_grid_id_counter++ ))
+        done
+
+        if [[ "${ansi_16_loop_counter}" == "1" ]]
+        then
+            \echo -e '\e[01;34m$ printf "\\e[01;%sm %3d \\e[0m" "${ansi_16_grid_id}" "${ansi_16_grid_id}"'
+            \echo -e "\e[01;34mANSI standard and bright 16-colour palette (Foreground, bold):\e[0m"
+        elif [[ "${ansi_16_loop_counter}" == "2" ]]
+        then
+            \echo -e '\e[01;34m$ printf "\\e[%sm %3d \\e[0m" "${ansi_16_grid_id}" "${ansi_16_grid_id}"'
+            \echo -e "\e[01;34mANSI standard and bright 16-colour palette (Foreground, normal):\e[0m"
+        fi
+    done
+}
+
 ## list all process signals
 lsig()
 {
