@@ -945,19 +945,19 @@ history = 0
 size = 10.0
 
 [font.normal]
-family = "xos4Terminus"
+family = "xos4 Terminus"
 style = "Regular"
 
 [font.bold]
-family = "xos4Terminus"
+family = "xos4 Terminus"
 style = "Bold"
 
 [font.italic]
-family = "xos4Terminus"
+family = "xos4 Terminus"
 style = "Italic"
 
 [font.bold_italic]
-family = "xos4Terminus"
+family = "xos4 Terminus"
 style = "Bold Italic"
 
 [colors]
