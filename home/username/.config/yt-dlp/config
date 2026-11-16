@@ -40,6 +40,6 @@
             -ar:a 44100 \
             -filter:a 'volume=1.2' \
             \"${original_file//.${filename_suffix}/.aac}\"; \
-        /bin/rm --force --verbose {}"
+        /bin/rm --force --verbose \"${original_file}\""
 #--output="./%(autonumber)03d_%(title)s [%(id)s][%(format_note)s].%(ext)s"
 --output="./%(uploader)s/%(playlist_title|)s/%(title)s [%(id)s][%(format_note)s].%(ext)s"
