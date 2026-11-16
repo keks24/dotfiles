@@ -32,6 +32,7 @@
 --exec="original_file={} && \
         filename_suffix=\"${original_file##*.}\" && \
         /usr/bin/ffmpeg \
+            -hide_banner \
             -i {} \
             -n \
             -codec:a aac \
