@@ -221,7 +221,7 @@ then
 fi
 #### prioritise zsh's "git" tab completion
 \unset -f _git
-\source /usr/share/zsh/?.?/functions/Completion/Unix/_git
+\source /usr/share/zsh/[0-9]##.[0-9]##(|.[0-9]##)/functions/Completion/Unix/_git
 
 ## aliases
 
