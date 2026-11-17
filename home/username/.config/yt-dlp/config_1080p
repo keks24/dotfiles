@@ -1,5 +1,5 @@
 ############################################################################
-# Copyright 2020-2025 Ramon Fischer                                        #
+# Copyright 2020-2026 Ramon Fischer                                        #
 #                                                                          #
 # Licensed under the Apache License, Version 2.0 (the "License");          #
 # you may not use this file except in compliance with the License.         #
@@ -14,7 +14,7 @@
 # limitations under the License.                                           #
 ############################################################################
 
-# curly braces are already escaped with single quotes!
+# curly braces and shell-quoted strings via "%()q" are already escaped with single quotes!
 # shell ("sh") variables must be escaped with double quotes, otherwise they are not expanded before execution!
 --format-sort="res:1080,vcodec:h265,acodec:aac"
 --sponsorblock-remove="all"
