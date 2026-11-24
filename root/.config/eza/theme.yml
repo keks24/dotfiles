@@ -1,0 +1,381 @@
+---
+# list of theme options as "yaml dictionaries":
+## from: "man --pager="less '+/LIST OF THEME OPTIONS'" 5 eza_colors-explanation"
+## see also:
+### https://deepwiki.com/eza-community/eza-themes/3.4-theme-categories
+### https://github.com/eza-community/eza-themes/blob/main/themes/default.yml
+### "eza-community/eza-themes/themes/default.yml"
+### "eza-community/eza/src/theme/lsc.rs"
+### "eza-community/eza/src/theme/default_theme.rs"
+### "eza-community/eza/src/theme/ui_styles.rs"
+#
+# filekinds:     perms:             size:             users:        links:
+#   normal        user_read           major             user_you      normal
+#   directory     user_write          minor             user_root     multi_link_file
+#   symlink       user_execute_file   number_byte       user_other
+#   pipe          user_execute_other  number_kilo       group_yours
+#   block_device  group_read          number_mega       group_other
+#   char_device   group_write         number_giga       group_root
+#   socket        group_execute       number_huge
+#   special       other_read          unit_byte
+#   executable    other_write         unit_kilo
+#   mount_point   other_execute       unit_mega
+#                 special_user_file   unit_giga
+#                 special_other       unit_huge
+#                 attribute
+#
+# git:           git_repo:          security_context: file_type:    punctuation:
+#   new            branch_main        none:             image       date:
+#   modified       branch_other       selinux:          video       inode:
+#   deleted        git_clean            colon           music       blocks:
+#   renamed        git_dirty            user            crypto      header:
+#   ignored                             role            document    octal:
+#   conflicted                          typ             compressed  flags:
+#                                       range           temp        control_char:
+#                                                       compiled    broken_symlink:
+#                                                       build       broken_path_overlay:
+#                                                       source      colourful:
+#                                                                   filenames:
+#                                                                     <some_filename>:
+#                                                                       filename:
+#                                                                   extensions:
+#                                                                     <some_filename_extension>:
+#                                                                       filename:
+#
+# each of those fields/sub fields can have the following styling properties defined beneath it:
+#
+# foreground: Blue
+# background: null
+# is_bold: false
+# is_dimmed: false
+# is_italic: false
+# is_underline: false
+# is_blink: false
+# is_reverse: false
+# is_hidden: false
+# is_strikethrough: true
+# prefix_with_reset: false
+#
+# example:
+#
+# file_type:
+#   image:
+#     foreground: Blue
+#     is_italic: true
+# date:
+#   foreground: White
+#
+# security_context:
+#   selinux:
+#     role:
+#       is_hidden: true
+#
+# icons can now be customized as well in the filenames and extensions fields
+#
+# filenames:
+#   # Just change the icon glyph
+#   Cargo.toml: {icon: {glyph: 🦀}}
+#   Cargo.lock: {icon: {glyph: 🦀}}
+#
+# extensions:
+#   rs: {  filename: {foreground: Red}, icon: {glyph: 🦀}}
+#
+# notes:
+#
+# not all glyphs support changing colors.
+#
+# if your theme is not working properly, double check the syntax in the config file, as a syntax issue can cause
+# multiple properties to not be applied.
+#
+# you must name the file theme.yml, no matter the directory you specify.
+
+# TODO:
+# * pick colour hexcodes and enter them here like so: "#xxxxxx".
+# * configure "EZA_COLORS".
+
+# "filekinds"
+filekinds:
+  normal:
+    foreground: "white"
+  directory:
+    foreground: "blue"
+    is_bold: true
+  symlink:
+    foreground: "cyan"
+    is_bold: true
+  pipe:
+    foreground: "yellow"
+    is_bold: true
+    is_underline: true
+  block_device:
+    foreground: "yellow"
+    is_bold: true
+  char_device:
+    foreground: "purple"
+    is_bold: true
+  socket:
+    foreground: "red"
+    is_bold: true
+  mount_point:
+    foreground: "blue"
+    is_bold: true
+    is_underline: true
+
+# "perms"
+## waiting to configure colours for individual octal values:
+### https://github.com/eza-community/eza/issues/889
+#perms:
+#  user_read:
+#    foreground: "yellow"
+#    is_bold: true
+#  user_write:
+#    foreground: "red"
+#    is_bold: true
+#  user_execute_file:
+#    foreground: "green"
+#    is_bold: true
+#    is_underline: true
+#  user_execute_other:
+#    foreground: "green"
+#    is_bold: true
+#  group_read:
+#    foreground: "yellow"
+#  group_write:
+#    foreground: "red"
+#  group_execute:
+#    foreground: "green"
+#  other_read:
+#    foreground: "yellow"
+#  other_write:
+#    foreground: "red"
+#  other_execute:
+#    foreground: "green"
+#  special_user_file:
+#    foreground: "purple"
+#  special_other:
+#    foreground: "purple"
+#  attribute:
+#    foreground: "default"
+
+# "size"
+size:
+  # block or character device files: device driver id
+  major:
+    foreground: "cyan"
+    is_bold: true
+  # block or character device files: device id
+  minor:
+    foreground: "yellow"
+  number_byte:
+    foreground: "darkgray"
+  number_kilo:
+    foreground: "green"
+    is_bold: false
+  number_mega:
+    foreground: "yellow"
+    is_bold: true
+  number_giga:
+    foreground: "red"
+    is_bold: true
+  number_huge:
+    foreground: "purple"
+    is_bold: true
+  # these are not working
+  #unit_byte:
+  #unit_kilo:
+  #unit_mega:
+  #unit_giga:
+  #unit_huge:
+
+# "users"
+users:
+  user_you:
+    foreground: "blue"
+    is_bold: false
+  user_root:
+    foreground: "red"
+    is_bold: true
+  user_other:
+    foreground: "yellow"
+  group_yours:
+    foreground: "blue"
+    is_bold: false
+  group_other:
+    foreground: "yellow"
+  group_root:
+    foreground: "red"
+    is_bold: true
+
+# "links"
+## only visible via parameter "--links" for now:
+### https://github.com/eza-community/eza/issues/765
+links:
+  normal:
+    foreground: "red"
+    is_bold: true
+  multi_link_file:
+    foreground: "red"
+    background: "yellow"
+
+# "git"
+## there are still some bugs:
+### for option "ignored": https://github.com/eza-community/eza/issues/521
+##
+## indicator legend:
+### | options      | tracked/staged | untracked/unstaged |
+### | :----------- | :------------- | :----------------- |
+### | not modified | -              | -                  |
+### | new          | N              | N                  |
+### | modified     | M              | M                  |
+### | deleted      | D              |                    |
+### | renamed      | N              |                    |
+### | typechange   | T              |                    |
+### | ignored      |                | I                  |
+### | conflicted   |                | U                  |
+git:
+  new:
+    foreground: "green"
+  modified:
+    foreground: "yellow"
+  deleted:
+    foreground: "red"
+  renamed:
+    foreground: "blue"
+  typechange:
+    foreground: "purple"
+    is_bold: true
+  ignored:
+    foreground: "white"
+    is_dimmed: true
+  conflicted:
+    foreground: "red"
+    is_bold: true
+
+# "git_repo"
+## indicator legend:
+### | options      | branch states      | indicators          |
+### | :----------- | :----------------- | :------------------ |
+### | branch_main  | none               | <branch_name>       |
+### | branch_other | none               | <other_branch_name> |
+### | git_clean    | clean              | |                   |
+### | git_dirty    | new, modified, ... | +                   |
+git_repo:
+  branch_main:
+    foreground: "green"
+  branch_other:
+    foreground: "yellow"
+  git_clean:
+    foreground: "green"
+  git_dirty:
+    foreground: "yellow"
+
+# "security_context"
+## untested
+#security_context:
+#  none:
+#  selinux:
+#    colon:
+#      foreground: "white"
+#      is_dimmed: true
+#    user:
+#      foreground: "blue"
+#    role:
+#      foreground: "green"
+#    typ:
+#      foreground: "yellow"
+#    range:
+#      foreground: "cyan"
+
+# "file_type"
+file_type:
+  image:
+    foreground: "purple"
+  video:
+    foreground: "purple"
+    is_bold: true
+  music:
+    foreground: "cyan"
+  lossless:
+    foreground: "cyan"
+    is_bold: false
+    is_underline: true
+  crypto:
+    foreground: "white"
+    is_bold: false
+    is_reverse: true
+  document:
+    foreground: "white"
+    is_underline: true
+  compressed:
+    foreground: "red"
+  temp:
+    foreground: "white"
+    is_dimmed: true
+  compiled:
+    foreground: "green"
+    is_bold: true
+    is_underline: true
+  build:
+    foreground: "yellow"
+    is_bold: false
+    is_underline: true
+  source:
+    foreground: "yellow"
+    is_bold: false
+
+# miscellaneous
+punctuation:
+  foreground: "darkgray"
+  is_bold: false
+
+date:
+  foreground: "blue"
+
+inode:
+  foreground: "purple"
+
+## this has no effect
+blocks:
+  foreground: "cyan"
+
+header:
+  foreground: "white"
+  is_underline: true
+
+octal:
+  foreground: "lightpurple"
+
+# mac, bsd and windows only
+flags:
+  foreground: "white"
+
+control_char:
+  foreground: "red"
+  is_bold: true
+  is_underline: true
+
+## symlink filename
+### only has an effect in "grid view", if the environment variable "LS_COLORS" and "EZA_COLORS" are unset.
+### "grid view" is correct, "list view" ("--long") is faulty: arrow gets coloured
+broken_symlink:
+  foreground: "white"
+  background: "red"
+  is_bold: true
+
+## symlink target path
+broken_path_overlay:
+  foreground: "white"
+  background: "red"
+  is_underline: false
+  is_bold: true
+
+## filename-based overrides
+#filenames:
+#  <some_filename>:
+#    filename:
+#      foreground: "darkgray"
+#
+#extensions:
+#  <some_filename_extension>:
+#    filename:
+#      foreground: "red"
