@@ -1869,9 +1869,24 @@ fi
                      }' '/etc/passwd' \
                         | \sort --numeric-sort --key='4'"
 \alias listvariables="\echo '${(k)parameters// /\n}'"
-\alias ll="ls -vl"
+\alias ll="eza \
+            --long \
+            --colour='auto' \
+            --header \
+            --inode \
+            --no-permissions \
+            --octal-permissions \
+            --binary \
+            --group \
+            --smart-group \
+            --modified \
+            --sort='Name' \
+            --time-style=$'+%Y-%m-%d %H:%M\n-----%m-%d %H:%M' \
+            --extended \
+            --mounts"
 \alias ln="ln --verbose"
 \alias locate="locate --ignore-case"
+\alias ls="eza"
 \alias lsblk="lsblk --discard --fs --merge --perms --zoned"
 \alias lz4="lz4 --best"
 \alias lzip="lzip --best"
