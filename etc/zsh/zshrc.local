@@ -82,6 +82,11 @@ dic()
                         \curl \
                             --silent \
                             --show-error \
+                            --proto="=https" \
+                            --connect-timeout="5" \
+                            --max-time="10" \
+                            --retry="2" \
+                            --fail \
                             --url "${dictionary_url}"
                        )
 
