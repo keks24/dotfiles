@@ -1,5 +1,18 @@
-today 01;41
-weeknumber 01;42
+# header: bold, underline, yellow foreground
 header 01;21;33
-workday 01;37
+
+# weeks: yellow foreground
+weeks 33
+
+# weeknumber: reverse, yellow foreground
+## only a specific week number via parameter "--week='x'"
+weeknumber 07;33
+
+# today: bold, red background
+today 01;41
+
+# workday: bold, white foreground
+workday 37
+
+# weekend: purple foreground
 weekend 35
