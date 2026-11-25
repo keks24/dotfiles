@@ -47,9 +47,9 @@ dic()
 
         *\:*) input_string="${input_string//\:/%3A}" ;|
         *\;*) input_string="${input_string//\;/%3B}" ;|
-        *\<*) input_string="${input_string//\@/%3C}" ;|
+        *\<*) input_string="${input_string//\</%3C}" ;|
         *\=*) input_string="${input_string//\=/%3D}" ;|
-        *\>*) input_string="${input_string//\@/%3E}" ;|
+        *\>*) input_string="${input_string//\>/%3E}" ;|
         *\?*) input_string="${input_string//\?/%3F}" ;|
 
         *\[*) input_string="${input_string//\[/%5B}" ;|
