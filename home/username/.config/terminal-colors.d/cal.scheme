@@ -1,3 +1,5 @@
+# see also: "man 5 terminal-colors.d"
+
 # header: bold, underline, yellow foreground
 header 01;21;33
 
