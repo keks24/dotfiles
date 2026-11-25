@@ -14,8 +14,9 @@
 # limitations under the License.                                           #
 ############################################################################
 
-# get the newest configuration file from the release page:
-# https://github.com/alacritty/alacritty/releases
+# get the newest configuration file from the "git" repository:
+## https://github.com/alacritty/alacritty/extra/man/alacritty.5.scd
+## see also: "man 5 alacritty"
 
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 
