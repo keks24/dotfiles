@@ -162,7 +162,7 @@ dic()
                            )
 
     # reverse output
-    \tac <<< "${filtered_output}"
+    \print -r -- "${filtered_output}" | \tac
 
     if [[ "${no_results}" == "true" ]]
     then
