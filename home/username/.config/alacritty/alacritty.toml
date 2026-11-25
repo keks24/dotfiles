@@ -934,6 +934,9 @@
 live_config_reload = false
 
 [env]
+# see also:
+## "man 5 terminfo"
+## "/usr/share/terminfo/"
 TERM = "alacritty"
 
 [window]
