@@ -115,16 +115,16 @@ dic()
                                     gsub("<dd>", "\n    ");
 
                                     # remove div container blocks
-                                    gsub("<div[^>]*>.*</div>", "");
+                                    gsub("<div[^>]*>(.|\n|\r)*</div>", "");
 
                                     # remove javascript blocks
-                                    gsub("<script[^>]*>.*</script>", "");
+                                    gsub("<script[^>]*>(.|\n|\r)*</script>", "");
 
                                     # remove css blocks
-                                    gsub("<style[^>]*>.*</style>", "");
+                                    gsub("<style[^>]*>(.|\n|\r)*</style>", "");
 
                                     # remove title blocks
-                                    gsub("<title[^>]*>.*</title>", "");
+                                    gsub("<title[^>]*>(.|\n|\r)*</title>", "");
 
                                     # remove any other html tags
                                     gsub("<[^>]+>", "");
