@@ -99,20 +99,26 @@ dic()
                             \gawk \
                                 '/<dl>|<\/dl>|<dt>|<\/dt>|<dd>|<\/dd>/ \
                                 {
-                                    # remove title tag
+                                    # remove description term tags
                                     gsub("<dt>", "");
 
                                     # add newline and indent
                                     gsub("<br>|<br />", "\n    ");
 
-                                    # indent sub entries
+                                    # indent sub entries (description details)
                                     gsub("<dd>", "\n    ");
 
-                                    # remove div container block
-                                    gsub("<div.*>(.|\n)*</div>", "");
+                                    # remove div container blocks
+                                    gsub("<div[^>]*>.*</div>", "");
 
-                                    # remove javascript block
-                                    gsub("<script.*>(.|\n)*</script>", "");
+                                    # remove javascript blocks
+                                    gsub("<script[^>]*>.*</script>", "");
+
+                                    # remove css blocks
+                                    gsub("<style[^>]*>.*</style>", "");
+
+                                    # remove title blocks
+                                    gsub("<title[^>]*>.*</title>", "");
 
                                     # remove any other html tags
                                     gsub("<[^>]+>", "");
