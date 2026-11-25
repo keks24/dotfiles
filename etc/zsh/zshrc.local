@@ -33,6 +33,7 @@ dic()
         *\"*) input_string="${input_string//\"/%22}" ;|
         *\#*) input_string="${input_string//\#/%23}" ;|
         *\$*) input_string="${input_string//\$/%24}" ;|
+        *\%*) input_string="${input_string//\%/%25}" ;|
         *\&*) input_string="${input_string//\&/%26}" ;|
         *\'*) input_string="${input_string//\'/%27}" ;|
         *\(*) input_string="${input_string//\(/%28}" ;|
@@ -42,6 +43,7 @@ dic()
         *\`*) input_string="${input_string//\`/%60}" ;|
 
         *\**) input_string="${input_string//\*/%2A}" ;|
+        *\+*) input_string="${input_string//\+/%2B}" ;|
         *\,*) input_string="${input_string//\,/%2C}" ;|
         *\/*) input_string="${input_string//\//%2F}" ;|
 
@@ -61,13 +63,17 @@ dic()
         *\|*) input_string="${input_string//\|/%7C}" ;|
         *\}*) input_string="${input_string//\}/%7D}" ;|
 
-        *\ß*) input_string="${input_string//\ß/%C3%9F}" ;|
-        *\ä*) input_string="${input_string//\ä/%C3%A4}" ;|
         *\§*) input_string="${input_string//\§/%C2%A7}" ;|
         *\°*) input_string="${input_string//\°/%C2%B0}" ;|
         *\²*) input_string="${input_string//\²/%C2%B2}" ;|
         *\³*) input_string="${input_string//\³/%C2%B3}" ;|
         *\´*) input_string="${input_string//\´/%C2%B4}" ;|
+
+        *\Ä*) input_string="${input_string//\Ä/%C3%84}" ;|
+        *\Ö*) input_string="${input_string//\Ö/%C3%96}" ;|
+        *\Ü*) input_string="${input_string//\Ü/%C3%9C}" ;|
+        *\ß*) input_string="${input_string//\ß/%C3%9F}" ;|
+        *\ä*) input_string="${input_string//\ä/%C3%A4}" ;|
         *\ö*) input_string="${input_string//\ö/%C3%B6}" ;|
         *\ü*) input_string="${input_string//\ü/%C3%BC}" ;|
 
