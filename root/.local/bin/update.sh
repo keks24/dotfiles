@@ -15,6 +15,9 @@
 # limitations under the License.                                            #
 #############################################################################
 
+# fail as soon as possible
+set -uo pipefail
+
 declare -a command_array
 command_array=(
                 "/bin/date"
@@ -38,7 +41,7 @@ checkCommands()
 {
     local current_command
 
-    unalias "${command_array[@]##*/}" 2>/dev/null
+    unalias "${command_array[@]##*/}" 2>/dev/null || true
 
     for current_command in "${command_array[@]}"
     do
