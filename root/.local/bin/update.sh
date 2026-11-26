@@ -15,7 +15,7 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# fail as soon as possible
+# exit on failure as soon as possible
 set -uo pipefail
 
 declare -a command_array

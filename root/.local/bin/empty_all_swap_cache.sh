@@ -15,7 +15,7 @@
 # limitations under the License.                                            #
 #############################################################################
 
-# fail as soon as possible
+# exit on failure as soon as possible
 # | parameter     | name     | description                                                            |
 # | ------------: | :------- | :--------------------------------------------------------------------- |
 # | "-E"          | errtrace | inherit "ERR" trap in functions, command substitutions  and subshells. |
