@@ -38,6 +38,7 @@ declare -a command_array
 command_array=(
                 "/sbin/swapoff"
                 "/sbin/swapon"
+                "/usr/bin/logger"
               )
 checkCommands()
 {
@@ -59,6 +60,8 @@ checkCommands()
 checkCommands
 
 # define more global variables
+script_directory_path="${0%/*}"
+script_name="${0##*/}"
 ## current date and time
 ### requires bash >=4.4
 ### example: 2025-01-01T00-00-00+0000
@@ -83,6 +86,15 @@ executeSwaponCommand()
 
     echo -e "    \e[01;30m[${function_name}]: Executed at '${date_time_format@P}':\e[0m"
     time /sbin/swapon --verbose "${swap_filename}"
+}
+
+writeSyslogEntry()
+{
+    /usr/bin/logger \
+        --tag="empty_all_swap_cache" \
+        --id \
+        --stderr \
+        "${script_directory_path}/${script_name}: executed"
 }
 
 getEnabledSwapCache()
@@ -136,6 +148,8 @@ emptyAllSwapCache()
 
 main()
 {
+    writeSyslogEntry
+
     getEnabledSwapCache
 
     emptyAllSwapCache
